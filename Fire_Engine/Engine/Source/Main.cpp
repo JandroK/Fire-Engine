@@ -2,10 +2,6 @@
 #include "Application.h"
 #include "Globals.h"
 
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl2.h"
-
 #include "SDL/include/SDL.h"
 #pragma comment( lib, "SDL2.lib" )
 #pragma comment( lib, "SDL2main.lib" )
@@ -25,7 +21,7 @@ int main(int argc, char ** argv)
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
-	Application* App = NULL;
+	Application* App = NULL;	
 
 	while (state != MAIN_EXIT)
 	{
@@ -56,7 +52,7 @@ int main(int argc, char ** argv)
 
 		case MAIN_UPDATE:
 		{
-			int update_return = App->Update();
+			int update_return = App->Update();			
 
 			if (update_return == UPDATE_ERROR)
 			{
@@ -72,6 +68,7 @@ int main(int argc, char ** argv)
 		case MAIN_FINISH:
 
 			LOG("-------------- Application CleanUp --------------");
+
 			if (App->CleanUp() == false)
 			{
 				LOG("Application CleanUp exits with ERROR");
