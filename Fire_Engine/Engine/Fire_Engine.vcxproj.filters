@@ -101,9 +101,6 @@
     <ClCompile Include="Application.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="glmath.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
@@ -121,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="ModulePhysics3D.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
