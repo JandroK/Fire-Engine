@@ -120,16 +120,26 @@ update_status Application::Update()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	/*
+	
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+	ImGui::Begin("demo ");
+	ImGui::Checkbox("Demo Window", &show_demo_window);
+	ImGui::End();
+	
 	if (show_demo_window)
 		ImGui::ShowDemoWindow(&show_demo_window);
-	*/
+	
 	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
 	{
 		static float f = 0.0f;
 		static int counter = 0;
 
+		ImGui::Begin("Close Window");
+		if (ImGui::Button("Close"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+			return ret = UPDATE_STOP;
+		ImGui::End();
+
+		/*
 		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
 		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
@@ -146,20 +156,10 @@ update_status Application::Update()
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
-	}
-
-	// 3. Show another simple window.
-	if (show_another_window)
-	{
-		ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-		ImGui::Text("Hello from another window!");
-		if (ImGui::Button("Close Me"))
-			show_another_window = false;
-		ImGui::End();
+		*/
 	}
 
 	item = list_modules.getFirst();
-
 
 	// Rendering
 	ImGui::Render();
@@ -168,7 +168,7 @@ update_status Application::Update()
 	//glClear(GL_COLOR_BUFFER_BIT);
 	//glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-	//SDL_GL_SwapWindow(window);
+	//SDL_GL_SwapWindow(window->window);
 
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
