@@ -58,13 +58,12 @@ bool Application::Init()
 	io = ImGui::GetIO();
 	(void)io;
 
-
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-
+	
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
@@ -135,7 +134,6 @@ update_status Application::Update()
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
-
 	
 	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	ImGui::Begin("demo ");
@@ -156,13 +154,10 @@ update_status Application::Update()
 		ImGui::End();
 	}
 
-
-
 	// Rendering
 	ImGui::Render();
 	
 	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 	//glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
@@ -176,7 +171,6 @@ update_status Application::Update()
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
 
-
 	item = list_modules.getFirst();
 
 	while(item != NULL && ret == UPDATE_CONTINUE)
@@ -188,6 +182,7 @@ update_status Application::Update()
 	SDL_GL_SwapWindow(window->window);
 
 	FinishUpdate();
+	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	return ret;
