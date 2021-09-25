@@ -78,15 +78,6 @@
     <ClInclude Include="Source\p2Point.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\imgui\imconfig.h">
-      <Filter>Sources\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\imgui\imgui.h">
-      <Filter>Sources\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h">
-      <Filter>Sources\Imgui</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\imgui\imgui_impl_sdl.h">
       <Filter>Sources\Imgui</Filter>
     </ClInclude>
@@ -100,6 +91,15 @@
       <Filter>Sources\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\imgui\imstb_truetype.h">
+      <Filter>Sources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui\imconfig.h">
+      <Filter>Sources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui\imgui.h">
+      <Filter>Sources\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h">
       <Filter>Sources\Imgui</Filter>
     </ClInclude>
   </ItemGroup>
@@ -149,6 +149,15 @@
     <ClCompile Include="Source\glmath.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\External\imgui\imgui_impl_sdl.cpp">
+      <Filter>Sources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui\imgui_tables.cpp">
+      <Filter>Sources\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui\imgui_widgets.cpp">
+      <Filter>Sources\Imgui</Filter>
+    </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui.cpp">
       <Filter>Sources\Imgui</Filter>
     </ClCompile>
@@ -159,15 +168,6 @@
       <Filter>Sources\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp">
-      <Filter>Sources\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\imgui\imgui_impl_sdl.cpp">
-      <Filter>Sources\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\imgui\imgui_tables.cpp">
-      <Filter>Sources\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\External\imgui\imgui_widgets.cpp">
       <Filter>Sources\Imgui</Filter>
     </ClCompile>
   </ItemGroup>
