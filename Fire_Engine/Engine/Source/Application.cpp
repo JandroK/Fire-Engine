@@ -55,7 +55,10 @@ bool Application::Init()
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io = ImGui::GetIO();
+	(void)io;
+
+
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
@@ -153,24 +156,39 @@ update_status Application::Update()
 		ImGui::End();
 	}
 
-	item = list_modules.getFirst();
+
 
 	// Rendering
 	ImGui::Render();
-		//glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-		//glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-		//glClear(GL_COLOR_BUFFER_BIT);
-		//glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
+	
+	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+	//glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-	//SDL_GL_SwapWindow(window->window);
+
+
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+		SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+	}
+
+
+	item = list_modules.getFirst();
 
 	while(item != NULL && ret == UPDATE_CONTINUE)
 	{
 		ret = item->data->PostUpdate(dt);
 		item = item->next;
 	}
+	
+	SDL_GL_SwapWindow(window->window);
 
 	FinishUpdate();
+	glClear(GL_COLOR_BUFFER_BIT);
 
 	return ret;
 }
