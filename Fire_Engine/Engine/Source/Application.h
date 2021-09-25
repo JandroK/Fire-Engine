@@ -20,11 +20,11 @@ class Application
 {
 public:
 	ModuleWindow* window;
+	ModuleCamera3D* camera;
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
-	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
 
 private:
