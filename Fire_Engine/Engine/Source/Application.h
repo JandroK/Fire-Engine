@@ -1,16 +1,17 @@
 #pragma once
+#include <iostream>
+#include <vector>
+#include <list>
 
-#include "p2List.h"
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModuleAudio.h"
-#include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
+
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl2.h"
@@ -22,18 +23,14 @@ public:
 	ModuleWindow* window;
 	ModuleCamera3D* camera;
 	ModuleInput* input;
-	ModuleAudio* audio;
-	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
 	ModulePhysics3D* physics;
 
+	std::vector<Module*> list_modules;
 private:
 
 	Timer	ms_timer;
 	float	dt;
-	p2List<Module*> list_modules;
-
-
 
 public:
 

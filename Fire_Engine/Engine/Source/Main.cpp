@@ -17,7 +17,7 @@ enum main_states
 
 int main(int argc, char ** argv)
 {
-	LOG("Starting game '%s'...", TITLE);
+	////LOG(//LOGType::L_NORMAL, "Starting game '%s'...", TITLE);
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
@@ -29,23 +29,23 @@ int main(int argc, char ** argv)
 		{
 		case MAIN_CREATION:
 
-			LOG("-------------- Application Creation --------------");
+			////LOG(//LOGType::L_NORMAL, "-------------- Application Creation --------------");
 			App = new Application();
 			state = MAIN_START;
 			break;
 
 		case MAIN_START:
 
-			LOG("-------------- Application Init --------------");
+			////LOG(//LOGType::L_NORMAL, "-------------- Application Init --------------");
 			if (App->Init() == false)
 			{
-				LOG("Application Init exits with ERROR");
+				//LOG(//LOGType::L_ERROR, "Application Init exits with ERROR");
 				state = MAIN_EXIT;
 			}
 			else
 			{
 				state = MAIN_UPDATE;
-				LOG("-------------- Application Update --------------");
+				//LOG(//LOGType::L_NORMAL,"-------------- Application Update --------------");
 			}
 
 			break;
@@ -56,7 +56,7 @@ int main(int argc, char ** argv)
 
 			if (update_return == UPDATE_ERROR)
 			{
-				LOG("Application Update exits with ERROR");
+				//LOG(//LOGType::L_ERROR, "Application Update exits with ERROR");
 				state = MAIN_EXIT;
 			}
 
@@ -67,11 +67,11 @@ int main(int argc, char ** argv)
 
 		case MAIN_FINISH:
 
-			LOG("-------------- Application CleanUp --------------");
+			//LOG(//LOGType::L_NORMAL,"-------------- Application CleanUp --------------");
 
 			if (App->CleanUp() == false)
 			{
-				LOG("Application CleanUp exits with ERROR");
+				//LOG(//LOGType::L_ERROR,"Application CleanUp exits with ERROR");
 			}
 			else
 				main_return = EXIT_SUCCESS;
@@ -84,6 +84,6 @@ int main(int argc, char ** argv)
 	}
 
 	delete App;
-	LOG("Exiting game '%s'...\n", TITLE);
+	//LOG(//LOGType::L_NORMAL,"Exiting game '%s'...\n", TITLE);
 	return main_return;
 }

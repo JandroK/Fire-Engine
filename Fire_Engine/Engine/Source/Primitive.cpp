@@ -3,9 +3,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "Primitive.h"
-#include "glut/include/glut.h"
+//#include "Glew/include/glew.h"
 
-#pragma comment (lib, "glut32.lib")
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
@@ -170,7 +169,15 @@ Sphere::Sphere(float radius) : Primitive(), radius(radius)
 
 void Sphere::InnerRender() const
 {
-	glutSolidSphere(radius, 25, 25);
+	glPointSize(5.0f);
+
+	glBegin(GL_POINTS);
+
+	glVertex3f(0.0f, 0.0f, 0.0f);
+
+	glEnd();
+
+	glPointSize(1.0f);
 }
 
 
