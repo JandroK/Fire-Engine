@@ -66,7 +66,7 @@ bool Application::Init()
 	(void)io;
 
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
 
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
@@ -171,12 +171,13 @@ update_status Application::Update()
 		ret = list_modules[i]->PostUpdate(dt);
 	}
 
-	SDL_GL_SwapWindow(window->window);
 	
 
 	FinishUpdate();
+	
 	glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 	glClear(GL_COLOR_BUFFER_BIT);
+	SDL_GL_SwapWindow(window->window);
 
 	return ret;
 }
