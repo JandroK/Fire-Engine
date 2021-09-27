@@ -12,9 +12,6 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl2.h"
 #include "SDL/include/SDL_opengl.h"
 
 class Application
@@ -46,11 +43,5 @@ private:
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
-
-	// Our state
-	bool show_demo_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-	ImGuiIO io; 
 
 };
