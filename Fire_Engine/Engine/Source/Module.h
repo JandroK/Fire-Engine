@@ -1,11 +1,10 @@
 #pragma once
-
 class Application;
 
 class Module
 {
 private :
-	bool enabled;
+	bool enabled = true;
 
 public:
 	Application* App;

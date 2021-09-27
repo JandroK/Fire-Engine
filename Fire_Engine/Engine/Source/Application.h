@@ -11,6 +11,7 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
+#include "ModuleEditor.h"
 
 #include "SDL/include/SDL_opengl.h"
 
@@ -22,6 +23,7 @@ public:
 	ModuleInput* input;
 	ModuleRenderer3D* renderer3D;
 	ModulePhysics3D* physics;
+	ModuleEditor* editor;
 
 	std::vector<Module*> list_modules;
 private:
