@@ -4,10 +4,14 @@
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled): Module(app, start_enabled)
 {
+	fps_log.reserve(FPS_MS_LOG_MAXLENGHT);
+	ms_log.reserve(FPS_MS_LOG_MAXLENGHT);
 }
 
 ModuleEditor::~ModuleEditor()
 {
+	ms_log.clear();
+	fps_log.clear();
 }
 
 bool ModuleEditor::Init()
@@ -62,25 +66,24 @@ update_status ModuleEditor::Update(float dt)
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-	ImGui::Begin("demo ");
-	ImGui::Checkbox("Demo Window", &show_demo_window);
-	ImGui::End();
+	float currentFPS = floorf(App->GetFrameRate())/*ImGui::GetIO().Framerate*/;
+	float currentMS = (1000.f * App->GetDt());
 
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
-
-	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+	if (fps_log.size() <= FPS_MS_LOG_MAXLENGHT) fps_log.push_back(currentFPS);
+	else
 	{
-		static float f = 0.0f;
-		static int counter = 0;
-
-		ImGui::Begin("Close Window");
-		if (ImGui::Button("Close"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-			return ret = UPDATE_STOP;
-		ImGui::End();
+		fps_log.erase(fps_log.begin());
+		fps_log.push_back(currentFPS);
+	}
+	if (ms_log.size() <= FPS_MS_LOG_MAXLENGHT) ms_log.push_back(currentMS);
+	else
+	{
+		ms_log.erase(ms_log.begin());
+		ms_log.push_back(currentMS);
 	}
 
+	ret = ImGuiMenu();
+	ImGuiFPSGraph();
 
 
     return ret;
@@ -107,6 +110,83 @@ update_status ModuleEditor::PostUpdate(float dt)
 
 	SDL_GL_SwapWindow(App->window->window);
     return UPDATE_CONTINUE;
+}
+
+update_status ModuleEditor::ImGuiMenu()
+{
+	update_status ret = update_status::UPDATE_CONTINUE;
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("Close ESC"))
+				ret = UPDATE_STOP;
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("View"))
+		{
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Help"))
+		{
+
+			if (ImGui::MenuItem("ImGui Demo", nullptr, showCase))
+			{
+				showCase = !showCase;
+			}
+			if (ImGui::MenuItem("Documentation"))
+			{
+				ShellExecute(0, 0, "https://github.com/JandroK/Fire-Engine/wiki", 0, 0, SW_SHOW);
+			}
+			if (ImGui::MenuItem("Download latest"))
+			{
+				ShellExecute(0, 0, "https://github.com/JandroK/Fire-Engine/releases", 0, 0, SW_SHOW);
+			}
+			if (ImGui::MenuItem("Report a bug"))
+			{
+				ShellExecute(0, 0, "https://github.com/JandroK/Fire-Engine/issues", 0, 0, SW_SHOW);
+			}
+			if (ImGui::BeginMenu("About"))
+			{
+				if (ImGui::MenuItem("Ismael Tejada"))
+				{
+					ShellExecute(0, 0, "https://github.com/IsmaUPC", 0, 0, SW_SHOW);
+				}
+				if (ImGui::MenuItem("Alejandro Moreno"))
+				{
+					ShellExecute(0, 0, "https://github.com/JandroK", 0, 0, SW_SHOW);
+				}
+				ImGui::EndMenu();
+			}			
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+	return ret;
+}
+
+void ModuleEditor::ImGuiFPSGraph()
+{
+	if (ImGui::Begin("Configuration"))
+	{
+		if (ImGui::CollapsingHeader("Application"))
+		{
+			ImGui::InputText("App Name", "Fire Engine",12);
+			ImGui::InputText("Organization", "UPC CITM", 9);
+			ImGui::SliderInt("Max FPS", &App->maxFPS, 0, 144);
+			ImGui::TextWrapped("Limit Framerate: ");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", App->maxFPS);
+
+			char title[25];
+			sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size()-1]);
+			ImGui::PlotHistogram("##frameRate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
+			ImGui::PlotHistogram("##miliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			ImGui::NewLine();
+		}
+	}
+	ImGui::End();
 }
 
 bool ModuleEditor::CleanUp()

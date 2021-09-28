@@ -4,7 +4,7 @@
 using namespace std;
 
 
-Application::Application()
+Application::Application() : maxFPS(60)
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
@@ -72,14 +72,25 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (maxFPS == 0 || renderer3D->vsync || maxFPS > screenRefresh)
+	{
+		Uint32 last_frame_ms = ms_timer.Read();
+		float wait_time = (1000.f / (float)screenRefresh) - (float)last_frame_ms;
+		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
+	}
+	else if (maxFPS > 0)
+	{
+		Uint32 last_frame_ms = ms_timer.Read();
+		float wait_time = (1000.f / (float)maxFPS) - (float)last_frame_ms;
+		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
-	PrepareUpdate();
-	
+	PrepareUpdate();	
 
 	for (unsigned int i = 0; i < list_modules.size() && ret == UPDATE_CONTINUE; i++)
 	{
@@ -94,12 +105,7 @@ update_status Application::Update()
 		ret = list_modules[i]->PostUpdate(dt);
 	}
 
-
-
-
 	FinishUpdate();
-	
-
 
 	return ret;
 }
@@ -109,7 +115,6 @@ bool Application::CleanUp()
 	bool ret = true;
 
 	// Cleanup
-
 
 	for (int i = list_modules.size() - 1; i >= 0 && ret == true; --i)
 	{

@@ -26,6 +26,21 @@ bool ModuleWindow::Init()
 	}
 	else
 	{
+		// Get Screen Refresh of monitor
+		SDL_DisplayMode current;
+		for (int i = 0; i < SDL_GetNumVideoDisplays(); ++i) {
+
+			int should_be_zero = SDL_GetCurrentDisplayMode(i, &current);
+
+			if (should_be_zero != 0)
+				// In case of error...
+				SDL_Log("Could not get display mode for video display #%d: %s", i, SDL_GetError());
+			else
+				// On success, print the current display mode.
+				SDL_Log("Display #%d: current display mode is %dx%dpx @ %dhz.", i, current.w, current.h, current.refresh_rate);
+		}
+		App->screenRefresh = current.refresh_rate;
+
 		//Create window
 		int width = SCREEN_WIDTH * SCREEN_SIZE;
 		int height = SCREEN_HEIGHT * SCREEN_SIZE;
@@ -68,7 +83,6 @@ bool ModuleWindow::Init()
 		window = SDL_CreateWindow("Dear ImGui SDL2+OpenGL example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
 		gl_context = SDL_GL_CreateContext(window);
 		SDL_GL_MakeCurrent(window, gl_context);
-		SDL_GL_SetSwapInterval(1); // Enable vsync
 
 		if(window == NULL)
 		{

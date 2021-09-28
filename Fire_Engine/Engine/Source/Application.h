@@ -31,6 +31,7 @@ private:
 	Timer	ms_timer;
 	float	dt;
 
+
 public:
 
 	Application();
@@ -39,6 +40,12 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+
+	float GetDt() const { return dt; }
+	float GetFrameRate() const { return 1.f / dt; }
+
+	int maxFPS;
+	int screenRefresh;
 
 private:
 
