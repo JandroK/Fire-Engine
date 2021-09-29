@@ -25,6 +25,8 @@ public:
 
 	update_status ImGuiMenu();
 	void ImGuiFPSGraph();
+	void ImGuiConsole();
+
 
 	bool CleanUp();
 
@@ -32,10 +34,9 @@ private:
 	std::vector<ModuleWindow*> windows;
 
 	bool show_demo_window = false;
-	ImGuiIO io;
 
 	bool showCase;
-	std::vector<float> fps_log;
-	std::vector<float> ms_log;
+	std::vector<float> fpsLog;
+	std::vector<float> msLog;
 
 };

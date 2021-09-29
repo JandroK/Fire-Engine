@@ -4,14 +4,14 @@
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled): Module(app, start_enabled)
 {
-	fps_log.reserve(FPS_MS_LOG_MAXLENGHT);
-	ms_log.reserve(FPS_MS_LOG_MAXLENGHT);
+	fpsLog.reserve(FPS_MS_LOG_MAXLENGHT);
+	msLog.reserve(FPS_MS_LOG_MAXLENGHT);
 }
 
 ModuleEditor::~ModuleEditor()
 {
-	ms_log.clear();
-	fps_log.clear();
+	msLog.clear();
+	fpsLog.clear();
 }
 
 bool ModuleEditor::Init()
@@ -19,14 +19,13 @@ bool ModuleEditor::Init()
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	io = ImGui::GetIO();
-	(void)io;
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
 
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
@@ -34,7 +33,7 @@ bool ModuleEditor::Init()
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 	ImGuiStyle& style = ImGui::GetStyle();
-	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
 		style.WindowRounding = 0.0f;
 		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
@@ -69,17 +68,17 @@ update_status ModuleEditor::Update(float dt)
 	float currentFPS = floorf(App->GetFrameRate())/*ImGui::GetIO().Framerate*/;
 	float currentMS = (1000.f * App->GetDt());
 
-	if (fps_log.size() <= FPS_MS_LOG_MAXLENGHT) fps_log.push_back(currentFPS);
+	if (fpsLog.size() <= FPS_MS_LOG_MAXLENGHT) fpsLog.push_back(currentFPS);
 	else
 	{
-		fps_log.erase(fps_log.begin());
-		fps_log.push_back(currentFPS);
+		fpsLog.erase(fpsLog.begin());
+		fpsLog.push_back(currentFPS);
 	}
-	if (ms_log.size() <= FPS_MS_LOG_MAXLENGHT) ms_log.push_back(currentMS);
+	if (msLog.size() <= FPS_MS_LOG_MAXLENGHT) msLog.push_back(currentMS);
 	else
 	{
-		ms_log.erase(ms_log.begin());
-		ms_log.push_back(currentMS);
+		msLog.erase(msLog.begin());
+		msLog.push_back(currentMS);
 	}
 
 	ret = ImGuiMenu();
@@ -91,15 +90,14 @@ update_status ModuleEditor::Update(float dt)
 
 update_status ModuleEditor::PostUpdate(float dt)
 {	
-	
 	// Rendering
 	ImGui::Render();
-	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	//glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 
-	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
 		SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
 		SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
@@ -176,17 +174,28 @@ void ModuleEditor::ImGuiFPSGraph()
 			ImGui::SliderInt("Max FPS", &App->maxFPS, 0, 144);
 			ImGui::TextWrapped("Limit Framerate: ");
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", App->maxFPS);
+			// If FPS is zero, change text FPS to VSync (if fps == 0, FPS = Screen Refresh)
+			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (App->maxFPS == 0) ? "VSync" : "%d", App->maxFPS);		
 
 			char title[25];
-			sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size()-1]);
-			ImGui::PlotHistogram("##frameRate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-			sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
-			ImGui::PlotHistogram("##miliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size()-1]);
+			ImGui::PlotHistogram("##frameRate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			sprintf_s(title, 25, "Milliseconds %0.1f", msLog[msLog.size() - 1]);
+			ImGui::PlotHistogram("##miliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			ImGui::NewLine();
 		}
 	}
 	ImGui::End();
+}
+
+void ModuleEditor::ImGuiConsole()
+{
+	if (ImGui::Begin("Console"))
+	{
+
+
+	}
+
 }
 
 bool ModuleEditor::CleanUp()
