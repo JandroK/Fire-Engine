@@ -6,12 +6,12 @@ using namespace std;
 
 Application::Application() : maxFPS(60)
 {
-	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	renderer3D = new ModuleRenderer3D(this);
-	camera = new ModuleCamera3D(this);
-	physics = new ModulePhysics3D(this);
-	editor = new ModuleEditor(this);
+	window = new Window(this);
+	input = new Input(this);
+	renderer3D = new Renderer3D(this);
+	camera = new Camera3D(this);
+	physics = new Physics3D(this);
+	editor = new Editor(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order

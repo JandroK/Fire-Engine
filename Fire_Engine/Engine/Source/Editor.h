@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "../ModuleWindow.h"
+#include "../Window.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_sdl.h"
@@ -9,12 +9,12 @@
 
 #define FPS_MS_LOG_MAXLENGHT 100
 
-class ModuleEditor:public Module
+class Editor:public Module
 {
 public:
-	ModuleEditor(Application* app, bool start_enabled = true);
+	Editor(Application* app, bool start_enabled = true);
 
-	~ModuleEditor();
+	~Editor();
 	bool Init();
 
 	bool Start();
@@ -25,18 +25,17 @@ public:
 
 	update_status ImGuiMenu();
 	void ImGuiFPSGraph();
-	void ImGuiConsole();
 
 
 	bool CleanUp();
 
 private:
-	std::vector<ModuleWindow*> windows;
+	std::vector<Window*> windows;
 
 	bool show_demo_window = false;
 
-	bool showCase;
 	std::vector<float> fpsLog;
 	std::vector<float> msLog;
 
+	bool showCase;
 };

@@ -6,24 +6,24 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "ModulePhysics3D.h"
-#include "ModuleEditor.h"
+#include "Window.h"
+#include "Input.h"
+#include "Renderer3D.h"
+#include "Camera3D.h"
+#include "Physics3D.h"
+#include "Editor.h"
 
 #include "SDL/include/SDL_opengl.h"
 
 class Application
 {
 public:
-	ModuleWindow* window;
-	ModuleCamera3D* camera;
-	ModuleInput* input;
-	ModuleRenderer3D* renderer3D;
-	ModulePhysics3D* physics;
-	ModuleEditor* editor;
+	Window* window;
+	Camera3D* camera;
+	Input* input;
+	Renderer3D* renderer3D;
+	Physics3D* physics;
+	Editor* editor;
 
 	std::vector<Module*> list_modules;
 private:

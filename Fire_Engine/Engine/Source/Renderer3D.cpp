@@ -1,6 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleRenderer3D.h"
+#include "Renderer3D.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -8,16 +8,16 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), vsync(false)
+Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), vsync(false)
 {
 }
 
 // Destructor
-ModuleRenderer3D::~ModuleRenderer3D()
+Renderer3D::~Renderer3D()
 {}
 
 // Called before render is available
-bool ModuleRenderer3D::Init()
+bool Renderer3D::Init()
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
@@ -108,7 +108,7 @@ bool ModuleRenderer3D::Init()
 }
 
 // PreUpdate: clear buffer
-update_status ModuleRenderer3D::PreUpdate(float dt)
+update_status Renderer3D::PreUpdate(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -126,7 +126,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 }
 
 // PostUpdate present buffer to screen
-update_status ModuleRenderer3D::PostUpdate(float dt)
+update_status Renderer3D::PostUpdate(float dt)
 {
 	update_status ret;
 	glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -144,7 +144,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 }
 
 // Called before quitting
-bool ModuleRenderer3D::CleanUp()
+bool Renderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 		
@@ -154,7 +154,7 @@ bool ModuleRenderer3D::CleanUp()
 }
 
 
-void ModuleRenderer3D::OnResize(int width, int height)
+void Renderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 

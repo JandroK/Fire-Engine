@@ -7,11 +7,11 @@
 
 class DebugDrawer;
 
-class ModulePhysics3D : public Module
+class Physics3D : public Module
 {
 public:
-	ModulePhysics3D(Application* app, bool start_enabled = true);
-	~ModulePhysics3D();
+	Physics3D(Application* app, bool start_enabled = true);
+	~Physics3D();
 
 	bool Start();
 	update_status PreUpdate(float dt);

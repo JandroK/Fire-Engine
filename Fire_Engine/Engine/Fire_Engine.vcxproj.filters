@@ -33,19 +33,19 @@
     <ClInclude Include="Source\Module.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleCamera3D.h">
+    <ClInclude Include="Source\Camera3D.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleInput.h">
+    <ClInclude Include="Source\Input.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModulePhysics3D.h">
+    <ClInclude Include="Source\Physics3D.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleRenderer3D.h">
+    <ClInclude Include="Source\Renderer3D.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleWindow.h">
+    <ClInclude Include="Source\Window.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\Light.h">
@@ -84,7 +84,10 @@
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h">
       <Filter>Sources\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleEditor.h">
+    <ClInclude Include="Source\Editor.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Configuration.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>
@@ -101,19 +104,19 @@
     <ClCompile Include="Source\Timer.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleCamera3D.cpp">
+    <ClCompile Include="Source\Camera3D.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleInput.cpp">
+    <ClCompile Include="Source\Input.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModulePhysics3D.cpp">
+    <ClCompile Include="Source\Physics3D.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleRenderer3D.cpp">
+    <ClCompile Include="Source\Renderer3D.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleWindow.cpp">
+    <ClCompile Include="Source\Window.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Light.cpp">
@@ -149,7 +152,10 @@
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp">
       <Filter>Sources\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleEditor.cpp">
+    <ClCompile Include="Source\Editor.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Configuration.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>

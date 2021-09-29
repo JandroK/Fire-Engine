@@ -1,20 +1,16 @@
 #include "Application.h"
 #include "Globals.h"
-#include "ModuleEditor.h"
+#include "Editor.h"
 
-ModuleEditor::ModuleEditor(Application* app, bool start_enabled): Module(app, start_enabled)
-{
-	fpsLog.reserve(FPS_MS_LOG_MAXLENGHT);
-	msLog.reserve(FPS_MS_LOG_MAXLENGHT);
+Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
+{	
 }
 
-ModuleEditor::~ModuleEditor()
+Editor::~Editor()
 {
-	msLog.clear();
-	fpsLog.clear();
 }
 
-bool ModuleEditor::Init()
+bool Editor::Init()
 {
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -46,17 +42,17 @@ bool ModuleEditor::Init()
     return true;
 }
 
-bool ModuleEditor::Start()
+bool Editor::Start()
 {
     return true;
 }
 
-update_status ModuleEditor::PreUpdate(float dt)
+update_status Editor::PreUpdate(float dt)
 {
     return UPDATE_CONTINUE;
 }
 
-update_status ModuleEditor::Update(float dt)
+update_status Editor::Update(float dt)
 {
 
 	update_status ret = UPDATE_CONTINUE;
@@ -84,11 +80,10 @@ update_status ModuleEditor::Update(float dt)
 	ret = ImGuiMenu();
 	ImGuiFPSGraph();
 
-
     return ret;
 }
 
-update_status ModuleEditor::PostUpdate(float dt)
+update_status Editor::PostUpdate(float dt)
 {	
 	// Rendering
 	ImGui::Render();
@@ -105,12 +100,11 @@ update_status ModuleEditor::PostUpdate(float dt)
 		ImGui::RenderPlatformWindowsDefault();
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
-
 	SDL_GL_SwapWindow(App->window->window);
     return UPDATE_CONTINUE;
 }
 
-update_status ModuleEditor::ImGuiMenu()
+update_status Editor::ImGuiMenu()
 {
 	update_status ret = update_status::UPDATE_CONTINUE;
 	if (ImGui::BeginMainMenuBar())
@@ -163,22 +157,22 @@ update_status ModuleEditor::ImGuiMenu()
 	return ret;
 }
 
-void ModuleEditor::ImGuiFPSGraph()
+void Editor::ImGuiFPSGraph()
 {
 	if (ImGui::Begin("Configuration"))
 	{
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			ImGui::InputText("App Name", "Fire Engine",12);
+			ImGui::InputText("App Name", "Fire Engine", 12);
 			ImGui::InputText("Organization", "UPC CITM", 9);
 			ImGui::SliderInt("Max FPS", &App->maxFPS, 0, 144);
 			ImGui::TextWrapped("Limit Framerate: ");
 			ImGui::SameLine();
 			// If FPS is zero, change text FPS to VSync (if fps == 0, FPS = Screen Refresh)
-			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (App->maxFPS == 0) ? "VSync" : "%d", App->maxFPS);		
+			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (App->maxFPS == 0) ? "VSync" : "%d", App->maxFPS);
 
 			char title[25];
-			sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size()-1]);
+			sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size() - 1]);
 			ImGui::PlotHistogram("##frameRate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			sprintf_s(title, 25, "Milliseconds %0.1f", msLog[msLog.size() - 1]);
 			ImGui::PlotHistogram("##miliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
@@ -188,17 +182,7 @@ void ModuleEditor::ImGuiFPSGraph()
 	ImGui::End();
 }
 
-void ModuleEditor::ImGuiConsole()
-{
-	if (ImGui::Begin("Console"))
-	{
-
-
-	}
-
-}
-
-bool ModuleEditor::CleanUp()
+bool Editor::CleanUp()
 {
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
