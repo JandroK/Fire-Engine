@@ -107,6 +107,7 @@
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\Physics3D.h" />
     <ClInclude Include="Source\Renderer3D.h" />
+    <ClInclude Include="Source\Tab.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Primitive.h" />
     <ClInclude Include="Source\Timer.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Physics3D.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
+    <ClCompile Include="Source\Tab.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Primitive.cpp" />
     <ClCompile Include="Source\Timer.cpp" />

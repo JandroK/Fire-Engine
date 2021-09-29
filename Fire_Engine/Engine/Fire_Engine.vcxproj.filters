@@ -19,6 +19,12 @@
     <Filter Include="Sources\Imgui">
       <UniqueIdentifier>{850646f3-1303-4c16-8b20-5324ad085bad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\Editor">
+      <UniqueIdentifier>{7dc99363-50ed-41cb-ba59-c627ec6b0d30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Editor\TabsEditor">
+      <UniqueIdentifier>{62637d66-c11d-4603-9050-24f0ada99ab7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -84,11 +90,14 @@
     <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h">
       <Filter>Sources\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Editor.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Configuration.h">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor.h">
+      <Filter>Sources\Modules\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tab.h">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,11 +161,14 @@
     <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp">
       <Filter>Sources\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Editor.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Configuration.cpp">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor.cpp">
+      <Filter>Sources\Modules\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Tab.cpp">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

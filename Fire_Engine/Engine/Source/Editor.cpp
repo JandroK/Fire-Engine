@@ -2,8 +2,13 @@
 #include "Globals.h"
 #include "Editor.h"
 
+#include "Configuration.h"
+
 Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 {	
+	tabs = std::vector<Tab*>(static_cast<unsigned int>(TabType::MAX), nullptr);
+
+	tabs[static_cast<unsigned int>(TabType::CONFIGURATION)] = new Configuration();
 }
 
 Editor::~Editor()
@@ -54,38 +59,45 @@ update_status Editor::PreUpdate(float dt)
 
 update_status Editor::Update(float dt)
 {
-
 	update_status ret = UPDATE_CONTINUE;
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	float currentFPS = floorf(App->GetFrameRate())/*ImGui::GetIO().Framerate*/;
-	float currentMS = (1000.f * App->GetDt());
-
-	if (fpsLog.size() <= FPS_MS_LOG_MAXLENGHT) fpsLog.push_back(currentFPS);
-	else
+	for (int i = 0; i < tabs.size(); i++)
 	{
-		fpsLog.erase(fpsLog.begin());
-		fpsLog.push_back(currentFPS);
+		if (App->input->GetKey(29 + tabs[i]->shortcut) == KEY_UP)
+		{
+			tabs[i]->active = !tabs[i]->active;
+		}
 	}
-	if (msLog.size() <= FPS_MS_LOG_MAXLENGHT) msLog.push_back(currentMS);
-	else
-	{
-		msLog.erase(msLog.begin());
-		msLog.push_back(currentMS);
-	}
+	
 
-	ret = ImGuiMenu();
-	ImGuiFPSGraph();
+	for (unsigned int i = 0; i < tabs.size(); i++)
+	{
+		if (tabs[i]->active)
+		{
+			tabs[i]->Update();
+		}
+	}
 
     return ret;
 }
 
 update_status Editor::PostUpdate(float dt)
 {	
+	update_status ret = UPDATE_CONTINUE;
 	// Rendering
+	ret = ImGuiMenu();
+	for (unsigned int i = 0; i < tabs.size(); i++)
+	{
+		if (tabs[i]->active)
+		{
+			tabs[i]->Draw();
+		}
+	}
+
 	ImGui::Render();
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	//glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
@@ -111,12 +123,17 @@ update_status Editor::ImGuiMenu()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Close ESC"))
+			if (ImGui::MenuItem("Quit", "ESC"))
 				ret = UPDATE_STOP;
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
 		{
+			for (int i = 0; i < tabs.size(); i++)
+			{
+				if (ImGui::MenuItem(tabs[i]->name.c_str(), std::to_string(i+1).c_str(), tabs[i]->active, &tabs[i]->active))
+					tabs[i]->active =! tabs[i]->active;
+			}			
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -157,36 +174,18 @@ update_status Editor::ImGuiMenu()
 	return ret;
 }
 
-void Editor::ImGuiFPSGraph()
-{
-	if (ImGui::Begin("Configuration"))
-	{
-		if (ImGui::CollapsingHeader("Application"))
-		{
-			ImGui::InputText("App Name", "Fire Engine", 12);
-			ImGui::InputText("Organization", "UPC CITM", 9);
-			ImGui::SliderInt("Max FPS", &App->maxFPS, 0, 144);
-			ImGui::TextWrapped("Limit Framerate: ");
-			ImGui::SameLine();
-			// If FPS is zero, change text FPS to VSync (if fps == 0, FPS = Screen Refresh)
-			ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), (App->maxFPS == 0) ? "VSync" : "%d", App->maxFPS);
-
-			char title[25];
-			sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size() - 1]);
-			ImGui::PlotHistogram("##frameRate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-			sprintf_s(title, 25, "Milliseconds %0.1f", msLog[msLog.size() - 1]);
-			ImGui::PlotHistogram("##miliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-			ImGui::NewLine();
-		}
-	}
-	ImGui::End();
-}
-
 bool Editor::CleanUp()
 {
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
+
+	for (unsigned int i = 0; i < tabs.size(); ++i)
+	{
+		delete tabs[i];
+		tabs[i] = nullptr;
+	}
+	tabs.clear();
 
     return false;
 }

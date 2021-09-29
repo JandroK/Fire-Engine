@@ -3,9 +3,11 @@
 
 using namespace std;
 
-
+extern Application* app = nullptr;
 Application::Application() : maxFPS(60)
 {
+
+	app = this;
 	window = new Window(this);
 	input = new Input(this);
 	renderer3D = new Renderer3D(this);
