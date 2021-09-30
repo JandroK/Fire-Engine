@@ -7,6 +7,24 @@
 
 #define MAX_LIGHTS 8
 
+class Hardware {
+public:
+	std::string caps;
+	char sdlVersion[25] = "";
+
+	uint cpuCount;
+	uint cpuCache;
+	float systemRAM;
+
+	uint gpuVendor = 0;
+	uint gpuDevice = 0;
+	char gpuBrand[250] = "";
+	float vramBudget = 0.f;
+	float vramUsage = 0.f;
+	float vramAvailable = 0.f;
+	float vramReserved = 0.f;
+};
+
 class Renderer3D : public Module
 {
 public:
@@ -18,7 +36,9 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
+	void GetCaps(std::string& caps);
 	void OnResize(int width, int height);
+	void OnGUI() override;
 
 public:
 
@@ -29,7 +49,6 @@ public:
 	bool vsync;
 
 private:
-
-	// Our state
+	Hardware hardware;
 
 };

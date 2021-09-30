@@ -201,7 +201,7 @@ void Window::OnGUI()
 			SetSize(width, height);
 		}
 
-		ImGui::Text("Refresh rate: "); ImGui::SameLine(); ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", current.refresh_rate);
+		IMGUI_PRINT("Refresh rate: ", "%d", current.refresh_rate);
 
 		if (ImGui::Checkbox("Fullscreen", &fullScreen)) {
 			SetFullscreen(fullScreen);

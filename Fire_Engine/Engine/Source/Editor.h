@@ -5,6 +5,7 @@
 #include "Tab.h"
 
 #include "imgui/imgui.h"
+#include "imgui/imgui_user.h"
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl2.h"
 

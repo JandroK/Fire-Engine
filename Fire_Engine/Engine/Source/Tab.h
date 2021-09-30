@@ -2,7 +2,6 @@
 #define __WINDOW_H__
 
 #include <string>
-#include "ImGui/imgui.h"
 
 class Tab
 {
