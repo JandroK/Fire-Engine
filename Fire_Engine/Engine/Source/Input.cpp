@@ -19,13 +19,13 @@ Input::~Input()
 // Called before render is available
 bool Input::Init()
 {
-	LOG("Init SDL input event system");
+	LOG(LogType::L_NORMAL, "Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
-		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+		LOG(LogType::L_ERROR, "SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
@@ -125,7 +125,7 @@ update_status Input::PreUpdate(float dt)
 // Called before quitting
 bool Input::CleanUp()
 {
-	LOG("Quitting SDL input event subsystem");
+	LOG(LogType::L_NORMAL, "Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }

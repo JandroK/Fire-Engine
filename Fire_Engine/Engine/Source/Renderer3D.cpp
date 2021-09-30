@@ -19,14 +19,14 @@ Renderer3D::~Renderer3D()
 // Called before render is available
 bool Renderer3D::Init()
 {
-	LOG("Creating 3D Renderer context");
+	LOG(LogType::L_NORMAL, "Creating 3D Renderer context");
 	bool ret = true;
 	
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		LOG(LogType::L_ERROR, "OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	
@@ -34,7 +34,7 @@ bool Renderer3D::Init()
 	{
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+			LOG(LogType::L_ERROR, "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix
 		glMatrixMode(GL_PROJECTION);
@@ -44,7 +44,7 @@ bool Renderer3D::Init()
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG(LogType::L_ERROR, "Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -56,7 +56,7 @@ bool Renderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG(LogType::L_ERROR, "Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 		
@@ -71,7 +71,7 @@ bool Renderer3D::Init()
 		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			LOG(LogType::L_ERROR, "Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
 
@@ -146,7 +146,7 @@ update_status Renderer3D::PostUpdate(float dt)
 // Called before quitting
 bool Renderer3D::CleanUp()
 {
-	LOG("Destroying 3D Renderer");
+	LOG(LogType::L_NORMAL, "Destroying 3D Renderer");
 		
 	SDL_GL_DeleteContext(context);
 

@@ -16,7 +16,7 @@ Window::~Window()
 // Called before render is available
 bool Window::Init()
 {
-	LOG("Init SDL window & surface");
+	LOG(LogType::L_NORMAL, "Init SDL window & surface");
 	bool ret = true;
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
@@ -85,7 +85,7 @@ bool Window::Init()
 
 		if(window == NULL)
 		{
-			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			LOG(LogType::L_ERROR, "Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
 		}
 		else
@@ -106,7 +106,7 @@ bool Window::Init()
 // Called before quitting
 bool Window::CleanUp()
 {
-	LOG("Destroying SDL window and quitting all SDL systems");
+	LOG(LogType::L_NORMAL, "Destroying SDL window and quitting all SDL systems");
 
 	SDL_GL_DeleteContext(gl_context);
 

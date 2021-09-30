@@ -13,6 +13,7 @@
 enum class TabType {
 
 	CONFIGURATION,
+	CONSOLE,
 
 	MAX
 };
@@ -34,6 +35,10 @@ public:
 	update_status ImGuiMenu();
 
 	bool CleanUp();
+
+	void LogToConsole(const char* msg, LogType _type);
+
+	Tab* GetTab(TabType type);
 
 private:
 	std::vector<Tab*> tabs;

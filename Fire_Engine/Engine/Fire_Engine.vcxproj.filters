@@ -99,6 +99,9 @@
     <ClInclude Include="Source\Tab.h">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ConsoleTab.h">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -168,6 +171,9 @@
       <Filter>Sources\Modules\Editor</Filter>
     </ClCompile>
     <ClCompile Include="Source\Tab.cpp">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ConsoleTab.cpp">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
   </ItemGroup>

@@ -30,7 +30,7 @@ Physics3D::~Physics3D()
 // ---------------------------------------------------------
 bool Physics3D::Start()
 {
-	LOG("Creating Physics environment");
+	LOG(LogType::L_NORMAL, "Creating Physics environment");
 
 	// TODO 3: Create the world and set default gravity
 	// Have gravity defined in a macro!
@@ -83,7 +83,7 @@ update_status Physics3D::PostUpdate(float dt)
 // Called before quitting
 bool Physics3D::CleanUp()
 {
-	LOG("Destroying 3D Physics simulation");
+	LOG(LogType::L_NORMAL, "Destroying 3D Physics simulation");
 
 	// TODO 3: ... and destroy the world here!
 

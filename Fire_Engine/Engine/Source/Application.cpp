@@ -53,7 +53,7 @@ bool Application::Init()
 		ret = list_modules[i]->Init();
 	}
 	// After all Init calls we call Start() in all modules
-	//LOGLogType::L_NORMAL, "-------------- Application Start --------------");
+	LOG(LogType::L_NORMAL, "-------------- Application Start --------------");
 
 	// Call Init() in all modules
 	for (unsigned int i = 0; i < list_modules.size() && ret == true; i++)

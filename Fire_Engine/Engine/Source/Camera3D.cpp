@@ -20,7 +20,7 @@ Camera3D::~Camera3D()
 // -----------------------------------------------------------------
 bool Camera3D::Start()
 {
-	LOG("Setting up the camera");
+	LOG(LogType::L_NORMAL, "Setting up the camera");
 	bool ret = true;
 
 	return ret;
@@ -29,7 +29,7 @@ bool Camera3D::Start()
 // -----------------------------------------------------------------
 bool Camera3D::CleanUp()
 {
-	LOG("Cleaning camera");
+	LOG(LogType::L_NORMAL, "Cleaning camera");
 
 	return true;
 }

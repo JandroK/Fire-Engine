@@ -3,13 +3,17 @@
 #include "Editor.h"
 
 #include "Configuration.h"
+#include "ConsoleTab.h"
 
 Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 {	
 	// Define size of the vector
 	tabs = std::vector<Tab*>(static_cast<unsigned int>(TabType::MAX), nullptr);
+
 	// Fill the array with the types of tabs 
 	tabs[static_cast<unsigned int>(TabType::CONFIGURATION)] = new Configuration();
+	tabs[static_cast<unsigned int>(TabType::CONSOLE)] = new ConsoleTab();
+
 	// Assign a shortcut to each tab
 	for (int i = 0; i < tabs.size(); i++)
 	{
@@ -204,4 +208,19 @@ bool Editor::CleanUp()
 	tabs.clear();
 
     return false;
+}
+void Editor::LogToConsole(const char* msg, LogType _type)
+{
+	ConsoleTab* consoleWindow = dynamic_cast<ConsoleTab*>(GetTab(TabType::CONSOLE));
+
+	if (consoleWindow != nullptr)
+		consoleWindow->AddLog(msg, _type);
+}
+
+Tab* Editor::GetTab(TabType type)
+{
+	unsigned int vecPosition = static_cast<unsigned int>(type);
+
+	//SDL_assert(vecPosition < windows.size());
+	return (vecPosition < tabs.size()) ? tabs[vecPosition] : nullptr;
 }
