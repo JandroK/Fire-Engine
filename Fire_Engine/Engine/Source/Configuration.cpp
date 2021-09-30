@@ -41,7 +41,7 @@ void Configuration::Draw()
 	if (ImGui::Begin("Configuration"))
 	{
 		// CollapsingHeader is to create new Header
-		if (ImGui::CollapsingHeader("Application"))
+		if (ImGui::CollapsingHeader("Application", ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			// Input Text is to create a text with background and a const text
 			ImGui::InputText("App Name", "Fire Engine", 12);
