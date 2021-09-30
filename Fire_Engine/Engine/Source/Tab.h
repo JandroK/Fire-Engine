@@ -17,7 +17,6 @@ public:
 	std::string name;
 	bool active;
 	int shortcut;
-
 };
 
 #endif //__WINDOW_H__

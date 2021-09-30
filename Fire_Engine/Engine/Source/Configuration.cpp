@@ -3,7 +3,7 @@
 Configuration::Configuration() : Tab()
 {
 	name = "Configuration";
-	shortcut = 1;
+	// Reserve 100 positions
 	fpsLog.reserve(FPS_MS_LOG_MAXLENGHT);
 	msLog.reserve(FPS_MS_LOG_MAXLENGHT);
 }
@@ -16,9 +16,8 @@ Configuration::~Configuration()
 
 void Configuration::Update()
 {
-
 	update_status ret = UPDATE_CONTINUE;
-
+	// Get framerate
 	float currentFPS = floorf(app->GetFrameRate())/*ImGui::GetIO().Framerate*/;
 	float currentMS = (1000.f * app->GetDt());
 
@@ -41,11 +40,14 @@ void Configuration::Draw()
 {
 	if (ImGui::Begin("Configuration"))
 	{
+		// CollapsingHeader is to create new Header
 		if (ImGui::CollapsingHeader("Application"))
 		{
+			// Input Text is to create a text with background and a const text
 			ImGui::InputText("App Name", "Fire Engine", 12);
 			ImGui::InputText("Organization", "UPC CITM", 9);
 			ImGui::SliderInt("Max FPS", &app->maxFPS, 0, 144);
+			// TextWrapped is to create a simple text
 			ImGui::TextWrapped("Limit Framerate: ");
 			ImGui::SameLine();
 			// If FPS is zero, change text FPS to VSync (if fps == 0, FPS = Screen Refresh)

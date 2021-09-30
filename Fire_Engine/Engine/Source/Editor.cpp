@@ -6,9 +6,15 @@
 
 Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 {	
+	// Define size of the vector
 	tabs = std::vector<Tab*>(static_cast<unsigned int>(TabType::MAX), nullptr);
-
+	// Fill the array with the types of tabs 
 	tabs[static_cast<unsigned int>(TabType::CONFIGURATION)] = new Configuration();
+	// Assign a shortcut to each tab
+	for (int i = 0; i < tabs.size(); i++)
+	{
+		tabs[i]->shortcut = i + 1;
+	}
 }
 
 Editor::~Editor()
@@ -23,7 +29,7 @@ bool Editor::Init()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;    // Enable Gamepad Controls
 
 	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
@@ -65,6 +71,7 @@ update_status Editor::Update(float dt)
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
+	// Check if any key is pressed and disable/enable the tab
 	for (int i = 0; i < tabs.size(); i++)
 	{
 		if (App->input->GetKey(29 + tabs[i]->shortcut) == KEY_UP)
@@ -73,8 +80,8 @@ update_status Editor::Update(float dt)
 		}
 	}
 	
-
-	for (unsigned int i = 0; i < tabs.size(); i++)
+	// Calll Updates of tabs
+	for (int i = 0; i < tabs.size(); i++)
 	{
 		if (tabs[i]->active)
 		{
@@ -88,7 +95,7 @@ update_status Editor::Update(float dt)
 update_status Editor::PostUpdate(float dt)
 {	
 	update_status ret = UPDATE_CONTINUE;
-	// Rendering
+	// Rendering the tabs
 	ret = ImGuiMenu();
 	for (unsigned int i = 0; i < tabs.size(); i++)
 	{
@@ -113,11 +120,13 @@ update_status Editor::PostUpdate(float dt)
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
 	SDL_GL_SwapWindow(App->window->window);
-    return UPDATE_CONTINUE;
+
+    return ret;
 }
 
 update_status Editor::ImGuiMenu()
 {
+	// Create a MenuBar
 	update_status ret = update_status::UPDATE_CONTINUE;
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -176,6 +185,7 @@ update_status Editor::ImGuiMenu()
 
 bool Editor::CleanUp()
 {
+	// CleanUp all tabs
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
