@@ -43,5 +43,5 @@ private:
 	std::vector<float> fpsLog;
 	std::vector<float> msLog;
 
-	bool showCase;
+	bool showCase = false;
 };

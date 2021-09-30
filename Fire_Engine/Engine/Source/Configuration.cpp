@@ -60,6 +60,10 @@ void Configuration::Draw()
 			ImGui::PlotHistogram("##miliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			ImGui::NewLine();
 		}
+		for (unsigned int i = 0; i < app->list_modules.size(); ++i)
+		{
+			app->list_modules[i]->OnGUI();
+		}
 	}
 	ImGui::End();
 }

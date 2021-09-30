@@ -80,7 +80,7 @@ update_status Editor::Update(float dt)
 		}
 	}
 	
-	// Calll Updates of tabs
+	// Call Updates of tabs
 	for (int i = 0; i < tabs.size(); i++)
 	{
 		if (tabs[i]->active)
@@ -97,6 +97,12 @@ update_status Editor::PostUpdate(float dt)
 	update_status ret = UPDATE_CONTINUE;
 	// Rendering the tabs
 	ret = ImGuiMenu();
+	if (showCase)
+	{
+		//ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_MenuBarBg, ImVec4(0.f, 0.f, 0.f, 1.f));
+		ImGui::ShowDemoWindow();
+		//ImGui::PopStyleColor();
+	}
 	for (unsigned int i = 0; i < tabs.size(); i++)
 	{
 		if (tabs[i]->active)
