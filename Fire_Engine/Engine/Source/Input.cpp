@@ -43,15 +43,24 @@ update_status Input::PreUpdate(float dt)
 	{
 		if(keys[i] == 1)
 		{
-			if(keyboard[i] == KEY_IDLE)
+			if (keyboard[i] == KEY_IDLE)
+			{
 				keyboard[i] = KEY_DOWN;
-			else
+				LogInputEvent(i, KEY_DOWN);
+			}				
+			else if (keyboard[i] != KEY_REPEAT)
+			{
 				keyboard[i] = KEY_REPEAT;
+				LogInputEvent(i, KEY_REPEAT);
+			}
 		}
 		else
 		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			{
 				keyboard[i] = KEY_UP;
+				LogInputEvent(i, KEY_UP);
+			}
 			else
 				keyboard[i] = KEY_IDLE;
 		}
@@ -61,21 +70,28 @@ update_status Input::PreUpdate(float dt)
 
 	mouse_x /= SCREEN_SIZE;
 	mouse_y /= SCREEN_SIZE;
-	mouse_z = 0;
+	wheel = 0;
 
-	for(int i = 0; i < 5; ++i)
+	for(int i = 0; i < MAX_MOUSE_BUTTONS; ++i)
 	{
 		if(buttons & SDL_BUTTON(i))
 		{
-			if(mouse_buttons[i] == KEY_IDLE)
+			if (mouse_buttons[i] == KEY_IDLE)
+			{
 				mouse_buttons[i] = KEY_DOWN;
+				LogInputEvent(1000 + i, KEY_DOWN);
+				LogInputEvent(1000 + i, KEY_REPEAT);
+			}
 			else
 				mouse_buttons[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if(mouse_buttons[i] == KEY_REPEAT || mouse_buttons[i] == KEY_DOWN)
+			if (mouse_buttons[i] == KEY_REPEAT || mouse_buttons[i] == KEY_DOWN)
+			{
 				mouse_buttons[i] = KEY_UP;
+				LogInputEvent(1000 + i, KEY_UP);
+			}
 			else
 				mouse_buttons[i] = KEY_IDLE;
 		}
@@ -90,7 +106,7 @@ update_status Input::PreUpdate(float dt)
 		switch(e.type)
 		{
 			case SDL_MOUSEWHEEL:
-			mouse_z = e.wheel.y;
+			wheel = e.wheel.y;
 			break;
 
 			case SDL_MOUSEMOTION:
@@ -113,6 +129,7 @@ update_status Input::PreUpdate(float dt)
 					if(!App->window->IsFullscreen() && !App->window->IsFullscreenDesktop()) App->window->SetSize(e.window.data1, e.window.data2);
 				}
 			}
+			break;
 		}
 	}
 
@@ -128,4 +145,41 @@ bool Input::CleanUp()
 	LOG(LogType::L_NORMAL, "Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+void Input::OnGUI()
+{
+	if (ImGui::CollapsingHeader("Input"))
+	{
+		IMGUI_PRINT("Mouse Position: ", "%i,%i", mouse_x, mouse_y);
+		IMGUI_PRINT("Mouse Motion: ", "%i,%i", mouse_x_motion, mouse_x_motion);
+		IMGUI_PRINT("Mouse Wheel: ", "%i", wheel);
+
+		ImGui::Separator();
+
+		ImGui::BeginChild("Input Log");
+		ImGui::TextUnformatted(inputBuf.begin());
+		if (need_scroll)
+			ImGui::SetScrollHere(1.0f);
+		need_scroll = false;
+		ImGui::EndChild();
+	}
+}
+
+void Input::AddInput(const char* entry)
+{
+	inputBuf.appendf(entry);
+	need_scroll = true;
+}
+
+void Input::LogInputEvent(uint key, uint state)
+{
+	static char entry[512];
+	static const char* states[] = { "IDLE", "DOWN", "REPEAT", "UP" };
+
+	if (key < 1000)
+		sprintf_s(entry, 512, "Keybr: %02u - %s\n", key, states[state]);
+	else
+		sprintf_s(entry, 512, "Mouse: %02u - %s\n", key - 1000, states[state]);
+	AddInput(entry);	
 }

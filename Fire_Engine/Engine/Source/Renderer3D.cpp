@@ -5,11 +5,39 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
+#include "GPUDetected/DeviceId.h"
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
 Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), vsync(false)
 {
+	GetCaps(hardware.caps);
+
+	SDL_version version;
+	SDL_GetVersion(&version);
+	sprintf_s(hardware.sdlVersion, 25, "%i.%i.%i", version.major, version.minor, version.patch);
+	hardware.cpuCount = SDL_GetCPUCount();
+	hardware.cpuCache = SDL_GetCPUCacheLineSize();
+	hardware.systemRAM = SDL_GetSystemRAM() / 1024.f;	
+
+	uint vendor, deviceId;
+	std::wstring brand;
+	unsigned __int64 videoMemBudget;
+	unsigned __int64 videoMemUsage;
+	unsigned __int64 videoMemAvailable;
+	unsigned __int64 videoMemReserved;
+
+	if (getGraphicsDeviceInfo(&vendor, &deviceId, &brand, &videoMemBudget, &videoMemUsage, &videoMemAvailable, &videoMemReserved))
+	{
+		hardware.gpuVendor = vendor;
+		hardware.gpuDevice = deviceId;
+		sprintf_s(hardware.gpuBrand, 250, "%S", brand.c_str());
+		hardware.vramBudget = float(videoMemBudget) / (1073741824.0f / 1024.f);
+		hardware.vramUsage = float(videoMemUsage) / (1024.f * 1024.f * 1024.f);
+		hardware.vramAvailable = float(videoMemAvailable) / (1024.f * 1024.f);
+		hardware.vramReserved = float(videoMemReserved) / (1024.f * 1024.f * 1024.f);
+	}
 }
 
 // Destructor
@@ -154,6 +182,21 @@ bool Renderer3D::CleanUp()
 }
 
 
+void Renderer3D::GetCaps(std::string& caps)
+{
+	caps += (SDL_HasRDTSC()) ? "RDTSC," : "";
+	caps += (SDL_HasMMX()) ? "MMX, " : "";
+	caps += (SDL_HasSSE()) ? "SSE, " : "";
+	caps += (SDL_HasSSE2()) ? "SSE2, " : "";
+	caps += (SDL_HasSSE3()) ? "SSE3, " : "";
+	caps += "\n";
+	caps += (SDL_HasSSE41()) ? "SSE41, " : "";
+	caps += (SDL_HasSSE42()) ? "SSE42, " : "";
+	caps += (SDL_HasAVX()) ? "AVX, " : "";
+	caps += (SDL_HasAltiVec()) ? "AltiVec, " : "";
+	caps += (SDL_Has3DNow()) ? "3DNow, " : "";
+}
+
 void Renderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
@@ -165,4 +208,27 @@ void Renderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void Renderer3D::OnGUI()
+{
+	if (ImGui::CollapsingHeader("Hardware"))
+	{
+		IMGUI_PRINT("SDL Version: ", hardware.sdlVersion);
+		IMGUI_PRINT("OpenGL Version: ", "%s", (const char*)glGetString(GL_VERSION));
+		//ImGui::TextWrapped("All external library versions can be found in the 'About' window with links to their pages.");
+
+		ImGui::Separator();
+		IMGUI_PRINT("CPUs: ", "%d (Cache: %dkb)", hardware.cpuCount, hardware.cpuCache);
+		IMGUI_PRINT("System RAM: ", "%.1fGb", hardware.systemRAM);
+		IMGUI_PRINT("Caps: ", hardware.caps.c_str());
+
+		ImGui::Separator();
+		IMGUI_PRINT("GPU:", "vendor %u device %u", hardware.gpuVendor, hardware.gpuDevice);
+		IMGUI_PRINT("Brand:", hardware.gpuBrand);
+		IMGUI_PRINT("VRAM Budget:", "%.1f Mb", hardware.vramBudget);
+		IMGUI_PRINT("VRAM Usage:", "%.1f Mb", hardware.vramUsage);
+		IMGUI_PRINT("VRAM Available:", "%.1f Mb", hardware.vramAvailable);
+		IMGUI_PRINT("VRAM Reserved:", "%.1f Mb", hardware.vramReserved);
+	}
 }

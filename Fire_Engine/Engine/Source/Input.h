@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "Imgui/imgui.h"
 
 #define MAX_MOUSE_BUTTONS 5
 
@@ -43,9 +44,9 @@ public:
 		return mouse_y;
 	}
 
-	int GetMouseZ() const
+	int GetWheel() const
 	{
-		return mouse_z;
+		return wheel;
 	}
 
 	int GetMouseXMotion() const
@@ -58,12 +59,19 @@ public:
 		return mouse_y_motion;
 	}
 
+	void OnGUI() override;
+	void AddInput(const char* entry);
+	void LogInputEvent(uint key, uint state);
+
 private:
+	ImGuiTextBuffer inputBuf;
+	bool need_scroll = false;
+
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 	int mouse_x;
 	int mouse_y;
-	int mouse_z;
+	int wheel;
 	int mouse_x_motion;
 	int mouse_y_motion;
 	//int mouse_z_motion;

@@ -3115,7 +3115,7 @@ namespace ImGui
 
     // Some of the older obsolete names along with their replacement (commented out so they are not reported in IDE)
     //static inline ImDrawList* GetOverlayDrawList()            { return GetForegroundDrawList(); }                         // OBSOLETED in 1.69 (from Mar 2019)
-    //static inline void  SetScrollHere(float ratio = 0.5f)     { SetScrollHereY(ratio); }                                  // OBSOLETED in 1.66 (from Nov 2018)
+    static inline void  SetScrollHere(float ratio = 0.5f)     { SetScrollHereY(ratio); }                                  // OBSOLETED in 1.66 (from Nov 2018)
     //static inline bool  IsItemDeactivatedAfterChange()        { return IsItemDeactivatedAfterEdit(); }                    // OBSOLETED in 1.63 (from Aug 2018)
     //static inline bool  IsAnyWindowFocused()                  { return IsWindowFocused(ImGuiFocusedFlags_AnyWindow); }    // OBSOLETED in 1.60 (from Apr 2018)
     //static inline bool  IsAnyWindowHovered()                  { return IsWindowHovered(ImGuiHoveredFlags_AnyWindow); }    // OBSOLETED in 1.60 (between Dec 2017 and Apr 2018)
