@@ -17,7 +17,7 @@ void log(const char file[], int line, LogType _type, const char* format, ...)
 	OutputDebugString(tmp_string2);
 
 
-	if (app != nullptr && app->editor != nullptr)
+	if (app != nullptr && app->editor != nullptr && _type != LogType::L_NO_PRINTABLE)
 	{
 		app->editor->LogToConsole(tmp_string, _type);
 	}

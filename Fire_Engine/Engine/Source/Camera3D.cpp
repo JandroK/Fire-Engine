@@ -29,7 +29,7 @@ bool Camera3D::Start()
 // -----------------------------------------------------------------
 bool Camera3D::CleanUp()
 {
-	LOG(LogType::L_NORMAL, "Cleaning camera");
+	LOG(LogType::L_NO_PRINTABLE, "Cleaning camera");
 
 	return true;
 }

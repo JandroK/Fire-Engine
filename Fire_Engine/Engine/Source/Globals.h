@@ -14,7 +14,8 @@ enum class LogType
 {
 	L_NORMAL,
 	L_WARNING,
-	L_ERROR
+	L_ERROR,
+	L_NO_PRINTABLE
 };
 
 #define LOG(_type, format, ...) log(__FILE__, __LINE__, _type, format, __VA_ARGS__);
