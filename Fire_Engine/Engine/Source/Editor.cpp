@@ -195,7 +195,6 @@ update_status Editor::ImGuiMenu()
 
 bool Editor::CleanUp()
 {
-
 	bool ret= true;
 
 	// CleanUp all tabs
