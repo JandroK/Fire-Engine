@@ -1,7 +1,6 @@
 #pragma once
 #include "Globals.h"
 
-
 #include "Application.h"
 #include "Editor.h"
 void log(const char file[], int line, LogType _type, const char* format, ...)

@@ -84,7 +84,8 @@ int main(int argc, char ** argv)
 	}
 
 	delete App;
-	LOG(LogType::L_NO_PRINTABLE,"Exiting game '%s'...\n", TITLE);
 
+	LOG(LogType::L_NO_PRINTABLE,"Exiting game '%s'...\n", TITLE);
+	
 	return main_return;
 }

@@ -10,19 +10,19 @@
 class Hardware {
 public:
 	std::string caps;
-	char sdlVersion[25] = "";
+	char SDLVersion[25] = "";
 
-	uint cpuCount;
-	uint cpuCache;
+	uint CPUCount;
+	uint CPUCache;
 	float systemRAM;
 
-	uint gpuVendor = 0;
-	uint gpuDevice = 0;
-	char gpuBrand[250] = "";
-	float vramBudget = 0.f;
-	float vramUsage = 0.f;
-	float vramAvailable = 0.f;
-	float vramReserved = 0.f;
+	uint GPUVendor = 0;
+	uint GPUDevice = 0;
+	char GPUBrand[250] = "";
+	float VRAMBudget = 0.f;
+	float VRAMUsage = 0.f;
+	float VRAMAvailable = 0.f;
+	float VRAMReserved = 0.f;
 };
 
 class Renderer3D : public Module

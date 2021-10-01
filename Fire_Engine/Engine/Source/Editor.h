@@ -7,7 +7,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_user.h"
 #include "imgui/imgui_impl_sdl.h"
-#include "imgui/imgui_impl_opengl2.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 #define FPS_MS_LOG_MAXLENGHT 100
 
