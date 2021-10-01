@@ -32,10 +32,8 @@ void ConsoleTab::Draw()
 
 			offset -= ImGui::CalcTextSize("Collapse").x + (ImGui::CalcTextSize("Clear").x / 2) - 7;
 			ImGui::SetCursorPosX(offset);
-			if (ImGui::Button("Collapse"/*, ImGuiDir_Right*/))
-			{
-				collapsed = !collapsed;
-			}
+			//if (ImGui::Button("Collapse"/*, ImGuiDir_Right*/)) collapsed = !collapsed;
+		
 			ImGui::Separator();
 			//ImGui::SetWindowSize("Console", { winSize.x/2, winSize.y/2 });
 

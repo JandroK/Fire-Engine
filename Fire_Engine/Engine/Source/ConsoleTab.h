@@ -39,7 +39,7 @@ public:
 
 	bool collapsed=false;
 	bool bottom= false;
-	ImVec2 winSize = {200,100};
+	ImVec2 winSize = {200,400};
 	LogMsg* charLog;
 	std::vector<LogMsg> logs;
 
