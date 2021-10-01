@@ -93,9 +93,6 @@
     <ClInclude Include="Source\External\imgui\imgui.h">
       <Filter>Sources\3rd Party\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\imgui\imgui_impl_opengl2.h">
-      <Filter>Sources\3rd Party\Imgui</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Configuration.h">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClInclude>
@@ -115,6 +112,12 @@
       <Filter>Sources\3rd Party\GPU Detected</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\Imgui\imgui_user.h">
+      <Filter>Sources\3rd Party\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl3.h">
+      <Filter>Sources\3rd Party\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\imgui\imgui_impl_opengl3_loader.h">
       <Filter>Sources\3rd Party\Imgui</Filter>
     </ClInclude>
   </ItemGroup>
@@ -176,9 +179,6 @@
     <ClCompile Include="Source\External\imgui\imgui_draw.cpp">
       <Filter>Sources\3rd Party\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\External\imgui\imgui_impl_opengl2.cpp">
-      <Filter>Sources\3rd Party\Imgui</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Configuration.cpp">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
@@ -195,6 +195,9 @@
       <Filter>Sources\3rd Party\GPU Detected</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\Imgui\imgui_user2.cpp">
+      <Filter>Sources\3rd Party\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\imgui\imgui_impl_opengl3.cpp">
       <Filter>Sources\3rd Party\Imgui</Filter>
     </ClCompile>
   </ItemGroup>
