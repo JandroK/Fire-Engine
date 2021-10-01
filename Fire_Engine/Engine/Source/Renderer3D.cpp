@@ -120,11 +120,13 @@ bool Renderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
@@ -139,6 +141,7 @@ bool Renderer3D::Init()
 // PreUpdate: clear buffer
 update_status Renderer3D::PreUpdate(float dt)
 {
+	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -158,16 +161,13 @@ update_status Renderer3D::PreUpdate(float dt)
 update_status Renderer3D::PostUpdate(float dt)
 {
 	update_status ret;
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	//glClearColor(0.f, 0.f, 0.f, 1.f);
+	//glClear(GL_COLOR_BUFFER_BIT);
 
 	// Axis and grid
-	{
-		Plane p(0, 1, 0, 0);
-		p.axis = true;
-		p.Render();
-	}
-
+	Plane p(0, 1, 0, 0);
+	p.axis = true;
+	p.Render();
 
 	return UPDATE_CONTINUE;
 }
@@ -216,13 +216,13 @@ void Renderer3D::OnGUI()
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
 		IMGUI_PRINT("SDL Version: ", hardware.SDLVersion);
-		IMGUI_PRINT("OpenGL Version: ", "%s", (const char*)glGetString(GL_VERSION));
-		IMGUI_PRINT("Glew Version: ", "%s", (const char*)glewGetString(GLEW_VERSION));
+		IMGUI_PRINT("OpenGL Version: ", "%s", glGetString(GL_VERSION));
+		IMGUI_PRINT("Glew Version: ", "%s", glewGetString(GLEW_VERSION));
 
 		ImGui::Separator();
-		IMGUI_PRINT("GLSL: ", "%s", (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
-		IMGUI_PRINT("Vendor: ", "%s", (const char*)glGetString(GL_VENDOR));
-		IMGUI_PRINT("Renderer: ", "%s", (const char*)glGetString(GL_RENDERER));
+		IMGUI_PRINT("GLSL: ", "%s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		IMGUI_PRINT("Vendor: ", "%s", glGetString(GL_VENDOR));
+		IMGUI_PRINT("Renderer: ", "%s", glGetString(GL_RENDERER));
 
 		//ImGui::TextWrapped("All external library versions can be found in the 'About' window with links to their pages.");
 
