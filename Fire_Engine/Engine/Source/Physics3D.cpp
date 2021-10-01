@@ -83,7 +83,7 @@ update_status Physics3D::PostUpdate(float dt)
 // Called before quitting
 bool Physics3D::CleanUp()
 {
-	LOG(LogType::L_NORMAL, "Destroying 3D Physics simulation");
+	LOG(LogType::L_NO_PRINTABLE, "Destroying 3D Physics simulation");
 
 	// TODO 3: ... and destroy the world here!
 

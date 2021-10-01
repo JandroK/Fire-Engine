@@ -106,7 +106,7 @@ bool Window::Init()
 // Called before quitting
 bool Window::CleanUp()
 {
-	LOG(LogType::L_NORMAL, "Destroying SDL window and quitting all SDL systems");
+	LOG(LogType::L_NO_PRINTABLE, "Destroying SDL window and quitting all SDL systems");
 
 	SDL_GL_DeleteContext(gl_context);
 

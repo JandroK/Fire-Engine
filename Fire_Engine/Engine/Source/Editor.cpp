@@ -195,6 +195,9 @@ update_status Editor::ImGuiMenu()
 
 bool Editor::CleanUp()
 {
+
+	bool ret= true;
+
 	// CleanUp all tabs
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -207,7 +210,7 @@ bool Editor::CleanUp()
 	}
 	tabs.clear();
 
-    return false;
+	return ret;
 }
 void Editor::LogToConsole(const char* msg, LogType _type)
 {
@@ -221,6 +224,6 @@ Tab* Editor::GetTab(TabType type)
 {
 	unsigned int vecPosition = static_cast<unsigned int>(type);
 
-	//SDL_assert(vecPosition < windows.size());
+	SDL_assert(vecPosition < tabs.size());
 	return (vecPosition < tabs.size()) ? tabs[vecPosition] : nullptr;
 }

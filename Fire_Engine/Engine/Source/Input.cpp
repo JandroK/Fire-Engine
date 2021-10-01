@@ -142,7 +142,7 @@ update_status Input::PreUpdate(float dt)
 // Called before quitting
 bool Input::CleanUp()
 {
-	LOG(LogType::L_NORMAL, "Quitting SDL input event subsystem");
+	LOG(LogType::L_NO_PRINTABLE, "Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
