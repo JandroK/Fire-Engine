@@ -207,7 +207,7 @@ bool Editor::CleanUp()
 	}
 	tabs.clear();
 
-    return false;
+    return true;
 }
 void Editor::LogToConsole(const char* msg, LogType _type)
 {
