@@ -2,8 +2,6 @@
 #include "Application.h"
 #include "Renderer3D.h"
 
-//#include "Glew/include/glew.h"
-#include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -70,8 +68,9 @@ bool Renderer3D::Init()
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
+		GLenum error = glewInit();
 		//Check for error
-		GLenum error = glGetError();
+		error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
 			LOG(LogType::L_ERROR, "Error initializing OpenGL! %s\n", gluErrorString(error));
@@ -218,6 +217,13 @@ void Renderer3D::OnGUI()
 	{
 		IMGUI_PRINT("SDL Version: ", hardware.SDLVersion);
 		IMGUI_PRINT("OpenGL Version: ", "%s", (const char*)glGetString(GL_VERSION));
+		IMGUI_PRINT("Glew Version: ", "%s", (const char*)glewGetString(GLEW_VERSION));
+
+		ImGui::Separator();
+		IMGUI_PRINT("GLSL: ", "%s", (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION));
+		IMGUI_PRINT("Vendor: ", "%s", (const char*)glGetString(GL_VENDOR));
+		IMGUI_PRINT("Renderer: ", "%s", (const char*)glGetString(GL_RENDERER));
+
 		//ImGui::TextWrapped("All external library versions can be found in the 'About' window with links to their pages.");
 
 		ImGui::Separator();

@@ -6,14 +6,12 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
+#include "Renderer3D.h"
 #include "Window.h"
 #include "Input.h"
-#include "Renderer3D.h"
 #include "Camera3D.h"
 #include "Physics3D.h"
 #include "Editor.h"
-
-#include "SDL/include/SDL_opengl.h"
 
 class Application
 {
@@ -30,7 +28,6 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
-
 
 public:
 
