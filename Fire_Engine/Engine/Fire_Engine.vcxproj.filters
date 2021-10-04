@@ -52,6 +52,9 @@
     <Filter Include="Sources\3rd Party\Parson">
       <UniqueIdentifier>{202ea345-b9a1-46c5-bddc-c09ff95e177e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\3rd Party\Mmgr">
+      <UniqueIdentifier>{58462921-e4ae-4079-82eb-0f3d6df7e30d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -315,6 +318,12 @@
     <ClInclude Include="Source\External\Parson\parson.h">
       <Filter>Sources\3rd Party\Parson</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\Mmgr\mmgr.h">
+      <Filter>Sources\3rd Party\Mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Mmgr\nommgr.h">
+      <Filter>Sources\3rd Party\Mmgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -493,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="Source\External\Parson\parson.c">
       <Filter>Sources\3rd Party\Parson</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\Mmgr\mmgr.cpp">
+      <Filter>Sources\3rd Party\Mmgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

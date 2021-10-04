@@ -14,9 +14,10 @@ public:
 
 	void Update() override;
 	void Draw() override;
+	void PushBackLog(std::vector<float> *log, float current);
 
 private:
 	std::vector<float> fpsLog;
 	std::vector<float> msLog;
-
+	std::vector<float> memoryLog;
 };
