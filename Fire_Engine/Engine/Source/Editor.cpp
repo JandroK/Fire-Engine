@@ -176,6 +176,12 @@ update_status Editor::ImGuiMenu()
 			}
 			if (ImGui::BeginMenu("About"))
 			{
+				ImGui::Text("Fire Engine");
+				ImGui::Text("This is a university project focused");
+				ImGui::Text("on the development of a video game engine");
+
+				ImGui::NewLine();
+				ImGui::Text("Developed by: ");
 				if (ImGui::MenuItem("Ismael Tejada"))
 				{
 					ShellExecute(0, 0, "https://github.com/IsmaUPC", 0, 0, SW_SHOW);
@@ -184,6 +190,27 @@ update_status Editor::ImGuiMenu()
 				{
 					ShellExecute(0, 0, "https://github.com/JandroK", 0, 0, SW_SHOW);
 				}
+
+				ImGui::NewLine();
+				ImGui::Separator();
+
+				char SDLVersion[25];
+				SDL_version version;
+				SDL_GetVersion(&version);
+				sprintf_s(SDLVersion, 25, "%i.%i.%i", version.major, version.minor, version.patch);
+
+				ImGui::Text("3rd Party Libraries used:");
+				IMGUI_PRINT("SDL Version: ", SDLVersion);
+				IMGUI_PRINT("OpenGL Version: ", "%s", glGetString(GL_VERSION));
+				IMGUI_PRINT("Glew Version: ", "%s", glewGetString(GLEW_VERSION));
+				IMGUI_PRINT("MathGeoLib Version: ", "1.5");
+				IMGUI_PRINT("ImGui Version: ", "1.84.2");
+
+				ImGui::NewLine();
+				ImGui::Separator();
+
+				PrintLicense();
+
 				ImGui::EndMenu();
 			}			
 			ImGui::EndMenu();
@@ -225,4 +252,28 @@ Tab* Editor::GetTab(TabType type)
 
 	SDL_assert(vecPosition < tabs.size());
 	return (vecPosition < tabs.size()) ? tabs[vecPosition] : nullptr;
+}
+
+void Editor::PrintLicense()
+{
+	ImGui::Text("License:");
+	ImGui::Text("MIT License \nCopyright(c) 2021 JandroK \n");
+	ImGui::NewLine();
+	ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy");
+	ImGui::Text("of this softwareand associated documentation files (the \"Software\"), to deal");
+	ImGui::Text("in the Software without restriction, including without limitation the rights");
+	ImGui::Text("to use, copy, modify, merge, publish, distribute, sublicense, and /or sell");
+	ImGui::Text("copies of the Software, and to permit persons to whom the Software is");
+	ImGui::Text("furnished to do so, subject to the following conditions:");
+	ImGui::NewLine();
+	ImGui::Text("The above copyright noticeand this permission notice shall be included in all");
+	ImGui::Text("copies or substantial portions of the Software.");
+	ImGui::NewLine();
+	ImGui::Text("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR");
+	ImGui::Text("IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,");
+	ImGui::Text("FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE");
+	ImGui::Text("AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER");
+	ImGui::Text("LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,");
+	ImGui::Text("OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE");
+	ImGui::Text("SOFTWARE");
 }

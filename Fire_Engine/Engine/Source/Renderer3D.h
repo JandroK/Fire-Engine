@@ -43,6 +43,8 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
+	Hardware GetHardware() { return hardware; };
+
 public:
 
 	Light lights[MAX_LIGHTS];
@@ -53,5 +55,4 @@ public:
 
 private:
 	Hardware hardware;
-
 };

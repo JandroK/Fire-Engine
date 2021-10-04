@@ -40,6 +40,7 @@ public:
 	void LogToConsole(const char* msg, LogType _type);
 
 	Tab* GetTab(TabType type);
+	void PrintLicense();
 
 private:
 	std::vector<Tab*> tabs;
