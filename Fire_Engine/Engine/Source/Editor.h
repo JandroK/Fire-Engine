@@ -41,6 +41,14 @@ public:
 
 	Tab* GetTab(TabType type);
 
+    void print_commits_info(const char* username, const char* repo);
+
+	void persistence_example(void);
+
+	void serialization_example(void);
+
+	void parsonTest(void);
+
 private:
 	std::vector<Tab*> tabs;
 

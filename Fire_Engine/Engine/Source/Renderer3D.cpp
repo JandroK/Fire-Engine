@@ -135,6 +135,9 @@ bool Renderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	// LADO FRONTAL: lado multicolor
+
+
 	return ret;
 }
 
@@ -168,6 +171,27 @@ update_status Renderer3D::PostUpdate(float dt)
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+
+	glBegin(GL_POLYGON);
+
+	glVertex3f(1,0, 1);       // P1
+	glVertex3f(1,1, 1);       // P2
+	glVertex3f(0,1, 1);       // P3
+	glVertex3f(0,0,1);       // P4
+
+	glVertex3f(0,0,1);       // P
+	glVertex3f(0, 1, 1);      // P
+	glVertex3f(0, 1, 0);       // P2
+	glVertex3f(0, 0, 0);       // P1
+
+
+	glVertex3f(0, 0, 0);       // P4
+	glVertex3f(0, 1, 0);       // P3
+	glVertex3f(1, 1, 0);       // P2
+	glVertex3f(1, 0, 0);       // P1
+
+
+	glEnd();
 
 	return UPDATE_CONTINUE;
 }
