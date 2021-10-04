@@ -49,6 +49,9 @@
     <Filter Include="Sources\3rd Party\MathGeoLib\Algorithm\Random">
       <UniqueIdentifier>{c63608ad-9929-4c7f-8460-3a00ec40fd5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\3rd Party\Parson">
+      <UniqueIdentifier>{202ea345-b9a1-46c5-bddc-c09ff95e177e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -309,6 +312,9 @@
     <ClInclude Include="Source\External\MathGeoLib\include\Time\Clock.h">
       <Filter>Sources\3rd Party\MathGeoLib\Time</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\Parson\parson.h">
+      <Filter>Sources\3rd Party\Parson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -484,6 +490,9 @@
     </ClCompile>
     <ClCompile Include="Source\External\MathGeoLib\include\Time\Clock.cpp">
       <Filter>Sources\3rd Party\MathGeoLib\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\Parson\parson.c">
+      <Filter>Sources\3rd Party\Parson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
