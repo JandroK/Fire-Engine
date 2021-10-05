@@ -46,7 +46,10 @@ void Configuration::Draw()
 			// Input Text is to create a text with background and a const text
 			ImGui::InputText("App Name", "Fire Engine", 12);
 			ImGui::InputText("Organization", "UPC CITM", 9);
-			ImGui::SliderInt("Max FPS", &app->maxFPS, 0, 144);
+			if (ImGui::SliderInt("Max FPS", &app->maxFPS, 0, 144))
+			{
+				app->renderer3D->vsync = false;
+			}
 			// TextWrapped is to create a simple text
 			IMGUI_PRINT("Limit Framerate: ", (app->maxFPS == 0) ? "VSync" : "%d", app->maxFPS);
 

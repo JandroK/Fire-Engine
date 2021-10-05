@@ -533,4 +533,7 @@
       <Filter>Sources\3rd Party\MathGeoLib\Geometry</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FireEngine.rc" />
+  </ItemGroup>
 </Project>
