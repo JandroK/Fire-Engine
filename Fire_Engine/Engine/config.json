@@ -9,7 +9,7 @@
         "fullscreen": false,
         "fullscreen desktop": false,
         "borderless": false,
-        "resizable": true
+        "resizable": false
     },
     "Camera3D": {},
     "Input": {},
