@@ -221,6 +221,13 @@ void Window::OnGUI()
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change resizable mode, only on Off FullScreen mode");
 
+		ImGui::SameLine();
+
+		if (ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe)) {}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Change render mode");
+
 		if (ImGui::Checkbox("Borderless", &borderless)) {
 			if (!fullScreen && !fullScreenDesktop) SetBorderless(borderless);
 			else borderless = !borderless;
@@ -228,6 +235,15 @@ void Window::OnGUI()
 
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change borderless mode, only on Off FullScreen mode");
+
+		ImGui::SameLine();
+
+		if (ImGui::Checkbox("VSync    ", &app->renderer3D->vsync)) {
+			app->maxFPS = 0;
+		}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Enable/Disable VSync");
 
 		ImGui::SameLine();
 
@@ -239,6 +255,7 @@ void Window::OnGUI()
 		}
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change fullscreen desktop mode");
+
 
 		ImGui::NewLine();
 	}

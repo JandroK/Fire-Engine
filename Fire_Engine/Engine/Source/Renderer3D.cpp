@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "Renderer3D.h"
+#include "Primitive.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -172,26 +173,14 @@ update_status Renderer3D::PostUpdate(float dt)
 	p.axis = true;
 	p.Render();
 
-	glBegin(GL_POLYGON);
+	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
-	glVertex3f(1,0, 1);       // P1
-	glVertex3f(1,1, 1);       // P2
-	glVertex3f(0,1, 1);       // P3
-	glVertex3f(0,0,1);       // P4
-
-	glVertex3f(0,0,1);       // P
-	glVertex3f(0, 1, 1);      // P
-	glVertex3f(0, 1, 0);       // P2
-	glVertex3f(0, 0, 0);       // P1
-
-
-	glVertex3f(0, 0, 0);       // P4
-	glVertex3f(0, 1, 0);       // P3
-	glVertex3f(1, 1, 0);       // P2
-	glVertex3f(1, 0, 0);       // P1
-
+	Cube cube;
+	cube.InnerRender();
 
 	glEnd();
+	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	return UPDATE_CONTINUE;
 }
