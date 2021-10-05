@@ -165,6 +165,7 @@
     <ClInclude Include="Source\External\Parson\parson.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
+    <ClInclude Include="Source\JsonParser.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Camera3D.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Source\External\Mmgr\mmgr.cpp" />
     <ClCompile Include="Source\External\Parson\parson.c" />
     <ClCompile Include="Source\glmath.cpp" />
+    <ClCompile Include="Source\JsonParser.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\log.cpp" />
     <ClCompile Include="Source\Main.cpp" />

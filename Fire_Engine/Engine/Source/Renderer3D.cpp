@@ -12,6 +12,8 @@
 
 Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), vsync(false)
 {
+	name = "Renderer3D";
+
 	GetCaps(hardware.caps);
 
 	SDL_version version;

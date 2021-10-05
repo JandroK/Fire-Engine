@@ -324,6 +324,9 @@
     <ClInclude Include="Source\External\Mmgr\nommgr.h">
       <Filter>Sources\3rd Party\Mmgr</Filter>
     </ClInclude>
+    <ClInclude Include="Source\JsonParser.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -505,6 +508,9 @@
     </ClCompile>
     <ClCompile Include="Source\External\Mmgr\mmgr.cpp">
       <Filter>Sources\3rd Party\Mmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\JsonParser.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
