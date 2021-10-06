@@ -1,7 +1,7 @@
 #ifndef _resources_rc
 #define _resources_rc
 //MAINICON ICON "Output/icon.ico"
-MAINICON ICON "../../../Output/icon.ico"
+//MAINICON ICON "../../../Output/icon.ico"
 
 //MAINICON ICON "icon.ico"
 

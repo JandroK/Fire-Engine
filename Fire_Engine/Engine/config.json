@@ -9,9 +9,25 @@
         "fullscreen": false,
         "fullscreen desktop": false,
         "borderless": false,
-        "resizable": true
+        "resizable": false
     },
-    "Camera3D": {},
+    "Camera3D": {
+        "X.x": 0.6267390251159668,
+        "X.y": 0,
+        "X.z": 0.77922952175140381,
+        "Y.x": 0.49927067756652832,
+        "Y.y": 0.76777124404907227,
+        "Y.z": -0.40156638622283936,
+        "Z.x": -0.5982702374458313,
+        "Z.y": 0.6407235860824585,
+        "Z.z": 0.48119202256202698,
+        "Reference.x": 0,
+        "Reference.y": 0,
+        "Reference.z": 0,
+        "Position.x": -3.1386344432830811,
+        "Position.y": 3.3613524436950684,
+        "Position.z": 2.5244209766387939
+    },
     "Input": {},
     "Physics3D": {},
     "Renderer3D": {},
