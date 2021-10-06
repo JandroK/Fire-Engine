@@ -132,6 +132,15 @@ bool Renderer3D::Init()
 		glEnable(GL_TEXTURE_2D);
 	}
 
+	// TODO: What is num_vertices and vertices? And this shoud be here?
+
+	//uint vboId;
+	//glGenBuffers(1, &vboId);
+	//// bind VBO in order to use
+	//glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	//// upload data to VBO
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
