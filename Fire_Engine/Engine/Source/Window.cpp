@@ -163,12 +163,12 @@ void Window::SetFullscreen(bool _fullscreen)
 {
 	fullScreen = _fullscreen;
 	if (fullScreen)fullScreenDesktop = !fullScreen;
-	(fullScreen) ? SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) : SDL_SetWindowFullscreen(window, 0);
+	(fullScreen) ? SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) : SDL_SetWindowFullscreen(window, false);
 
-}void Window::SetFullscreen()
+}
+void Window::SetFullscreen()
 {
-	if (fullScreen)fullScreenDesktop = !fullScreen;
-	(fullScreen) ? SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) : SDL_SetWindowFullscreen(window, 0);
+	(fullScreen) ? SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) : SDL_SetWindowFullscreen(window, false);
 }
 
 void Window::SetResizable(bool _resizable)
@@ -189,7 +189,7 @@ void Window::SetBorderless(bool _borderless)
 }
 void Window::SetBorderless()
 {
-	SDL_SetWindowBordered(window, SDL_bool(borderless));
+	(borderless) ? SDL_SetWindowBordered(window, SDL_bool(false)) : SDL_SetWindowBordered(window, SDL_bool(true));
 }
 
 void Window::SetFullscreenDesktop(bool _fulldesktop)
@@ -198,9 +198,9 @@ void Window::SetFullscreenDesktop(bool _fulldesktop)
 	if (fullScreenDesktop) fullScreen = !fullScreenDesktop;
 	(fullScreenDesktop) ? SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) : SDL_SetWindowFullscreen(window, 0);
 }
+
 void Window::SetFullscreenDesktop()
 {
-	if (fullScreenDesktop) fullScreen = !fullScreenDesktop;
 	(fullScreenDesktop) ? SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) : SDL_SetWindowFullscreen(window, 0);
 }
 
@@ -318,9 +318,9 @@ bool Window::LoadConfig(JsonParser& node)
 	borderless = node.JsonValToBool("borderless");
 	isResizable = node.JsonValToBool("resizable");
 
-	if (fullScreen) SetFullscreen();
-	else if (fullScreenDesktop) SetFullscreenDesktop();
-	if (borderless) SetBorderless();
+	SetFullscreen();
+	SetFullscreenDesktop();
+	SetBorderless();
 
 	SetBrightness();
 	SetResizable();

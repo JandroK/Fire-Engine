@@ -319,3 +319,21 @@ void Renderer3D::OnGUI()
 
 	}
 }
+
+bool Renderer3D::SaveConfig(JsonParser& node) const
+{
+
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "vsync", vsync);
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "wireframe", wireframe);
+
+	return true;
+}
+
+bool Renderer3D::LoadConfig(JsonParser& node)
+{
+
+	vsync = node.JsonValToBool("vsync");
+	wireframe = node.JsonValToBool("wireframe");
+
+	return true;
+}

@@ -74,8 +74,6 @@ update_status Editor::PreUpdate(float dt)
 
 update_status Editor::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_UP) app->SaveConfigRequest();
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_STATE::KEY_UP) app->LoadConfigRequest();
 
 	update_status ret = UPDATE_CONTINUE;
 	// Start the Dear ImGui frame
