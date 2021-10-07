@@ -129,8 +129,6 @@ void Camera3D::Look()
 	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
 	Y = cross(Z, X);
 
-	this->Position += Z * 0.05f;
-
 	CalculateViewMatrix();
 }
 
