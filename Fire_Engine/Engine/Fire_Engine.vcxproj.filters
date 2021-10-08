@@ -315,6 +315,9 @@
     <ClInclude Include="Source\External\Parson\parson.h">
       <Filter>Sources\3rd Party\Parson</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -493,6 +496,9 @@
     </ClCompile>
     <ClCompile Include="Source\External\Parson\parson.c">
       <Filter>Sources\3rd Party\Parson</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

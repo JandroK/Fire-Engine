@@ -73,7 +73,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\MathGeoLib\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\PhysFS\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -82,7 +82,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGRelease;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGRelease;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\PhysFS\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;MathGeoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -168,6 +168,7 @@
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\Input.h" />
+    <ClInclude Include="Source\FileSystem.h" />
     <ClInclude Include="Source\Physics3D.h" />
     <ClInclude Include="Source\Renderer3D.h" />
     <ClInclude Include="Source\Tab.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="Source\Camera3D.cpp" />
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\FileSystem.cpp" />
     <ClCompile Include="Source\Physics3D.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\Tab.cpp" />
