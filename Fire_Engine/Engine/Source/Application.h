@@ -13,6 +13,13 @@
 #include "Physics3D.h"
 #include "Editor.h"
 
+#include "mmgr/mmgr.h"
+
+#include "JsonParser.h"
+
+#define FILE_CONFIG	"config.json"
+
+
 class Application
 {
 public:
@@ -23,7 +30,7 @@ public:
 	Physics3D* physics;
 	Editor* editor;
 
-	std::vector<Module*> list_modules;
+	std::vector<Module*> listModules;
 private:
 
 	Timer	ms_timer;
@@ -41,14 +48,27 @@ public:
 	float GetDt() const { return dt; }
 	float GetFrameRate() const { return 1.f / dt; }
 
+	void SaveConfig();
+	void LoadConfig();
+
+	inline void SaveConfigRequest() { saveRequested = true; }
+	inline void LoadConfigRequest() { loadRequested = true; }
+
+
 	int maxFPS;
 	int screenRefresh;
+
 
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
+	JsonParser jsonFile;
+
+	bool saveRequested;
+	bool loadRequested;
 
 };
 extern Application* app;

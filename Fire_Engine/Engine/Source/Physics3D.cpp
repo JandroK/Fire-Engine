@@ -1,13 +1,14 @@
 #include "Globals.h"
 #include "Application.h"
 #include "Physics3D.h"
-#include "Primitive.h"
 
 // TODO 1: ...and the 3 libraries based on how we compile (Debug or Release)
 // use the _DEBUG preprocessor define
 
 Physics3D::Physics3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "Physics3D";
+
 	debug_draw = NULL;
 	debug = true;
 

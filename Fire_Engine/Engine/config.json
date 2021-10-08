@@ -1,0 +1,38 @@
+{
+    "App": {
+        "FPS": 0
+    },
+    "Window": {
+        "width": 1280,
+        "height": 720,
+        "brightness": 1,
+        "fullscreen": true,
+        "fullscreen desktop": false,
+        "borderless": false,
+        "resizable": false
+    },
+    "Camera3D": {
+        "X.x": 0.98058068752288818,
+        "X.y": 0,
+        "X.z": -0.1961161345243454,
+        "Y.x": -0.03774256631731987,
+        "Y.y": 0.98130679130554199,
+        "Y.z": -0.18871285021305084,
+        "Z.x": 0.19245009124279022,
+        "Z.y": 0.19245009124279022,
+        "Z.z": 0.9622504711151123,
+        "Reference.x": 0,
+        "Reference.y": 0,
+        "Reference.z": 0,
+        "Position.x": 1,
+        "Position.y": 1,
+        "Position.z": 5
+    },
+    "Input": {},
+    "Physics3D": {},
+    "Renderer3D": {
+        "vsync": false,
+        "wireframe": false
+    },
+    "Editor": {}
+}

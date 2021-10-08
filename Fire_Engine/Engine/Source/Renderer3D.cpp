@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "Renderer3D.h"
+#include "Primitive.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -12,6 +13,8 @@
 
 Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), vsync(false)
 {
+	name = "Renderer3D";
+
 	GetCaps(hardware.caps);
 
 	SDL_version version;
@@ -129,6 +132,15 @@ bool Renderer3D::Init()
 		glEnable(GL_TEXTURE_2D);
 	}
 
+	// TODO: What is num_vertices and vertices? And this shoud be here?
+
+	//uint vboId;
+	//glGenBuffers(1, &vboId);
+	//// bind VBO in order to use
+	//glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	//// upload data to VBO
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -172,26 +184,14 @@ update_status Renderer3D::PostUpdate(float dt)
 	p.axis = true;
 	p.Render();
 
-	glBegin(GL_POLYGON);
+	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
-	glVertex3f(1,0, 1);       // P1
-	glVertex3f(1,1, 1);       // P2
-	glVertex3f(0,1, 1);       // P3
-	glVertex3f(0,0,1);       // P4
-
-	glVertex3f(0,0,1);       // P
-	glVertex3f(0, 1, 1);      // P
-	glVertex3f(0, 1, 0);       // P2
-	glVertex3f(0, 0, 0);       // P1
-
-
-	glVertex3f(0, 0, 0);       // P4
-	glVertex3f(0, 1, 0);       // P3
-	glVertex3f(1, 1, 0);       // P2
-	glVertex3f(1, 0, 0);       // P1
-
+	Cube cube;
+	cube.InnerRender();
 
 	glEnd();
+	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	return UPDATE_CONTINUE;
 }
@@ -201,6 +201,12 @@ bool Renderer3D::CleanUp()
 {
 	LOG(LogType::L_NO_PRINTABLE, "Destroying 3D Renderer");
 		
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_COLOR_MATERIAL);
+	glDisable(GL_TEXTURE_2D);
+
 	SDL_GL_DeleteContext(context);
 
 	return true;
@@ -263,4 +269,71 @@ void Renderer3D::OnGUI()
 		IMGUI_PRINT("VRAM Available:", "%.1f Mb", hardware.VRAMAvailable);
 		IMGUI_PRINT("VRAM Reserved:", "%.1f Mb", hardware.VRAMReserved);
 	}
+	if (ImGui::CollapsingHeader("Debug"))
+	{
+		if (ImGui::Checkbox("GL_DEPTH_TEST", &depthTest)) {
+			if(depthTest) glEnable(GL_DEPTH_TEST);
+			else glDisable(GL_DEPTH_TEST);
+		}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Enable/Disable GL_DEPTH_TEST");
+
+		ImGui::SameLine();
+
+		if (ImGui::Checkbox("GL_CULL_FACE", &cullFace)) {
+			if (cullFace) glEnable(GL_CULL_FACE);
+			else glDisable(GL_CULL_FACE);
+		}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Enable/Disable GL_CULL_FACE");
+
+		ImGui::SameLine();
+
+		if (ImGui::Checkbox("GL_COLOR_MATERIAL", &colorMaterial)) {
+			if (colorMaterial) glEnable(GL_COLOR_MATERIAL);
+			else glDisable(GL_COLOR_MATERIAL);
+		}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Enable/Disable GL_COLOR_MATERIAL");
+
+		if (ImGui::Checkbox("GL_TEXTURE_2D", &texture2D)) {
+			if (texture2D) glEnable(GL_TEXTURE_2D);
+			else glDisable(GL_TEXTURE_2D);
+		}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Enable/Disable GL_TEXTURE_2D");
+
+		ImGui::SameLine();
+
+		if (ImGui::Checkbox("GL_LIGHTING", &lighting)) {
+			if (lighting) glEnable(GL_LIGHTING);
+			else glDisable(GL_LIGHTING);
+		}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Enable/Disable GL_LIGHTING");		
+
+	}
+}
+
+bool Renderer3D::SaveConfig(JsonParser& node) const
+{
+
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "vsync", vsync);
+	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "wireframe", wireframe);
+
+	return true;
+}
+
+bool Renderer3D::LoadConfig(JsonParser& node)
+{
+
+	vsync = node.JsonValToBool("vsync");
+	wireframe = node.JsonValToBool("wireframe");
+
+	return true;
 }

@@ -52,6 +52,9 @@
     <Filter Include="Sources\3rd Party\Parson">
       <UniqueIdentifier>{202ea345-b9a1-46c5-bddc-c09ff95e177e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\3rd Party\Mmgr">
+      <UniqueIdentifier>{58462921-e4ae-4079-82eb-0f3d6df7e30d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -316,6 +319,14 @@
       <Filter>Sources\3rd Party\Parson</Filter>
     </ClInclude>
     <ClInclude Include="Source\FileSystem.h">
+    </ClInclude>
+    <ClInclude Include="Source\External\Mmgr\mmgr.h">
+      <Filter>Sources\3rd Party\Mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Mmgr\nommgr.h">
+      <Filter>Sources\3rd Party\Mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\JsonParser.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
   </ItemGroup>
@@ -498,6 +509,11 @@
       <Filter>Sources\3rd Party\Parson</Filter>
     </ClCompile>
     <ClCompile Include="Source\FileSystem.cpp">
+    </ClCompile>
+    <ClCompile Include="Source\External\Mmgr\mmgr.cpp">
+      <Filter>Sources\3rd Party\Mmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\JsonParser.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -520,5 +536,8 @@
     <None Include="Source\External\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl">
       <Filter>Sources\3rd Party\MathGeoLib\Geometry</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FireEngine.rc" />
   </ItemGroup>
 </Project>

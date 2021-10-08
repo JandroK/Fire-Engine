@@ -43,6 +43,12 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
+	bool SaveConfig(JsonParser& node) const;
+
+	bool LoadConfig(JsonParser& node);
+
+	Hardware GetHardware() { return hardware; };
+
 public:
 
 	Light lights[MAX_LIGHTS];
@@ -50,8 +56,13 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	bool vsync;
+	bool wireframe = false;
 
 private:
 	Hardware hardware;
-
+	bool depthTest = true;
+	bool cullFace = true;
+	bool lighting = true;
+	bool colorMaterial = true;
+	bool texture2D = true;
 };
