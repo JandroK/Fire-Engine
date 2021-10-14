@@ -1,11 +1,12 @@
 #ifndef __FileSystem_H__
 #define __FileSystem_H__
 
-#include "Module.h"
 #include <vector>
 #include <string>
 
 #include "JsonParser.h"
+#include "PhysFS/include/physfs.h"
+
 
 struct SDL_RWops;
 int close_sdl_rwops(SDL_RWops *rw);
