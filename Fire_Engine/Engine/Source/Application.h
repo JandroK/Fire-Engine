@@ -17,7 +17,7 @@
 
 #include "JsonParser.h"
 
-#define FILE_CONFIG	"config.json"
+#define FILE_CONFIG	"../Output/Settings/config.json"
 
 
 class Application
@@ -54,6 +54,8 @@ public:
 	inline void SaveConfigRequest() { saveRequested = true; }
 	inline void LoadConfigRequest() { loadRequested = true; }
 
+	inline const char* GetAppName() const { return TITLE; }
+	inline const char* GetOrganizationName() const { return ORGANIZATION_NAME; }
 
 	int maxFPS;
 	int screenRefresh;
