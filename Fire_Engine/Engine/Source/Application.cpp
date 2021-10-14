@@ -30,7 +30,7 @@ Application::Application() : maxFPS(60)
 	AddModule(renderer3D);
 	AddModule(editor);
 
-	loadRequested = false;
+	loadRequested = true;
 	saveRequested = false;
 }
 

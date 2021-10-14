@@ -123,7 +123,7 @@ void Cube::InnerRender() const
 	//GLfloat v7 = (-sx, -sy, -sz);
 
 	glBegin(GL_TRIANGLES);  // draw a cube with 12 triangles
-	glBegin(GL_TRIANGLE_STRIP);  // draw a cube with 12 triangles
+	//glBegin(GL_TRIANGLE_STRIP); 
 
 	// Front face =================
 	glVertex3f(sx, sy, sz);
