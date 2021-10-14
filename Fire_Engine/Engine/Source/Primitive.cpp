@@ -3,6 +3,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "Primitive.h"
+#include <cmath>
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
@@ -97,89 +98,71 @@ void Primitive::Scale(float x, float y, float z)
 }
 
 // CUBE ============================================
-Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
+Cube::Cube() : Primitive(), size(0.5f, 0.5f, 0.5f)
 {
 	type = PrimitiveTypes::Primitive_Cube;
 }
 
-Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
+Cube::Cube(vec3 size, vec3 pos) : Primitive(), size(size)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+	glTranslatef(pos.x, pos.y, pos.z);
 }
 
 void Cube::InnerRender() const
 {	
-	float sx = size.x * 0.5f;
-	float sy = size.y * 0.5f;
-	float sz = size.z * 0.5f;
+	GLfloat vertices[] = { 1, 1, 1,  -1, 1, 1,  -1,-1, 1,   1,-1, 1,   // v0,v1,v2,v3 (front)
+						1, 1, 1,   1,-1, 1,   1,-1,-1,   1, 1,-1,		// v0,v3,v4,v5 (right)
+						1, 1, 1,   1, 1,-1,  -1, 1,-1,  -1, 1, 1,		// v0,v5,v6,v1 (top)
+					   -1, 1, 1,  -1, 1,-1,  -1,-1,-1,  -1,-1, 1,		// v1,v6,v7,v2 (left)
+					   -1,-1,-1,   1,-1,-1,   1,-1, 1,  -1,-1, 1,		// v7,v4,v3,v2 (bottom)
+						1,-1,-1,  -1,-1,-1,  -1, 1,-1,   1, 1,-1 };		// v4,v7,v6,v5 (back)
 
-	//GLfloat v0 = (sx, sy, sz);
-	//GLfloat v1 = (-sx, sy, sz);
-	//GLfloat v2 = (-sx, -sy, sz);
-	//GLfloat v3 = (sx, -sy, sz);
-	//GLfloat v4 = (sx, -sy, -sz);
-	//GLfloat v5 = (sx, sy, -sz);
-	//GLfloat v6 = (-sx, sy, -sz);
-	//GLfloat v7 = (-sx, -sy, -sz);
+	for (int i = 0; i < 24; i++)
+	{
+		vertices[i * 3] = vertices[i * 3] * size.x;
+		vertices[i * 3 + 1] = vertices[i * 3 + 1] * size.y;
+		vertices[i * 3 + 2] = vertices[i * 3 + 2] * size.z;
+	}
 
-	glBegin(GL_TRIANGLES);  // draw a cube with 12 triangles
-	//glBegin(GL_TRIANGLE_STRIP); 
+	// normal array
+	GLfloat normals[] = { 0, 0, 1,   0, 0, 1,   0, 0, 1,   0, 0, 1,   // v0,v1,v2,v3 (front)
+							1, 0, 0,   1, 0, 0,   1, 0, 0,   1, 0, 0,   // v0,v3,v4,v5 (right)
+							0, 1, 0,   0, 1, 0,   0, 1, 0,   0, 1, 0,   // v0,v5,v6,v1 (top)
+						   -1, 0, 0,  -1, 0, 0,  -1, 0, 0,  -1, 0, 0,   // v1,v6,v7,v2 (left)
+							0,-1, 0,   0,-1, 0,   0,-1, 0,   0,-1, 0,   // v7,v4,v3,v2 (bottom)
+							0, 0,-1,   0, 0,-1,   0, 0,-1,   0, 0,-1 }; // v4,v7,v6,v5 (back)
 
-	// Front face =================
-	glVertex3f(sx, sy, sz);
-	glVertex3f(-sx, sy, sz);
-	glVertex3f(sx, -sy, sz);
+	for (int i = 0; i < 24; i++)
+	{
+		normals[i*3] = normals[i*3] * size.x;
+		normals[i*3 + 1] = normals[i*3 + 1] * size.y;
+		normals[i*3 + 2] = normals[i*3 + 2] * size.z;
+	}
 
-	glVertex3f(-sx, sy, sz);
-	glVertex3f(-sx, -sy, sz);
-	glVertex3f(sx, -sy, sz);
+	// Index array of vertex array
+	GLubyte indices[] = { 0, 1, 2,   2, 3, 0,       // front
+						   4, 5, 6,   6, 7, 4,      // right
+						   8, 9,10,  10,11, 8,      // top
+						  12,13,14,  14,15,12,      // left
+						  16,17,18,  18,19,16,      // bottom
+						  20,21,22,  22,23,20 };    // back
 
-	// Right face =================
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(sx, sy, sz);
-	glVertex3f(sx, -sy, sz);
 
-	glVertex3f(sx, sy, sz);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(sx, sy, -sz);
+	// enable and specify pointers to vertex arrays
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glNormalPointer(GL_FLOAT, 0, normals);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
-	// Top face ===================
-	glVertex3f(sx, sy, sz);
-	glVertex3f(-sx, sy, -sz);
-	glVertex3f(-sx, sy, sz);
+	glPushMatrix();
 
-	glVertex3f(sx, sy, sz);
-	glVertex3f(sx, sy, -sz);
-	glVertex3f(-sx, sy, -sz);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
 
-	// Down face ===================
-	glVertex3f(sx, -sy, sz);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(sx, -sy, -sz);
+	glPopMatrix();
 
-	glVertex3f(sx, -sy, sz);
-	glVertex3f(-sx, -sy, sz);
-	glVertex3f(-sx, -sy, -sz);
-
-	// Left face ===================
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx, -sy, sz);
-	glVertex3f(-sx, sy, sz);
-
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx, sy, sz);
-	glVertex3f(-sx, sy, -sz);
-
-	// Back face ===================
-	glVertex3f(sx, sy, -sz);
-	glVertex3f(-sx, -sy, -sz);
-	glVertex3f(-sx, sy, -sz);
-
-	glVertex3f(sx, sy, -sz);
-	glVertex3f(sx, -sy, -sz);
-	glVertex3f(-sx, -sy, -sz);
-
-	glEnd();
+	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 // SPHERE ============================================
@@ -188,24 +171,69 @@ Sphere::Sphere() : Primitive(), radius(1.0f)
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-Sphere::Sphere(float radius) : Primitive(), radius(radius)
+Sphere::Sphere(float radius, int rings, int sectors) : Primitive(), radius(radius), rings(rings), sectors(sectors)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
 void Sphere::InnerRender() const
 {
-	glPointSize(5.0f);
+	std::vector<GLfloat> vertices;
+	std::vector<GLfloat> normals;
+	std::vector<GLushort> indices;
+	
+	float const R = 1. / (rings - 1);
+	float const S = 1. / (sectors - 1);
+	int r, s;
 
-	glBegin(GL_POINTS);
+	vertices.resize(rings * sectors * 3);
+	normals.resize(rings * sectors * 3);
+	std::vector<GLfloat>::iterator v = vertices.begin();
+	std::vector<GLfloat>::iterator n = normals.begin();
+	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
+		float const y = sin(-M_PI_2 + M_PI * r * R);
+		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
+		float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
 
-	glVertex3f(0.0f, 0.0f, 0.0f);
+		*v++ = x * radius;
+		*v++ = y * radius;
+		*v++ = z * radius;
 
-	glEnd();
+		*n++ = -x;
+		*n++ = -y;
+		*n++ = -z;
+	}
 
-	glPointSize(1.0f);
+	indices.resize(rings * sectors * 4);
+	std::vector<GLushort>::iterator i = indices.begin();
+	for (r = 0; r < rings - 1; r++)
+		for (s = 0; s < sectors - 1; s++) {
+			*i++ = (r + 1) * sectors + s;
+			*i++ = (r + 1) * sectors + (s + 1);
+			*i++ = r * sectors + (s + 1);
+			*i++ = r * sectors + s;
+
+		}
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+
+	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+	glNormalPointer(GL_FLOAT, 0, &normals[0]);
+
+	glPushMatrix();
+
+	glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
+
+	glPopMatrix();
+
+	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+	glDisableClientState(GL_NORMAL_ARRAY);
+
+	// clear memory of arrays
+	std::vector<float>().swap(vertices);
+	std::vector<float>().swap(normals);
 }
-
 
 // CYLINDER ============================================
 Cylinder::Cylinder() : Primitive(), radius(1.0f), height(1.0f)
@@ -218,40 +246,98 @@ Cylinder::Cylinder(float radius, float height) : Primitive(), radius(radius), he
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
+std::vector<float> Cylinder::getUnitCircleVertices()
+{
+	const float PI = 3.1415926f;
+	float sectorStep = 2 * PI / sectorCount;
+	float sectorAngle;  // radian
+
+	std::vector<float> unitCircleVertices;
+	for (int i = 0; i <= sectorCount; ++i)
+	{
+		sectorAngle = i * sectorStep;
+		unitCircleVertices.push_back(cos(sectorAngle)); // x
+		unitCircleVertices.push_back(sin(sectorAngle)); // y
+		unitCircleVertices.push_back(0);                // z
+	}
+	return unitCircleVertices;
+}
+
 void Cylinder::InnerRender() const
 {
-	int n = 30;
+	std::vector<GLfloat> vertices;
+	std::vector<GLfloat> normals;
+	std::vector<GLushort> indices;
 
-	// Cylinder Bottom
-	glBegin(GL_POLYGON);
-	
-	for(int i = 360; i >= 0; i -= (360 / n))
+	const float PI = 3.1415926f;
+	float sectorStep = 2 * PI / sectorCount;
+	float sectorAngle;  // radian
+
+	std::vector<float> unitCircleVertices;
+	for (int i = 0; i <= sectorCount; ++i)
 	{
-		float a = i * M_PI / 180; // degrees to radians
-		glVertex3f(-height*0.5f, radius * cos(a), radius * sin(a));
+		sectorAngle = i * sectorStep;
+		unitCircleVertices.push_back(cos(sectorAngle)); // x
+		unitCircleVertices.push_back(sin(sectorAngle)); // y
+		unitCircleVertices.push_back(0);                // z
 	}
-	glEnd();
 
-	// Cylinder Top
-	glBegin(GL_POLYGON);
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	for(int i = 0; i <= 360; i += (360 / n))
+	// get unit circle vectors on XY-plane
+	std::vector<float> unitVertices = unitCircleVertices;
+
+	// put side vertices to arrays
+	for (int i = 0; i < 2; ++i)
 	{
-		float a = i * M_PI / 180; // degrees to radians
-		glVertex3f(height * 0.5f, radius * cos(a), radius * sin(a));
-	}
-	glEnd();
+		float h = -height / 2.0f + i * height;           // z value; -h/2 to h/2
+		float t = 1.0f - i;                              // vertical tex coord; 1 to 0
 
-	// Cylinder "Cover"
-	glBegin(GL_QUAD_STRIP);
-	for(int i = 0; i < 480; i += (360 / n))
+		for (int j = 0, k = 0; j <= sectorCount; ++j, k += 3)
+		{
+			float ux = unitVertices[k];
+			float uy = unitVertices[k + 1];
+			float uz = unitVertices[k + 2];
+			// position vector
+			vertices.push_back(ux * radius);             // vx
+			vertices.push_back(uy * radius);             // vy
+			vertices.push_back(h);                       // vz
+			// normal vector
+			normals.push_back(ux);                       // nx
+			normals.push_back(uy);                       // ny
+			normals.push_back(uz);                       // nz
+		}
+	}
+
+	// the starting index for the base/top surface
+	//NOTE: it is used for generating indices later
+	int baseCenterIndex = (int)vertices.size() / 3;
+	int topCenterIndex = baseCenterIndex + sectorCount + 1; // include center vertex
+
+	// put base and top vertices to arrays
+	for (int i = 0; i < 2; ++i)
 	{
-		float a = i * M_PI / 180; // degrees to radians
+		float h = -height / 2.0f + i * height;           // z value; -h/2 to h/2
+		float nz = -1 + i * 2;                           // z value of normal; -1 to 1
 
-		glVertex3f(height*0.5f,  radius * cos(a), radius * sin(a) );
-		glVertex3f(-height*0.5f, radius * cos(a), radius * sin(a) );
+		// center point
+		vertices.push_back(0);     vertices.push_back(0);     vertices.push_back(h);
+		normals.push_back(0);      normals.push_back(0);      normals.push_back(nz);
+
+		for (int j = 0, k = 0; j < sectorCount; ++j, k += 3)
+		{
+			float ux = unitVertices[k];
+			float uy = unitVertices[k + 1];
+			// position vector
+			vertices.push_back(ux * radius);             // vx
+			vertices.push_back(uy * radius);             // vy
+			vertices.push_back(h);                       // vz
+			// normal vector
+			normals.push_back(0);                        // nx
+			normals.push_back(0);                        // ny
+			normals.push_back(nz);                       // nz
+		}
 	}
-	glEnd();
+
+
 }
 
 // LINE ==================================================

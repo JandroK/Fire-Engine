@@ -209,8 +209,9 @@ update_status Editor::ImGuiMenu()
 				IMGUI_PRINT("SDL Version: ", SDLVersion);
 				IMGUI_PRINT("OpenGL Version: ", "%s", glGetString(GL_VERSION));
 				IMGUI_PRINT("Glew Version: ", "%s", glewGetString(GLEW_VERSION));
-				IMGUI_PRINT("MathGeoLib Version: ", "1.5");
 				IMGUI_PRINT("ImGui Version: ", "1.84.2");
+				IMGUI_PRINT("MathGeoLib Version: ", "1.5");
+				IMGUI_PRINT("Assimp Version: ", "5.0.1");
 
 				ImGui::NewLine();
 				ImGui::Separator();
