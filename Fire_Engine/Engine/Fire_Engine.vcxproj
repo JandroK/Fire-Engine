@@ -183,10 +183,12 @@
     <ClInclude Include="Source\External\Mmgr\mmgr.h" />
     <ClInclude Include="Source\External\Mmgr\nommgr.h" />
     <ClInclude Include="Source\External\Parson\parson.h" />
+    <ClInclude Include="Source\FBXLoader.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\JsonParser.h" />
     <ClInclude Include="Source\Light.h" />
+    <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Camera3D.h" />
     <ClInclude Include="Source\Editor.h" />
@@ -215,6 +217,7 @@
     <ClCompile Include="Source\External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\External\Mmgr\mmgr.cpp" />
     <ClCompile Include="Source\External\Parson\parson.c" />
+    <ClCompile Include="Source\FBXLoader.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\JsonParser.cpp" />
     <ClCompile Include="Source\Light.cpp" />
@@ -224,6 +227,7 @@
     <ClCompile Include="Source\Editor.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Physics3D.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\Tab.cpp" />

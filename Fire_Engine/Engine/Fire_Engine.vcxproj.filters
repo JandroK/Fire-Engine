@@ -132,8 +132,6 @@
     <ClInclude Include="Source\External\Parson\parson.h">
       <Filter>Sources\3rd Party\Parson</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FileSystem.h">
-    </ClInclude>
     <ClInclude Include="Source\External\Mmgr\mmgr.h">
       <Filter>Sources\3rd Party\Mmgr</Filter>
     </ClInclude>
@@ -374,6 +372,13 @@
     <ClInclude Include="Source\External\Assimp\include\ZipArchiveIOSystem.h">
       <Filter>Sources\3rd Party\Aassimp</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FileSystem.h" />
+    <ClInclude Include="Source\FBXLoader.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -465,9 +470,12 @@
     <ClCompile Include="Source\JsonParser.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="FireEngine.rc" />
+    <ClCompile Include="Source\FBXLoader.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\External\Assimp\include\color4.inl">
@@ -494,5 +502,8 @@
     <None Include="Source\External\Assimp\include\vector3.inl">
       <Filter>Sources\3rd Party\Aassimp</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FireEngine.rc" />
   </ItemGroup>
 </Project>
