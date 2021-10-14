@@ -2,6 +2,7 @@
 #pragma once
 #include "glmath.h"
 #include "Color.h"
+#include <vector>
 
 enum PrimitiveTypes
 {
@@ -41,10 +42,10 @@ class Cube : public Primitive
 {
 public :
 	Cube();
-	Cube(float sizeX, float sizeY, float sizeZ);
+	Cube(vec3 _size, vec3 pos);
 	void InnerRender() const;
 public:
-	vec3 size;
+	vec3 size =1;
 };
 
 // ============================================
@@ -52,10 +53,12 @@ class Sphere : public Primitive
 {
 public:
 	Sphere();
-	Sphere(float radius);
+	Sphere(float radius, int rings, int sectors);
 	void InnerRender() const;
 public:
-	float radius;
+	float radius = 1;
+	int rings = 16;
+	int sectors = 16;
 };
 
 // ============================================
@@ -64,10 +67,12 @@ class Cylinder : public Primitive
 public:
 	Cylinder();
 	Cylinder(float radius, float height);
+	std::vector<float> getUnitCircleVertices();
 	void InnerRender() const;
 public:
 	float radius;
 	float height;
+	int sectorCount;
 };
 
 // ============================================

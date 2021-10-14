@@ -132,8 +132,6 @@ bool Renderer3D::Init()
 		glEnable(GL_TEXTURE_2D);
 	}
 
-	// TODO: What is num_vertices and vertices? And this shoud be here?
-
 	//uint vboId;
 	//glGenBuffers(1, &vboId);
 	//// bind VBO in order to use
@@ -189,6 +187,13 @@ update_status Renderer3D::PostUpdate(float dt)
 
 	Cube cube;
 	cube.InnerRender();
+
+	Sphere sphere(2,20,20);
+	sphere.InnerRender();
+
+	Cylinder cylinder;
+	cylinder.InnerRender();
+
 
 	glEnd();
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
