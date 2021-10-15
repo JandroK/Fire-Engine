@@ -146,7 +146,7 @@ bool Renderer3D::Init()
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	// LADO FRONTAL: lado multicolor
-	glEnd();
+	
 	cube.SetupMesh();
 
 	return ret;
@@ -179,10 +179,6 @@ update_status Renderer3D::PostUpdate(float dt)
 	//glClear(GL_COLOR_BUFFER_BIT);
 	// Axis and grid
 	
-	glPushMatrix();
-	cube.Draw();
-	glPopMatrix();
-	
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
@@ -190,6 +186,9 @@ update_status Renderer3D::PostUpdate(float dt)
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
+	glPushMatrix();
+	cube.Draw();
+	glPopMatrix();
 
 	glEnd();	
 
