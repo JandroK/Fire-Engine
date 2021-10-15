@@ -98,7 +98,7 @@ void Primitive::Scale(float x, float y, float z)
 }
 
 // CUBE ============================================
-Cube::Cube() : Primitive(), size(0.5f, 0.5f, 0.5f)
+Cube::Cube() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cube;
 }
@@ -109,99 +109,88 @@ Cube::Cube(vec3 size, vec3 pos) : Primitive(), size(size)
 	glTranslatef(pos.x, pos.y, pos.z);
 }
 
-void Cube::InnerMesh() const
+void Cube::InnerMesh()
 {	
-	GLfloat points[] = { 1, 1, 1,  -1, 1, 1,  -1,-1, 1,   1,-1, 1,   // v0,v1,v2,v3 (front)
-						1, 1, 1,   1,-1, 1,   1,-1,-1,   1, 1,-1,		// v0,v3,v4,v5 (right)
-						1, 1, 1,   1, 1,-1,  -1, 1,-1,  -1, 1, 1,		// v0,v5,v6,v1 (top)
-					   -1, 1, 1,  -1, 1,-1,  -1,-1,-1,  -1,-1, 1,		// v1,v6,v7,v2 (left)
-					   -1,-1,-1,   1,-1,-1,   1,-1, 1,  -1,-1, 1,		// v7,v4,v3,v2 (bottom)
-						1,-1,-1,  -1,-1,-1,  -1, 1,-1,   1, 1,-1 };		// v4,v7,v6,v5 (back)
-
-	for (int i = 0; i < 24; i++)
+	float vertex[] =
 	{
-		points[i * 3] = points[i * 3] * size.x;
-		points[i * 3 + 1] = points[i * 3 + 1] * size.y;
-		points[i * 3 + 2] = points[i * 3 + 2] * size.z;
-	}
-
-	// Index array of vertex array
-	GLubyte indices[] = { 0, 1, 2,   2, 3, 0,       // front
-						   4, 5, 6,   6, 7, 4,      // right
-						   8, 9,10,  10,11, 8,      // top
-						  12,13,14,  14,15,12,      // left
-						  16,17,18,  18,19,16,      // bottom
-						  20,21,22,  22,23,20 };    // back
+		-1.0f, -1.0f, 1.0f,
+		1.0f, -1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f,
+		-1.0f, 1.0f, 1.0f,
+		-1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, 1.0f, -1.0f,
+		-1.0f, 1.0f, -1.0f
+	};
+	int index[] =
+	{
+		0, 1, 2, 2, 3, 0,
+		3, 2, 6, 6, 7, 3,
+		7, 6, 5, 5, 4, 7,
+		4, 0, 3, 3, 7, 4,
+		5, 1, 0, 0, 4, 5,
+		1, 5, 6, 6, 2, 1
+	};
+	SetVertices(vertex, 24);
+	SetIndices(index, 36);
 }
 
 // SPHERE ============================================
-Sphere::Sphere() : Primitive(), radius(1.0f)
+Sphere::Sphere() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-Sphere::Sphere(float radius, int rings, int sectors) : Primitive(), radius(radius), rings(rings), sectors(sectors)
+Sphere::Sphere(float radius, int sectors, int stacks) : Primitive(), radius(radius), sectors(sectors), stacks(stacks)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-void Sphere::InnerRender() const
+void Sphere::InnerMesh()
 {
-	std::vector<GLfloat> vertices;
-	std::vector<GLfloat> normals;
-	std::vector<GLushort> indices;
-	
-	float const R = 1. / (rings - 1);
-	float const S = 1. / (sectors - 1);
-	int r, s;
+	// generate CCW index list of sphere triangles
+	// k1--k1+1
+	// |  / |
+	// | /  |
+	// k2--k2+1
+	std::vector<int> indices;
+	std::vector<int> lineIndices;
+	int k1, k2;
+	for (int i = 0; i < stacks; ++i)
+	{
+		k1 = i * (sectors + 1);     // beginning of current stack
+		k2 = k1 + sectors + 1;      // beginning of next stack
 
-	vertices.resize(rings * sectors * 3);
-	normals.resize(rings * sectors * 3);
-	std::vector<GLfloat>::iterator v = vertices.begin();
-	std::vector<GLfloat>::iterator n = normals.begin();
-	for (r = 0; r < rings; r++) for (s = 0; s < sectors; s++) {
-		float const y = sin(-M_PI_2 + M_PI * r * R);
-		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
-		float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
+		for (int j = 0; j < sectors; ++j, ++k1, ++k2)
+		{
+			// 2 triangles per sector excluding first and last stacks
+			// k1 => k2 => k1+1
+			if (i != 0)
+			{
+				indices.push_back(k1);
+				indices.push_back(k2);
+				indices.push_back(k1 + 1);
+			}
 
-		*v++ = x * radius;
-		*v++ = y * radius;
-		*v++ = z * radius;
+			// k1+1 => k2 => k2+1
+			if (i != (stacks - 1))
+			{
+				indices.push_back(k1 + 1);
+				indices.push_back(k2);
+				indices.push_back(k2 + 1);
+			}
 
-		*n++ = -x;
-		*n++ = -y;
-		*n++ = -z;
-	}
-
-	indices.resize(rings * sectors * 4);
-	std::vector<GLushort>::iterator i = indices.begin();
-	for (r = 0; r < rings - 1; r++)
-		for (s = 0; s < sectors - 1; s++) {
-			*i++ = (r + 1) * sectors + s;
-			*i++ = (r + 1) * sectors + (s + 1);
-			*i++ = r * sectors + (s + 1);
-			*i++ = r * sectors + s;
-
+			// store indices for lines
+			// vertical lines for all stacks, k1 => k2
+			lineIndices.push_back(k1);
+			lineIndices.push_back(k2);
+			if (i != 0)  // horizontal lines except 1st stack, k1 => k+1
+			{
+				lineIndices.push_back(k1);
+				lineIndices.push_back(k1 + 1);
+			}
 		}
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-
-	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
-	glNormalPointer(GL_FLOAT, 0, &normals[0]);
-
-	glPushMatrix();
-
-	glDrawElements(GL_QUADS, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
-
-	glPopMatrix();
-
-	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-	glDisableClientState(GL_NORMAL_ARRAY);
-
-	// clear memory of arrays
-	std::vector<float>().swap(vertices);
-	std::vector<float>().swap(normals);
+	}
 }
 
 // CYLINDER ============================================

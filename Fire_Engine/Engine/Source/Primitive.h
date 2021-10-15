@@ -44,9 +44,9 @@ class Cube : public Primitive
 public :
 	Cube();
 	Cube(vec3 _size, vec3 pos);
-	void InnerMesh() const;
+	void InnerMesh();
 public:
-	vec3 size =1;
+	vec3 size = { 0.5f, 0.5f, 0.5f };
 };
 
 // ============================================
@@ -54,12 +54,12 @@ class Sphere : public Primitive
 {
 public:
 	Sphere();
-	Sphere(float radius, int rings, int sectors);
-	void InnerRender() const;
+	Sphere(float radius, int sectors, int stacks);
+	void InnerMesh();
 public:
 	float radius = 1;
-	int rings = 16;
-	int sectors = 16;
+	int sectors = 36;
+	int stacks = 18;
 };
 
 // ============================================

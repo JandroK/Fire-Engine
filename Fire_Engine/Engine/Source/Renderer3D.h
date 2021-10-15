@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-#include "Mesh.h"
+#include "Primitive.h"
 
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -67,5 +67,5 @@ private:
 	bool colorMaterial = true;
 	bool texture2D = true;
 
-	Mesh cube;
+	Cube cube;
 };

@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "Renderer3D.h"
-#include "Primitive.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -147,6 +146,7 @@ bool Renderer3D::Init()
 
 	// LADO FRONTAL: lado multicolor
 	
+	cube.InnerMesh();
 	cube.SetupMesh();
 
 	return ret;

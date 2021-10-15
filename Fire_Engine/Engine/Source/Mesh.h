@@ -8,8 +8,11 @@ class Mesh
 public:
 	Mesh();
 
-	void Draw();
 	void SetupMesh();
+	void SetIndices(int _indices[], int size);
+	void SetVertices(float _vertices[], int size);
+
+	void Draw();
 
 public:
 	// mesh data

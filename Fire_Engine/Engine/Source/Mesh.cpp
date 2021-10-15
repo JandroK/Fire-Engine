@@ -9,31 +9,6 @@ Mesh::Mesh()
 
 void Mesh::SetupMesh()
 {	
-	//0
-	vertices.push_back(-1.f);
-	vertices.push_back(1.f);
-	vertices.push_back(0.f);
-	//1
-	vertices.push_back(1.f);
-	vertices.push_back(1.f);
-	vertices.push_back(0.f);
-	//2
-	vertices.push_back(-1.f);
-	vertices.push_back(-1.f);
-	vertices.push_back(0.f);
-	//3
-	vertices.push_back(1.f);
-	vertices.push_back(-1.f);
-	vertices.push_back(0.f);
-
-	//orden de lectura para los  vertex
-	indices.push_back(2);
-	indices.push_back(3);
-	indices.push_back(1);
-	indices.push_back(1);
-	indices.push_back(0);
-	indices.push_back(2);
-
 	// Vertex Buffer GL_ARRAY_BUFFER
 	glGenBuffers(1, (uint*)&(vertexBufferId));
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
@@ -45,6 +20,22 @@ void Mesh::SetupMesh()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices.size(), &indices[0], GL_STATIC_DRAW);
 }
 
+void Mesh::SetVertices(float _vertices[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		vertices.push_back(_vertices[i]);
+	}
+}
+
+void Mesh::SetIndices(int _indices[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		indices.push_back(_indices[i]);
+	}
+}
+
 void Mesh::Draw()
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -52,7 +43,7 @@ void Mesh::Draw()
 
 	//-- Buffers--//
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-	glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	/*glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
@@ -64,7 +55,7 @@ void Mesh::Draw()
 	glPushMatrix();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, &indices[0]);
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
 
 	glPopMatrix();
 	//-- UnBind Buffers--//
