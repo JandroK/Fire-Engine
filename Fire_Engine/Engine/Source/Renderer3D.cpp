@@ -147,6 +147,7 @@ bool Renderer3D::Init()
 
 	// LADO FRONTAL: lado multicolor
 
+	cube.SetupMesh();
 
 	return ret;
 }
@@ -176,7 +177,6 @@ update_status Renderer3D::PostUpdate(float dt)
 	update_status ret;
 	//glClearColor(0.f, 0.f, 0.f, 1.f);
 	//glClear(GL_COLOR_BUFFER_BIT);
-
 	// Axis and grid
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
@@ -185,17 +185,12 @@ update_status Renderer3D::PostUpdate(float dt)
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
-	Cube cube;
-	cube.InnerRender();
+	glPushMatrix();
+	cube.Draw();
+	glPopMatrix();
 
-	Sphere sphere(2,20,20);
-	sphere.InnerRender();
+	glEnd();	
 
-	Cylinder cylinder;
-	cylinder.InnerRender();
-
-
-	glEnd();
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	return UPDATE_CONTINUE;

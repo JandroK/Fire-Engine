@@ -125,21 +125,6 @@ void Cube::InnerRender() const
 		vertices[i * 3 + 2] = vertices[i * 3 + 2] * size.z;
 	}
 
-	// normal array
-	GLfloat normals[] = { 0, 0, 1,   0, 0, 1,   0, 0, 1,   0, 0, 1,   // v0,v1,v2,v3 (front)
-							1, 0, 0,   1, 0, 0,   1, 0, 0,   1, 0, 0,   // v0,v3,v4,v5 (right)
-							0, 1, 0,   0, 1, 0,   0, 1, 0,   0, 1, 0,   // v0,v5,v6,v1 (top)
-						   -1, 0, 0,  -1, 0, 0,  -1, 0, 0,  -1, 0, 0,   // v1,v6,v7,v2 (left)
-							0,-1, 0,   0,-1, 0,   0,-1, 0,   0,-1, 0,   // v7,v4,v3,v2 (bottom)
-							0, 0,-1,   0, 0,-1,   0, 0,-1,   0, 0,-1 }; // v4,v7,v6,v5 (back)
-
-	for (int i = 0; i < 24; i++)
-	{
-		normals[i*3] = normals[i*3] * size.x;
-		normals[i*3 + 1] = normals[i*3 + 1] * size.y;
-		normals[i*3 + 2] = normals[i*3 + 2] * size.z;
-	}
-
 	// Index array of vertex array
 	GLubyte indices[] = { 0, 1, 2,   2, 3, 0,       // front
 						   4, 5, 6,   6, 7, 4,      // right
@@ -147,22 +132,6 @@ void Cube::InnerRender() const
 						  12,13,14,  14,15,12,      // left
 						  16,17,18,  18,19,16,      // bottom
 						  20,21,22,  22,23,20 };    // back
-
-
-	// enable and specify pointers to vertex arrays
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glNormalPointer(GL_FLOAT, 0, normals);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-
-	glPushMatrix();
-
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
-
-	glPopMatrix();
-
-	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 // SPHERE ============================================
