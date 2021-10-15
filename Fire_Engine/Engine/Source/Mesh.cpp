@@ -42,7 +42,7 @@ void Mesh::SetupMesh()
 	//Index Buffer GL_ELEMENT_ARRAY_BUFFER
 	glGenBuffers(1, (uint*)&(indexBufferId));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * numIndices, &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices.size(), &indices[0], GL_STATIC_DRAW);
 }
 
 void Mesh::Draw()
