@@ -109,9 +109,9 @@ Cube::Cube(vec3 size, vec3 pos) : Primitive(), size(size)
 	glTranslatef(pos.x, pos.y, pos.z);
 }
 
-void Cube::InnerRender() const
+void Cube::InnerMesh() const
 {	
-	GLfloat vertices[] = { 1, 1, 1,  -1, 1, 1,  -1,-1, 1,   1,-1, 1,   // v0,v1,v2,v3 (front)
+	GLfloat points[] = { 1, 1, 1,  -1, 1, 1,  -1,-1, 1,   1,-1, 1,   // v0,v1,v2,v3 (front)
 						1, 1, 1,   1,-1, 1,   1,-1,-1,   1, 1,-1,		// v0,v3,v4,v5 (right)
 						1, 1, 1,   1, 1,-1,  -1, 1,-1,  -1, 1, 1,		// v0,v5,v6,v1 (top)
 					   -1, 1, 1,  -1, 1,-1,  -1,-1,-1,  -1,-1, 1,		// v1,v6,v7,v2 (left)
@@ -120,9 +120,9 @@ void Cube::InnerRender() const
 
 	for (int i = 0; i < 24; i++)
 	{
-		vertices[i * 3] = vertices[i * 3] * size.x;
-		vertices[i * 3 + 1] = vertices[i * 3 + 1] * size.y;
-		vertices[i * 3 + 2] = vertices[i * 3 + 2] * size.z;
+		points[i * 3] = points[i * 3] * size.x;
+		points[i * 3 + 1] = points[i * 3 + 1] * size.y;
+		points[i * 3 + 2] = points[i * 3 + 2] * size.z;
 	}
 
 	// Index array of vertex array

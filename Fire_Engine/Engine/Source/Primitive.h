@@ -3,6 +3,7 @@
 #include "glmath.h"
 #include "Color.h"
 #include <vector>
+#include "Mesh.h"
 
 enum PrimitiveTypes
 {
@@ -14,7 +15,7 @@ enum PrimitiveTypes
 	Primitive_Cylinder
 };
 
-class Primitive
+class Primitive : public Mesh
 {
 public:
 
@@ -43,7 +44,7 @@ class Cube : public Primitive
 public :
 	Cube();
 	Cube(vec3 _size, vec3 pos);
-	void InnerRender() const;
+	void InnerMesh() const;
 public:
 	vec3 size =1;
 };

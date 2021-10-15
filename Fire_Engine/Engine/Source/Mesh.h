@@ -17,6 +17,6 @@ public:
 	uint vertexBufferId = 0;
 	uint numIndices = 0;
 	std::vector<uint> indices;
-	std::vector<float> vertex;
+	std::vector<float> vertices;
 
 };

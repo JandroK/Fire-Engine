@@ -189,6 +189,7 @@ update_status Renderer3D::PostUpdate(float dt)
 	cube.Draw();
 	glPopMatrix();
 
+
 	glEnd();	
 
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
