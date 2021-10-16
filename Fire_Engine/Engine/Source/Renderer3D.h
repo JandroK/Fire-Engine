@@ -68,4 +68,5 @@ private:
 	bool texture2D = true;
 
 	Cube cube;
+	Sphere sphere;
 };

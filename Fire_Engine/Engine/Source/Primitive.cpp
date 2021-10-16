@@ -135,6 +135,8 @@ void Cube::InnerMesh()
 	SetIndices(index, 36);
 }
 
+
+
 // SPHERE ============================================
 Sphere::Sphere() : Primitive()
 {
@@ -148,12 +150,59 @@ Sphere::Sphere(float radius, int sectors, int stacks) : Primitive(), radius(radi
 
 void Sphere::InnerMesh()
 {
+	SetVerticesMesh();
+	SetIndicesMesh();	
+}
+
+void Sphere::SetVerticesMesh()
+{
+	// clear memory of prev arrays
+	std::vector<float>().swap(vertices);
+	//std::vector<float>().swap(texCoords);
+
+	float x, y, z, xy;                              // vertex position
+	//float s, t;                                     // vertex texCoord
+
+	float sectorStep = 2 * PI / sectors;
+	float stackStep = PI / stacks;
+	float sectorAngle, stackAngle;
+
+	for (int i = 0; i <= stacks; ++i)
+	{
+		stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+		xy = radius * cosf(stackAngle);             // r * cos(u)
+		z = radius * sinf(stackAngle);              // r * sin(u)
+
+		// add (sectorCount+1) vertices per stack
+		// the first and last vertices have same position and normal, but different tex coords
+		for (int j = 0; j <= sectors; ++j)
+		{
+			sectorAngle = j * sectorStep;           // starting from 0 to 2pi
+
+			// vertex position (x, y, z)
+			x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
+			y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+			vertices.push_back(x);
+			vertices.push_back(y);
+			vertices.push_back(z);
+
+			// vertex tex coord (s, t) range between [0, 1]
+			/*s = (float)j / sectorCount;
+			t = (float)i / stackCount;
+			texCoords.push_back(s);
+			texCoords.push_back(t);*/
+		}
+	}
+}
+
+void Sphere::SetIndicesMesh()
+{
 	// generate CCW index list of sphere triangles
 	// k1--k1+1
 	// |  / |
 	// | /  |
 	// k2--k2+1
-	std::vector<int> indices;
+	indices;
 	std::vector<int> lineIndices;
 	int k1, k2;
 	for (int i = 0; i < stacks; ++i)
@@ -179,19 +228,11 @@ void Sphere::InnerMesh()
 				indices.push_back(k2);
 				indices.push_back(k2 + 1);
 			}
-
-			// store indices for lines
-			// vertical lines for all stacks, k1 => k2
-			lineIndices.push_back(k1);
-			lineIndices.push_back(k2);
-			if (i != 0)  // horizontal lines except 1st stack, k1 => k+1
-			{
-				lineIndices.push_back(k1);
-				lineIndices.push_back(k1 + 1);
-			}
 		}
 	}
 }
+
+
 
 // CYLINDER ============================================
 Cylinder::Cylinder() : Primitive(), radius(1.0f), height(1.0f)
@@ -206,7 +247,7 @@ Cylinder::Cylinder(float radius, float height) : Primitive(), radius(radius), he
 
 std::vector<float> Cylinder::getUnitCircleVertices()
 {
-	const float PI = 3.1415926f;
+	//const float PI = 3.1415926f;
 	float sectorStep = 2 * PI / sectorCount;
 	float sectorAngle;  // radian
 
@@ -221,13 +262,13 @@ std::vector<float> Cylinder::getUnitCircleVertices()
 	return unitCircleVertices;
 }
 
-void Cylinder::InnerRender() const
+void Cylinder::InnerMesh()
 {
 	std::vector<GLfloat> vertices;
 	std::vector<GLfloat> normals;
 	std::vector<GLushort> indices;
 
-	const float PI = 3.1415926f;
+	//const float PI = 3.1415926f;
 	float sectorStep = 2 * PI / sectorCount;
 	float sectorAngle;  // radian
 

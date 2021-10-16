@@ -149,6 +149,9 @@ bool Renderer3D::Init()
 	cube.InnerMesh();
 	cube.SetupMesh();
 
+	sphere.InnerMesh();
+	sphere.SetupMesh();
+
 	return ret;
 }
 
@@ -187,7 +190,8 @@ update_status Renderer3D::PostUpdate(float dt)
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
 	glPushMatrix();
-	cube.Draw();
+	//cube.Draw();
+	sphere.Draw();
 	glPopMatrix();
 
 

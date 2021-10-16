@@ -56,6 +56,11 @@ public:
 	Sphere();
 	Sphere(float radius, int sectors, int stacks);
 	void InnerMesh();
+
+private:
+	void SetVerticesMesh();
+	void SetIndicesMesh();
+
 public:
 	float radius = 1;
 	int sectors = 36;
@@ -69,7 +74,7 @@ public:
 	Cylinder();
 	Cylinder(float radius, float height);
 	std::vector<float> getUnitCircleVertices();
-	void InnerRender() const;
+	void InnerMesh();
 public:
 	float radius;
 	float height;
