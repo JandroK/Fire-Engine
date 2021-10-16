@@ -160,7 +160,7 @@ void Sphere::SetVerticesMesh()
 	std::vector<float>().swap(vertices);
 	//std::vector<float>().swap(texCoords);
 
-	float x, y, z, xy;                              // vertex position
+	float x, y, z, xz;                              // vertex position
 	//float s, t;                                     // vertex texCoord
 
 	float sectorStep = 2 * PI / sectors;
@@ -170,8 +170,8 @@ void Sphere::SetVerticesMesh()
 	for (int i = 0; i <= stacks; ++i)
 	{
 		stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
-		xy = radius * cosf(stackAngle);             // r * cos(u)
-		z = radius * sinf(stackAngle);              // r * sin(u)
+		xz = radius * cosf(stackAngle);             // r * cos(u)
+		y = radius * sinf(stackAngle);              // r * sin(u)
 
 		// add (sectorCount+1) vertices per stack
 		// the first and last vertices have same position and normal, but different tex coords
@@ -180,8 +180,8 @@ void Sphere::SetVerticesMesh()
 			sectorAngle = j * sectorStep;           // starting from 0 to 2pi
 
 			// vertex position (x, y, z)
-			x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
-			y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+			x = xz * cosf(sectorAngle);             // r * cos(u) * cos(v)
+			z = xz * sinf(sectorAngle);             // r * cos(u) * sin(v)
 			vertices.push_back(x);
 			vertices.push_back(y);
 			vertices.push_back(z);
@@ -214,17 +214,17 @@ void Sphere::SetIndicesMesh()
 			// k1 => k2 => k1+1
 			if (i != 0)
 			{
-				indices.push_back(k1);
-				indices.push_back(k2);
 				indices.push_back(k1 + 1);
+				indices.push_back(k2);
+				indices.push_back(k1);
 			}
 
 			// k1+1 => k2 => k2+1
 			if (i != (stacks - 1))
 			{
-				indices.push_back(k1 + 1);
-				indices.push_back(k2);
 				indices.push_back(k2 + 1);
+				indices.push_back(k2);
+				indices.push_back(k1 + 1);
 			}
 		}
 	}

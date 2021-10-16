@@ -194,7 +194,8 @@ update_status Renderer3D::PostUpdate(float dt)
 
 	glPushMatrix();
 	//cube.Draw();
-	cylinder.Draw();
+	sphere.Draw();
+	//cylinder.Draw();
 	glPopMatrix();
 
 	glEnd();	

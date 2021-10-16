@@ -83,7 +83,7 @@ private:
 public:
 	float radius = 1;
 	float height = 3;
-	int sectorCount = 36;
+	int sectorCount = 24;
 
 private:
 	int baseCenterIndex;
