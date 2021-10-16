@@ -69,4 +69,5 @@ private:
 
 	Cube cube;
 	Sphere sphere;
+	Cylinder cylinder;
 };

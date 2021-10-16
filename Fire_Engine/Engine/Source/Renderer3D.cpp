@@ -151,6 +151,9 @@ bool Renderer3D::Init()
 
 	sphere.InnerMesh();
 	sphere.SetupMesh();
+	
+	cylinder.InnerMesh();
+	cylinder.SetupMesh();
 
 	return ret;
 }
@@ -191,9 +194,8 @@ update_status Renderer3D::PostUpdate(float dt)
 
 	glPushMatrix();
 	//cube.Draw();
-	sphere.Draw();
+	cylinder.Draw();
 	glPopMatrix();
-
 
 	glEnd();	
 

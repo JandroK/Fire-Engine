@@ -72,13 +72,22 @@ class Cylinder : public Primitive
 {
 public:
 	Cylinder();
-	Cylinder(float radius, float height);
-	std::vector<float> getUnitCircleVertices();
+	Cylinder(float radius, float height, int sectorCount);
 	void InnerMesh();
+
+private:
+	std::vector<float> GetUnitCircleVertices();
+	void SetVerticesMesh();
+	void SetIndicesMesh();
+
 public:
-	float radius;
-	float height;
-	int sectorCount;
+	float radius = 1;
+	float height = 3;
+	int sectorCount = 36;
+
+private:
+	int baseCenterIndex;
+	int topCenterIndex;
 };
 
 // ============================================
