@@ -90,6 +90,23 @@ private:
 	int topCenterIndex;
 };
 
+
+class Pyramid : public Primitive
+{
+public:
+	Pyramid();
+	Pyramid(float radius, float height, int sectorCount);
+	void InnerMesh();
+
+private:
+	void SetVerticesMesh();
+	void SetIndicesMesh();
+
+public:
+	float radius = 2;
+	float height = 2;
+};
+
 // ============================================
 class Line : public Primitive
 {

@@ -122,6 +122,12 @@ void Cube::InnerMesh()
 		1.0f, 1.0f, -1.0f,
 		-1.0f, 1.0f, -1.0f
 	};
+	for (int i = 0; i < 24; i +=3)
+	{
+		vertex[i] *= size.x;
+		vertex[i+1] *= size.y;
+		vertex[i+2] *= size.z;
+	}
 	int index[] =
 	{
 		0, 1, 2, 2, 3, 0,
@@ -375,6 +381,56 @@ void Cylinder::SetIndicesMesh()
 			indices.push_back(topCenterIndex);
 		}
 	}
+}
+
+
+
+// PYRAMID ============================================
+Pyramid::Pyramid() : Primitive()
+{
+	type = PrimitiveTypes::Primitive_Cylinder;
+}
+
+Pyramid::Pyramid(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height)
+{
+	type = PrimitiveTypes::Primitive_Cylinder;
+}
+
+void Pyramid::InnerMesh()
+{
+	SetVerticesMesh();
+	SetIndicesMesh();
+}
+
+void Pyramid::SetVerticesMesh()
+{
+	float vertex[] =
+	{
+		-0.5, 0, -0.5,
+		0.5f, 0, -0.5,
+		-0.5, 0, 0.5f,
+		0.5f, 0, 0.5f,
+		0, height/radius, 0,
+	};
+	for (int i = 0; i < 15; i++)
+	{
+		vertex[i] *= radius;
+	}
+	SetVertices(vertex, 24);
+}
+
+void Pyramid::SetIndicesMesh()
+{
+	int index[] =
+	{
+		0, 2, 4,
+		2, 3, 4,
+		3, 1, 4,
+		1, 0, 4,
+		0, 1, 3,
+		0, 3, 2,
+	};
+	SetIndices(index, 36);
 }
 
 
