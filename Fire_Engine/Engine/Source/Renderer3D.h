@@ -68,7 +68,7 @@ private:
 	bool texture2D = true;
 
 	Cube cube;
-	PSphere sphere;
-	PCylinder cylinder;
+	Sphere sphere;
+	Cylinder cylinder;
 	Pyramid pyramid;
 };
