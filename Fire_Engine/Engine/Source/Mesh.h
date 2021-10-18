@@ -2,6 +2,9 @@
 
 #include "Globals.h"
 #include <vector>
+#include "Math/float3.h"
+
+
 
 class Mesh
 {
@@ -10,7 +13,7 @@ public:
 
 	void SetupMesh();
 	void SetIndices(int _indices[], int size);
-	void SetVertices(float _vertices[], int size);
+	void SetVertices(std::vector<float3> _vertices, int size);
 
 	void Draw();
 
@@ -19,7 +22,10 @@ public:
 	uint indexBufferId = 0;
 	uint vertexBufferId = 0;
 	uint numIndices = 0;
-	std::vector<uint> indices;
-	std::vector<float> vertices;
+	uint numVertex = 0;
+	uint numNormals = 0;
+	std::vector<uint> meshIndex;
+	std::vector<float3> meshVertex;
+	std::vector<float3> meshNormals;
 
 };

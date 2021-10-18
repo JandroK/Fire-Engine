@@ -2,6 +2,7 @@
 
 #include "Mesh.h"
 
+
 class FBXLoader {
 public:
 	FBXLoader();
@@ -9,6 +10,8 @@ public:
 	~FBXLoader();
 
 	void LoadMesh(const char* path);
+
+	bool CleanUp();
 
 	inline Mesh& GetMesh() { return ourMesh; }
 

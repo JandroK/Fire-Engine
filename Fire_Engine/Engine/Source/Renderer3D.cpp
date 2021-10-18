@@ -188,7 +188,7 @@ update_status Renderer3D::PostUpdate(float dt)
 	//glClear(GL_COLOR_BUFFER_BIT);
 	// Axis and grid
 	
-	Plane p(0, 1, 0, 0);
+	PPlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
 

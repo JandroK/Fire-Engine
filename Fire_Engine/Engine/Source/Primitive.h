@@ -12,7 +12,7 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder
+	Primitive_PCylinder
 };
 
 class Primitive : public Mesh
@@ -50,11 +50,11 @@ public:
 };
 
 // ============================================
-class Sphere : public Primitive
+class PSphere : public Primitive
 {
 public:
-	Sphere();
-	Sphere(float radius, int sectors, int stacks);
+	PSphere();
+	PSphere(float radius, int sectors, int stacks);
 	void InnerMesh();
 
 private:
@@ -68,11 +68,11 @@ public:
 };
 
 // ============================================
-class Cylinder : public Primitive
+class PCylinder : public Primitive
 {
 public:
-	Cylinder();
-	Cylinder(float radius, float height, int sectorCount);
+	PCylinder();
+	PCylinder(float radius, float height, int sectorCount);
 	void InnerMesh();
 
 private:
@@ -108,11 +108,11 @@ public:
 };
 
 // ============================================
-class Line : public Primitive
+class PLine : public Primitive
 {
 public:
-	Line();
-	Line(float x, float y, float z);
+	PLine();
+	PLine(float x, float y, float z);
 	void InnerRender() const;
 public:
 	vec3 origin;
@@ -120,11 +120,11 @@ public:
 };
 
 // ============================================
-class Plane : public Primitive
+class PPlane : public Primitive
 {
 public:
-	Plane();
-	Plane(float x, float y, float z, float d);
+	PPlane();
+	PPlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
 	vec3 normal;

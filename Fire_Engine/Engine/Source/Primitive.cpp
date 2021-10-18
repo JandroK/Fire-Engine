@@ -137,33 +137,39 @@ void Cube::InnerMesh()
 		5, 1, 0, 0, 4, 5,
 		1, 5, 6, 6, 2, 1
 	};
-	SetVertices(vertex, 24);
+
+	
+	std::vector<float3> vertex3;
+	vertex3.resize(24);
+	memcpy(&vertex3, vertex, sizeof(float3) * 24);
+
+	SetVertices(vertex3, 24);
 	SetIndices(index, 36);
 }
 
 
 
 // SPHERE ============================================
-Sphere::Sphere() : Primitive()
+PSphere::PSphere() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-Sphere::Sphere(float radius, int sectors, int stacks) : Primitive(), radius(radius), sectors(sectors), stacks(stacks)
+PSphere::PSphere(float radius, int sectors, int stacks) : Primitive(), radius(radius), sectors(sectors), stacks(stacks)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-void Sphere::InnerMesh()
+void PSphere::InnerMesh()
 {
 	SetVerticesMesh();
 	SetIndicesMesh();	
 }
 
-void Sphere::SetVerticesMesh()
+void PSphere::SetVerticesMesh()
 {
 	// clear memory of prev arrays
-	std::vector<float>().swap(vertices);
+	//std::vector<float>().swap(meshVertex);
 	//std::vector<float>().swap(texCoords);
 
 	float x, y, z, xz;                              // vertex position
@@ -188,9 +194,9 @@ void Sphere::SetVerticesMesh()
 			// vertex position (x, y, z)
 			x = xz * cosf(sectorAngle);             // r * cos(u) * cos(v)
 			z = xz * sinf(sectorAngle);             // r * cos(u) * sin(v)
-			vertices.push_back(x);
-			vertices.push_back(y);
-			vertices.push_back(z);
+
+			meshVertex.emplace_back(x, y, z);
+
 
 			// vertex tex coord (s, t) range between [0, 1]
 			/*s = (float)j / sectorCount;
@@ -201,7 +207,7 @@ void Sphere::SetVerticesMesh()
 	}
 }
 
-void Sphere::SetIndicesMesh()
+void PSphere::SetIndicesMesh()
 {
 	// generate CCW index list of sphere triangles
 	// k1--k1+1
@@ -220,17 +226,17 @@ void Sphere::SetIndicesMesh()
 			// k1 => k2 => k1+1
 			if (i != 0)
 			{
-				indices.push_back(k1 + 1);
-				indices.push_back(k2);
-				indices.push_back(k1);
+				meshIndex.push_back(k1 + 1);
+				meshIndex.push_back(k2);
+				meshIndex.push_back(k1);
 			}
 
 			// k1+1 => k2 => k2+1
 			if (i != (stacks - 1))
 			{
-				indices.push_back(k2 + 1);
-				indices.push_back(k2);
-				indices.push_back(k1 + 1);
+				meshIndex.push_back(k2 + 1);
+				meshIndex.push_back(k2);
+				meshIndex.push_back(k1 + 1);
 			}
 		}
 	}
@@ -238,24 +244,24 @@ void Sphere::SetIndicesMesh()
 
 
 
-// CYLINDER ============================================
-Cylinder::Cylinder() : Primitive()
+// PCylinder ============================================
+PCylinder::PCylinder() : Primitive()
 {
-	type = PrimitiveTypes::Primitive_Cylinder;
+	type = PrimitiveTypes::Primitive_PCylinder;
 }
 
-Cylinder::Cylinder(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height), sectorCount(sectorCount)
+PCylinder::PCylinder(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height), sectorCount(sectorCount)
 {
-	type = PrimitiveTypes::Primitive_Cylinder;
+	type = PrimitiveTypes::Primitive_PCylinder;
 }
 
-void Cylinder::InnerMesh()
+void PCylinder::InnerMesh()
 {
 	SetVerticesMesh();
 	SetIndicesMesh();
 }
 
-std::vector<float> Cylinder::GetUnitCircleVertices()
+std::vector<float> PCylinder::GetUnitCircleVertices()
 {
 	float sectorStep = 2 * PI / sectorCount;
 	float sectorAngle;  // radian
@@ -271,10 +277,10 @@ std::vector<float> Cylinder::GetUnitCircleVertices()
 	return unitCircleVertices;
 }
 
-void Cylinder::SetVerticesMesh()
+void PCylinder::SetVerticesMesh()
 {
 	// clear memory of prev arrays
-	std::vector<float>().swap(vertices);
+	//std::vector<float>().swap(meshVertex);
 	//std::vector<float>().swap(texCoords);
 
 	// get unit circle vectors on XY-plane
@@ -291,15 +297,13 @@ void Cylinder::SetVerticesMesh()
 			float ux = unitVertices[k];
 			float uz = unitVertices[k + 2];
 			// position vector
-			vertices.push_back(ux * radius);             // vx
-			vertices.push_back(h);                       // vy
-			vertices.push_back(uz * radius);             // vz
+			meshVertex.emplace_back(ux * radius, h, uz * radius);
 		}
 	}
 
 	// the starting index for the base/top surface
 	//NOTE: it is used for generating indices later
-	baseCenterIndex = (int)vertices.size() / 3;
+	baseCenterIndex = (int)meshVertex.size() / 3;
 	topCenterIndex = baseCenterIndex + sectorCount + 1; // include center vertex
 
 	// put base and top vertices to arrays
@@ -308,16 +312,15 @@ void Cylinder::SetVerticesMesh()
 		float h = -height / 2.0f + i * height;           // y value; -h/2 to h/2
 
 		// center point
-		vertices.push_back(0);     vertices.push_back(h);     vertices.push_back(0);
+		meshVertex.emplace_back(0, h, 0);
 
 		for (int j = 0, k = 0; j < sectorCount; ++j, k += 3)
 		{
 			float ux = unitVertices[k];
 			float uz = unitVertices[k + 2];
 			// position vector
-			vertices.push_back(ux * radius);             // vx
-			vertices.push_back(h);                       // vz
-			vertices.push_back(uz * radius);             // vy
+			meshVertex.emplace_back(ux * radius, h, uz * radius);
+
 			// texture coordinate
 			//texCoords.push_back(-ux * 0.5f + 0.5f);      // s
 			//texCoords.push_back(-uy * 0.5f + 0.5f);      // t
@@ -325,9 +328,9 @@ void Cylinder::SetVerticesMesh()
 	}
 }
 
-void Cylinder::SetIndicesMesh()
+void PCylinder::SetIndicesMesh()
 {
-	// generate CCW index list of cylinder triangles
+	// generate CCW index list of PCylinder triangles
 	int k2 = 0;                         // 1st vertex index at base
 	int k1 = sectorCount + 1;           // 1st vertex index at top
 
@@ -336,14 +339,14 @@ void Cylinder::SetIndicesMesh()
 	{
 		// 2 triangles per sector
 		// k1 => k1+1 => k2
-		indices.push_back(k1);
-		indices.push_back(k1 + 1);
-		indices.push_back(k2);
+		meshIndex.push_back(k1);
+		meshIndex.push_back(k1 + 1);
+		meshIndex.push_back(k2);
 
 		// k2 => k1+1 => k2+1
-		indices.push_back(k2);
-		indices.push_back(k1 + 1);
-		indices.push_back(k2 + 1);
+		meshIndex.push_back(k2);
+		meshIndex.push_back(k1 + 1);
+		meshIndex.push_back(k2 + 1);
 	}
 
 	// indices for the base surface
@@ -353,15 +356,15 @@ void Cylinder::SetIndicesMesh()
 	{
 		if (i < sectorCount - 1)
 		{
-			indices.push_back(k);
-			indices.push_back(k + 1);
-			indices.push_back(baseCenterIndex);
+			meshIndex.push_back(k);
+			meshIndex.push_back(k + 1);
+			meshIndex.push_back(baseCenterIndex);
 		}
 		else // last triangle
 		{
-			indices.push_back(k);
-			indices.push_back(baseCenterIndex + 1);
-			indices.push_back(baseCenterIndex);
+			meshIndex.push_back(k);
+			meshIndex.push_back(baseCenterIndex + 1);
+			meshIndex.push_back(baseCenterIndex);
 		}
 	}
 
@@ -370,15 +373,15 @@ void Cylinder::SetIndicesMesh()
 	{
 		if (i < sectorCount - 1)
 		{
-			indices.push_back(k + 1);
-			indices.push_back(k);
-			indices.push_back(topCenterIndex);
+			meshIndex.push_back(k + 1);
+			meshIndex.push_back(k);
+			meshIndex.push_back(topCenterIndex);
 		}
 		else // last triangle
 		{
-			indices.push_back(topCenterIndex + 1);
-			indices.push_back(k);
-			indices.push_back(topCenterIndex);
+			meshIndex.push_back(topCenterIndex + 1);
+			meshIndex.push_back(k);
+			meshIndex.push_back(topCenterIndex);
 		}
 	}
 }
@@ -388,12 +391,12 @@ void Cylinder::SetIndicesMesh()
 // PYRAMID ============================================
 Pyramid::Pyramid() : Primitive()
 {
-	type = PrimitiveTypes::Primitive_Cylinder;
+	type = PrimitiveTypes::Primitive_PCylinder;
 }
 
 Pyramid::Pyramid(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height)
 {
-	type = PrimitiveTypes::Primitive_Cylinder;
+	type = PrimitiveTypes::Primitive_PCylinder;
 }
 
 void Pyramid::InnerMesh()
@@ -416,7 +419,11 @@ void Pyramid::SetVerticesMesh()
 	{
 		vertex[i] *= radius;
 	}
-	SetVertices(vertex, 24);
+	std::vector<float3> vertex3;
+	vertex3.resize(24);
+	memcpy(&vertex3, vertex, sizeof(float3) * 24);
+
+	SetVertices(vertex3, 24);
 }
 
 void Pyramid::SetIndicesMesh()
@@ -436,17 +443,17 @@ void Pyramid::SetIndicesMesh()
 
 
 // LINE ==================================================
-Line::Line() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
+PLine::PLine() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
 {
 	type = PrimitiveTypes::Primitive_Line;
 }
 
-Line::Line(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
+PLine::PLine(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
 {
 	type = PrimitiveTypes::Primitive_Line;
 }
 
-void Line::InnerRender() const
+void PLine::InnerRender() const
 {
 	glLineWidth(2.0f);
 
@@ -461,17 +468,17 @@ void Line::InnerRender() const
 }
 
 // PLANE ==================================================
-Plane::Plane() : Primitive(), normal(0, 1, 0), constant(1)
+PPlane::PPlane() : Primitive(), normal(0, 1, 0), constant(1)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-Plane::Plane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
+PPlane::PPlane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-void Plane::InnerRender() const
+void PPlane::InnerRender() const
 {
 	glLineWidth(1.0f);
 
