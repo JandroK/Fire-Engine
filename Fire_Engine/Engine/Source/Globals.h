@@ -10,6 +10,9 @@
 //#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
 
+#define INVALID_OGL_VALUE 0xffffffff
+#define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals |  aiProcess_JoinIdenticalVertices )
+
 enum class LogType
 {
 	L_NORMAL,

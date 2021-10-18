@@ -149,6 +149,9 @@ bool Renderer3D::Init()
 	cube.InnerMesh();
 	cube.SetupMesh();
 
+	exampleFBX = new MeshData();
+	exampleFBX->LoadMesh("C:/Users/Ismael/Desktop/Animacion/warrior.fbx");  //path to example 
+
 	/*sphere.InnerMesh();
 	sphere.SetupMesh();
 	
@@ -201,6 +204,9 @@ update_status Renderer3D::PostUpdate(float dt)
 	//cylinder.Draw();
 	//pyramid.Draw();
 	glPopMatrix();
+
+
+	exampleFBX->Render();
 
 	glEnd();	
 
