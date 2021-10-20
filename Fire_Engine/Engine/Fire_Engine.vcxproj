@@ -186,6 +186,7 @@
     <ClInclude Include="Source\FBXLoader.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
+    <ClInclude Include="Source\ImageLoader.h" />
     <ClInclude Include="Source\JsonParser.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Mesh.h" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Source\FileSystem.h" />
     <ClInclude Include="Source\Physics3D.h" />
     <ClInclude Include="Source\Renderer3D.h" />
+    <ClInclude Include="Source\Resources.h" />
     <ClInclude Include="Source\Tab.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Primitive.h" />
@@ -219,6 +221,7 @@
     <ClCompile Include="Source\External\Parson\parson.c" />
     <ClCompile Include="Source\FBXLoader.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
+    <ClCompile Include="Source\ImageLoader.cpp" />
     <ClCompile Include="Source\JsonParser.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\log.cpp" />
@@ -230,6 +233,7 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Physics3D.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
+    <ClCompile Include="Source\Resources.cpp" />
     <ClCompile Include="Source\Tab.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Primitive.cpp" />

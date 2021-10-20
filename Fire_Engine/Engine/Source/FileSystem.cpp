@@ -148,7 +148,7 @@ int close_sdl_rwops(SDL_RWops *rw)
 }
 
 // Save a whole buffer to disk
-uint FileSystem::Save(const char* file, const void* buffer, unsigned int size, bool append)
+unsigned int FileSystem::Save(const char* file, char** buffer, unsigned int size, bool append)
 {
 	unsigned int ret = 0;
 

@@ -34,7 +34,7 @@ public:
 
 	// Open for Read/Write
 	unsigned int Load(const char* file, char** buffer) const;
-	uint Save(const char* file, const void* buffer, unsigned int size, bool append = false);
+	unsigned int Save(const char* file, char** buffer, unsigned int size, bool append = false);
 
 	// IO interfaces for other libs to handle files via PHYSfs
 	aiFileIO* GetAssimpIO();
