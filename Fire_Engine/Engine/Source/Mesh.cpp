@@ -28,6 +28,14 @@ void Mesh::SetVertices(float _vertices[], int size)
 	}
 }
 
+void Mesh::SetTexCoords(float _texCoords[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		vertices.push_back(_texCoords[i]);
+	}
+}
+
 void Mesh::SetIndices(int _indices[], int size)
 {
 	for (int i = 0; i < size; i++)
@@ -39,17 +47,17 @@ void Mesh::SetIndices(int _indices[], int size)
 void Mesh::Draw()
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
-	//glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	//-- Buffers--//
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	/*glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	glBindTexture(GL_TEXTURE_2D, textureId);
-	*/
+	//glBindTexture(GL_TEXTURE_2D, textureId);
+	
 	//-- Draw --//
 
 	glPushMatrix();
@@ -61,10 +69,17 @@ void Mesh::Draw()
 	//-- UnBind Buffers--//
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	/*glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);*/
+	glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	//--Disables States--//
 	glDisableClientState(GL_VERTEX_ARRAY);
-	//glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void Mesh::CleanUp()
+{
+	//Clear buffers
+	indices.clear();
+	vertices.clear();
 }

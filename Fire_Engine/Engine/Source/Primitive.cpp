@@ -137,8 +137,17 @@ void Cube::InnerMesh()
 		5, 1, 0, 0, 4, 5,
 		1, 5, 6, 6, 2, 1
 	};
+	float texCoords[] =
+	{
+		1.0000, 0.0000, 0.0000,
+		1.0000, 1.0000, 0.0000,
+		0.0000, 1.0000, 0.0000,
+		0.0000, 0.0000, 0.0000
+	};
+
 	SetVertices(vertex, 24);
 	SetIndices(index, 36);
+	SetTexCoords(texCoords, 12);
 }
 
 
@@ -164,10 +173,10 @@ void Sphere::SetVerticesMesh()
 {
 	// clear memory of prev arrays
 	std::vector<float>().swap(vertices);
-	//std::vector<float>().swap(texCoords);
+	std::vector<float>().swap(texCoords);
 
 	float x, y, z, xz;                              // vertex position
-	//float s, t;                                     // vertex texCoord
+	float s, t;                                     // vertex texCoord
 
 	float sectorStep = 2 * PI / sectors;
 	float stackStep = PI / stacks;
@@ -193,10 +202,10 @@ void Sphere::SetVerticesMesh()
 			vertices.push_back(z);
 
 			// vertex tex coord (s, t) range between [0, 1]
-			/*s = (float)j / sectorCount;
-			t = (float)i / stackCount;
+			s = (float)j / sectors;
+			t = (float)i / stacks;
 			texCoords.push_back(s);
-			texCoords.push_back(t);*/
+			texCoords.push_back(t);
 		}
 	}
 }
@@ -275,7 +284,7 @@ void Cylinder::SetVerticesMesh()
 {
 	// clear memory of prev arrays
 	std::vector<float>().swap(vertices);
-	//std::vector<float>().swap(texCoords);
+	std::vector<float>().swap(texCoords);
 
 	// get unit circle vectors on XY-plane
 	std::vector<float> unitVertices = GetUnitCircleVertices();
@@ -284,7 +293,7 @@ void Cylinder::SetVerticesMesh()
 	for (int i = 0; i < 2; ++i)
 	{
 		float h = -height / 2.0f + i * height;           // y value; -h/2 to h/2
-		//float t = 1.0f - i;                              // vertical tex coord; 1 to 0
+		float t = 1.0f - i;                              // vertical tex coord; 1 to 0
 
 		for (int j = 0, k = 0; j <= sectorCount; ++j, k += 3)
 		{
@@ -319,8 +328,8 @@ void Cylinder::SetVerticesMesh()
 			vertices.push_back(h);                       // vz
 			vertices.push_back(uz * radius);             // vy
 			// texture coordinate
-			//texCoords.push_back(-ux * 0.5f + 0.5f);      // s
-			//texCoords.push_back(-uy * 0.5f + 0.5f);      // t
+			texCoords.push_back(-ux * 0.5f + 0.5f);      // s
+			texCoords.push_back(-uz * 0.5f + 0.5f);      // t
 		}
 	}
 }
