@@ -60,8 +60,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\DevIL\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGDebug;%(AdditionalLibraryDirectories);$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\assimp\lib;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86;$(SolutionDir)\Source\External\Assimp\libx86;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;MathGeoLib.lib;assimp-vc142-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\DevIL\libx86;$(ProjectDir)Source\External\PhysFS\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGDebug;%(AdditionalLibraryDirectories);$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\assimp\lib;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86;$(SolutionDir)\Source\External\Assimp\libx86;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;MathGeoLib.lib;assimp-vc142-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,8 +82,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\DevIL\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGRelease;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\PhysFS\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\assimp\lib;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86;$(SolutionDir)\Source\External\Assimp\libx86;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;MathGeoLib.lib;assimp-vc142-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\DevIL\libx86;$(ProjectDir)Source\External\PhysFS\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGRelease;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\PhysFS\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\assimp\lib;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86;$(SolutionDir)\Source\External\Assimp\libx86;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;MathGeoLib.lib;assimp-vc142-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -186,7 +186,7 @@
     <ClInclude Include="Source\FBXLoader.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
-    <ClInclude Include="Source\ImageLoader.h" />
+    <ClInclude Include="Source\TextureLoader.h" />
     <ClInclude Include="Source\JsonParser.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\Mesh.h" />
@@ -199,6 +199,7 @@
     <ClInclude Include="Source\Renderer3D.h" />
     <ClInclude Include="Source\Resources.h" />
     <ClInclude Include="Source\Tab.h" />
+    <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Primitive.h" />
     <ClInclude Include="Source\Timer.h" />
@@ -221,7 +222,7 @@
     <ClCompile Include="Source\External\Parson\parson.c" />
     <ClCompile Include="Source\FBXLoader.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
-    <ClCompile Include="Source\ImageLoader.cpp" />
+    <ClCompile Include="Source\TextureLoader.cpp" />
     <ClCompile Include="Source\JsonParser.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\log.cpp" />
@@ -235,6 +236,7 @@
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\Resources.cpp" />
     <ClCompile Include="Source\Tab.cpp" />
+    <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Primitive.cpp" />
     <ClCompile Include="Source\Timer.cpp" />

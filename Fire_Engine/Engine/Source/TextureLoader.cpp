@@ -1,4 +1,4 @@
-#include "ImageLoader.h"
+#include "TextureLoader.h"
 #include "FileSystem.h"
 
 #include"Globals.h"
@@ -12,7 +12,7 @@
 //#include"RE_Texture.h"
 
 
-GLuint ImageLoader::LoadToMemory(char* buffer, int size, int* w, int* h)
+GLuint TextureLoader::LoadToMemory(char* buffer, int size, int* w, int* h)
 {
 	ILuint imageID;
 	ilGenImages(1, &imageID);
@@ -31,7 +31,6 @@ GLuint ImageLoader::LoadToMemory(char* buffer, int size, int* w, int* h)
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	GLuint glID = ilutGLBindTexImage();
 
-	//TODO: Generate mipmaps and use best settings
 	glBindTexture(GL_TEXTURE_2D, glID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -47,7 +46,7 @@ GLuint ImageLoader::LoadToMemory(char* buffer, int size, int* w, int* h)
 	return glID;
 }
 
-void ImageLoader::SaveDDS(char* buffer, int size, const char* fileName)
+void TextureLoader::SaveDDS(char* buffer, int size, const char* fileName)
 {
 	ILuint imageID;
 	ilGenImages(1, &imageID);
@@ -71,7 +70,7 @@ void ImageLoader::SaveDDS(char* buffer, int size, const char* fileName)
 		std::string path(fileName);
 		//path += ".dds";
 
-		//FileSystem::Save(path.c_str(), (char*)data, _size, false);
+		FileSystem::Save(path.c_str(), (char*)data, _size, false);
 
 		delete[] data;
 		data = nullptr;
@@ -80,13 +79,13 @@ void ImageLoader::SaveDDS(char* buffer, int size, const char* fileName)
 	ilDeleteImages(1, &imageID);
 }
 
-void ImageLoader::Import(char* buffer, int bSize, Resources* res)
+void TextureLoader::Import(char* buffer, int bSize, Resources* res)
 {
 	SaveDDS(buffer, bSize, res->GetLibraryPath());
 }
 
 /*Take a screenshot*/
-void ImageLoader::TakeScreenshot(int frameBuffer)
+void TextureLoader::TakeScreenshot(int frameBuffer)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 

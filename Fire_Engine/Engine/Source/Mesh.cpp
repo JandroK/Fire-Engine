@@ -18,6 +18,10 @@ void Mesh::SetupMesh()
 	glGenBuffers(1, (uint*)&(indexBufferId));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices.size(), &indices[0], GL_STATIC_DRAW);
+
+	//texcoords attribute
+	/*glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * texCoords.size() * 2, (GLvoid*)(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);*/
 }
 
 void Mesh::SetVertices(float _vertices[], int size)
