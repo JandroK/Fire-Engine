@@ -1,6 +1,6 @@
 #pragma once
 
-#include"Resources.h"
+#include"Resource.h"
 #include<string>
 #include"Color.h"
 
@@ -15,7 +15,7 @@ struct Rect
 typedef unsigned int GLuint;
 
 
-class Texture : public Resources
+class Texture : public Resource
 {
 public:
 	Texture(unsigned int _uid);

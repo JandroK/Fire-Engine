@@ -43,9 +43,6 @@
     <Filter Include="Sources\Tools\Importers">
       <UniqueIdentifier>{702658f2-b2f0-43b8-a39c-8d68d0e226a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Tools\Resources">
-      <UniqueIdentifier>{e345d3f7-1771-4113-9031-2dd99d096b73}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\3rd Party\MathGeoLib">
       <UniqueIdentifier>{ecfbadda-2137-4d26-8007-88ba0d7551f0}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,9 @@
     </Filter>
     <Filter Include="Sources\3rd Party\MathGeoLib\Algorithm">
       <UniqueIdentifier>{9ad58b0e-0d94-47cf-bccd-cbef6a5a6e4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Resources">
+      <UniqueIdentifier>{e345d3f7-1771-4113-9031-2dd99d096b73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -399,14 +399,14 @@
     <ClInclude Include="Source\TextureLoader.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Resources.h">
-      <Filter>Sources\Tools\Resources</Filter>
+    <ClInclude Include="Source\Resource.h">
+      <Filter>Sources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\Textures.h">
-      <Filter>Sources\Tools\Resources</Filter>
+      <Filter>Sources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mesh.h">
-      <Filter>Sources\Tools\Resources</Filter>
+      <Filter>Sources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\FileSystem.h">
       <Filter>Sources\Tools\Importers</Filter>
@@ -591,6 +591,9 @@
     <ClInclude Include="Source\External\MathGeoLib\include\MathGeoLibFwd.h">
       <Filter>Sources\3rd Party\MathGeoLib</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ResourceManager.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -686,14 +689,14 @@
     <ClCompile Include="Source\TextureLoader.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Resources.cpp">
-      <Filter>Sources\Tools\Resources</Filter>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Textures.cpp">
-      <Filter>Sources\Tools\Resources</Filter>
+      <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Sources\Tools\Resources</Filter>
+      <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\FileSystem.cpp">
       <Filter>Sources\Tools\Importers</Filter>
@@ -793,6 +796,9 @@
     </ClCompile>
     <ClCompile Include="Source\External\MathGeoLib\include\Algorithm\Random\LCG.cpp">
       <Filter>Sources\3rd Party\MathGeoLib\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

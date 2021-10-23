@@ -22,7 +22,7 @@ bool Rect::Contains(Rect b)
     }
 }
 
-Texture::Texture(unsigned int _uid) : Resources(_uid, Resources::Type::TEXTURE), textureID(0), tWidth(0), tHeight(0)
+Texture::Texture(unsigned int _uid) : Resource(_uid, Resource::Type::TEXTURE), textureID(0), tWidth(0), tHeight(0)
 {
 	color = White;
 }
@@ -30,11 +30,6 @@ Texture::Texture(unsigned int _uid) : Resources(_uid, Resources::Type::TEXTURE),
 Texture::~Texture()
 {
 }
-
-//bool ResourceTexture::LoadToMemory()
-//{
-//	return true;
-//}
 
 bool Texture::LoadToMemory()
 {
