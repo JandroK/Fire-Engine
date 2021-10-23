@@ -29,8 +29,8 @@ public:
 	Input* input;
 	Renderer3D* renderer3D;
 	Physics3D* physics;
-	Editor* editor;
 	ResourceManager* resources;
+	Editor* editor;
 
 	std::vector<Module*> listModules;
 private:

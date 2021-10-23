@@ -1,5 +1,5 @@
+#include "Application.h"
 #include "ResourceManager.h"
-
 
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -21,6 +21,16 @@ bool ResourceManager::Start()
 }
 
 update_status ResourceManager::PreUpdate(float dt)
+{
+	return UPDATE_CONTINUE;
+}
+
+update_status ResourceManager::Update(float dt)
+{
+	return UPDATE_CONTINUE;
+}
+
+update_status ResourceManager::PostUpdate(float dt)
 {
 	return UPDATE_CONTINUE;
 }

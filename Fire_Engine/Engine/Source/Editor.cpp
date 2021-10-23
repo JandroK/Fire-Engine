@@ -30,8 +30,6 @@ Editor::~Editor()
 
 bool Editor::Init()
 {
-	
-
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
