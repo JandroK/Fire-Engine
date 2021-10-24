@@ -12,6 +12,7 @@
 #include "Camera3D.h"
 #include "Physics3D.h"
 #include "Editor.h"
+#include "ResourceManager.h"
 
 //#include "mmgr/mmgr.h"
 
@@ -28,6 +29,7 @@ public:
 	Input* input;
 	Renderer3D* renderer3D;
 	Physics3D* physics;
+	ResourceManager* resources;
 	Editor* editor;
 
 	std::vector<Module*> listModules;
