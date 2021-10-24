@@ -8,4 +8,5 @@ typedef unsigned int uint;
 namespace ModelImporter
 {
 	void Import(char* buffer, int bSize, Resource* res);
+	void GetMeshesFromMeta(const char* assetFile, std::vector<uint>& uids);
 }

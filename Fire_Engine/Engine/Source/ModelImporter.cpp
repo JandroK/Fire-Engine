@@ -25,8 +25,8 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 
 		//Load mesh uid from meta file
 		std::vector<uint> uids;
-		//if (FileSystem::Exists(app->resources->GetMetaPath(res->GetAssetPath()).c_str()))
-			//GetMeshesFromMeta(res->GetAssetPath(), uids);
+		if (FileSystem::Exists(app->resources->GetMetaPath(res->GetAssetPath()).c_str()))
+			GetMeshesFromMeta(res->GetAssetPath(), uids);
 
 		if (scene->HasMeshes())
 		{
@@ -46,4 +46,24 @@ void ModelImporter::Import(char* buffer, int bSize, Resource* res)
 	}
 	else
 		LOG(LogType::L_ERROR, "Error loading scene"/*, scene->name*/);
+}
+
+void ModelImporter::GetMeshesFromMeta(const char* assetFile, std::vector<uint>& uids)
+{
+	JSON_Value* metaFile = json_parse_file(app->resources->GetMetaPath(assetFile).c_str());
+
+	if (metaFile == NULL)
+		return;
+
+	JSON_Object* sceneObj = json_value_get_object(metaFile);
+
+	JSON_Array* meshArray = json_object_get_array(sceneObj, "Meshes Inside");
+
+	for (size_t i = 0; i < json_array_get_count(meshArray); i++)
+	{
+		uids.push_back(json_array_get_number(meshArray, i));
+	}
+
+	//Free memory
+	json_value_free(metaFile);
 }
