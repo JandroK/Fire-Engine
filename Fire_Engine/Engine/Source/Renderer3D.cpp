@@ -147,19 +147,16 @@ bool Renderer3D::Init()
 	// LADO FRONTAL: lado multicolor
 	
 	cube.InnerMesh();
-	cube.SetupMesh();
-
-	exampleFBX = new MeshData();
-	exampleFBX->LoadMesh("C:/Users/aleja/OneDrive/Escritorio/Universidad/2n Carrera/Semestre 4/Escenarios 3D/box_normal.fbx");  //path to example 
+	cube.LoadToMemory();
 
 	/*sphere.InnerMesh();
-	sphere.SetupMesh();
+	sphere.LoadToMemory();
 	
 	cylinder.InnerMesh();
-	cylinder.SetupMesh();
+	cylinder.LoadToMemory();
 
 	pyramid.InnerMesh();
-	pyramid.SetupMesh();*/
+	pyramid.LoadToMemory();*/
 
 	return ret;
 }
@@ -191,19 +188,17 @@ update_status Renderer3D::PostUpdate(float dt)
 	//glClear(GL_COLOR_BUFFER_BIT);
 	// Axis and grid
 	
-	Plane p(0, 1, 0, 0);
+	PrimitivePlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
 
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
-	cube.Draw();
-	//sphere.Draw();
-	//cylinder.Draw();
-	//pyramid.Draw();
-
-	exampleFBX->Render();
+	cube.RenderMesh();
+	//sphere.RenderMesh();
+	//cylinder.RenderMesh();
+	//pyramid.RenderMesh();
 
 	glEnd();	
 

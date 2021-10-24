@@ -399,7 +399,7 @@
     <ClInclude Include="Source\TextureLoader.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Resources.h">
+    <ClInclude Include="Source\Resource.h">
       <Filter>Sources\Tools\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\Textures.h">
@@ -686,7 +686,7 @@
     <ClCompile Include="Source\TextureLoader.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Resources.cpp">
+    <ClCompile Include="Source\Resource.cpp">
       <Filter>Sources\Tools\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\Textures.cpp">

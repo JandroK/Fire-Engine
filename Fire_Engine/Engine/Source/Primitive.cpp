@@ -1,12 +1,11 @@
-
-#include "Globals.h"
+#include "Application.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "Primitive.h"
 #include <cmath>
 
 // ------------------------------------------------------------
-Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
+Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point), Mesh(app->GetNewUID())
 {}
 
 // ------------------------------------------------------------
@@ -98,18 +97,18 @@ void Primitive::Scale(float x, float y, float z)
 }
 
 // CUBE ============================================
-Cube::Cube() : Primitive()
+PrimitiveCube::PrimitiveCube() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cube;
 }
 
-Cube::Cube(vec3 size, vec3 pos) : Primitive(), size(size)
+PrimitiveCube::PrimitiveCube(vec3 size, vec3 pos) : Primitive(), size(size)
 {
 	type = PrimitiveTypes::Primitive_Cube;
 	glTranslatef(pos.x, pos.y, pos.z);
 }
 
-void Cube::InnerMesh()
+void PrimitiveCube::InnerMesh()
 {	
 	float vertex[] =
 	{
@@ -150,26 +149,24 @@ void Cube::InnerMesh()
 	SetTexCoords(texCoords, 12);
 }
 
-
-
 // SPHERE ============================================
-Sphere::Sphere() : Primitive()
+PrimitiveSphere::PrimitiveSphere() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-Sphere::Sphere(float radius, int sectors, int stacks) : Primitive(), radius(radius), sectors(sectors), stacks(stacks)
+PrimitiveSphere::PrimitiveSphere(float radius, int sectors, int stacks) : Primitive(), radius(radius), sectors(sectors), stacks(stacks)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-void Sphere::InnerMesh()
+void PrimitiveSphere::InnerMesh()
 {
 	SetVerticesMesh();
 	SetIndicesMesh();	
 }
 
-void Sphere::SetVerticesMesh()
+void PrimitiveSphere::SetVerticesMesh()
 {
 	// clear memory of prev arrays
 	std::vector<float>().swap(vertices);
@@ -210,7 +207,7 @@ void Sphere::SetVerticesMesh()
 	}
 }
 
-void Sphere::SetIndicesMesh()
+void PrimitiveSphere::SetIndicesMesh()
 {
 	// generate CCW index list of sphere triangles
 	// k1--k1+1
@@ -248,23 +245,23 @@ void Sphere::SetIndicesMesh()
 
 
 // CYLINDER ============================================
-Cylinder::Cylinder() : Primitive()
+PrimitiveCylinder::PrimitiveCylinder() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
-Cylinder::Cylinder(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height), sectorCount(sectorCount)
+PrimitiveCylinder::PrimitiveCylinder(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height), sectorCount(sectorCount)
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
-void Cylinder::InnerMesh()
+void PrimitiveCylinder::InnerMesh()
 {
 	SetVerticesMesh();
 	SetIndicesMesh();
 }
 
-std::vector<float> Cylinder::GetUnitCircleVertices()
+std::vector<float> PrimitiveCylinder::GetUnitCircleVertices()
 {
 	float sectorStep = 2 * PI / sectorCount;
 	float sectorAngle;  // radian
@@ -280,7 +277,7 @@ std::vector<float> Cylinder::GetUnitCircleVertices()
 	return unitCircleVertices;
 }
 
-void Cylinder::SetVerticesMesh()
+void PrimitiveCylinder::SetVerticesMesh()
 {
 	// clear memory of prev arrays
 	std::vector<float>().swap(vertices);
@@ -334,7 +331,7 @@ void Cylinder::SetVerticesMesh()
 	}
 }
 
-void Cylinder::SetIndicesMesh()
+void PrimitiveCylinder::SetIndicesMesh()
 {
 	// generate CCW index list of cylinder triangles
 	int k2 = 0;                         // 1st vertex index at base
@@ -395,23 +392,17 @@ void Cylinder::SetIndicesMesh()
 
 
 // PYRAMID ============================================
-Pyramid::Pyramid() : Primitive()
+PrimitivePyramid::PrimitivePyramid() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
-Pyramid::Pyramid(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height)
+PrimitivePyramid::PrimitivePyramid(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height)
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
-void Pyramid::InnerMesh()
-{
-	SetVerticesMesh();
-	SetIndicesMesh();
-}
-
-void Pyramid::SetVerticesMesh()
+void PrimitivePyramid::InnerMesh()
 {
 	float vertex[] =
 	{
@@ -419,17 +410,12 @@ void Pyramid::SetVerticesMesh()
 		0.5f, 0, -0.5,
 		-0.5, 0, 0.5f,
 		0.5f, 0, 0.5f,
-		0, height/radius, 0,
+		0, height / radius, 0,
 	};
 	for (int i = 0; i < 15; i++)
 	{
 		vertex[i] *= radius;
 	}
-	SetVertices(vertex, 24);
-}
-
-void Pyramid::SetIndicesMesh()
-{
 	int index[] =
 	{
 		0, 2, 4,
@@ -439,23 +425,50 @@ void Pyramid::SetIndicesMesh()
 		0, 1, 3,
 		0, 3, 2,
 	};
-	SetIndices(index, 36);
-}
+	float texCoords[] =
+	{
+		0.5000, 0.1910,
+		0.1910, 0.5000,
+		0.5000, 0.8090,
+		0.5000, 0.1910,
+		0.5000, 0.8090,
+		0.8090, 0.5000,
 
+		0.5000, 0.1910,
+		0.8090, 0.5000,
+		1.0000, 0.0000,
+
+		0.8090, 0.5000,
+		0.5000, 0.8090,
+		1.0000, 1.0000,
+
+		0.5000, 0.8090,
+		0.1910, 0.5000,
+		0.0000, 1.0000,
+
+		0.1910, 0.5000,
+		0.5000, 0.1910,
+		0.0000, 0.0000,
+	};
+
+	SetVertices(vertex, 15);
+	SetIndices(index, 18);
+	SetTexCoords(texCoords, 36);
+}
 
 
 // LINE ==================================================
-Line::Line() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
+PrimitiveLine::PrimitiveLine() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
 {
 	type = PrimitiveTypes::Primitive_Line;
 }
 
-Line::Line(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
+PrimitiveLine::PrimitiveLine(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
 {
 	type = PrimitiveTypes::Primitive_Line;
 }
 
-void Line::InnerRender() const
+void PrimitiveLine::InnerRender() const
 {
 	glLineWidth(2.0f);
 
@@ -470,17 +483,17 @@ void Line::InnerRender() const
 }
 
 // PLANE ==================================================
-Plane::Plane() : Primitive(), normal(0, 1, 0), constant(1)
+PrimitivePlane::PrimitivePlane() : Primitive(), normal(0, 1, 0), constant(1)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-Plane::Plane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
+PrimitivePlane::PrimitivePlane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-void Plane::InnerRender() const
+void PrimitivePlane::InnerRender() const
 {
 	glLineWidth(1.0f);
 

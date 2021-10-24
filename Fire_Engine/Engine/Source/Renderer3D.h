@@ -69,11 +69,8 @@ private:
 	bool colorMaterial = true;
 	bool texture2D = true;
 
-	Cube cube;
-	Sphere sphere;
-	Cylinder cylinder;
-	Pyramid pyramid;
-
-	MeshData* exampleFBX;
-	
+	PrimitiveCube cube;
+	PrimitiveSphere sphere;
+	PrimitiveCylinder cylinder;
+	PrimitivePyramid pyramid;	
 };

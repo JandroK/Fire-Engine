@@ -13,6 +13,7 @@ Application::Application() : maxFPS(60)
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
 	physics = new Physics3D(this);
+	//resources = new ResourceManager(this);
 	editor = new Editor(this);
 
 	// The order of calls is very important!
@@ -24,7 +25,7 @@ Application::Application() : maxFPS(60)
 	AddModule(camera);
 	AddModule(input);
 	AddModule(physics);
-	
+	//AddModule(resources);	
 	
 	// Renderer last!
 	AddModule(renderer3D);

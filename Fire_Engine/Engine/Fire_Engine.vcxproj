@@ -257,7 +257,7 @@
     <ClInclude Include="Source\FileSystem.h" />
     <ClInclude Include="Source\Physics3D.h" />
     <ClInclude Include="Source\Renderer3D.h" />
-    <ClInclude Include="Source\Resources.h" />
+    <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\Tab.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Window.h" />
@@ -326,7 +326,7 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Physics3D.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
-    <ClCompile Include="Source\Resources.cpp" />
+    <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\Tab.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />

@@ -2,13 +2,16 @@
 
 #include "Glew/include/glew.h"
 
-Mesh::Mesh()
+Mesh::Mesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH)
 {
 }
 
+Mesh::~Mesh()
+{
+}
 
-void Mesh::SetupMesh()
-{	
+bool Mesh::LoadToMemory()
+{
 	// Vertex Buffer GL_ARRAY_BUFFER
 	glGenBuffers(1, (uint*)&(vertexBufferId));
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
@@ -19,9 +22,25 @@ void Mesh::SetupMesh()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices.size(), &indices[0], GL_STATIC_DRAW);
 
+	// TexCoords Buffer GL_ARRAY_BUFFER
+	glGenBuffers(1, (uint*)&(textureBufferId));
+	glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size() * 2, &texCoords[0], GL_STATIC_DRAW);
+
 	//texcoords attribute
 	/*glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * texCoords.size() * 2, (GLvoid*)(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);*/
+
+	return true;
+}
+
+bool Mesh::UnloadFromMemory()
+{
+	//Clear buffers
+	indices.clear();
+	vertices.clear();
+
+	return true;
 }
 
 void Mesh::SetVertices(float _vertices[], int size)
@@ -36,7 +55,7 @@ void Mesh::SetTexCoords(float _texCoords[], int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		vertices.push_back(_texCoords[i]);
+		texCoords.push_back(_texCoords[i]);
 	}
 }
 
@@ -48,7 +67,7 @@ void Mesh::SetIndices(int _indices[], int size)
 	}
 }
 
-void Mesh::Draw()
+void Mesh::RenderMesh()
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);

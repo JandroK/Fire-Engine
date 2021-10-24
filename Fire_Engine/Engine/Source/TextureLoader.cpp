@@ -8,7 +8,7 @@
 #include "DevIL\include\ilu.h"
 #include "DevIL\include\ilut.h"
 
-#include"Resources.h"
+#include"Resource.h"
 //#include"RE_Texture.h"
 
 
@@ -79,7 +79,7 @@ void TextureLoader::SaveDDS(char* buffer, int size, const char* fileName)
 	ilDeleteImages(1, &imageID);
 }
 
-void TextureLoader::Import(char* buffer, int bSize, Resources* res)
+void TextureLoader::Import(char* buffer, int bSize, Resource* res)
 {
 	SaveDDS(buffer, bSize, res->GetLibraryPath());
 }
