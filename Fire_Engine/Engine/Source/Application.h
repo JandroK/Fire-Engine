@@ -11,7 +11,7 @@
 #include "Input.h"
 #include "Camera3D.h"
 #include "Physics3D.h"
-//#include "ResourceManager.h"
+#include "ResourceManager.h"
 #include "Editor.h"
 #include "ResourceManager.h"
 
@@ -28,7 +28,7 @@ public:
 	Input* input;
 	Renderer3D* renderer3D;
 	Physics3D* physics;
-	//ResourceManager* resources;
+	ResourceManager* resources;
 	Editor* editor;
 
 	std::vector<Module*> listModules;

@@ -35,7 +35,7 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	file += std::to_string(UID);
 	file += ".mmh";
 
-	Mesh* mesh;// = dynamic_cast<Mesh*>(app->resources->CreateNewResource("", UID, Resource::Type::MESH));
+	Mesh* mesh = dynamic_cast<Mesh*>(app->resources->CreateNewResource("", UID, Resource::Type::MESH));
 
 	// copy vertices
 	mesh->numVertex = importedMesh->mNumVertices;

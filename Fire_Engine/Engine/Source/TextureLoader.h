@@ -11,7 +11,5 @@ namespace TextureLoader
 	void SaveDDS(char* buffer, int size, const char* fileName);
 
 	void Import(char* buffer, int bSize, Resource* res);
-
-	void TakeScreenshot(int frameBuffer);
 };
 
