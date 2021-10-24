@@ -136,6 +136,12 @@ Resource::Type ResourceManager::GetTypeFromLibraryExtension(const char* libraryF
 
 	return Resource::Type::UNKNOWN;
 }
+void ResourceManager::UpdateMeshesDisplay()
+{
+	/*meshesLibraryRoot.childDirs.clear();
+	App->moduleFileSystem->GetAllFilesRecursive(meshesLibraryRoot);
+	LOG(LogType::L_WARNING, "Mesh display updated");*/
+}
 void ResourceManager::ReleaseResource(int uid)
 {
 	std::map<int, Resource*>::iterator it = resources.find(uid);

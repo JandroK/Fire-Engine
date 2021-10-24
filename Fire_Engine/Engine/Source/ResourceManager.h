@@ -31,6 +31,8 @@ public:
 	std::string GenLibraryPath(uint _uid, Resource::Type _type);
 	Resource::Type GetTypeFromLibraryExtension(const char* libraryFile) const;
 
+	void UpdateMeshesDisplay();
+
 private:
 	void ReleaseResource(int uid);
 
