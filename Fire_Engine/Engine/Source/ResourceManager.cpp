@@ -3,10 +3,13 @@
 
 //Importers
 #include "FileSystem.h"
+#include "TextureLoader.h"
+#include "MeshLoader.h"
+#include "ModelImporter.h"
 
 //Resources
-#include "Textures.h"
-#include "Mesh.h"
+#include "ResourceTexture.h"
+#include "ResourceMesh.h"
 
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -36,6 +39,76 @@ int ResourceManager::GenerateNewUID()
 {
 	return app->GetNewUID();
 }
+int ResourceManager::GetMetaUID(const char* metaFile) const
+{
+	JSON_Value* metaJSON = json_parse_file(metaFile);
+	JsonConfig rObj(json_value_get_object(metaJSON));
+
+	uint mUID = rObj.ReadInt("UID");
+
+	//Free memory
+	json_value_free(metaJSON);
+
+	return mUID;
+}
+int ResourceManager::ImportFile(const char* assetsFile, Resource::Type type)
+{
+	//To check if a resource is loaded we need to create .meta files first
+
+	if (type == Resource::Type::UNKNOWN)
+		return 0;
+
+	//Generate meta
+	std::string meta = ResourceManager::GetMetaPath(assetsFile);
+	uint resUID = GetMetaUID(meta.c_str());
+
+	Resource* resource = GetResourceFromUID(resUID);
+
+	bool isCreated = false;
+	if (resource == nullptr) {
+		resource = CreateNewResource(assetsFile, resUID, type);
+		isCreated = true;
+	}
+
+	if (resource == nullptr)
+		return 0;
+
+	int ret = 0;
+
+	char* fileBuffer = nullptr;
+	unsigned int size = FileSystem::LoadToBuffer(assetsFile, &fileBuffer);
+
+	static_assert(static_cast<int>(Resource::Type::UNKNOWN) == 7, "Update all switches with new type");
+	switch (resource->GetType())
+	{
+		case Resource::Type::TEXTURE: TextureLoader::Import(fileBuffer, size, resource); break;
+		case Resource::Type::MODEL: ModelImporter::Import(fileBuffer, size, resource); break;
+	}
+
+	//Save the resource to custom format
+	ret = resource->GetUID();
+
+	RELEASE_ARRAY(fileBuffer);
+
+	if (resource->GetReferenceCount() <= 1 && isCreated == true)
+		UnloadResource(ret);
+
+	return ret;
+}
+void ResourceManager::UnloadResource(int uid)
+{
+	Resource* res = nullptr;
+
+	std::map<int, Resource*>::iterator it = resources.find(uid);
+	if (it == resources.end())
+		return;
+
+	res = it->second;
+	res->DecreaseReferenceCount();
+
+	if (res->GetReferenceCount() <= 0)
+		ReleaseResource(res->GetUID());
+}
 // Get file type according to its extension
 Resource::Type ResourceManager::GetTypeFromLibraryExtension(const char* libraryFile) const
 {
@@ -62,6 +135,17 @@ Resource::Type ResourceManager::GetTypeFromLibraryExtension(const char* libraryF
 
 
 	return Resource::Type::UNKNOWN;
+}
+void ResourceManager::ReleaseResource(int uid)
+{
+	std::map<int, Resource*>::iterator it = resources.find(uid);
+	if (it == resources.end())
+		return;
+
+	Resource* res = (*it).second;
+	(*it).second->UnloadFromMemory();
+	resources.erase((*it).second->GetUID());
+	delete res;
 }
 Resource* ResourceManager::CreateNewResource(const char* assetsFile, uint uid, Resource::Type type)
 {
@@ -133,6 +217,28 @@ Resource* ResourceManager::RequestResource(int uid, const char* libraryPath)
 	}
 
 	return nullptr;
+}
+
+Resource* ResourceManager::GetResourceFromUID(int uid)
+{
+	//Find if the resource is already loaded
+	if (uid <= -1)
+		return nullptr;
+
+	std::map<int, Resource*>::iterator it = resources.find(uid);
+	if (it != resources.end())
+	{
+		return it->second;
+	}
+
+	return nullptr;
+}
+
+std::string ResourceManager::GetMetaPath(const char* assetsFile)
+{
+	std::string metaFile(assetsFile);
+	metaFile += ".meta";
+	return metaFile;
 }
 
 std::string ResourceManager::GenLibraryPath(uint _uid, Resource::Type _type)

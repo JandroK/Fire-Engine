@@ -37,14 +37,11 @@ public:
 	inline void IncreaseReferenceCount() { referenceCount++; }
 	inline void DecreaseReferenceCount() { referenceCount--; }
 
-	//virtual void Save(Config& config) const;
-	//virtual void Load(const Config& config);
-
 	//Can't be pure virtual "=0" until there is a resoruce model class
 	virtual bool LoadToMemory() { return false; }
 	virtual bool UnloadFromMemory() { return false; }
 
-protected:
+public:
 
 	int uid;
 	std::string assetsFile;

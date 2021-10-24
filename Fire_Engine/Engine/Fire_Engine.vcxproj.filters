@@ -393,7 +393,7 @@
     <ClInclude Include="Source\External\Assimp\include\ZipArchiveIOSystem.h">
       <Filter>Sources\3rd Party\Aassimp</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FBXLoader.h">
+    <ClInclude Include="Source\MeshLoader.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source\TextureLoader.h">
@@ -402,10 +402,10 @@
     <ClInclude Include="Source\Resource.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Textures.h">
+    <ClInclude Include="Source\ResourceTexture.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
+    <ClInclude Include="Source\ResourceMesh.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source\FileSystem.h">
@@ -594,6 +594,9 @@
     <ClInclude Include="Source\ResourceManager.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ModelImporter.h">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -683,19 +686,16 @@
     <ClCompile Include="Source\JsonParser.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FBXLoader.cpp">
+    <ClCompile Include="Source\MeshLoader.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source\TextureLoader.cpp">
       <Filter>Sources\Tools\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Resource.cpp">
-      <Filter>Sources\Tools\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Textures.cpp">
+    <ClCompile Include="Source\ResourceTexture.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
+    <ClCompile Include="Source\ResourceMesh.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source\FileSystem.cpp">
@@ -799,6 +799,12 @@
     </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModelImporter.cpp">
+      <Filter>Sources\Tools\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Sources\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,9 +8,6 @@
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
-#include "FBXLoader.h"
-
-
 #define MAX_LIGHTS 8
 
 class Hardware {

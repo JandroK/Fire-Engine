@@ -3,7 +3,7 @@
 #include "glmath.h"
 #include "Color.h"
 #include <vector>
-#include "Mesh.h"
+#include "ResourceMesh.h"
 
 enum PrimitiveTypes
 {

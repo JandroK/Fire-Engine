@@ -7,6 +7,8 @@
 
 #include "GPUDetected/DeviceId.h"
 
+#include "ResourceManager.h"
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
@@ -148,6 +150,8 @@ bool Renderer3D::Init()
 	
 	cube.InnerMesh();
 	cube.LoadToMemory();
+
+	
 
 	/*sphere.InnerMesh();
 	sphere.LoadToMemory();
