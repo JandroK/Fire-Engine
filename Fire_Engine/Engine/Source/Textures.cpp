@@ -31,11 +31,6 @@ Texture::~Texture()
 {
 }
 
-//bool ResourceTexture::LoadToMemory()
-//{
-//	return true;
-//}
-
 bool Texture::LoadToMemory()
 {
 	LOG(LogType::L_WARNING, "Texture loaded to memory");

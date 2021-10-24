@@ -9,7 +9,7 @@
 #include "DevIL\include\ilut.h"
 
 #include"Resource.h"
-//#include"RE_Texture.h"
+//#include "Textures.h"
 
 
 GLuint TextureLoader::LoadToMemory(char* buffer, int size, int* w, int* h)
@@ -82,19 +82,4 @@ void TextureLoader::SaveDDS(char* buffer, int size, const char* fileName)
 void TextureLoader::Import(char* buffer, int bSize, Resource* res)
 {
 	SaveDDS(buffer, bSize, res->GetLibraryPath());
-}
-
-/*Take a screenshot*/
-void TextureLoader::TakeScreenshot(int frameBuffer)
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-
-	ILuint imageID = ilGenImage();
-	ilBindImage(imageID);
-	ilutGLScreen();
-	ilEnable(IL_FILE_OVERWRITE);
-	ilSaveImage("Screenshots/Screenshot.png");
-	ilDeleteImage(imageID);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

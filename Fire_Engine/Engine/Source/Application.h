@@ -13,6 +13,7 @@
 #include "Physics3D.h"
 //#include "ResourceManager.h"
 #include "Editor.h"
+#include "ResourceManager.h"
 
 #include "JsonParser.h"
 
