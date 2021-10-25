@@ -39,9 +39,8 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	Mesh* mesh = dynamic_cast<Mesh*>(app->resources->CreateNewResource("", UID, Resource::Type::MESH));
 
 	// copy vertices
-	mesh->numVertex = importedMesh->mNumVertices;
-	//mesh->vertices = new float[_mesh->numVertex * VERTEX_ATTRIBUTES];
-	//mesh->texCoords = new float[_mesh->numVertex * VERTEX_ATTRIBUTES];
+	mesh->vertices.resize(mesh->numVertex * sizeof(float) * 3);
+	mesh->texCoords.resize(mesh->numVertex * sizeof(float) * 2);
 
 	for (size_t i = 0; i < mesh->numVertex; i++)
 	{
@@ -66,7 +65,8 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	if (importedMesh->HasFaces())
 	{
 		mesh->numIndices = importedMesh->mNumFaces * 3;
-		//mesh->indices = new uint[_mesh->numIndices]; // assume each face is a triangle
+		mesh->indices.resize(mesh->numVertex);
+		
 		for (uint j = 0; j < importedMesh->mNumFaces; ++j)
 		{
 			if (importedMesh->mFaces[j].mNumIndices != 3)

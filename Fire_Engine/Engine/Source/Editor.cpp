@@ -210,6 +210,7 @@ update_status Editor::ImGuiMenu()
 				IMGUI_PRINT("ImGui Version: ", "1.84.2");
 				IMGUI_PRINT("MathGeoLib Version: ", "1.5");
 				IMGUI_PRINT("Assimp Version: ", "5.0.1");
+				IMGUI_PRINT("DeviL Version: ", "1.8");
 
 				ImGui::NewLine();
 				ImGui::Separator();

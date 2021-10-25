@@ -201,8 +201,8 @@ Resource* ResourceManager::RequestResource(int uid, const char* libraryPath)
 			//uid = 0; //This should be the uid from library
 			switch (GetTypeFromLibraryExtension(libraryPath))
 			{
-			case Resource::Type::TEXTURE: ret = (Resource*) new Texture(uid); break;
-			case Resource::Type::MESH: ret = (Resource*) new Mesh(uid); break;
+				case Resource::Type::TEXTURE: ret = (Resource*) new Texture(uid); break;
+				case Resource::Type::MESH: ret = (Resource*) new Mesh(uid); break;
 			}
 
 			if (ret != nullptr)
