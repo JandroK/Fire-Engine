@@ -104,4 +104,5 @@ void Mesh::CleanUp()
 	//Clear buffers
 	indices.clear();
 	vertices.clear();
+	texCoords.clear();
 }
