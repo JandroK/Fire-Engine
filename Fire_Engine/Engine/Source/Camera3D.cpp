@@ -65,59 +65,60 @@ update_status Camera3D::Update(float dt)
 	Reference += newPos;
 
 	// Mouse motion ----------------
-
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-	{
-		int dx = -App->input->GetMouseXMotion();
-		int dy = -App->input->GetMouseYMotion();
-
-		float Sensitivity = 0.25f;
-		float4x4 t;
-		float3 up = float3(0, 1, 0);
-		float3 left = float3(1, 0, 0);
-		Position -= Reference;
-		float3 i;
-		if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
-		{
-			//float DeltaX = (float)dx * Sensitivity;
-			//i = (t.RotateAxisAngle(up, DeltaX) * t.RotateAxisAngle(left, DeltaX)).MulPos(float3(Position.x, Position.y, Position.z));
-			//Position = vec3(i.x, i.y, i.z);
-			//Position = Reference + Position;
-		}
-		else 
-		{
-			if (dx != 0)
-			{
-				float DeltaX = (float)dx * Sensitivity;
-
-				X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				
-			}
-
-			if (dy != 0)
-			{
-				float DeltaY = (float)dy * Sensitivity;
-
-				Y = rotate(Y, DeltaY, X);
-				Z = rotate(Z, DeltaY, X);
-
-				if (Y.y < 0.0f)
-				{
-					Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-					Y = cross(Z, X);
-				}
-			}
-			Position = Reference + Z * length(Position);
-		}
-		
-	}
+	OrbitRotation();
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
 
 	return UPDATE_CONTINUE;
+}
+
+void Camera3D::OrbitRotation()
+{
+
+	vec3 pivot = vec3(0,0,0);
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
+		int dx = -App->input->GetMouseXMotion();
+		int dy = -App->input->GetMouseYMotion();
+
+		float Sensitivity = 0.25f;
+
+		if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+		{
+			//Position -= Object;
+
+		}
+		else {
+
+			Position -= Reference;
+		}
+
+		if (dx != 0)
+		{
+			float DeltaX = (float)dx * Sensitivity;
+
+			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+		}
+
+		if (dy != 0)
+		{
+			float DeltaY = (float)dy * Sensitivity;
+
+			Y = rotate(Y, DeltaY, X);
+			Z = rotate(Z, DeltaY, X);
+
+			if (Y.y < 0.0f)
+			{
+				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+				Y = cross(Z, X);
+			}
+		}
+		Position = Reference + Z * length(Position);
+
+	}
 }
 
 // -----------------------------------------------------------------
