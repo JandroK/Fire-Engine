@@ -8,6 +8,7 @@
 #include "GPUDetected/DeviceId.h"
 
 #include "ResourceManager.h"
+#include "ResourceTexture.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -133,13 +134,6 @@ bool Renderer3D::Init()
 		glEnable(GL_TEXTURE_2D);
 	}
 
-	//uint vboId;
-	//glGenBuffers(1, &vboId);
-	//// bind VBO in order to use
-	//glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	//// upload data to VBO
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
-
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -148,12 +142,10 @@ bool Renderer3D::Init()
 
 	// LADO FRONTAL: lado multicolor
 	
-	cube.InnerMesh();
-	cube.LoadToMemory();
+	/*cube.InnerMesh();
+	cube.LoadToMemory();	
 
-	
-
-	/*sphere.InnerMesh();
+	sphere.InnerMesh();
 	sphere.LoadToMemory();
 	
 	cylinder.InnerMesh();
@@ -199,7 +191,7 @@ update_status Renderer3D::PostUpdate(float dt)
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
-	cube.RenderMesh();
+	//cube.RenderMesh();
 	//sphere.RenderMesh();
 	//cylinder.RenderMesh();
 	//pyramid.RenderMesh();
@@ -221,6 +213,21 @@ bool Renderer3D::CleanUp()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_TEXTURE_2D);
+
+	for (unsigned int k = 0; k < globalTextures.size(); ++k)
+	{
+		glDeleteTextures(1, &globalTextures[k]->textureID);
+		delete globalTextures[k];
+		globalTextures[k] = nullptr;
+	}
+	globalTextures.clear();
+
+	for (unsigned int i = 0; i < globalMeshes.size(); i++)
+	{
+		delete globalMeshes[i];
+		globalMeshes[i] = nullptr;
+	}
+	globalMeshes.clear();
 
 	SDL_GL_DeleteContext(context);
 

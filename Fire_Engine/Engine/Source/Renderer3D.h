@@ -8,6 +8,8 @@
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 
+class Texture;
+
 #define MAX_LIGHTS 8
 
 class Hardware {
@@ -57,6 +59,10 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	bool vsync;
 	bool wireframe = false;
+
+	//Mesh testMesh;
+	std::vector<Mesh*> globalMeshes;
+	std::vector<Texture*> globalTextures;
 
 private:
 	Hardware hardware;

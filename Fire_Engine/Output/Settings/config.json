@@ -3,13 +3,13 @@
         "FPS": 0
     },
     "Window": {
-        "width": 1280,
-        "height": 720,
+        "width": 1311,
+        "height": 897,
         "brightness": 1,
         "fullscreen": false,
         "fullscreen desktop": false,
         "borderless": false,
-        "resizable": false
+        "resizable": true
     },
     "Camera3D": {
         "X.x": 0.53272974491119385,

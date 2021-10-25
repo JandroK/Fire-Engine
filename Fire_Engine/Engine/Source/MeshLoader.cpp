@@ -1,7 +1,15 @@
-#include "MeshLoader.h"
 #include "Application.h"
-#include "Editor.h"
+#include "MeshLoader.h"
+
+//#include "Editor.h"
+ 
+// Importers
+#include "FileSystem.h"
+#include "TextureLoader.h"
+
+// Resources
 #include "ResourceMesh.h"
+#include "ResourceTexture.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -21,7 +29,7 @@ void MeshLoader::EnableDebugMode()
 }
 void MeshLoader::DisableDebugMode()
 {
-	// detach log stream
+	// Detach log stream
 	aiDetachAllLogStreams();
 }
 
@@ -32,11 +40,11 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 		UID = app->GetNewUID();
 
 	LOG(LogType::L_NORMAL, "%s", importedMesh->mName.C_Str());
-	std::string file = MESH_FOLDER;
+	std::string file = MESHES_FOLDER;
 	file += std::to_string(UID);
 	file += ".mmh";
 
-	Mesh* mesh = dynamic_cast<Mesh*>(app->resources->CreateNewResource("", UID, Resource::Type::MESH));
+	Mesh* mesh = new Mesh(UID);
 
 	// copy vertices
 	mesh->vertices.resize(mesh->numVertex * sizeof(float) * 3);
@@ -60,7 +68,6 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 		LOG(LogType::L_ERROR, "ADD VERTEX COLORS");
 	}
 
-
 	// Generate indices
 	if (importedMesh->HasFaces())
 	{
@@ -79,6 +86,8 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 			}
 		}
 	}
+
+	mesh->LoadToMemory();
 
 	return mesh;
 }
