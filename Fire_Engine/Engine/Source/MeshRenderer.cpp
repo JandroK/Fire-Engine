@@ -6,6 +6,7 @@
 
 #include "GameObject.h"
 #include "Transform.h"
+#include "Material.h"
 
 #include "ImGui/imgui.h"
 
@@ -30,7 +31,14 @@ void MeshRenderer::RenderMesh()
 		glPushMatrix();
 		glMultMatrixf(transform->GetGlobalTransposed());
 	}
-	mesh->RenderMesh();
+
+	Material* material = dynamic_cast<Material*>(GetOwner()->GetComponent(ComponentType::MATERIAL));
+	GLuint id = -1;
+
+	if (material != nullptr)
+		id = material->GetTextureID();
+
+	mesh->RenderMesh(id);
 
 	if (vertexNormals || faceNormals)
 		mesh->RenderMeshDebug(&vertexNormals, &faceNormals);

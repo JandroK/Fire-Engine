@@ -246,6 +246,7 @@
     <ClInclude Include="Source\External\Mmgr\nommgr.h" />
     <ClInclude Include="Source\External\Parson\parson.h" />
     <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\MeshLoader.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
@@ -321,6 +322,7 @@
     <ClCompile Include="Source\External\Mmgr\mmgr.cpp" />
     <ClCompile Include="Source\External\Parson\parson.c" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\Material.cpp" />
     <ClCompile Include="Source\MeshLoader.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\MeshRenderer.cpp" />
