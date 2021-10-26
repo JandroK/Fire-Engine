@@ -1,8 +1,9 @@
-#include "Globals.h"
 #include "Application.h"
+#include "Camera3D.h"
+#include "Globals.h"
+
 #include "Math/float4x4.h"
 #include "Math/float3.h"
-#include "Camera3D.h"
 
 Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -21,7 +22,6 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 Camera3D::~Camera3D()
 {}
 
-// -----------------------------------------------------------------
 bool Camera3D::Start()
 {
 	LOG(LogType::L_NORMAL, "Setting up the camera");
@@ -30,7 +30,6 @@ bool Camera3D::Start()
 	return ret;
 }
 
-// -----------------------------------------------------------------
 bool Camera3D::CleanUp()
 {
 	LOG(LogType::L_NO_PRINTABLE, "Cleaning camera");
@@ -38,7 +37,6 @@ bool Camera3D::CleanUp()
 	return true;
 }
 
-// -----------------------------------------------------------------
 update_status Camera3D::Update(float dt)
 {
 	// Implement a debug camera with keys and mouse
