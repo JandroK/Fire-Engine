@@ -21,7 +21,7 @@ Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start
 
 	SDL_version version;
 	SDL_GetVersion(&version);
-	sprintf_s(hardware.SDLVersion, 25, "%i.%i.%i", version.major, version.minor, version.patch);
+	hardware.SDLVersion = std::to_string(version.major) + '.' + std::to_string(version.minor) + '.' + std::to_string(version.patch);
 	hardware.CPUCount = SDL_GetCPUCount();
 	hardware.CPUCache = SDL_GetCPUCacheLineSize();
 	hardware.systemRAM = SDL_GetSystemRAM() / 1024.f;	
@@ -62,6 +62,17 @@ bool Renderer3D::Init()
 		LOG(LogType::L_ERROR, "OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+
+	GLenum error = glewInit();
+	if (error != GL_NO_ERROR)
+	{
+		LOG(LogType::L_ERROR, "Error initializing glew library! %s", SDL_GetError());
+		ret = false;
+	}
+	else
+	{
+		LOG(LogType::L_NORMAL, "Init: Glew %s", glewGetString(GLEW_VERSION));
+	}
 	
 	if(ret == true)
 	{
@@ -73,9 +84,8 @@ bool Renderer3D::Init()
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		GLenum error = glewInit();
 		//Check for error
-		error = glGetError();
+		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
 		{
 			LOG(LogType::L_ERROR, "Error initializing OpenGL! %s\n", gluErrorString(error));
@@ -109,7 +119,11 @@ bool Renderer3D::Init()
 			ret = false;
 		}
 
-		
+		// Blend for transparency
+		glEnable(GL_BLEND);
+		glBlendEquation(GL_FUNC_ADD);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 		
@@ -134,20 +148,40 @@ bool Renderer3D::Init()
 		glEnable(GL_TEXTURE_2D);
 	}
 
+	//Generate texture
+	for (int i = 0; i < SQUARE_TEXTURE_W; i++) {
+		for (int j = 0; j < SQUARE_TEXTURE_H; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &checkersTexture);
+	glBindTexture(GL_TEXTURE_2D, checkersTexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SQUARE_TEXTURE_W, SQUARE_TEXTURE_H, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	// LADO FRONTAL: lado multicolor
 	
+	// Load Primitives Test
 	cube.InnerMesh();
 	cube.LoadToMemory();	
 
-	sphere.InnerMesh();
+	/*sphere.InnerMesh();
 	sphere.LoadToMemory();
-	/*
+	
 	cylinder.InnerMesh();
 	cylinder.LoadToMemory();
 
@@ -162,6 +196,7 @@ update_status Renderer3D::PreUpdate(float dt)
 {
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
@@ -179,7 +214,7 @@ update_status Renderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status Renderer3D::PostUpdate(float dt)
 {
-	update_status ret;
+	update_status ret = UPDATE_CONTINUE;
 	//glClearColor(0.f, 0.f, 0.f, 1.f);
 	//glClear(GL_COLOR_BUFFER_BIT);
 	// Axis and grid
@@ -188,19 +223,19 @@ update_status Renderer3D::PostUpdate(float dt)
 	p.axis = true;
 	p.Render();
 
+	// Comprobe wireframe mode
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
+	// Draw all tabs
 	cube.RenderMesh();
-	//sphere.RenderMesh();
-	//cylinder.RenderMesh();
-	//pyramid.RenderMesh();
+	ret = app->editor->Draw();
 
-	glEnd();	
+	SDL_GL_SwapWindow(app->window->window);
 
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	return UPDATE_CONTINUE;
+	return ret;
 }
 
 // Called before quitting
@@ -267,7 +302,7 @@ void Renderer3D::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Hardware"))
 	{
-		IMGUI_PRINT("SDL Version: ", hardware.SDLVersion);
+		IMGUI_PRINT("SDL Version: ", "%s", hardware.SDLVersion.c_str());
 		IMGUI_PRINT("OpenGL Version: ", "%s", glGetString(GL_VERSION));
 		IMGUI_PRINT("Glew Version: ", "%s", glewGetString(GLEW_VERSION));
 

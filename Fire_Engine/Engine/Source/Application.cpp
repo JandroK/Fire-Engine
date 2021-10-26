@@ -25,8 +25,8 @@ Application::Application() : maxFPS(60)
 	AddModule(physics);	
 	
 	// Renderer last!
-	AddModule(renderer3D);
 	AddModule(editor);
+	AddModule(renderer3D);
 
 	loadRequested = true;
 	saveRequested = false;

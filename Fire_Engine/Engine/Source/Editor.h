@@ -30,9 +30,8 @@ public:
 	bool Start();
 	void LogToConsole(const char* msg, LogType _type);
 	
-	update_status PreUpdate(float dt);
-	update_status Update(float dt);
-	update_status PostUpdate(float dt);
+	void StartFrame();
+	update_status Draw();
 
 	update_status ImGuiMenuBar();
 	Tab* GetTab(TabType type);

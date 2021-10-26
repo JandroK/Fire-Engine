@@ -11,11 +11,13 @@
 class Texture;
 
 #define MAX_LIGHTS 8
+#define SQUARE_TEXTURE_W 256
+#define SQUARE_TEXTURE_H 256
 
 class Hardware {
 public:
 	std::string caps;
-	char SDLVersion[25] = "";
+	std::string SDLVersion;
 
 	uint CPUCount;
 	uint CPUCache;
@@ -60,9 +62,13 @@ public:
 	bool vsync;
 	bool wireframe = false;
 
-	//Mesh testMesh;
+	// Mesh testMesh;
 	std::vector<Mesh*> globalMeshes;
 	std::vector<Texture*> globalTextures;
+
+	// Textures
+	GLuint checkersTexture;
+	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 
 private:
 	Hardware hardware;

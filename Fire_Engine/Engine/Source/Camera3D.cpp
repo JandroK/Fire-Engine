@@ -75,7 +75,6 @@ update_status Camera3D::Update(float dt)
 
 void Camera3D::OrbitRotation()
 {
-
 	vec3 pivot = vec3(0,0,0);
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{

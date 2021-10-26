@@ -87,15 +87,8 @@ void Editor::CreateDockSpace()
 	dockId = DockSpaceOverViewportCustom(viewport, ImGuiDockNodeFlags_PassthruCentralNode, dockPos, dockSize, nullptr);
 }
 
-update_status Editor::PreUpdate(float dt)
+void Editor::StartFrame()
 {
-    return UPDATE_CONTINUE;
-}
-
-update_status Editor::Update(float dt)
-{
-
-	update_status ret = UPDATE_CONTINUE;
 	// Start the Dear ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
@@ -109,16 +102,16 @@ update_status Editor::Update(float dt)
 			tabs[i]->active = !tabs[i]->active;
 		}
 	}
-
-    return ret;
 }
 
-update_status Editor::PostUpdate(float dt)
+update_status Editor::Draw()
 {	
-	update_status ret = UPDATE_CONTINUE;
+	StartFrame();
+
 	// Rendering the tabs
-	ret = ImGuiMenuBar();
+	update_status ret = ImGuiMenuBar();
 	CreateDockSpace();
+
 	if (showCase)
 	{
 		//ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_MenuBarBg, ImVec4(0.f, 0.f, 0.f, 1.f));
@@ -147,15 +140,14 @@ update_status Editor::PostUpdate(float dt)
 		ImGui::RenderPlatformWindowsDefault();
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
-	SDL_GL_SwapWindow(App->window->window);
-
-    return ret;
+	return ret;
 }
 
 update_status Editor::ImGuiMenuBar()
 {
 	// Create a MenuBar
 	update_status ret = update_status::UPDATE_CONTINUE;
+
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -206,6 +198,7 @@ update_status Editor::ImGuiMenuBar()
 bool Editor::CleanUp()
 {
 	bool ret= true;
+	LOG(LogType::L_NORMAL, "Editor CleanUp");
 
 	// CleanUp all tabs
 	ImGui_ImplOpenGL3_Shutdown();
