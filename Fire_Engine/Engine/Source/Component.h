@@ -24,6 +24,8 @@ public:
 	Type GetType() { return type; };
 	void SetType(Type type) { this->type = type; };
 
+	GameObject* GetOwner() { return owner; };
+
 private:
 	Type type = Type::UNKNOW;
 	bool active = true;

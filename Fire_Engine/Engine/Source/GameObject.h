@@ -5,7 +5,7 @@
 
 #include "Component.h"
 
-class C_Transform;
+class Transform;
 
 class GameObject
 {
@@ -24,6 +24,12 @@ public:
 	bool IsRoot() { return (parent == nullptr) ? true : false; };
 	void Destroy() { toDelete = true;};
 
+	std::vector<GameObject*> GetChildrens() { return children; };
+	std::vector<Component*> GetComponents() { return components; };
+
+	GameObject* GetParent() { return parent; };
+	Transform* GetTransform() { return transform; };
+
 private:
 	std::string name;
 	bool active = true;
@@ -32,7 +38,7 @@ private:
 	bool toDelete = false;
 
 	GameObject* parent;
-	C_Transform* transform;
+	Transform* transform;
 
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;

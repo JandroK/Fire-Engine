@@ -61,8 +61,11 @@
     <Filter Include="Sources\Resources">
       <UniqueIdentifier>{e345d3f7-1771-4113-9031-2dd99d096b73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Components">
+    <Filter Include="Sources\GameObjects">
       <UniqueIdentifier>{0cbad30e-dda4-4ac6-8e5e-eb9a8bbec025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\GameObjects\Components">
+      <UniqueIdentifier>{9aba92e1-cfd4-404a-9086-73bf56b39ec2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -604,10 +607,13 @@
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject.h">
-      <Filter>Sources\Components</Filter>
+      <Filter>Sources\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Source\Component.h">
-      <Filter>Sources\Components</Filter>
+      <Filter>Sources\GameObjects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform.h">
+      <Filter>Sources\GameObjects\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -822,7 +828,10 @@
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
-      <Filter>Sources\Components</Filter>
+      <Filter>Sources\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transform.cpp">
+      <Filter>Sources\GameObjects\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

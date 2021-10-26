@@ -1,8 +1,11 @@
 #include "GameObject.h"
 #include "Component.h"
 
+#include "Transform.h"
+
 GameObject::GameObject(const char* name) : parent(nullptr), name(name)
 {
+	transform = dynamic_cast<Transform*>(AddComponent(Type::TRANSFORM));
 }
 
 GameObject::~GameObject()
@@ -40,11 +43,13 @@ void GameObject::Update()
 
 Component* GameObject::AddComponent(Type type)
 {
+	assert(type != Type::UNKNOW, "Can't create a UNKNOW component");
 	Component* ret = nullptr;
 
 	switch (type)
 	{
 	case Type::TRANSFORM:
+		ret = new Transform(this);
 		break;
 	case Type::MESHRENDERER:
 		break;
