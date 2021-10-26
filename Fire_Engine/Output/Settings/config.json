@@ -21,12 +21,12 @@
         "Z.x": 0.19245009124279022,
         "Z.y": 0.19245009124279022,
         "Z.z": 0.9622504711151123,
-        "Reference.x": 0,
-        "Reference.y": 0,
-        "Reference.z": 0,
-        "Position.x": 1,
-        "Position.y": 1,
-        "Position.z": 5
+        "Reference.x": -0.19245012104511261,
+        "Reference.y": -0.19245012104511261,
+        "Reference.z": -0.9622502326965332,
+        "Position.x": 0.80754983425140381,
+        "Position.y": 0.80754983425140381,
+        "Position.z": 4.0377492904663086
     },
     "Input": {},
     "Physics3D": {},

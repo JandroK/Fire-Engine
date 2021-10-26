@@ -28,18 +28,19 @@ public:
 	bool Init();
 
 	bool Start();
+	void LogToConsole(const char* msg, LogType _type);
 	
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 
-	update_status ImGuiMenu();
+	update_status ImGuiMenuBar();
+	Tab* GetTab(TabType type);
 
 	bool CleanUp();
 
-	void LogToConsole(const char* msg, LogType _type);
-
-	Tab* GetTab(TabType type);
+	void CreateDockSpace();
+	ImGuiID DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass);
 
 private:
 	std::vector<Tab*> tabs;
@@ -50,4 +51,7 @@ private:
 	std::vector<float> msLog;
 
 	bool showCase = false;
+
+	// DockingSpace
+	ImGuiID dockId = 0;
 };
