@@ -191,8 +191,8 @@ update_status Renderer3D::PostUpdate(float dt)
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
-	//cube.RenderMesh(-1);
-	sphere.RenderMesh(-1);
+	cube.RenderMesh();
+	//sphere.RenderMesh();
 	//cylinder.RenderMesh();
 	//pyramid.RenderMesh();
 

@@ -27,7 +27,6 @@ public:
 
 	~ConsoleTab();
 
-	void Update() override;
 	void Draw() override;
 
 	void AddLog(const char*, LogType);

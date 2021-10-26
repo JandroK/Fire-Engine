@@ -10,12 +10,6 @@ ConsoleTab::~ConsoleTab()
 {
 }
 
-void ConsoleTab::Update()
-{
-	update_status ret = UPDATE_CONTINUE;
-
-}
-
 void ConsoleTab::Draw()
 {
 	

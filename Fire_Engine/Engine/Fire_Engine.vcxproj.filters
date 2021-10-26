@@ -597,6 +597,9 @@
     <ClInclude Include="Source\ModelImporter.h">
       <Filter>Sources\Tools\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AboutTab.h">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -805,6 +808,9 @@
     </ClCompile>
     <ClCompile Include="Source\Resource.cpp">
       <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AboutTab.cpp">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

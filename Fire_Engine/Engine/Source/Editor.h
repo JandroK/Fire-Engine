@@ -2,19 +2,19 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "Tab.h"
-
 #include "imgui/imgui.h"
 #include "imgui/imgui_user.h"
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+class Tab;
 #define FPS_MS_LOG_MAXLENGHT 100
 
 enum class TabType {
 
-	CONFIGURATION,
+	ABOUT,
 	CONSOLE,
+	CONFIGURATION,
 
 	MAX
 };
@@ -40,7 +40,6 @@ public:
 	void LogToConsole(const char* msg, LogType _type);
 
 	Tab* GetTab(TabType type);
-	void PrintLicense();
 
 private:
 	std::vector<Tab*> tabs;

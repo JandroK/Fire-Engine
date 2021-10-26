@@ -1,3 +1,4 @@
+#include "Application.h"
 #include "Configuration.h"
 #include "mmgr/mmgr.h"
 
@@ -30,6 +31,8 @@ void Configuration::Update()
 
 void Configuration::Draw()
 {
+	Update();
+
 	if (ImGui::Begin("Configuration"))
 	{
 		// CollapsingHeader is to create new Header

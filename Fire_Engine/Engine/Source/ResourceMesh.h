@@ -19,7 +19,7 @@ public:
 	void SetVertices(float _vertices[], int size);
 	void SetTexCoords(float _texCoords[], int size);
 
-	void RenderMesh(GLuint textureID);
+	void RenderMesh(GLuint textureID = -1);
 	void CleanUp();
 
 public:
