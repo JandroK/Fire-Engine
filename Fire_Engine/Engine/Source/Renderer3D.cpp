@@ -179,14 +179,14 @@ bool Renderer3D::Init()
 	cube.InnerMesh();
 	cube.LoadToMemory();	
 
-	/*sphere.InnerMesh();
-	sphere.LoadToMemory();
+	//sphere.InnerMesh();
+	//sphere.LoadToMemory();
 	
-	cylinder.InnerMesh();
-	cylinder.LoadToMemory();
+	//cylinder.InnerMesh();
+	//cylinder.LoadToMemory();
 
-	pyramid.InnerMesh();
-	pyramid.LoadToMemory();*/
+	//pyramid.InnerMesh();
+	//pyramid.LoadToMemory();
 
 	return ret;
 }
@@ -223,6 +223,11 @@ update_status Renderer3D::PostUpdate(float dt)
 	p.axis = true;
 	p.Render();
 
+
+	// Comprobe wireframe mode
+	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
+	
 	if (!renderQueue.empty())
 	{
 		for (size_t i = 0; i < renderQueue.size(); i++)
@@ -231,10 +236,6 @@ update_status Renderer3D::PostUpdate(float dt)
 		}
 		renderQueue.clear();
 	}
-
-	// Comprobe wireframe mode
-	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 
 	// Draw all tabs
 	cube.RenderMesh();
