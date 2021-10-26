@@ -25,7 +25,7 @@ void MeshRenderer::Update()
 
 void MeshRenderer::RenderMesh()
 {
-	Transform* transform = GetOwner()->GetTransform();
+	Transform* transform = GetOwner()->transform;
 	if (transform != nullptr)
 	{
 		glPushMatrix();

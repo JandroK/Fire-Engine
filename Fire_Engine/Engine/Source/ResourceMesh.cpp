@@ -132,9 +132,10 @@ void Mesh::RenderMesh(GLuint textureID)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
 
 	//-- Draw --//
-	glPushMatrix();
+	//glPushMatrix();
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
-	glPopMatrix();
+	//glPopMatrix();
+	
 	//-- UnBind Buffers--//
 	if (textureID != -1) glBindTexture(GL_TEXTURE_2D, textureID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

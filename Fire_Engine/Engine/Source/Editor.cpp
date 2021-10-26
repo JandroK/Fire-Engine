@@ -219,7 +219,6 @@ Tab* Editor::GetTab(TabType type)
 {
 	unsigned int vecPosition = static_cast<unsigned int>(type);
 
-	SDL_assert(vecPosition < tabs.size());
 	return (vecPosition < tabs.size()) ? tabs[vecPosition] : nullptr;
 }
 

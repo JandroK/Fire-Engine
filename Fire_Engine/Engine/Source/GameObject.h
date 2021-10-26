@@ -27,8 +27,8 @@ public:
 	std::vector<GameObject*> GetChildrens() { return children; };
 	std::vector<Component*> GetComponents() { return components; };
 
-	GameObject* GetParent() { return parent; };
-	Transform* GetTransform() { return transform; };
+	GameObject* parent;
+	Transform* transform;
 
 private:
 	std::string name;
@@ -37,8 +37,6 @@ private:
 	bool showChildren = false;
 	bool toDelete = false;
 
-	GameObject* parent;
-	Transform* transform;
 
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;

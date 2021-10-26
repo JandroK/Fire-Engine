@@ -2,6 +2,8 @@
 #include "Component.h"
 
 #include "Transform.h"
+#include "MeshRenderer.h"
+#include "Material.h"
 
 GameObject::GameObject(const char* name) : parent(nullptr), name(name)
 {
@@ -52,8 +54,10 @@ Component* GameObject::AddComponent(ComponentType type)
 		ret = new Transform(this);
 		break;
 	case ComponentType::MESHRENDERER:
+		ret = new MeshRenderer(this);
 		break;
 	case ComponentType::MATERIAL:
+		ret = new Material(this);
 		break;
 	}
 

@@ -30,5 +30,4 @@ private:
 	ComponentType type = ComponentType::UNKNOW;
 	bool active = true;
 	GameObject* owner;
-
 };
