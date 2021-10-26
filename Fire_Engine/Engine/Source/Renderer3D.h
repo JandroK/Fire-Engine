@@ -8,6 +8,7 @@
 #include "SDL\include\SDL_opengl.h"
 
 class Texture;
+class MeshRenderer;
 
 #define MAX_LIGHTS 8
 #define SQUARE_TEXTURE_W 256
@@ -68,6 +69,8 @@ public:
 	// Textures
 	GLuint checkersTexture;
 	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
+
+	std::vector<MeshRenderer*> renderQueue;
 
 private:
 	Hardware hardware;

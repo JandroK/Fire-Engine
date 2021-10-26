@@ -1,14 +1,14 @@
-#include "Globals.h"
 #include "Application.h"
 #include "Renderer3D.h"
+#include "Globals.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
 #include "GPUDetected/DeviceId.h"
 
-//#include "ResourceManager.h"
 #include "ResourceTexture.h"
+#include "MeshRenderer.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -222,6 +222,15 @@ update_status Renderer3D::PostUpdate(float dt)
 	PrimitivePlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
+
+	if (!renderQueue.empty())
+	{
+		for (size_t i = 0; i < renderQueue.size(); i++)
+		{
+			renderQueue[i]->RenderMesh();
+		}
+		renderQueue.clear();
+	}
 
 	// Comprobe wireframe mode
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

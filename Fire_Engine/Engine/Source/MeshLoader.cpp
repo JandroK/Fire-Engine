@@ -45,8 +45,14 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	Mesh* mesh = new Mesh(UID);
 
 	// copy vertices
+	mesh->numVertex = importedMesh->mNumVertices;
 	mesh->vertices.resize(mesh->numVertex * sizeof(float) * 3);
-	mesh->texCoords.resize(mesh->numVertex * sizeof(float) * 2);
+
+	mesh->numTexCoords = importedMesh->mNumVertices;
+	mesh->texCoords.resize(mesh->numTexCoords * sizeof(float) * 2);
+
+	mesh->numNormals = importedMesh->mNumVertices;
+	mesh->normals.resize(mesh->numNormals * sizeof(float) * 3);
 
 	for (size_t i = 0; i < mesh->numVertex; i++)
 	{
@@ -54,6 +60,12 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 		mesh->vertices.push_back(importedMesh->mVertices[i].y);
 		mesh->vertices.push_back(importedMesh->mVertices[i].z);
 
+		if (importedMesh->HasNormals())
+		{
+			mesh->normals.push_back(importedMesh->mNormals[i].x);
+			mesh->normals.push_back(importedMesh->mNormals[i].y);
+			mesh->normals.push_back(importedMesh->mNormals[i].z);
+		}
 		if (importedMesh->HasTextureCoords(0))
 		{
 			mesh->texCoords.push_back(importedMesh->mTextureCoords[0][i].x);
@@ -86,6 +98,10 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	}
 
 	mesh->LoadToMemory();
+
+	LOG(LogType::L_NORMAL, "New mesh with %d vertices", mesh->numVertex);
+	LOG(LogType::L_NORMAL, "New mesh with %d normals", mesh->numNormals);
+	LOG(LogType::L_NORMAL, "New mesh with %d texture coords", mesh->numTexCoords);
 
 	return mesh;
 }
