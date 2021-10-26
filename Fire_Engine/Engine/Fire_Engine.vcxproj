@@ -249,6 +249,7 @@
     <ClInclude Include="Source\MeshLoader.h" />
     <ClInclude Include="Source\glmath.h" />
     <ClInclude Include="Source\Globals.h" />
+    <ClInclude Include="Source\MeshRenderer.h" />
     <ClInclude Include="Source\ModelImporter.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\TextureLoader.h" />
@@ -322,6 +323,7 @@
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\MeshLoader.cpp" />
     <ClCompile Include="Source\glmath.cpp" />
+    <ClCompile Include="Source\MeshRenderer.cpp" />
     <ClCompile Include="Source\ModelImporter.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\TextureLoader.cpp" />

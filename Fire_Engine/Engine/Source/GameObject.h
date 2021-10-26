@@ -3,8 +3,8 @@
 #include<vector>
 #include<string>
 
-#include "Component.h"
-
+class Component;
+enum class ComponentType;
 class Transform;
 
 class GameObject
@@ -14,8 +14,8 @@ public:
 	virtual ~GameObject();
 
 	void Update();
-	Component* AddComponent(Type type);
-	Component* GetComponent(Type type);
+	Component* AddComponent(ComponentType type);
+	Component* GetComponent(ComponentType type);
 
 	bool isActive() { return active; };
 	void Enable();
@@ -42,5 +42,4 @@ private:
 
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;
-
 };

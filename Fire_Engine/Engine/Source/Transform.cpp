@@ -1,9 +1,7 @@
 #include "Transform.h"
-#include "ImGui/imgui.h"
-#include"ImGui/imgui_internal.h"
 #include "Globals.h"
-#include <vector>
-#include"GameObject.h"
+
+#include "ImGui/imgui.h"
 
 Transform::Transform(GameObject* obj) : Component(obj), updateTransform(false)
 {

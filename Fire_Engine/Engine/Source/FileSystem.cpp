@@ -1,6 +1,6 @@
-#include "Globals.h"
 #include "Application.h"
 #include "FileSystem.h"
+#include "Globals.h"
 
 // Extract file name, from last "/" until the "."
 std::string StringLogic::FileNameFromPath(const char* _path)

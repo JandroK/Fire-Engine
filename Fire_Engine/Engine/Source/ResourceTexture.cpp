@@ -22,13 +22,13 @@ bool Rect::Contains(Rect b)
     }
 }
 
-Texture::Texture(unsigned int _uid) : Resource(_uid, Resource::Type::TEXTURE), textureID(0), texWidth(0), texHeight(0)
+Texture::Texture(unsigned int textureID) : Resource(textureID, ResourceType::TEXTURE), texWidth(0), texHeight(0)
 {
 	color = White;
 }
 
 Texture::Texture(GLuint textureID, int texWidth, int texHeight, const char* name, const char* path) : 
-	Resource(textureID, Resource::Type::TEXTURE), textureID(textureID), texWidth(texWidth), texHeight(texHeight), name(name), path(path)
+	Resource(textureID, ResourceType::TEXTURE), textureID(textureID), texWidth(texWidth), texHeight(texHeight), name(name), path(path)
 {
 }
 

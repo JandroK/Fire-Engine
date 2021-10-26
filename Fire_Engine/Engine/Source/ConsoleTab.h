@@ -1,7 +1,6 @@
 #pragma once
-#include <vector>
 #include "Tab.h"
-#include "Application.h"
+#include <vector>
 
 #define FPS_MS_LOG_MAXLENGHT 100
 

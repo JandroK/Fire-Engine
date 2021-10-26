@@ -1,7 +1,7 @@
 #pragma once
 
-class GameObject;
-enum class Type
+#include "GameObject.h"
+enum class ComponentType
 {
 	UNKNOW,
 	TRANSFORM,
@@ -21,13 +21,13 @@ public:
 	virtual void Update() {};
 	virtual void OnEditor() {};
 
-	Type GetType() { return type; };
-	void SetType(Type type) { this->type = type; };
+	ComponentType GetType() { return type; };
+	void SetType(ComponentType type) { this->type = type; };
 
 	GameObject* GetOwner() { return owner; };
 
 private:
-	Type type = Type::UNKNOW;
+	ComponentType type = ComponentType::UNKNOW;
 	bool active = true;
 	GameObject* owner;
 

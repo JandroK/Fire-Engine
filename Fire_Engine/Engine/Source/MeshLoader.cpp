@@ -1,7 +1,5 @@
 #include "Application.h"
 #include "MeshLoader.h"
-
-//#include "Editor.h"
  
 // Importers
 #include "FileSystem.h"

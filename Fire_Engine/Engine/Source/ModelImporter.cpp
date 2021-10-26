@@ -2,13 +2,15 @@
 #include "ModelImporter.h"
 #include "Globals.h"
 
-#include "Resource.h"
-#include "ResourceTexture.h"
-#include "ResourceMesh.h"
-
+// Importers
 #include "FileSystem.h"
 #include "MeshLoader.h"
 #include "TextureLoader.h"
+
+// Resources
+#include "Resource.h"
+#include "ResourceTexture.h"
+#include "ResourceMesh.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"

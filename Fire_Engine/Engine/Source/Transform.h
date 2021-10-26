@@ -5,10 +5,6 @@
 #include"MathGeoLib/include/Math/float3.h"
 #include"MathGeoLib/include/Math/Quat.h"
 
-#include<vector>
-
-class GameObject;
-
 class Transform : public Component
 {
 public:

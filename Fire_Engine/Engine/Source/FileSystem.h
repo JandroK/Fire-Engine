@@ -1,12 +1,10 @@
 #ifndef __FileSystem_H__
 #define __FileSystem_H__
 
-#include <vector>
-#include <string>
-
-#include "JsonParser.h"
 #include "PhysFS/include/physfs.h"
 
+#include <vector>
+#include <string>
 
 struct SDL_RWops;
 int close_sdl_rwops(SDL_RWops *rw);
@@ -53,7 +51,6 @@ namespace FileSystem
 	inline const char* GetBasePath() { return PHYSFS_getBaseDir(); }
 	inline const char* GetWritePath() { return PHYSFS_getWriteDir(); }
 	const char* GetReadPaths();
-
 };
 
 #endif // __FileSystem_H__

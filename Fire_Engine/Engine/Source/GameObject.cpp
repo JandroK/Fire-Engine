@@ -5,7 +5,7 @@
 
 GameObject::GameObject(const char* name) : parent(nullptr), name(name)
 {
-	transform = dynamic_cast<Transform*>(AddComponent(Type::TRANSFORM));
+	transform = dynamic_cast<Transform*>(AddComponent(ComponentType::TRANSFORM));
 }
 
 GameObject::~GameObject()
@@ -41,19 +41,19 @@ void GameObject::Update()
 	}
 }
 
-Component* GameObject::AddComponent(Type type)
+Component* GameObject::AddComponent(ComponentType type)
 {
-	assert(type != Type::UNKNOW, "Can't create a UNKNOW component");
+	assert(type != ComponentType::UNKNOW, "Can't create a UNKNOW component");
 	Component* ret = nullptr;
 
 	switch (type)
 	{
-	case Type::TRANSFORM:
+	case ComponentType::TRANSFORM:
 		ret = new Transform(this);
 		break;
-	case Type::MESHRENDERER:
+	case ComponentType::MESHRENDERER:
 		break;
-	case Type::MATERIAL:
+	case ComponentType::MATERIAL:
 		break;
 	}
 
@@ -66,7 +66,7 @@ Component* GameObject::AddComponent(Type type)
 	return ret;
 }
 
-Component* GameObject::GetComponent(Type type)
+Component* GameObject::GetComponent(ComponentType type)
 {
 	for (size_t i = 0; i < components.size(); i++)
 	{

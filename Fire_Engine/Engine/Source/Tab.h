@@ -1,6 +1,4 @@
-#ifndef __WINDOW_H__
-#define __WINDOW_H__
-
+#pragma once
 #include <string>
 
 class Tab
@@ -16,5 +14,3 @@ public:
 	bool active;
 	int shortcut;
 };
-
-#endif //__WINDOW_H__

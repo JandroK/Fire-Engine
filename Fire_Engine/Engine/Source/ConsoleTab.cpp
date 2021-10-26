@@ -1,3 +1,4 @@
+#include "Application.h"
 #include "ConsoleTab.h"
 
 ConsoleTab::ConsoleTab() : Tab()

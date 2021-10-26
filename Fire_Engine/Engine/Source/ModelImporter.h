@@ -1,9 +1,6 @@
 #pragma once
-#include<vector>
 
 class Resource;
-class Mesh;
-typedef unsigned int uint;
 
 namespace ModelImporter
 {

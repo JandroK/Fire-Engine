@@ -1,8 +1,5 @@
 #pragma once
 
-#include<vector>
-#include<string>
-
 typedef unsigned int GLuint;
 class Resource;
 

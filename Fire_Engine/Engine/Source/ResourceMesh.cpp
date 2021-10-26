@@ -1,8 +1,9 @@
 #include "ResourceMesh.h"
+#include "Globals.h"
 
 #include "Glew/include/glew.h"
 
-Mesh::Mesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH)
+Mesh::Mesh(unsigned int uid) : Resource(uid, ResourceType::MESH)
 {
 }
 
@@ -42,27 +43,27 @@ bool Mesh::UnloadFromMemory()
 	return true;
 }
 
-void Mesh::SetVertices(float _vertices[], int size)
+void Mesh::SetVertices(float vertices[], int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		vertices.push_back(_vertices[i]);
+		this->vertices.push_back(vertices[i]);
 	}
 }
 
-void Mesh::SetTexCoords(float _texCoords[], int size)
+void Mesh::SetTexCoords(float texCoords[], int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		texCoords.push_back(_texCoords[i]);
+		this->texCoords.push_back(texCoords[i]);
 	}
 }
 
-void Mesh::SetIndices(int _indices[], int size)
+void Mesh::SetIndices(int indices[], int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		indices.push_back(_indices[i]);
+		this->indices.push_back(indices[i]);
 	}
 }
 

@@ -1,9 +1,8 @@
 #pragma once
-
-#include "Globals.h"
-#include <vector>
 #include "Resource.h"
+#include <vector>
 
+typedef unsigned int uint;
 typedef unsigned int GLuint;
 
 class Mesh : public Resource
@@ -15,9 +14,9 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	void SetIndices(int _indices[], int size);
-	void SetVertices(float _vertices[], int size);
-	void SetTexCoords(float _texCoords[], int size);
+	void SetIndices(int indices[], int size);
+	void SetVertices(float vertices[], int size);
+	void SetTexCoords(float texCoords[], int size);
 
 	void RenderMesh(GLuint textureID = -1);
 	void CleanUp();

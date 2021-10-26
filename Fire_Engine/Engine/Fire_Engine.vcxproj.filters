@@ -615,6 +615,9 @@
     <ClInclude Include="Source\Transform.h">
       <Filter>Sources\GameObjects\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source\MeshRenderer.h">
+      <Filter>Sources\GameObjects\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -831,6 +834,9 @@
       <Filter>Sources\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Transform.cpp">
+      <Filter>Sources\GameObjects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshRenderer.cpp">
       <Filter>Sources\GameObjects\Components</Filter>
     </ClCompile>
   </ItemGroup>
