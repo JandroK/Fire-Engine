@@ -262,7 +262,6 @@
     <ClInclude Include="Source\Editor.h" />
     <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\FileSystem.h" />
-    <ClInclude Include="Source\Physics3D.h" />
     <ClInclude Include="Source\Renderer3D.h" />
     <ClInclude Include="Source\Resource.h" />
     <ClInclude Include="Source\Tab.h" />
@@ -338,7 +337,6 @@
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
     <ClCompile Include="Source\ResourceMesh.cpp" />
-    <ClCompile Include="Source\Physics3D.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\Tab.cpp" />

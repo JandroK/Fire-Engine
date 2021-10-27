@@ -11,7 +11,6 @@ Application::Application() : maxFPS(60)
 	input = new Input(this);
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
-	physics = new Physics3D(this);
 	editor = new Editor(this);
 
 	// The order of calls is very important!
@@ -21,8 +20,7 @@ Application::Application() : maxFPS(60)
 	// Main Modules
 	AddModule(window);
 	AddModule(camera);
-	AddModule(input);
-	AddModule(physics);	
+	AddModule(input);	
 	
 	// Renderer last!
 	AddModule(editor);
