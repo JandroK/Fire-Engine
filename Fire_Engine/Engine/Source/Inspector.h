@@ -1,5 +1,7 @@
 #pragma once
 #include "Tab.h"
+#include <string>
+#include <list>
 
 class GameObject;
 

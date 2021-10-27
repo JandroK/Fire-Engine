@@ -20,6 +20,7 @@ void Material::OnEditor()
 	{
 		if (matTexture->textureID != -1) 
 		{
+			// Print Texture information, the Image and view model with checkers
 			IMGUI_PRINT("Texture Width: ", "%i", matTexture->texWidth);
 			IMGUI_PRINT("Texture Height: ", "%i", matTexture->texHeight);
 			ImGui::Image((ImTextureID)matTexture->textureID, ImVec2(128, 128));
@@ -27,7 +28,7 @@ void Material::OnEditor()
 		}
 	}
 }
-
+// Get Texture ID from the image, this ID is unique
 int Material::GetTextureID()
 {
 	return (viewWithCheckers == false) ? matTexture->textureID : app->renderer3D->checkersTexture;

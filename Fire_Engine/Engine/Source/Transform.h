@@ -29,5 +29,8 @@ private:
 	void UpdateTransform();
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);
 
+	// This variable is the global transform transposed, 
+	// this is used for this game object is children of another gm 
+	// we can translate it in an easier way because: global = global parent * local
 	float4x4 globalTransformTransposed;
 };

@@ -11,6 +11,7 @@ public:
 
 	bool Start();
 	update_status Update(float dt);
+	void CheckInputs();
 	bool CleanUp();
 
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);

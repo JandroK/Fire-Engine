@@ -39,6 +39,7 @@ void Transform::OnEditor()
 		if (ImGui::DragFloat3("##Scale", &localScale[0], 0.1f))
 			updateTransform = true;
 
+		// If any component has been modified update them 
 		if (updateTransform)
 			UpdateTransform();
 	}
@@ -46,13 +47,13 @@ void Transform::OnEditor()
 
 void Transform::UpdateTransform()
 {
+	// Update the localTransform, the rotation and the globalTransform
 	std::vector<Transform*> transformsToUpdate;
 	GetRecursiveTransforms(this, transformsToUpdate);
 
 	rotation = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
 	localTransform = float4x4::FromTRS(position, rotation, localScale);
 
-	//Not working
 	if (!transformsToUpdate.empty())
 	{
 		for (size_t i = 0; i < transformsToUpdate.size(); i++)
@@ -62,7 +63,7 @@ void Transform::UpdateTransform()
 				Transform* parentTra = transformsToUpdate[i]->GetOwner()->parent->transform;
 
 				if (parentTra != nullptr) {
-					// = global = global parent * local
+					// global = global parent * local
 					transformsToUpdate[i]->globalTransform = parentTra->globalTransform * transformsToUpdate[i]->localTransform;
 					transformsToUpdate[i]->globalTransformTransposed = transformsToUpdate[i]->globalTransform.Transposed();
 				}
@@ -72,9 +73,7 @@ void Transform::UpdateTransform()
 
 	transformsToUpdate.clear();
 	updateTransform = false;
-
 }
-
 //Populates an array of childs in descending order
 Transform* Transform::GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms)
 {

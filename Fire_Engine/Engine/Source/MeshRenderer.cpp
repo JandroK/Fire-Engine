@@ -40,6 +40,7 @@ void MeshRenderer::RenderMesh()
 
 	mesh->RenderMesh(id);
 
+	// If vertexNormals or faceNormals are true draw the Normals
 	if (vertexNormals || faceNormals)
 		mesh->RenderMeshDebug(&vertexNormals, &faceNormals);
 
@@ -51,11 +52,12 @@ void MeshRenderer::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		// Print mesh information
 		IMGUI_PRINT("Vertices: ", "%i", mesh->numVertex);
 		IMGUI_PRINT("Indices: ", "%i", mesh->numIndices);
 		IMGUI_PRINT("Texture coords: ", "%i", mesh->numIndices);
 		IMGUI_PRINT("Normals: ", "%i", mesh->numNormals);
-
+		// You can enable/disable the mode debug
 		ImGui::Checkbox("Vertex Normals", &vertexNormals);
 		ImGui::Checkbox("Face Normals", &faceNormals);
 	}

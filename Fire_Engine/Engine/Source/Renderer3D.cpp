@@ -172,6 +172,9 @@ bool Renderer3D::Init()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	//Generate scene buffers
+	ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
+
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	
@@ -194,6 +197,8 @@ bool Renderer3D::Init()
 // PreUpdate: clear buffer
 update_status Renderer3D::PreUpdate(float dt)
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -228,6 +233,7 @@ update_status Renderer3D::PostUpdate(float dt)
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
 	
+	// Draw all meshes
 	if (!renderQueue.empty())
 	{
 		for (size_t i = 0; i < renderQueue.size(); i++)
@@ -236,9 +242,11 @@ update_status Renderer3D::PostUpdate(float dt)
 		}
 		renderQueue.clear();
 	}
+	cube.RenderMesh();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Draw all tabs
-	cube.RenderMesh();
 	ret = app->editor->Draw();
 
 	SDL_GL_SwapWindow(app->window->window);
@@ -252,6 +260,10 @@ update_status Renderer3D::PostUpdate(float dt)
 bool Renderer3D::CleanUp()
 {
 	LOG(LogType::L_NO_PRINTABLE, "Destroying 3D Renderer");
+
+	glDeleteFramebuffers(1, &framebuffer);
+	glDeleteTextures(1, &texColorBuffer);
+	glDeleteRenderbuffers(1, &rbo);
 		
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
@@ -293,6 +305,43 @@ void Renderer3D::GetCaps(std::string& caps)
 	caps += (SDL_HasAVX()) ? "AVX, " : "";
 	caps += (SDL_HasAltiVec()) ? "AltiVec, " : "";
 	caps += (SDL_Has3DNow()) ? "3DNow, " : "";
+}
+
+void Renderer3D::ReGenerateFrameBuffer(int w, int h)
+{
+	if (framebuffer > 0)
+		glDeleteFramebuffers(1, &framebuffer);
+
+	if (texColorBuffer > 0)
+		glDeleteTextures(1, &texColorBuffer);
+
+	if (rbo > 0)
+		glDeleteRenderbuffers(1, &rbo);
+
+
+	glGenFramebuffers(1, &framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
+	glGenTextures(1, &texColorBuffer);
+	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// attach it to currently bound framebuffer object
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
+
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void Renderer3D::OnResize(int width, int height)

@@ -17,6 +17,7 @@ AboutTab::AboutTab()
 	name = "About";
 	active = false;
 
+	// Get version on real time of 3rd Paries Dependences
 	PHYSFS_Version physVersionStc;
 	PHYSFS_getLinkedVersion(&physVersionStc);
 	SDL_version version;
@@ -31,10 +32,12 @@ void AboutTab::Draw()
 {
 	if (ImGui::Begin(name.c_str()))
 	{
+		// Name and description of Engine
 		ImGui::Text("Fire Engine");
 		ImGui::Text("This is a university project focused");
 		ImGui::Text("on the development of a video game engine");
 
+		// GitHub of developers
 		ImGui::NewLine();
 		ImGui::Text("Developed by: ");
 		if (ImGui::MenuItem("Ismael Tejada"))
@@ -48,7 +51,7 @@ void AboutTab::Draw()
 
 		ImGui::NewLine();
 		ImGui::Separator();
-
+		// Print all 3rd Party Libraries versions
 		ImGui::Text("3rd Party Libraries used:");
 		IMGUI_PRINT("SDL Version: ", "%s", SDLVersion.c_str());
 		IMGUI_PRINT("OpenGL Version: ", "%s", glGetString(GL_VERSION));
@@ -62,7 +65,7 @@ void AboutTab::Draw()
 
 		ImGui::NewLine();
 		ImGui::Separator();
-
+		// Print License
 		PrintLicense();
 	}
 	ImGui::End();	

@@ -37,12 +37,13 @@ void GameObject::Enable()
 
 void GameObject::Update()
 {
+	// Call all components Updates
 	for (size_t i = 0; i < components.size(); i++)
 	{
 		components[i]->Update();
 	}
 }
-
+// Add component by Type
 Component* GameObject::AddComponent(ComponentType type)
 {
 	assert(type != ComponentType::UNKNOW, "Can't create a UNKNOW component");
@@ -69,7 +70,7 @@ Component* GameObject::AddComponent(ComponentType type)
 
 	return ret;
 }
-
+// Get component by Type, because an object can only have 1 component of 1 type
 Component* GameObject::GetComponent(ComponentType type)
 {
 	for (size_t i = 0; i < components.size(); i++)

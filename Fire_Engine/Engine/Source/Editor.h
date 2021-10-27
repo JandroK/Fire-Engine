@@ -18,6 +18,7 @@ enum class TabType {
 	CONSOLE,
 	CONFIGURATION,
 	INSPECTOR,
+	SCENE,
 
 	MAX
 };

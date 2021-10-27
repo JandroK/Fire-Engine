@@ -47,6 +47,8 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
+	void ReGenerateFrameBuffer(int w, int h);
+
 	bool SaveConfig(JsonParser& node) const;
 
 	bool LoadConfig(JsonParser& node);
@@ -71,6 +73,11 @@ public:
 	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];
 
 	std::vector<MeshRenderer*> renderQueue;
+
+	// FrameBuffer
+	unsigned int framebuffer = 0;
+	unsigned int texColorBuffer = 0;
+	unsigned int rbo = 0;
 
 private:
 	Hardware hardware;

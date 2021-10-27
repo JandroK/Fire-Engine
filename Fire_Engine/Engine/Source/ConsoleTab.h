@@ -29,21 +29,16 @@ public:
 	void Draw() override;
 
 	void AddLog(const char*, LogType);
-
 	char GetMsgType(LogType, ImVec4&);
-
 
 public:
 
-	bool collapsed=false;
-	bool bottom= false;
-	ImVec2 winSize = {200,400};
+	bool collapsed = true;
+	ImVec2 winSize = { 200,400 };
 	LogMsg* charLog;
 	std::vector<LogMsg> logs;
 
 private:
-
 	float offset;
-
 };
 
