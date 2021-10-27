@@ -29,39 +29,43 @@ AboutTab::AboutTab()
 
 void AboutTab::Draw()
 {
-	ImGui::Text("Fire Engine");
-	ImGui::Text("This is a university project focused");
-	ImGui::Text("on the development of a video game engine");
-
-	ImGui::NewLine();
-	ImGui::Text("Developed by: ");
-	if (ImGui::MenuItem("Ismael Tejada"))
+	if (ImGui::Begin("About"))
 	{
-		ShellExecute(0, 0, "https://github.com/IsmaUPC", 0, 0, SW_SHOW);
+		ImGui::Text("Fire Engine");
+		ImGui::Text("This is a university project focused");
+		ImGui::Text("on the development of a video game engine");
+
+		ImGui::NewLine();
+		ImGui::Text("Developed by: ");
+		if (ImGui::MenuItem("Ismael Tejada"))
+		{
+			ShellExecute(0, 0, "https://github.com/IsmaUPC", 0, 0, SW_SHOW);
+		}
+		if (ImGui::MenuItem("Alejandro Moreno"))
+		{
+			ShellExecute(0, 0, "https://github.com/JandroK", 0, 0, SW_SHOW);
+		}
+
+		ImGui::NewLine();
+		ImGui::Separator();
+
+		ImGui::Text("3rd Party Libraries used:");
+		IMGUI_PRINT("SDL Version: ", "%s", SDLVersion.c_str());
+		IMGUI_PRINT("OpenGL Version: ", "%s", glGetString(GL_VERSION));
+		IMGUI_PRINT("Glew Version: ", "%s", glewGetString(GLEW_VERSION));
+		IMGUI_PRINT("ImGui Version: ", "%s", ImGui::GetVersion());
+		IMGUI_PRINT("MathGeoLib Version: ", "1.5");
+		IMGUI_PRINT("Parson Version: ", "1.2.1");
+		IMGUI_PRINT("Assimp Version: ", "%s", assimpVersion.c_str());
+		IMGUI_PRINT("PhysFS Version: ", "%s", physVersion.c_str());
+		IMGUI_PRINT("DeviL Version: ", "1.8");
+
+		ImGui::NewLine();
+		ImGui::Separator();
+
+		PrintLicense();
 	}
-	if (ImGui::MenuItem("Alejandro Moreno"))
-	{
-		ShellExecute(0, 0, "https://github.com/JandroK", 0, 0, SW_SHOW);
-	}
-
-	ImGui::NewLine();
-	ImGui::Separator();
-
-	ImGui::Text("3rd Party Libraries used:");
-	IMGUI_PRINT("SDL Version: ", "%s", SDLVersion.c_str());
-	IMGUI_PRINT("OpenGL Version: ", "%s", glGetString(GL_VERSION));
-	IMGUI_PRINT("Glew Version: ", "%s", glewGetString(GLEW_VERSION));
-	IMGUI_PRINT("ImGui Version: ", "%s", ImGui::GetVersion());
-	IMGUI_PRINT("MathGeoLib Version: ", "1.5");
-	IMGUI_PRINT("Parson Version: ", "1.2.1");
-	IMGUI_PRINT("Assimp Version: ", "%s", assimpVersion.c_str());
-	IMGUI_PRINT("PhysFS Version: ", "%s", physVersion.c_str());
-	IMGUI_PRINT("DeviL Version: ", "1.8");
-
-	ImGui::NewLine();
-	ImGui::Separator();
-
-	PrintLicense();
+	ImGui::End();	
 }
 
 void AboutTab::PrintLicense()
