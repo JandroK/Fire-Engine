@@ -1,10 +1,12 @@
 #include "Application.h"
 #include "Editor.h"
 
+// Tabs
 #include "Tab.h"
 #include "Configuration.h"
 #include "ConsoleTab.h"
 #include "AboutTab.h"
+#include "Inspector.h"
 
 Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 {	
@@ -18,6 +20,7 @@ Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 	tabs[static_cast<unsigned int>(TabType::ABOUT)] = new AboutTab();
 	tabs[static_cast<unsigned int>(TabType::CONSOLE)] = new ConsoleTab();
 	tabs[static_cast<unsigned int>(TabType::CONFIGURATION)] = new Configuration();
+	tabs[static_cast<unsigned int>(TabType::INSPECTOR)] = new Inspector();
 
 	// Assign a shortcut to each tab
 	for (int i = 0; i < tabs.size(); i++)
@@ -221,6 +224,13 @@ Tab* Editor::GetTab(TabType type)
 
 	return (vecPosition < tabs.size()) ? tabs[vecPosition] : nullptr;
 }
+
+GameObject* Editor::GetGameObjectSelected()
+{
+	Inspector* inspector = dynamic_cast<Inspector*>(GetTab(TabType::INSPECTOR));
+	return inspector->gameObjectSelected;
+}
+
 
 ImGuiID Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass)
 {

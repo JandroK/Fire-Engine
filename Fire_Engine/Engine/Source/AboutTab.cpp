@@ -29,7 +29,7 @@ AboutTab::AboutTab()
 
 void AboutTab::Draw()
 {
-	if (ImGui::Begin("About"))
+	if (ImGui::Begin(name.c_str()))
 	{
 		ImGui::Text("Fire Engine");
 		ImGui::Text("This is a university project focused");

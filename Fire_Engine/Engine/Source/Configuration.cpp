@@ -33,7 +33,7 @@ void Configuration::Draw()
 {
 	Update();
 
-	if (ImGui::Begin("Configuration"))
+	if (ImGui::Begin(name.c_str()))
 	{
 		// CollapsingHeader is to create new Header
 		if (ImGui::CollapsingHeader("Options"))

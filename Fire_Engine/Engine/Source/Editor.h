@@ -15,6 +15,7 @@ enum class TabType {
 	ABOUT,
 	CONSOLE,
 	CONFIGURATION,
+	INSPECTOR,
 
 	MAX
 };
@@ -35,6 +36,7 @@ public:
 
 	update_status ImGuiMenuBar();
 	Tab* GetTab(TabType type);
+	GameObject* GetGameObjectSelected();
 
 	bool CleanUp();
 

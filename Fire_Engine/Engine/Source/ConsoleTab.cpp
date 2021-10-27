@@ -16,7 +16,7 @@ void ConsoleTab::Draw()
 	
 	winSize = ImGui::GetWindowSize();
 
-	if (ImGui::Begin("Console"))
+	if (ImGui::Begin(name.c_str()))
 	{
 		
 		if (ImGui::Begin(name.c_str(), NULL, ImGuiWindowFlags_::ImGuiWindowFlags_NoCollapse /*| ImGuiWindowFlags_NoResize*/ | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar))
