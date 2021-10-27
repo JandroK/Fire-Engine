@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "Editor.h"
 
+#include "GameObject.h"
+
 // Tabs
 #include "Tab.h"
 #include "Configuration.h"

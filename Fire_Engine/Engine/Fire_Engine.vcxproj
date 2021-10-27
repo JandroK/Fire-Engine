@@ -254,6 +254,7 @@
     <ClInclude Include="Source\MeshRenderer.h" />
     <ClInclude Include="Source\ModelImporter.h" />
     <ClInclude Include="Source\ResourceManager.h" />
+    <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\TextureLoader.h" />
     <ClInclude Include="Source\JsonParser.h" />
     <ClInclude Include="Source\Light.h" />
@@ -329,6 +330,7 @@
     <ClCompile Include="Source\MeshRenderer.cpp" />
     <ClCompile Include="Source\ModelImporter.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\TextureLoader.cpp" />
     <ClCompile Include="Source\JsonParser.cpp" />
     <ClCompile Include="Source\Light.cpp" />

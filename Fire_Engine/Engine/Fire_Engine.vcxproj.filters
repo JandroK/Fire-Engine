@@ -621,6 +621,9 @@
     <ClInclude Include="Source\Inspector.h">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -844,6 +847,9 @@
     </ClCompile>
     <ClCompile Include="Source\Inspector.cpp">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

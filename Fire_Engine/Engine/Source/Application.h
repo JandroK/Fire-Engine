@@ -11,6 +11,7 @@
 #include "Input.h"
 #include "Camera3D.h"
 #include "Editor.h"
+#include "Scene.h"
 
 #include "JsonParser.h"
 
@@ -25,6 +26,7 @@ public:
 	Camera3D* camera;
 	Input* input;
 	Renderer3D* renderer3D;
+	Scene* scene;
 	Editor* editor;
 
 	std::vector<Module*> listModules;

@@ -11,6 +11,7 @@ Application::Application() : maxFPS(60)
 	input = new Input(this);
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
+	scene = new Scene(this);
 	editor = new Editor(this);
 
 	// The order of calls is very important!
@@ -21,6 +22,7 @@ Application::Application() : maxFPS(60)
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);	
+	AddModule(scene);	
 	
 	// Renderer last!
 	AddModule(editor);
