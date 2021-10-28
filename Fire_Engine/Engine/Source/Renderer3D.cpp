@@ -179,8 +179,8 @@ bool Renderer3D::Init()
 	OnResize(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 	
 	// Load Primitives Test
-	cube.InnerMesh();
-	cube.LoadToMemory();	
+	//cube.InnerMesh();
+	//cube.LoadToMemory();	
 
 	//sphere.InnerMesh();
 	//sphere.LoadToMemory();
@@ -233,7 +233,6 @@ update_status Renderer3D::PostUpdate(float dt)
 	// Comprobe wireframe mode
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	(wireframe) ? glColor3f(Yellow.r, Yellow.g, Yellow.b) : glColor3f(White.r, White.g, White.b);
-	cube.RenderMesh(-1);
 	
 	// Draw all meshes
 	if (!renderQueue.empty())

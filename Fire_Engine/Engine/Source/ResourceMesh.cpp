@@ -24,10 +24,7 @@ Mesh::~Mesh()
 		glDeleteBuffers(1, &normalBufferId);
 
 	//Clear buffers
-	indices.clear();
-	vertices.clear();
-	texCoords.clear();
-	normals.clear();
+	UnloadFromMemory();
 }
 
 bool Mesh::LoadToMemory()
@@ -76,6 +73,8 @@ bool Mesh::UnloadFromMemory()
 	//Clear buffers
 	indices.clear();
 	vertices.clear();
+	normals.clear();
+	texCoords.clear();
 
 	return true;
 }
@@ -135,8 +134,8 @@ void Mesh::RenderMesh(GLuint textureID)
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
 	
 	//-- UnBind Buffers--//
-	//if (textureID != -1) 
-		glBindTexture(GL_TEXTURE_2D, textureID);
+	if (textureID != -1) 
+		glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
