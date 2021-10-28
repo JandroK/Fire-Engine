@@ -24,10 +24,7 @@ Mesh::~Mesh()
 		glDeleteBuffers(1, &normalBufferId);
 
 	//Clear buffers
-	indices.clear();
-	vertices.clear();
-	texCoords.clear();
-	normals.clear();
+	UnloadFromMemory();
 }
 
 bool Mesh::LoadToMemory()
@@ -76,6 +73,8 @@ bool Mesh::UnloadFromMemory()
 	//Clear buffers
 	indices.clear();
 	vertices.clear();
+	normals.clear();
+	texCoords.clear();
 
 	return true;
 }
