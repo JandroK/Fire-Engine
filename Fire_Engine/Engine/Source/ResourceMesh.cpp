@@ -79,33 +79,6 @@ bool Mesh::UnloadFromMemory()
 	return true;
 }
 
-void Mesh::SetVertices(float vertices[], int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		this->vertices.push_back(vertices[i]);
-	}
-	numVertex = this->vertices.size() / 3;
-}
-
-void Mesh::SetTexCoords(float texCoords[], int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		this->texCoords.push_back(texCoords[i]);
-	}
-	numTexCoords = this->texCoords.size() / 2;
-}
-
-void Mesh::SetIndices(int indices[], int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		this->indices.push_back(indices[i]);
-	}
-	numIndices = this->indices.size();
-}
-
 void Mesh::RenderMesh(GLuint textureID)
 {
 	if (textureID != -1) 

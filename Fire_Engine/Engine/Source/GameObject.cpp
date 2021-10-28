@@ -10,8 +10,6 @@ GameObject::GameObject(const char* name) : parent(nullptr), name(name)
 	transform = dynamic_cast<Transform*>(AddComponent(ComponentType::TRANSFORM));
 }
 
-
-
 GameObject::~GameObject()
 {
 	for (size_t i = 0; i < components.size(); i++)

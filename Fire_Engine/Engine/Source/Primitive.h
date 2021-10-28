@@ -15,7 +15,7 @@ enum PrimitiveTypes
 	Primitive_Cylinder
 };
 
-class Primitive : public Mesh
+class Primitive
 {
 public:
 
@@ -26,6 +26,11 @@ public:
 	void			SetPos(float x, float y, float z);
 	void			SetRotation(float angle, const vec3 &u);
 	void			Scale(float x, float y, float z);
+
+	void SetVertices(float vertices[], int size);
+	void SetTexCoords(float texCoords[], int size);
+	void SetIndices(int indices[], int size);
+
 	PrimitiveTypes	GetType() const;
 
 public:
@@ -33,6 +38,8 @@ public:
 	Color color;
 	mat4x4 transform;
 	bool axis,wire;
+
+	Mesh* mesh;
 
 protected:
 	PrimitiveTypes type;
