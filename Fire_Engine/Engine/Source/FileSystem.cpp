@@ -23,6 +23,7 @@ void FileSystem::FSInit()
 
 	// PHYSFS_init
 	// Needs to be created before Init so other modules can use it
+	LOG(LogType::L_NORMAL, "PHYSFS Init");
 	char* base_path = SDL_GetBasePath();
 	PHYSFS_init(base_path);
 	SDL_free(base_path);
@@ -38,8 +39,12 @@ void FileSystem::FSInit()
 	FileSystem::AddPath(assetPath.c_str());
 
 	// Dump list of paths
+	LOG(LogType::L_NORMAL, "Get Base Path: ");
 	LOG(LogType::L_NORMAL, "FileSystem Operations base is [%s] plus:", GetBasePath());
+	LOG(LogType::L_NORMAL, "Get Read Path: ");
 	LOG(LogType::L_NORMAL, GetReadPaths());
+	LOG(LogType::L_NORMAL, "Get Write Path: ");
+	LOG(LogType::L_NORMAL, GetWritePath());
 
 	FileSystem::CreateLibraryDirectories();
 }

@@ -94,3 +94,35 @@ void AboutTab::PrintLicense()
 	ImGui::Text("OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE");
 	ImGui::Text("SOFTWARE");
 }
+
+void LogVersionDependences::LogVersionDependences()
+{
+	// Get version on real time of 3rd Paries Dependences
+	std::string SDLVersion;
+	std::string physVersion;
+	std::string assimpVersion;
+
+	PHYSFS_Version physVersionStc;
+	PHYSFS_getLinkedVersion(&physVersionStc);
+	SDL_version version;
+	SDL_GetVersion(&version);
+
+	SDLVersion = std::to_string(version.major) + '.' + std::to_string(version.minor) + '.' + std::to_string(version.patch);
+	physVersion = std::to_string(physVersionStc.major) + '.' + std::to_string(physVersionStc.minor) + '.' + std::to_string(physVersionStc.patch);
+	assimpVersion = std::to_string(aiGetVersionMajor()) + '.' + std::to_string(aiGetVersionMinor()) + '.' + std::to_string(aiGetVersionRevision());
+
+	// Print all 3rd Party Libraries versions
+	LOG(LogType::L_NORMAL, "-------------- 3rd Party Libraries used --------------");
+	LOG(LogType::L_NORMAL, "SDL Version: %s", SDLVersion.c_str());
+	LOG(LogType::L_NORMAL, "OpenGL Version: %s", glGetString(GL_VERSION));
+	LOG(LogType::L_NORMAL, "Glew Version: %s", glewGetString(GLEW_VERSION));
+	LOG(LogType::L_NORMAL, "GLSL: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	LOG(LogType::L_NORMAL, "ImGui Version: %s", ImGui::GetVersion());
+	LOG(LogType::L_NORMAL, "MathGeoLib Version: 1.5");
+	LOG(LogType::L_NORMAL, "Parson Version: 1.2.1");
+	LOG(LogType::L_NORMAL, "Assimp Version: %s", assimpVersion.c_str());
+	LOG(LogType::L_NORMAL, "PhysFS Version: %s", physVersion.c_str());
+	LOG(LogType::L_NORMAL, "DeviL Version: 1.8");
+	LOG(LogType::L_NORMAL, "Vendor: %s", glGetString(GL_VENDOR));
+	LOG(LogType::L_NORMAL, "Renderer: %s", glGetString(GL_RENDERER));
+}

@@ -41,6 +41,8 @@ Editor::~Editor()
 
 bool Editor::Init()
 {
+	LOG(LogType::L_NORMAL, "Init editor gui with imgui lib version %s", ImGui::GetVersion());
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();

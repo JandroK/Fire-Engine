@@ -26,6 +26,7 @@ Scene::~Scene()
 
 bool Scene::Init()
 {
+	LOG(LogType::L_NORMAL, "Loading Scene");
 	root = CreateGameObject("Root", nullptr);
 
 	return true;
@@ -71,6 +72,7 @@ update_status Scene::Update(float dt)
 
 bool Scene::CleanUp()
 {
+	LOG(LogType::L_NORMAL, "Freeing Level Manager");
 	//Delete all gameObjects
 	delete root;
 

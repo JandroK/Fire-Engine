@@ -15,3 +15,7 @@ public:
 	std::string assimpVersion;
 };
 
+namespace LogVersionDependences
+{
+	 void LogVersionDependences();
+}

@@ -10,6 +10,8 @@
 #include "ResourceTexture.h"
 #include "MeshRenderer.h"
 
+#include "AboutTab.h"
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
@@ -71,11 +73,14 @@ bool Renderer3D::Init()
 	}
 	else
 	{
-		LOG(LogType::L_NORMAL, "Init: Glew %s", glewGetString(GLEW_VERSION));
+		LOG(LogType::L_NORMAL, "Init Glew");
 	}
 	
 	if(ret == true)
 	{
+		// get version info
+		LogVersionDependences::LogVersionDependences();
+
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
 			LOG(LogType::L_ERROR, "Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());

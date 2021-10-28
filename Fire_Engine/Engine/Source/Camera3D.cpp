@@ -28,7 +28,6 @@ Camera3D::~Camera3D()
 
 bool Camera3D::Start()
 {
-	LOG(LogType::L_NORMAL, "Setting up the camera");
 	bool ret = true;
 
 	return ret;
@@ -234,7 +233,8 @@ bool Camera3D::SaveConfig(JsonParser& node) const
 
 bool Camera3D::LoadConfig(JsonParser& node)
 {
-	
+	LOG(LogType::L_NORMAL, "Setting up the camera");
+
 	X.x = (float)node.JsonValToNumber("X.x");
 	X.y = (float)node.JsonValToNumber("X.y");
 	X.z = (float)node.JsonValToNumber("X.z");
