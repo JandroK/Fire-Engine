@@ -38,7 +38,8 @@ void MeshRenderer::RenderMesh()
 	if (material != nullptr)
 		id = material->GetTextureID();
 
-	mesh->RenderMesh(-1);
+	mesh->RenderMesh(id);
+	
 
 	// If vertexNormals or faceNormals are true draw the Normals
 	if (vertexNormals || faceNormals)
