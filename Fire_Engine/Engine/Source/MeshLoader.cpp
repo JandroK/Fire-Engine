@@ -82,7 +82,7 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
 	if (importedMesh->HasFaces())
 	{
 		mesh->numIndices = importedMesh->mNumFaces * 3;
-		mesh->indices.resize(mesh->numVertex);
+		mesh->indices.resize(mesh->numIndices);
 		
 		for (uint j = 0; j < importedMesh->mNumFaces; ++j)
 		{

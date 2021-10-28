@@ -31,9 +31,12 @@ void FileSystem::FSInit()
 	if (PHYSFS_setWriteDir(".") == 0)
 		LOG(LogType::L_NORMAL, "File System error while creating write dir: %s\n", PHYSFS_getLastError());
 
-	FileSystem::AddPath("."); //Adding ProjectFolder (working directory)
+	// Adding ProjectFolder (working directory)
+	FileSystem::AddPath(".");
+	// Adding AssestsFolder
 	std::string assetPath = GetBasePath();
-	assetPath += "Assets";
+	assetPath += ASSETS_FOLDER;
+	assetPath = NormalizePath(assetPath.c_str());
 	FileSystem::AddPath(assetPath.c_str());
 
 	// Dump list of paths

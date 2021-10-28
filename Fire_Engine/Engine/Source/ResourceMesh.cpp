@@ -35,37 +35,36 @@ bool Mesh::LoadToMemory()
 	// Vertex Buffer GL_ARRAY_BUFFER
 	if (numVertex != 0)
 	{
-		glGenBuffers(1, (uint*)&(vertexBufferId));
+		glGenBuffers(1, (GLuint*)&(vertexBufferId));
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 3, &vertices[0], GL_STATIC_DRAW);
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertex * 3, &vertices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}	
 
 	//Index Buffer GL_ELEMENT_ARRAY_BUFFER
 	if (numIndices != 0)
 	{
-		glGenBuffers(1, (uint*)&(indexBufferId));
+		glGenBuffers(1, (GLuint*)&(indexBufferId));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices.size(), &indices[0], GL_STATIC_DRAW);
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * numIndices, &indices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}	
 
-	if (numTexCoords != 0)
-	{
-		// TexCoords Buffer GL_ARRAY_BUFFER
-		glGenBuffers(1, (uint*)&(textureBufferId));
+	// TexCoords Buffer GL_ARRAY_BUFFER
+	if (numTexCoords != 0)	{
+		glGenBuffers(1, (GLuint*)&(textureBufferId));
 		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size() * 2, &texCoords[0], GL_STATIC_DRAW);
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numTexCoords * 2, &texCoords[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	
+	// Normals Buffer GL_ARRAY_BUFFER
 	if (numNormals != 0)
-	{
-		// TexCoords Buffer GL_ARRAY_BUFFER
-		glGenBuffers(1, (uint*)&(normalBufferId));
+	{		
+		glGenBuffers(1, (GLuint*)&(normalBufferId));
 		glBindBuffer(GL_ARRAY_BUFFER, normalBufferId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals.size() * 3, &normals[0], GL_STATIC_DRAW);
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numNormals * 3, &normals[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}	
 
 	return true;

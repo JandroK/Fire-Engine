@@ -7,6 +7,7 @@ extern Application* app = nullptr;
 Application::Application() : maxFPS(60)
 {
 	app = this;
+	resourceManager = new ResourceManager(this);
 	window = new Window(this);
 	input = new Input(this);
 	renderer3D = new Renderer3D(this);
@@ -20,6 +21,7 @@ Application::Application() : maxFPS(60)
 
 	// Main Modules
 	AddModule(window);
+	AddModule(resourceManager);
 	AddModule(camera);
 	AddModule(input);	
 	AddModule(scene);	

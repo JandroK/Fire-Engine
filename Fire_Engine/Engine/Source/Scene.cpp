@@ -3,10 +3,10 @@
 #include "Globals.h"
 
 #include "GameObject.h"
+#include "ResourceManager.h"
 
 #include "Input.h"
 #include "Editor.h"
-#include "FileSystem.h"
 #include "Inspector.h"
 
 Scene::Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
@@ -20,7 +20,6 @@ Scene::~Scene()
 
 bool Scene::Init()
 {
-	FileSystem::FSInit();
 	root = CreateGameObject("Root", nullptr);
 
 	return true;
@@ -28,6 +27,7 @@ bool Scene::Init()
 
 bool Scene::Start()
 {
+	app->resourceManager->ImportFile("BakerHouse.fbx");
 	return true;
 }
 
@@ -55,8 +55,6 @@ update_status Scene::Update(float dt)
 
 bool Scene::CleanUp()
 {
-	FileSystem::FSDeInit();
-
 	//Delete all gameObjects
 	delete root;
 
