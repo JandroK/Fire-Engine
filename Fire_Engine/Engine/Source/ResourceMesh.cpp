@@ -135,10 +135,11 @@ void Mesh::RenderMesh(GLuint textureID)
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
 	
 	//-- UnBind Buffers--//
-	//if (textureID != -1) 
-		glBindTexture(GL_TEXTURE_2D, textureID);
+	if (textureID != -1) 
+		glBindTexture(GL_TEXTURE_2D, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 
 	/*if (numTexCoords != 0) glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
 	if (textureID != -1) glBindTexture(GL_TEXTURE_2D, 0);*/

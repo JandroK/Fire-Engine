@@ -39,6 +39,8 @@ void Transform::OnEditor()
 		if (ImGui::DragFloat3("##Scale", &localScale[0], 0.1f))
 			updateTransform = true;
 
+		//ImGui::Text("%f, %f, %f", globalTransform.GetScale().x, globalTransform.GetScale().y, globalTransform.GetScale().z);
+
 		// If any component has been modified update them 
 		if (updateTransform)
 			UpdateTransform();
