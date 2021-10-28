@@ -75,6 +75,7 @@ void Camera3D::CheckInputs()
 void Camera3D::OrbitRotation()
 {
 	vec3 pivot = vec3(0,0,0);
+	
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		int dx = -App->input->GetMouseXMotion();
@@ -82,15 +83,9 @@ void Camera3D::OrbitRotation()
 
 		float Sensitivity = 0.25f;
 
-		if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
-		{
-			//Position -= Object;
-
-		}
-		else {
-
-			Position -= Reference;
-		}
+		(App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) ? pivot = pivot : pivot= Reference ;
+		
+		Position -= pivot;
 
 		if (dx != 0)
 		{
@@ -114,7 +109,7 @@ void Camera3D::OrbitRotation()
 				Y = cross(Z, X);
 			}
 		}
-		Position = Reference + Z * length(Position);
+		Position = pivot + Z * length(Position);
 
 	}
 }
