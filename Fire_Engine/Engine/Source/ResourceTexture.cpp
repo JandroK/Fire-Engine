@@ -28,7 +28,8 @@ Texture::Texture(unsigned int textureID) : Resource(textureID, ResourceType::TEX
 }
 
 Texture::Texture(GLuint textureID, int texWidth, int texHeight, const char* name, const char* path) : 
-	Resource(textureID, ResourceType::TEXTURE), textureID(textureID), texWidth(texWidth), texHeight(texHeight), name(name), path(path)
+	Resource(textureID, ResourceType::TEXTURE), 
+	textureID(textureID), texWidth(texWidth), texHeight(texHeight), name(name), path(path)
 {
 }
 

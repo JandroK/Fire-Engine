@@ -38,6 +38,9 @@ void MeshRenderer::RenderMesh()
 	if (material != nullptr)
 		id = material->GetTextureID();
 
+	//LOG(LogType::L_NORMAL,"Name Owner matirial %s", material->owner->name.data());
+	//LOG(LogType::L_NORMAL,"Id de materiales %d",id);
+
 	mesh->RenderMesh(id);
 	
 
