@@ -1,6 +1,10 @@
 #include "Application.h"
 #include "Camera3D.h"
 #include "Globals.h"
+#include "Editor.h"
+#include "GameObject.h"
+#include "Transform.h"
+
 
 #include "Math/float4x4.h"
 #include "Math/float3.h"
@@ -75,15 +79,19 @@ void Camera3D::CheckInputs()
 void Camera3D::OrbitRotation()
 {
 	vec3 pivot = vec3(0,0,0);
+	GameObject* gameObject =App->editor->GetGameObjectSelected();
+
+	float3 posGO = { 0, 0, 0 };
+
+	if(gameObject != nullptr)posGO = gameObject->transform->position;
 	
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
-
 		float Sensitivity = 0.25f;
-
-		(App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT) ? pivot = pivot : pivot= Reference ;
+		app->editor->GetGameObjectSelected();
+		(App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && gameObject !=nullptr) ? pivot= vec3(posGO.x, posGO.y, posGO.z) : pivot= Reference ;
 		
 		Position -= pivot;
 
