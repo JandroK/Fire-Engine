@@ -20,6 +20,7 @@ Scene::~Scene()
 
 bool Scene::Init()
 {
+	FileSystem::FSInit();
 	root = CreateGameObject("Root", nullptr);
 
 	return true;
@@ -54,6 +55,8 @@ update_status Scene::Update(float dt)
 
 bool Scene::CleanUp()
 {
+	FileSystem::FSDeInit();
+
 	//Delete all gameObjects
 	delete root;
 

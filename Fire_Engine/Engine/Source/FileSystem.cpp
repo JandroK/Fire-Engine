@@ -2,6 +2,48 @@
 #include "FileSystem.h"
 #include "Globals.h"
 
+#include "DevIL\include\ilu.h"
+#include "DevIL\include\ilut.h"
+#include "MeshLoader.h"
+
+// This pragma comment shouldn't be necessary because it is already included in additional directories but if not give fail 
+//#pragma comment( lib, "DevIL/libx86/ILUT.lib" )
+
+// File System Init
+void FileSystem::FSInit()
+{
+	// In future this should be move to ResourceManager (the CleanUp, also)
+	// Devil init
+	LOG(LogType::L_NORMAL, "DevIL Init");
+	ilInit();
+	iluInit();
+	ilutInit();
+	ilutRenderer(ILUT_OPENGL);
+	MeshLoader::EnableDebugMode();
+
+	// PHYSFS_init
+	// Needs to be created before Init so other modules can use it
+	char* base_path = SDL_GetBasePath();
+	PHYSFS_init(base_path);
+	SDL_free(base_path);
+
+	//Setting the working directory as the writing directory
+	if (PHYSFS_setWriteDir(".") == 0)
+		LOG(LogType::L_NORMAL, "File System error while creating write dir: %s\n", PHYSFS_getLastError());
+
+	FileSystem::AddPath("."); //Adding ProjectFolder (working directory)
+	std::string assetPath = GetBasePath();
+	assetPath += "Assets";
+	FileSystem::AddPath(assetPath.c_str());
+
+	// Dump list of paths
+	LOG(LogType::L_NORMAL, "FileSystem Operations base is [%s] plus:", GetBasePath());
+	LOG(LogType::L_NORMAL, GetReadPaths());
+
+	FileSystem::CreateLibraryDirectories();
+}
+
+
 // Extract file name, from last "/" until the "."
 std::string StringLogic::FileNameFromPath(const char* _path)
 {
@@ -57,31 +99,10 @@ int close_sdl_rwops(SDL_RWops* rw)
 	return 0;
 }
 
-// File System Init
-void FileSystem::FSInit()
-{
-	// Needs to be created before Init so other modules can use it
-	char* base_path = SDL_GetBasePath();
-	PHYSFS_init(base_path);
-	SDL_free(base_path);
-
-	//Setting the working directory as the writing directory
-	if (PHYSFS_setWriteDir(".") == 0)
-		LOG(LogType::L_NORMAL, "File System error while creating write dir: %s\n", PHYSFS_getLastError());
-
-	FileSystem::AddPath("."); //Adding ProjectFolder (working directory)
-	FileSystem::AddPath("Assets");
-
-	// Dump list of paths
-	LOG(LogType::L_NORMAL, "FileSystem Operations base is [%s] plus:", GetBasePath());
-	LOG(LogType::L_NORMAL, GetReadPaths());
-
-	FileSystem::CreateLibraryDirectories();
-}
-
 void FileSystem::FSDeInit()
 {
 	PHYSFS_deinit();
+	MeshLoader::DisableDebugMode();
 }
 // If don't exist this paths, let's create 
 void FileSystem::CreateLibraryDirectories()

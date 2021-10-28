@@ -33,9 +33,9 @@ public:
 	bool active = true;
 	std::string name;
 	bool isStatic = false;
+	bool showChildren = false;
 
 private:
-	bool showChildren = false;
 	bool toDelete = false;
 
 	std::vector<GameObject*> children;

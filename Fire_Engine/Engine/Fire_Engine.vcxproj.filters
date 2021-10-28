@@ -67,6 +67,9 @@
     <Filter Include="Sources\GameObjects\Components">
       <UniqueIdentifier>{9aba92e1-cfd4-404a-9086-73bf56b39ec2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\3rd Party\DevIL">
+      <UniqueIdentifier>{16fa7215-eca5-4d16-a750-4c8ca57a3b85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -627,6 +630,12 @@
     <ClInclude Include="Source\SceneTab.h">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Hierarchy.h">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\DevIL\include\ilut.h">
+      <Filter>Sources\3rd Party\DevIL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -855,6 +864,9 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneTab.cpp">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hierarchy.cpp">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
   </ItemGroup>

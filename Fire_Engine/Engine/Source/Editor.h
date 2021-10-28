@@ -19,6 +19,7 @@ enum class TabType {
 	CONFIGURATION,
 	INSPECTOR,
 	SCENE,
+	HIERARCHY,
 
 	MAX
 };
