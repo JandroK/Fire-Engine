@@ -28,12 +28,24 @@ ResourceManager::~ResourceManager()
 
 bool ResourceManager::Init()
 {	
-	FileSystem::FSInit();
+	FileSystem::FSInit();	
+
 	return true;
 }
 
 bool ResourceManager::Start()
 {
+	// Import Icon
+	int w = 0; int h = 0;
+	char* buffer = nullptr;
+	uint size = FileSystem::LoadToBuffer("logo.png", &buffer);
+
+	GLuint id = TextureLoader::LoadToMemory(buffer, size, &w, &h);
+	logo = new Texture(id, w, h);
+	app->renderer3D->globalTextures.push_back(logo);
+
+	RELEASE_ARRAY(buffer);
+
 	return true;
 }
 

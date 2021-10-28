@@ -3,7 +3,7 @@
 #include "Globals.h"
 
 #include "Parson/parson.h"
-
+#include "ResourceTexture.h"
 
 Window::Window(Application* app, bool startEnabled) : Module(app, startEnabled)
 {
@@ -217,7 +217,8 @@ void Window::OnGUI()
 	if (ImGui::CollapsingHeader("Window"))
 	{
 		// TODO: Cambiar el *default* por le nombre del archivo del icono del motor
-		ImGui::TextWrapped("Icon: *default* ");
+		ImGui::TextWrapped("Icon: ");
+		ImGui::Image((ImTextureID)app->resourceManager->logo->textureID, ImVec2(32, 32));
 
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f))
 		{
@@ -253,13 +254,6 @@ void Window::OnGUI()
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change resizable mode, only on Off FullScreen mode");
 
-		ImGui::SameLine();
-
-		if (ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe)) {}
-
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Change render mode");
-
 		if (ImGui::Checkbox("Borderless", &borderless)) {
 			if (!fullScreen && !fullScreenDesktop) SetBorderless(borderless);
 			else borderless = !borderless;
@@ -277,6 +271,11 @@ void Window::OnGUI()
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Enable/Disable VSync");
 
+		if (ImGui::Checkbox("Wireframe ", &app->renderer3D->wireframe)) {}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Change render mode");
+
 		ImGui::SameLine();
 
 		if (ImGui::Checkbox("Fullscreen Desktop", &fullScreenDesktop)) {
@@ -287,7 +286,6 @@ void Window::OnGUI()
 		}
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change fullscreen desktop mode");
-
 
 		ImGui::NewLine();
 	}

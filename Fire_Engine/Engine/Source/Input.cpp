@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "Globals.h"
 
+#include "FileSystem.h"
+
 #define MAX_KEYS 300
 
 Input::Input(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -151,6 +153,8 @@ bool Input::CleanUp()
 
 void Input::OnGUI()
 {
+	FileSystem::OnGui();
+
 	if (ImGui::CollapsingHeader("Input"))
 	{
 		IMGUI_PRINT("Mouse Position: ", "%i,%i", mouse_x, mouse_y);
