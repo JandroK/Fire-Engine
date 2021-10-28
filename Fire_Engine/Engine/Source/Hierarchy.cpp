@@ -44,7 +44,7 @@ void Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
 
-	if (node->GetChildrens().size() == 0)
+	if (node->children.size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 
 	if (node == app->editor->GetGameObjectSelected())
@@ -63,14 +63,14 @@ void Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = node;
 	}
 
-	node->showChildren = (node->GetChildrens().size() == 0) ? false : nodeOpen;
+	node->showChildren = (node->children.size() == 0) ? false : nodeOpen;
 
 	if (node->showChildren == true)
 	{
 		// Call function recursive mode
-		for (unsigned int i = 0; i < node->GetChildrens().size(); i++)
+		for (unsigned int i = 0; i < node->children.size(); i++)
 		{
-			DrawGameObjectsTree(node->GetChildrens()[i], drawAsDisabled);
+			DrawGameObjectsTree(node->children[i], drawAsDisabled);
 		}
 		ImGui::TreePop();
 	}

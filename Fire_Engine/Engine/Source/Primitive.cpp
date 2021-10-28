@@ -505,7 +505,7 @@ void PrimitivePlane::InnerRender() const
 
 	glBegin(GL_LINES);
 
-	float d = 200.0f;
+	float d = 50.0f;
 
 	for(float i = -d; i <= d; i += 1.0f)
 	{

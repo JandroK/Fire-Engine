@@ -128,8 +128,7 @@ void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& 
 		}
 
 		PopulateTransform(gmNode, node);
-
-		objParent->GetChildrens().push_back(gmNode);
+		objParent->children.push_back(gmNode);
 	}
 
 	if (node->mNumChildren > 0)
@@ -146,7 +145,7 @@ void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& 
 			rootGO = new GameObject(holderName);
 			rootGO->parent = objParent;
 			PopulateTransform(rootGO, node);
-			objParent->GetChildrens().push_back(rootGO);
+			objParent->children.push_back(rootGO);
 		}
 
 

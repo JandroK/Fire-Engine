@@ -176,7 +176,7 @@ bool Renderer3D::Init()
 	ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 
 	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	OnResize(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 	
 	// Load Primitives Test
 	cube.InnerMesh();
@@ -201,6 +201,7 @@ update_status Renderer3D::PreUpdate(float dt)
 
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 
 	glLoadIdentity();
 
@@ -245,7 +246,9 @@ update_status Renderer3D::PostUpdate(float dt)
 	cube.RenderMesh();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
+	glDisable(GL_DEPTH_TEST);
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// Draw all tabs
 	ret = app->editor->Draw();
 
@@ -355,6 +358,10 @@ void Renderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	App->window->SetSize(width, height);
+
+	ReGenerateFrameBuffer(width, height);
 }
 
 void Renderer3D::OnGUI()

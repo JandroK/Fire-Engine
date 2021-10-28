@@ -66,7 +66,7 @@ GameObject* Scene::CreateGameObject(const char* name, GameObject* parent)
 	GameObject* obj = new GameObject(name);
 
 	if (parent != nullptr)
-		parent->GetChildrens().push_back(obj);
+		parent->children.push_back(obj);
 
 	return obj;
 }
@@ -75,11 +75,11 @@ void Scene::Destroy(GameObject* obj)
 {
 	dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
 
-	for (std::vector<GameObject*>::iterator i = obj->parent->GetChildrens().begin(); i != obj->parent->GetChildrens().end(); ++i)
+	for (std::vector<GameObject*>::iterator i = obj->parent->children.begin(); i != obj->parent->children.end(); ++i)
 	{
 		if (*i._Ptr == obj)
 		{
-			obj->parent->GetChildrens().erase(i);
+			obj->parent->children.erase(i);
 			break;
 		}
 	}
@@ -105,9 +105,9 @@ void Scene::RecursiveUpdate(GameObject* parent)
 	{
 		parent->Update();
 
-		for (size_t i = 0; i < parent->GetChildrens().size(); i++)
+		for (size_t i = 0; i < parent->children.size(); i++)
 		{
-			RecursiveUpdate(parent->GetChildrens()[i]);
+			RecursiveUpdate(parent->children[i]);
 		}
 	}
 }

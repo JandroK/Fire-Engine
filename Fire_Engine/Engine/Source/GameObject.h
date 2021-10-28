@@ -25,17 +25,12 @@ public:
 	void Destroy() { toDelete = true;};
 	bool GetToDelete() { return toDelete; };
 
-	std::vector<GameObject*> GetChildrens() { return children; };
-	std::vector<Component*> GetComponents() { return components; };
-
 	GameObject* parent;
 	Transform* transform;
 	bool active = true;
 	std::string name;
 	bool isStatic = false;
 	bool showChildren = false;
-
-private:
 	bool toDelete = false;
 
 	std::vector<GameObject*> children;

@@ -50,20 +50,20 @@ bool Mesh::LoadToMemory()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}	
 
-	// TexCoords Buffer GL_ARRAY_BUFFER
-	if (numTexCoords != 0)	{
-		glGenBuffers(1, (GLuint*)&(textureBufferId));
-		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numTexCoords * 2, &texCoords[0], GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-	
 	// Normals Buffer GL_ARRAY_BUFFER
 	if (numNormals != 0)
 	{		
 		glGenBuffers(1, (GLuint*)&(normalBufferId));
 		glBindBuffer(GL_ARRAY_BUFFER, normalBufferId);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numNormals * 3, &normals[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}	
+
+	// TexCoords Buffer GL_ARRAY_BUFFER
+	if (numTexCoords != 0)	{
+		glGenBuffers(1, (GLuint*)&(textureBufferId));
+		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numTexCoords * 2, &texCoords[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}	
 
@@ -132,11 +132,12 @@ void Mesh::RenderMesh(GLuint textureID)
 
 	//-- Draw --//
 	//glPushMatrix();
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
 	//glPopMatrix();
 	
 	//-- UnBind Buffers--//
-	if (textureID != -1) glBindTexture(GL_TEXTURE_2D, textureID);
+	if (textureID != -1) 
+		glBindTexture(GL_TEXTURE_2D, textureID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -145,8 +146,10 @@ void Mesh::RenderMesh(GLuint textureID)
 
 	//--Disables States--//
 	glDisableClientState(GL_VERTEX_ARRAY);
-	if (numNormals != 0) glDisableClientState(GL_NORMAL_ARRAY);
-	if (numTexCoords != 0) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	if (numNormals != 0) 
+		glDisableClientState(GL_NORMAL_ARRAY);
+	if (numTexCoords != 0) 
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 void Mesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
