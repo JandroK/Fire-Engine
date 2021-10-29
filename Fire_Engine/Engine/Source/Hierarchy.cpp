@@ -58,6 +58,8 @@ void Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 	if (drawAsDisabled)
 		ImGui::PopStyleColor();
 
+
+
 	if (ImGui::IsItemClicked() && !node->IsRoot())
 	{
 		dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = node;

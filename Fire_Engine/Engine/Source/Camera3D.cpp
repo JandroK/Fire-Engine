@@ -119,6 +119,7 @@ void Camera3D::OrbitRotation()
 			}
 		}
 		Position = pivot + Z * length(Position);
+		Reference = pivot;
 
 	}
 }
@@ -137,8 +138,10 @@ void Camera3D::FrontView()
 		posGO = gameObject->transform->position;
 
 		nwPos = vec3(posGO.x, posGO.y, posGO.z);
-
-		Position = nwPos + vec3(0, 0, 10);
+		// First param: Right, 
+		// Second param: UP			//With the inverted of the axes the opposite position is obtained
+		// Third param: From
+		Position = nwPos + vec3(0, 0, -10);
 		LookAt(nwPos);
 	}
 }
