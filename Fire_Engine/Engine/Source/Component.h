@@ -3,7 +3,6 @@
 
 enum class ComponentType
 {
-	UNKNOW,
 	TRANSFORM,
 	MESHRENDERER,
 	MATERIAL,
@@ -25,6 +24,6 @@ public:
 
 	bool active = true;
 private:
-	ComponentType type = ComponentType::UNKNOW;
+	ComponentType type;
 	GameObject* owner;
 };

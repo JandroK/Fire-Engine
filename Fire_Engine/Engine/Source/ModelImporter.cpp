@@ -122,7 +122,7 @@ void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& 
 		if (importedMesh->mMaterialIndex < sceneTextures.size())
 		{
 			Material* material = dynamic_cast<Material*>(gmNode->AddComponent(ComponentType::MATERIAL));
-			material->matTexture = sceneTextures[importedMesh->mMaterialIndex];
+			material->texture = sceneTextures[importedMesh->mMaterialIndex];
 		}
 
 		PopulateTransform(gmNode, node);

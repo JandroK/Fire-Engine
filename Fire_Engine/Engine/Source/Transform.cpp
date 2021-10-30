@@ -4,7 +4,7 @@
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/Math/TransformOps.h"
 
-Transform::Transform(GameObject* obj) : Component(obj), updateTransform(false)
+Transform::Transform(GameObject* obj) : Component(obj)
 {
 	// Inicialize transforms
 	globalTransform.SetIdentity();

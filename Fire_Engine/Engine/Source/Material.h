@@ -12,7 +12,7 @@ public:
 	void OnEditor() override;
 	int GetTextureID();
 
-	Texture* matTexture;
-
-	bool viewWithCheckers;
+	Texture* texture = nullptr;
+private:
+	bool viewWithCheckers = false;
 };

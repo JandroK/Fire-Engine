@@ -45,10 +45,10 @@ public:
 	bool isStatic = false;
 	std::string name;
 
-	std::vector<GameObject*> childrens;
 private:
-	GameObject* parent;
+	GameObject* parent = nullptr;
 	std::vector<Component*> components;
+	std::vector<GameObject*> childrens;
 
 	bool showChildrens = false;
 	bool pendingToDelete = false;

@@ -10,7 +10,7 @@
 
 #include "ImGui/imgui.h"
 
-MeshRenderer::MeshRenderer(GameObject* obj) : Component(obj), mesh(nullptr)
+MeshRenderer::MeshRenderer(GameObject* obj) : Component(obj)
 {
 }
 

@@ -51,6 +51,16 @@ void log(const char file[], int line, LogType _type, const char* format, ...);
 	   }\
 	}
 
+// Deletes an std::vector
+#define RELEASE_VECTOR( x, s )\
+	{\
+		for (size_t i = 0; i < s; i++)\
+		{\
+			delete x[i];\
+			x[i] = nullptr;\
+		}\
+	}
+
 // Folders defines
 #define ASSETS_FOLDER "Assets/"
 #define SETTINGS_FOLDER "Settings/"

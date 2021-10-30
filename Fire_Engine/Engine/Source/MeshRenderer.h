@@ -18,7 +18,7 @@ public:
 	void SetMesh(Mesh* mesh) { this->mesh = mesh; };
 
 private:
-	Mesh* mesh;
+	Mesh* mesh = nullptr;
 
 	bool faceNormals = false;
 	bool vertexNormals = false;

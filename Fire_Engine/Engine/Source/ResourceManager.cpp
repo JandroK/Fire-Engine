@@ -36,7 +36,7 @@ bool ResourceManager::Init()
 bool ResourceManager::Start()
 {
 	// Import Icon
-	logo = new Texture("logo.png", "logo");
+	logo = new Texture("Assets/logo.png", "logo");
 	logo->LoadToMemory();
 
 	app->renderer3D->globalTextures.push_back(logo);
@@ -99,11 +99,11 @@ void ResourceManager::ImportFile(const char* assetsFile)
 				Material* mat = dynamic_cast<Material*>(inspector->gameObjectSelected->GetComponent(ComponentType::MATERIAL));
 				if (mat)
 				{
-					mat->matTexture = material;
+					mat->texture = material;
 				}
 				else {
 					Material* mat = dynamic_cast<Material*>(inspector->gameObjectSelected->AddComponent(ComponentType::MATERIAL));
-					mat->matTexture = material;
+					mat->texture = material;
 				}
 			}
 			break;

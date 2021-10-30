@@ -1,11 +1,14 @@
-#include "GameObject.h"
+// Not necesarry because #include "Component.h" already includes #include "GameObject.h"
+//#include "GameObject.h" 
 #include "Component.h"
+#include "Globals.h"
 
+// Components
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Material.h"
 
-GameObject::GameObject(const char* name) : parent(nullptr), name(name)
+GameObject::GameObject(const char* name) : name(name)
 {
 	// Each GameObject must have a transform component, that's why we add it when creating it
 	transform = dynamic_cast<Transform*>(AddComponent(ComponentType::TRANSFORM));
@@ -14,19 +17,11 @@ GameObject::GameObject(const char* name) : parent(nullptr), name(name)
 GameObject::~GameObject()
 {
 	// Delete all components
-	for (size_t i = 0; i < components.size(); i++)
-	{
-		delete components[i];
-		components[i] = nullptr;
-	}
+	RELEASE_VECTOR(components, components.size());
 	components.clear();
 
 	// Delete all childrens
-	for (size_t i = 0; i < childrens.size(); i++)
-	{
-		delete childrens[i];
-		childrens[i] = nullptr;
-	}
+	RELEASE_VECTOR(childrens, childrens.size());
 	childrens.clear();
 }
 
@@ -51,8 +46,6 @@ void GameObject::Update()
 // Add component by Type
 Component* GameObject::AddComponent(ComponentType type)
 {
-	// Can't add a component without type
-	assert(type != ComponentType::UNKNOW, "Can't create a UNKNOW component");
 	Component* newComponent = nullptr;
 
 	switch (type)
@@ -68,11 +61,8 @@ Component* GameObject::AddComponent(ComponentType type)
 		break;
 	}
 
-	if (newComponent != nullptr)
-	{
-		newComponent->SetType(type);
-		components.push_back(newComponent);
-	}
+	newComponent->SetType(type);
+	components.push_back(newComponent);
 
 	return newComponent;
 }
