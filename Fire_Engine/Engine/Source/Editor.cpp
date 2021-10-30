@@ -2,8 +2,6 @@
 #include "Editor.h"
 
 #include "GameObject.h"
-#include "MeshRenderer.h"
-
 
 // Tabs
 #include "Tab.h"
@@ -183,67 +181,37 @@ update_status Editor::ImGuiMenuBar()
 		// Menu of game objects
 		if (ImGui::BeginMenu("Game Objects"))
 		{
-			if (ImGui::MenuItem("Sphere", nullptr))
-			{
-				GameObject* sphere = new GameObject("Sphere");
-				sphere->parent = app->scene->root;
-
-				PrimitiveSphere spherePrim = PrimitiveSphere();
-				spherePrim.InnerMesh();
-				spherePrim.InnerRender();
-				spherePrim.mesh->LoadToMemory();
-
-				MeshRenderer* meshRenderer;
-				meshRenderer = dynamic_cast<MeshRenderer*>(sphere->AddComponent(ComponentType::MESHRENDERER));
-				meshRenderer->mesh = spherePrim.mesh;
-				
-				app->scene->root->children.push_back(sphere);
-			}
 			if (ImGui::MenuItem("Cube", nullptr))
 			{
-				GameObject* cube = new GameObject("Cube");
-				cube->parent = app->scene->root;
-
 				PrimitiveCube cubePrim = PrimitiveCube();
 				cubePrim.InnerMesh();
 				cubePrim.mesh->LoadToMemory();
 
-				MeshRenderer* meshRenderer;
-				meshRenderer = dynamic_cast<MeshRenderer*>(cube->AddComponent(ComponentType::MESHRENDERER));
-				meshRenderer->mesh = cubePrim.mesh;
+				app->scene->CreatePrimitive("Cube", cubePrim.mesh);
+			}
+			if (ImGui::MenuItem("Sphere", nullptr))
+			{
+				PrimitiveSphere spherePrim = PrimitiveSphere();
+				spherePrim.InnerMesh();
+				spherePrim.mesh->LoadToMemory();
 
-				app->scene->root->children.push_back(cube);
-
+				app->scene->CreatePrimitive("Sphere", spherePrim.mesh);
 			}
 			if (ImGui::MenuItem("Cylinder", nullptr))
 			{
-				GameObject* cylinder = new GameObject("Cylinder");
-				cylinder->parent = app->scene->root;
-
 				PrimitiveCylinder cylinderPrim = PrimitiveCylinder();
 				cylinderPrim.InnerMesh();
 				cylinderPrim.mesh->LoadToMemory();
 
-				MeshRenderer* meshRenderer;
-				meshRenderer = dynamic_cast<MeshRenderer*>(cylinder->AddComponent(ComponentType::MESHRENDERER));
-				meshRenderer->mesh = cylinderPrim.mesh;
-
-				app->scene->root->children.push_back(cylinder);
+				app->scene->CreatePrimitive("Cylinder", cylinderPrim.mesh);
 			}
 			if (ImGui::MenuItem("Pyramid", nullptr))
 			{
-				GameObject* pyramid = new GameObject("Pyramid");
-				pyramid->parent = app->scene->root;
-
 				PrimitivePyramid pyramidPrim = PrimitivePyramid();
 				pyramidPrim.InnerMesh();
 				pyramidPrim.mesh->LoadToMemory();
 
-				MeshRenderer* meshRenderer;
-				meshRenderer = dynamic_cast<MeshRenderer*>(pyramid->AddComponent(ComponentType::MESHRENDERER));
-				meshRenderer->mesh = pyramidPrim.mesh;
-
-				app->scene->root->children.push_back(pyramid);
+				app->scene->CreatePrimitive("Pyramid", pyramidPrim.mesh);
 			}
 
 			ImGui::EndMenu();

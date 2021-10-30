@@ -40,11 +40,11 @@ void Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 {
 	// If this game object is active false draw on mode disabled
 	if (drawAsDisabled == false)
-		drawAsDisabled = !node->isActive();
+		drawAsDisabled = !node->active;
 
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
 
-	if (node->children.size() == 0)
+	if (node->GetChildrens().size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 
 	if (node == app->editor->GetGameObjectSelected())
@@ -65,14 +65,14 @@ void Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 		dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = node;
 	}
 
-	node->showChildren = (node->children.size() == 0) ? false : nodeOpen;
+	node->SetShowChildrens((node->GetChildrens().size() == 0) ? false : nodeOpen);
 
-	if (node->showChildren == true)
+	if (node->GetShowChildrens() == true)
 	{
 		// Call function recursive mode
-		for (unsigned int i = 0; i < node->children.size(); i++)
+		for (unsigned int i = 0; i < node->GetChildrens().size(); i++)
 		{
-			DrawGameObjectsTree(node->children[i], drawAsDisabled);
+			DrawGameObjectsTree(node->GetChildrens()[i], drawAsDisabled);
 		}
 		ImGui::TreePop();
 	}

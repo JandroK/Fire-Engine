@@ -60,9 +60,9 @@ void Transform::UpdateTransform()
 	{
 		for (size_t i = 0; i < transformsToUpdate.size(); i++)
 		{
-			if (transformsToUpdate[i]->owner->parent != nullptr)
+			if (transformsToUpdate[i]->owner->GetParent() != nullptr)
 			{
-				Transform* parentTra = transformsToUpdate[i]->owner->parent->transform;
+				Transform* parentTra = transformsToUpdate[i]->owner->GetParent()->transform;
 
 				if (parentTra != nullptr) {
 					// global = global parent * local
@@ -81,11 +81,11 @@ Transform* Transform::GetRecursiveTransforms(Transform* node, std::vector<Transf
 {
 	transforms.push_back(node);
 
-	if (!node->owner->children.empty())
+	if (!node->owner->GetChildrens().empty())
 	{
-		for (size_t i = 0; i < node->owner->children.size(); i++)
+		for (size_t i = 0; i < node->owner->GetChildrens().size(); i++)
 		{
-			Transform* parentTrans = node->owner->children[i]->transform;
+			Transform* parentTrans = node->owner->GetChildrens()[i]->transform;
 			GetRecursiveTransforms(parentTrans, transforms);
 		}
 	}

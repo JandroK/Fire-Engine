@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
- enum class ComponentType
+enum class ComponentType
 {
 	UNKNOW,
 	TRANSFORM,

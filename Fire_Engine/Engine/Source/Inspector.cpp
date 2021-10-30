@@ -93,9 +93,9 @@ void Inspector::Draw()
 
 			ImGui::Separator();
 			// Draw all OnEditors componets
-			for (size_t i = 0; i < gameObjectSelected->components.size(); i++)
+			for (size_t i = 0; i < gameObjectSelected->GetCompomemts().size(); i++)
 			{
-				gameObjectSelected->components[i]->OnEditor();
+				gameObjectSelected->GetCompomemts()[i]->OnEditor();
 			}
 		}
 	}
