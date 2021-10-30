@@ -45,8 +45,8 @@ bool Scene::Start()
 	float3 size(1, 1, 1);
 	Quat rotationQuat(0, 0, 0, 1);
 
-	transformChimney->SetTransformMatrix(transformChimney->position, rotationQuat, size, parentTransform);
-	transformBakerhouse->SetTransformMatrix(transformBakerhouse->position, rotationQuat, size, parentTransform);
+	transformChimney->SetTransformMatrix(transformChimney->GetPosition(), rotationQuat, size, parentTransform);
+	transformBakerhouse->SetTransformMatrix(transformBakerhouse->GetPosition(), rotationQuat, size, parentTransform);
 
 	return true;
 }

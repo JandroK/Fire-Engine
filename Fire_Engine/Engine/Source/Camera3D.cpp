@@ -84,7 +84,7 @@ void Camera3D::OrbitRotation()
 
 	float3 posGO = { 0, 0, 0 };
 
-	if(gameObject != nullptr)posGO = gameObject->transform->position;
+	if(gameObject != nullptr)posGO = gameObject->transform->GetPosition();
 	
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -135,7 +135,7 @@ void Camera3D::FrontView()
 
 	if (gameObject != nullptr)
 	{
-		posGO = gameObject->transform->position;
+		posGO = gameObject->transform->GetPosition();
 
 		nwPos = vec3(posGO.x, posGO.y, posGO.z);
 		// First param: Right, 
