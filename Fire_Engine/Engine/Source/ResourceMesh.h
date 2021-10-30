@@ -1,5 +1,8 @@
 #pragma once
 #include "Resource.h"
+//#include "MathGeoLib/include/Geometry/AABB.h"
+//#include "MathGeoLib/include/Geometry/OBB.h"
+//#include "MathGeoLib/include/Math/float3.h"
 #include <vector>
 
 typedef unsigned int uint;
@@ -39,4 +42,7 @@ public:
 	std::vector<float> vertices;
 	std::vector<float> texCoords;
 	std::vector<float> normals;
+
+	//AABB* bbox;
+	//OBB* obb;
 };

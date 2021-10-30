@@ -34,7 +34,7 @@ void FileSystem::FSInit()
 
 	// Adding ProjectFolder (working directory + AssestsFolder)
 	std::string assetPath = GetBasePath();
-	assetPath += ASSETS_FOLDER;
+	//assetPath += ASSETS_FOLDER;
 	assetPath = NormalizePath(assetPath.c_str());
 	FileSystem::AddPath(assetPath.c_str());
 

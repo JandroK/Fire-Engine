@@ -2,12 +2,16 @@
 #include "Camera3D.h"
 #include "Globals.h"
 #include "Editor.h"
+
 #include "GameObject.h"
 #include "Transform.h"
 
+//#include "MeshRenderer.h"
+//#include "MathGeoLib/include/Geometry/AABB.h"
 
-#include "Math/float4x4.h"
-#include "Math/float3.h"
+
+//#include "Math/float4x4.h"
+//#include"MathGeoLib/include/Math/float3.h"
 
 Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -28,6 +32,7 @@ Camera3D::~Camera3D()
 
 bool Camera3D::Start()
 {
+	LOG(LogType::L_NORMAL, "Setting up the camera");
 	bool ret = true;
 
 	return ret;
@@ -131,7 +136,27 @@ void Camera3D::FrontView()
 	vec3 nwPos;
 
 	//float dist = gameObject->components.a;
+	//MeshRenderer* meshRenderer;
+	//Transform* meshTransform;
+	//meshRenderer = dynamic_cast<MeshRenderer*>(gameObject->GetChildrens().at(0)->GetComponent(ComponentType::MESHRENDERER));
+	//meshTransform = dynamic_cast<Transform*>(gameObject->GetChildrens().at(0)->GetComponent(ComponentType::TRANSFORM));
 
+	//meshRenderer->mesh->bbox = new AABB();
+	//meshRenderer->mesh->obb = new OBB();
+
+	//meshRenderer->mesh->bbox->SetNegativeInfinity();
+	//meshRenderer->mesh->bbox->Enclose((float3*)&meshRenderer->mesh->vertices, meshRenderer->mesh->numVertex);
+
+	//
+	//meshRenderer->mesh->obb->Transform(meshTransform->globalTransform);
+
+	//meshRenderer->mesh->bbox->SetNegativeInfinity();
+	//meshRenderer->mesh->bbox->Enclose(*meshRenderer->mesh->obb);
+
+	//float3* corner= new float3();
+
+	//meshRenderer->mesh->bbox->GetCornerPoints(corner);
+	//posGO.z=meshRenderer->mesh->bbox->CenterPoint().z;
 
 	if (gameObject != nullptr)
 	{
