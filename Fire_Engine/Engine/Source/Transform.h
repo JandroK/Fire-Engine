@@ -23,7 +23,7 @@ private:
 	void UpdateTransform();
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);
 
-	bool updateTransform = true;
+	bool updateTransform = false;
 
 	// Local transforms
 	float4x4 localTransform;

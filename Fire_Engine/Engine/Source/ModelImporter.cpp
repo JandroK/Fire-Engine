@@ -63,12 +63,10 @@ void ModelImporter::Import(const char* fullPath,  char* buffer, int bSize, GameO
 
 					if (buffer != nullptr)
 					{
-						int w = 0;
-						int h = 0;
+						Texture* tex = new Texture(localPath.c_str());
+						tex->LoadToMemory();
 
-						GLuint id = TextureLoader::LoadToMemory(buffer, size, &w, &h);
-						Texture* Test = new Texture(id, w, h);
-						testTextures.push_back(Test);
+						testTextures.push_back(tex);
 
 						RELEASE_ARRAY(buffer)
 					}
@@ -118,7 +116,7 @@ void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& 
 		//Load mesh to GameObject
 		MeshRenderer* gmMeshRenderer = dynamic_cast<MeshRenderer*>(gmNode->AddComponent(ComponentType::MESHRENDERER));
 
-		gmMeshRenderer->mesh = meshPointer;
+		gmMeshRenderer->SetMesh(meshPointer);
 
 		aiMesh* importedMesh = meshArray[node->mMeshes[i]];
 		if (importedMesh->mMaterialIndex < sceneTextures.size())

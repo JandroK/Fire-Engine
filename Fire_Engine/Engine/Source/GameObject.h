@@ -27,6 +27,10 @@ public:
 	std::vector<GameObject*> GetChildrens() { return childrens; };
 	void AddChildren(GameObject* children) { childrens.push_back(children); };
 
+	std::vector<GameObject*>::iterator GetBeginChildren() { return childrens.begin(); };
+	std::vector<GameObject*>::iterator GetEndChildren() { return childrens.end(); };
+	void EraseChildren(std::vector<GameObject*>::const_iterator i) { childrens.erase(i); };
+
 	GameObject* GetParent() { return parent; };
 	void SetParent(GameObject* obj) { parent = obj; };
 	std::vector<Component*> GetCompomemts() { return components; };
@@ -41,9 +45,9 @@ public:
 	bool isStatic = false;
 	std::string name;
 
+	std::vector<GameObject*> childrens;
 private:
 	GameObject* parent;
-	std::vector<GameObject*> childrens;
 	std::vector<Component*> components;
 
 	bool showChildrens = false;

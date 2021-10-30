@@ -10,10 +10,16 @@ public:
 	virtual ~MeshRenderer();
 
 	void Update() override;
-	void RenderMesh();
 	void OnEditor() override;
 
+	void RenderMesh();
+
+	Mesh* GetMesh() { return mesh; };
+	void SetMesh(Mesh* mesh) { this->mesh = mesh; };
+
+private:
 	Mesh* mesh;
+
 	bool faceNormals = false;
 	bool vertexNormals = false;
 };

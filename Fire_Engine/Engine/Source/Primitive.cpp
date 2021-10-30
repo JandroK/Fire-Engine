@@ -7,7 +7,7 @@
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
 {
-	mesh = new Mesh(app->GetNewUID());
+	mesh = new Mesh();
 }
 
 // ------------------------------------------------------------

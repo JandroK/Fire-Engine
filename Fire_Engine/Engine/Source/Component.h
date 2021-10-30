@@ -1,6 +1,6 @@
 #pragma once
-
 #include "GameObject.h"
+
 enum class ComponentType
 {
 	UNKNOW,
@@ -15,9 +15,6 @@ public:
 	Component(GameObject* obj) { owner = obj; };
 	virtual ~Component() {};
 
-	void Enable() { active = true; };
-	void Disable() { active = false; };
-
 	virtual void Update() {};
 	virtual void OnEditor() {};
 
@@ -26,8 +23,8 @@ public:
 
 	GameObject* GetOwner() { return owner; };
 
-private:
 	bool active = true;
+private:
 	ComponentType type = ComponentType::UNKNOW;
 	GameObject* owner;
 };

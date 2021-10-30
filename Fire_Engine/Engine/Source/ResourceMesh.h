@@ -9,7 +9,7 @@ class vec3;
 class Mesh : public Resource
 {
 public:
-	Mesh(unsigned int _uid);
+	Mesh();
 	~Mesh();
 
 	bool LoadToMemory() override;

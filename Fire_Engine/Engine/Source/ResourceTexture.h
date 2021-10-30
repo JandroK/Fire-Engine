@@ -16,8 +16,7 @@ typedef unsigned int GLuint;
 class Texture : public Resource
 {
 public:
-	Texture(unsigned int textureID);
-	Texture(GLuint textureID, int texWidth, int texHeight, const char* name = nullptr, const char* path = nullptr);
+	Texture(std::string path, std::string name = "");
 	~Texture();
 
 	bool LoadToMemory() override;
@@ -25,12 +24,12 @@ public:
 	Rect GetTextureChunk(Rect area);
 
 public:
-	int texWidth;
-	int texHeight;
+	int texWidth = 0;
+	int texHeight = 0;
 
-	GLuint textureID;
+	GLuint textureID = -1;
 	Color color;
 
-	const char* path;
-	const char* name;
+	std::string path;
+	std::string name;
 };

@@ -22,14 +22,7 @@ bool Rect::Contains(Rect b)
     }
 }
 
-Texture::Texture(unsigned int textureID) : Resource(textureID, ResourceType::TEXTURE), texWidth(0), texHeight(0)
-{
-	color = White;
-}
-
-Texture::Texture(GLuint textureID, int texWidth, int texHeight, const char* name, const char* path) : 
-	Resource(textureID, ResourceType::TEXTURE), 
-	textureID(textureID), texWidth(texWidth), texHeight(texHeight), name(name), path(path)
+Texture::Texture(std::string path, std::string name) : Resource(ResourceType::TEXTURE), path(path), name(name)
 {
 }
 
@@ -41,7 +34,7 @@ bool Texture::LoadToMemory()
 {
 	LOG(LogType::L_WARNING, "Texture loaded to memory");
 	char* buffer = nullptr;
-	int size = FileSystem::LoadToBuffer(GetLibraryPath(), &buffer);
+	int size = FileSystem::LoadToBuffer(path.c_str(), &buffer);
 
 	textureID = TextureLoader::LoadToMemory(buffer, size, &texWidth, &texHeight);
 

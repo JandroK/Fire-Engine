@@ -4,7 +4,7 @@
 #include "Glew/include/glew.h"
 #include "glmath.h"
 
-Mesh::Mesh(unsigned int uid) : Resource(uid, ResourceType::MESH)
+Mesh::Mesh() : Resource(ResourceType::MESH)
 {
 }
 

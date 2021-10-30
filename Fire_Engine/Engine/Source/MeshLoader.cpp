@@ -31,28 +31,16 @@ void MeshLoader::DisableDebugMode()
 	aiDetachAllLogStreams();
 }
 
-Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh, uint oldUID)
+Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 {
-	uint UID = oldUID;
-	if (UID == 0)
-		UID = app->GetNewUID();
-
 	LOG(LogType::L_NORMAL, "%s", importedMesh->mName.C_Str());
-	std::string file = MESHES_FOLDER;
-	file += std::to_string(UID);
-	file += ".mmh";
 
-	Mesh* mesh = new Mesh(UID);
+	Mesh* mesh = new Mesh();
 
 	// copy vertices
 	mesh->numVertex = importedMesh->mNumVertices;
-//	mesh->vertices.resize(mesh->numVertex * sizeof(float) * 3);
-
 	mesh->numTexCoords = importedMesh->mNumVertices;
-//	mesh->texCoords.resize(mesh->numTexCoords * sizeof(float) * 2);
-
 	mesh->numNormals = importedMesh->mNumVertices;
-//	mesh->normals.resize(mesh->numNormals * sizeof(float) * 3);
 
 	for (size_t i = 0; i < mesh->numVertex; i++)
 	{
