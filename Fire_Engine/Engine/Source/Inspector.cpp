@@ -74,29 +74,64 @@ std::string Inspector::DrawList(const char* label, std::vector<std::string>* lis
 	{
 		for (int i = 0; i < list->size(); i++)
 		{
-			bool isSelected = item.compare(list->at(i));
+			bool isSelected = !item.compare(list->at(i));
 			if (ImGui::Selectable(list->at(i).c_str(), isSelected))
 				item = list->at(i);
 			if (isSelected)
 				ImGui::SetItemDefaultFocus();
 		}
+		ImGui::Separator();
+
+		AddItem(label, item);
+
 		ImGui::EndCombo();
 	}
 	ImGui::PopItemWidth();
 
 	return ret;
 }
+// Function in progress, it is necessary to collect the user's input to create an item with the chosen name
+void Inspector::AddItem(const char* label, std::string& item)
+{
+	std::string addItem = "Add";
+	addItem.append(label);
+	if (ImGui::Button(addItem.c_str()))
+	{
+		if (label == "Tag")
+			AddTag("InProgressTag");
+		else if (item.compare("Layer"))
+			AddLayer("InProgressLayer");
+	}
+}
+
+void Inspector::AddTag(std::string newTag)
+{
+	tags.push_back(newTag);
+	CalculateMaxWidth(tags, maxWidthTag);
+}
+
+void Inspector::AddLayer(std::string newLayer)
+{
+	layers.push_back(newLayer);
+	CalculateMaxWidth(layers, maxWidthLayers);
+}
 
 // This function calculate the size of the longest text in a string list in pixels
 void Inspector::CalculateMaxWidth(std::vector<std::string> list, int& width)
 {
+	int w = width;
 	for (int i = 0; i < list.size(); i++)
 	{
 		if (ImGui::CalcTextSize(list.at(i).c_str()).x > width)
 			width = ImGui::CalcTextSize(list[i].c_str()).x;
 	}
+
 	// Add a margin: GetFrameHeight = button size
-	// ItemInnerSpacing.x is the space from the beginning of the container until the first character is drawn  
-	ImGuiStyle& style = ImGui::GetStyle();
-	width += ImGui::GetFrameHeight() + style.ItemInnerSpacing.x * 2;
+	// ItemInnerSpacing.x is the space from the beginning of the container until the first character is drawn 
+	// Only if the size has increased
+	if (w != width)
+	{
+		ImGuiStyle& style = ImGui::GetStyle();
+		width += ImGui::GetFrameHeight() + style.ItemInnerSpacing.x * 2;
+	}	
 }
