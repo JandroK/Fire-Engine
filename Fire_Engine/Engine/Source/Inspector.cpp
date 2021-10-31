@@ -15,10 +15,6 @@ Inspector::Inspector() : Tab(), gameObjectSelected(nullptr)
 	layers = { "0: Default", "1: TransparentFX", "2: Ignore Raycast", "3: Water", "4: UI", "5: Player" };
 }
 
-Inspector::~Inspector()
-{
-}
-
 void Inspector::Draw()
 {
 	if (ImGui::Begin(name.c_str()))
@@ -40,7 +36,10 @@ void Inspector::Draw()
 			ImGui::SameLine();
 			ImGui::Checkbox("Static", &gameObjectSelected->isStatic);
 
-			DrawList("Tag", &tags);	ImGui::SameLine();	DrawList("Layer", &layers);
+			// Draw tagList and layerList
+			DrawList("Tag", &tags, gameObjectSelected->tag, maxWidthTag);
+			ImGui::SameLine();	
+			DrawList("Layer", &layers, gameObjectSelected->layer, maxWidthLayers);
 
 			// Destroy object selected, pendingToDelete = true
 			if (ImGui::Button("Delete")) {
@@ -59,32 +58,45 @@ void Inspector::Draw()
 	ImGui::End();
 }
 
-void Inspector::DrawList(const char* label, std::vector<std::string>* list)
+std::string Inspector::DrawList(const char* label, std::vector<std::string>* list, std::string &item, int width)
 {
-	static const char* currentItem = NULL;
+	std::string ret = "";
 	ImGui::Text(label); ImGui::SameLine();
 
-	// Draw the popUp tab of a list and selectable 
-	ImGuiStyle& style = ImGui::GetStyle();
-	float w = ImGui::CalcItemWidth();
-	float spacing = style.ItemInnerSpacing.x;
-	float buttonSize = ImGui::GetFrameHeight();
-	ImGui::PushItemWidth((w - spacing * 2.0f - buttonSize * 2.0f) * 0.5f);
+	// Set the width of item
+	ImGui::PushItemWidth(width);
 
 	std::string listLabel = "##List";
 	listLabel.append(label);
 
-	if (ImGui::BeginCombo(listLabel.c_str(), currentItem))
+	// Draw the popUp tab of a list and the state of current item of in the list has a special style
+	if (ImGui::BeginCombo(listLabel.c_str(), item.c_str()))
 	{
 		for (int i = 0; i < list->size(); i++)
 		{
-			bool isSelected = (currentItem == list->at(i).c_str());
+			bool isSelected = item.compare(list->at(i));
 			if (ImGui::Selectable(list->at(i).c_str(), isSelected))
-				currentItem = list->at(i).c_str();
+				item = list->at(i);
 			if (isSelected)
 				ImGui::SetItemDefaultFocus();
 		}
 		ImGui::EndCombo();
 	}
-	ImGui::PopItemWidth();	
+	ImGui::PopItemWidth();
+
+	return ret;
+}
+
+// This function calculate the size of the longest text in a string list in pixels
+void Inspector::CalculateMaxWidth(std::vector<std::string> list, int& width)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		if (ImGui::CalcTextSize(list.at(i).c_str()).x > width)
+			width = ImGui::CalcTextSize(list[i].c_str()).x;
+	}
+	// Add a margin: GetFrameHeight = button size
+	// ItemInnerSpacing.x is the space from the beginning of the container until the first character is drawn  
+	ImGuiStyle& style = ImGui::GetStyle();
+	width += ImGui::GetFrameHeight() + style.ItemInnerSpacing.x * 2;
 }

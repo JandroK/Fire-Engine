@@ -45,6 +45,9 @@ public:
 	bool isStatic = false;
 	std::string name;
 
+	std::string tag;
+	std::string layer;
+
 private:
 	GameObject* parent = nullptr;
 	std::vector<Component*> components;
@@ -52,4 +55,5 @@ private:
 
 	bool showChildrens = false;
 	bool pendingToDelete = false;
+
 };
