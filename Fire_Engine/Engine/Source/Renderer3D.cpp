@@ -78,8 +78,8 @@ bool Renderer3D::Init()
 	
 	if(ret == true)
 	{
-		// get version info
-		LogVersionDependences::LogVersionDependences();
+		// Print version info
+		dynamic_cast<AboutTab*>(app->editor->GetTab(TabType::ABOUT))->LogVersionDependences();
 
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)

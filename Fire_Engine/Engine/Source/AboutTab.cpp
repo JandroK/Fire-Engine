@@ -10,22 +10,11 @@
 #include "Assimp/include/version.h"
 
 #include "SDL/include/SDL.h"
-#include "Glew/include/glew.h"
 
 AboutTab::AboutTab()
 {
 	name = "About";
 	active = false;
-
-	// Get version on real time of 3rd Paries Dependences
-	PHYSFS_Version physVersionStc;
-	PHYSFS_getLinkedVersion(&physVersionStc);
-	SDL_version version;
-	SDL_GetVersion(&version);
-
-	SDLVersion = std::to_string(version.major) + '.' + std::to_string(version.minor) + '.' + std::to_string(version.patch);
-	physVersion = std::to_string(physVersionStc.major) + '.' + std::to_string(physVersionStc.minor) + '.' + std::to_string(physVersionStc.patch);
-	assimpVersion = std::to_string(aiGetVersionMajor()) + '.' + std::to_string(aiGetVersionMinor()) + '.' + std::to_string(aiGetVersionRevision());
 }
 
 void AboutTab::Draw()
@@ -54,14 +43,15 @@ void AboutTab::Draw()
 		// Print all 3rd Party Libraries versions
 		ImGui::Text("3rd Party Libraries used:");
 		IMGUI_PRINT("SDL Version: ", "%s", SDLVersion.c_str());
-		IMGUI_PRINT("OpenGL Version: ", "%s", glGetString(GL_VERSION));
-		IMGUI_PRINT("Glew Version: ", "%s", glewGetString(GLEW_VERSION));
-		IMGUI_PRINT("ImGui Version: ", "%s", ImGui::GetVersion());
-		IMGUI_PRINT("MathGeoLib Version: ", "1.5");
-		IMGUI_PRINT("Parson Version: ", "1.2.1");
-		IMGUI_PRINT("Assimp Version: ", "%s", assimpVersion.c_str());
+		IMGUI_PRINT("OpenGL Version: ", "%s", OGLVersion);
+		IMGUI_PRINT("Glew Version: ", "%s", GlewVersion);
+		IMGUI_PRINT("GLSL: ", "%s", GLSLVersion);
 		IMGUI_PRINT("PhysFS Version: ", "%s", physVersion.c_str());
-		IMGUI_PRINT("DeviL Version: ", "1.8");
+		IMGUI_PRINT("Assimp Version: ", "%s", assimpVersion.c_str());
+		IMGUI_PRINT("ImGui Version: ", "%s", imGuiVersion);
+		IMGUI_PRINT("MathGeoLib Version: ", "%s", mathGeoLib);
+		IMGUI_PRINT("Parson Version: ", "%s", parsonVersion);
+		IMGUI_PRINT("DeviL Version: ", "%s", deviLVersion);
 
 		ImGui::NewLine();
 		ImGui::Separator();
@@ -95,28 +85,16 @@ void AboutTab::PrintLicense()
 	ImGui::Text("SOFTWARE");
 }
 
-void LogVersionDependences::LogVersionDependences()
+void AboutTab::LogVersionDependences()
 {
-	// Get version on real time of 3rd Paries Dependences
-	std::string SDLVersion;
-	std::string physVersion;
-	std::string assimpVersion;
-
-	PHYSFS_Version physVersionStc;
-	PHYSFS_getLinkedVersion(&physVersionStc);
-	SDL_version version;
-	SDL_GetVersion(&version);
-
-	SDLVersion = std::to_string(version.major) + '.' + std::to_string(version.minor) + '.' + std::to_string(version.patch);
-	physVersion = std::to_string(physVersionStc.major) + '.' + std::to_string(physVersionStc.minor) + '.' + std::to_string(physVersionStc.patch);
-	assimpVersion = std::to_string(aiGetVersionMajor()) + '.' + std::to_string(aiGetVersionMinor()) + '.' + std::to_string(aiGetVersionRevision());
+	InitVersions();
 
 	// Print all 3rd Party Libraries versions
 	LOG(LogType::L_NORMAL, "-------------- 3rd Party Libraries used --------------");
 	LOG(LogType::L_NORMAL, "SDL Version: %s", SDLVersion.c_str());
-	LOG(LogType::L_NORMAL, "OpenGL Version: %s", glGetString(GL_VERSION));
-	LOG(LogType::L_NORMAL, "Glew Version: %s", glewGetString(GLEW_VERSION));
-	LOG(LogType::L_NORMAL, "GLSL: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	LOG(LogType::L_NORMAL, "OpenGL Version: %s", OGLVersion);
+	LOG(LogType::L_NORMAL, "Glew Version: %s", GlewVersion);
+	LOG(LogType::L_NORMAL, "GLSL: %s", GLSLVersion);
 	LOG(LogType::L_NORMAL, "ImGui Version: %s", ImGui::GetVersion());
 	LOG(LogType::L_NORMAL, "MathGeoLib Version: 1.5");
 	LOG(LogType::L_NORMAL, "Parson Version: 1.2.1");
@@ -125,4 +103,27 @@ void LogVersionDependences::LogVersionDependences()
 	LOG(LogType::L_NORMAL, "DeviL Version: 1.8");
 	LOG(LogType::L_NORMAL, "Vendor: %s", glGetString(GL_VENDOR));
 	LOG(LogType::L_NORMAL, "Renderer: %s", glGetString(GL_RENDERER));
+}
+
+void AboutTab::InitVersions()
+{
+	// Get version of 3rd Paries Dependences
+	PHYSFS_Version physVersionStc;
+	PHYSFS_getLinkedVersion(&physVersionStc);
+	SDL_version version;
+	SDL_GetVersion(&version);
+
+	// On real time 
+	SDLVersion = std::to_string(version.major) + '.' + std::to_string(version.minor) + '.' + std::to_string(version.patch);
+	assimpVersion = std::to_string(aiGetVersionMajor()) + '.' + std::to_string(aiGetVersionMinor()) + '.' + std::to_string(aiGetVersionRevision());
+	physVersion = std::to_string(physVersionStc.major) + '.' + std::to_string(physVersionStc.minor) + '.' + std::to_string(physVersionStc.patch);
+	imGuiVersion = ImGui::GetVersion();
+	OGLVersion = glGetString(GL_VERSION);
+	GlewVersion = glewGetString(GLEW_VERSION);
+	GLSLVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+	// Not real time
+	mathGeoLib = "1.5";
+	parsonVersion = "1.2.1";
+	deviLVersion = "1.8";
 }

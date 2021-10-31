@@ -32,7 +32,7 @@ Texture::~Texture()
 
 bool Texture::LoadToMemory()
 {
-	LOG(LogType::L_WARNING, "Texture loaded to memory");
+	LOG(LogType::L_NORMAL, "Texture loaded to memory");
 	char* buffer = nullptr;
 	int size = FileSystem::LoadToBuffer(path.c_str(), &buffer);
 
