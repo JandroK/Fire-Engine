@@ -93,7 +93,7 @@ void Editor::CreateDockSpace()
 	ImVec2 dockSize(viewport->WorkSize);
 	ImGui::SetNextWindowSize(dockSize);
 
-	dockId = DockSpaceOverViewportCustom(viewport, ImGuiDockNodeFlags_PassthruCentralNode, dockPos, dockSize, nullptr);
+	DockSpaceOverViewportCustom(viewport, ImGuiDockNodeFlags_PassthruCentralNode, dockPos, dockSize, nullptr);
 }
 
 void Editor::StartFrame()
@@ -115,18 +115,13 @@ void Editor::StartFrame()
 
 update_status Editor::Draw()
 {	
-	StartFrame();
+	update_status ret = update_status::UPDATE_CONTINUE;
 
-	// Rendering the tabs
-	update_status ret = ImGuiMenuBar();
+	StartFrame();
+	ret = ImGuiMenuBar();
 	CreateDockSpace();
 
-	if (showCase)
-	{
-		//ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_MenuBarBg, ImVec4(0.f, 0.f, 0.f, 1.f));
-		ImGui::ShowDemoWindow();
-		//ImGui::PopStyleColor();
-	}
+	// Rendering the tabs
 	for (unsigned int i = 0; i < tabs.size(); i++)
 	{
 		if (tabs[i]->active)
@@ -137,9 +132,7 @@ update_status Editor::Draw()
 
 	ImGui::Render();
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
-	//glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 
 	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
@@ -169,7 +162,8 @@ update_status Editor::ImGuiMenuBar()
 		{
 			for (int i = 0; i < tabs.size(); i++)
 			{
-				if (ImGui::MenuItem(tabs[i]->name.c_str(), std::to_string(i+1).c_str(), tabs[i]->active, &tabs[i]->active))
+				// Name  ShortCut  State
+				if (ImGui::MenuItem(tabs[i]->name.c_str(), std::to_string(tabs[i]->shortcut).c_str(), tabs[i]->active, &tabs[i]->active))
 					tabs[i]->active =! tabs[i]->active;
 			}			
 			ImGui::EndMenu();
@@ -209,16 +203,10 @@ update_status Editor::ImGuiMenuBar()
 
 				app->scene->CreatePrimitive("Pyramid", pyramidPrim.mesh);
 			}
-
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
-
-			if (ImGui::MenuItem("ImGui Demo", nullptr, showCase))
-			{
-				showCase = !showCase;
-			}
 			if (ImGui::MenuItem("Documentation"))
 			{
 				ShellExecute(0, 0, "https://github.com/JandroK/Fire-Engine/wiki", 0, 0, SW_SHOW);
@@ -262,7 +250,7 @@ Tab* Editor::GetTab(TabType type)
 {
 	unsigned int vecPosition = static_cast<unsigned int>(type);
 
-	return (vecPosition < tabs.size()) ? tabs[vecPosition] : nullptr;
+	return (vecPosition < tabs.size()) ? tabs[vecPosition] : tabs[vecPosition];
 }
 
 GameObject* Editor::GetGameObjectSelected()
@@ -272,7 +260,7 @@ GameObject* Editor::GetGameObjectSelected()
 }
 
 
-ImGuiID Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass)
+void Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass)
 {
 	if (viewport == NULL)
 		viewport = ImGui::GetMainViewport();
@@ -299,6 +287,4 @@ ImGuiID Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNo
 	ImGuiID dockspaceId = ImGui::GetID("DockSpace");
 	ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags, windowClass);
 	ImGui::End();
-
-	return dockspaceId;
 }

@@ -71,7 +71,7 @@ update_status Scene::Update(float dt)
 
 bool Scene::CleanUp()
 {
-	LOG(LogType::L_NORMAL, "Freeing Level Manager");
+	LOG(LogType::L_NO_PRINTABLE, "Freeing Level Manager");
 	//Delete all gameObjects
 	delete root;
 

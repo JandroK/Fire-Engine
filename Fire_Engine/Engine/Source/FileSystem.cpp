@@ -6,13 +6,9 @@
 #include "DevIL\include\ilut.h"
 #include "MeshLoader.h"
 
-// This pragma comment shouldn't be necessary because it is already included in additional directories but if not give fail 
-//#pragma comment( lib, "DevIL/libx86/ILUT.lib" )
-
 // File System Init
 void FileSystem::FSInit()
 {
-	// In future this should be move to ResourceManager (the CleanUp, also)
 	// Devil init
 	LOG(LogType::L_NORMAL, "DevIL Init");
 	ilInit();
@@ -24,15 +20,15 @@ void FileSystem::FSInit()
 	// PHYSFS_init
 	// Needs to be created before Init so other modules can use it
 	LOG(LogType::L_NORMAL, "PHYSFS Init");
-	char* base_path = SDL_GetBasePath();
-	PHYSFS_init(base_path);
-	SDL_free(base_path);
+	char* basePath = SDL_GetBasePath();
+	PHYSFS_init(basePath);
+	SDL_free(basePath);
 
 	//Setting the working directory as the writing directory
 	if (PHYSFS_setWriteDir(".") == 0)
 		LOG(LogType::L_NORMAL, "File System error while creating write dir: %s\n", PHYSFS_getLastError());
 
-	// Adding ProjectFolder (working directory + AssestsFolder)
+	// Adding ProjectFolder (working directory)
 	std::string assetPath = GetBasePath();
 	//assetPath += ASSETS_FOLDER;
 	assetPath = NormalizePath(assetPath.c_str());
@@ -40,7 +36,7 @@ void FileSystem::FSInit()
 
 	// Dump list of paths
 	LOG(LogType::L_NORMAL, "Get Base Path: ");
-	LOG(LogType::L_NORMAL, "FileSystem Operations base is [%s] plus:", GetBasePath());
+	LOG(LogType::L_NORMAL, GetBasePath());
 	LOG(LogType::L_NORMAL, "Get Read Path: ");
 	LOG(LogType::L_NORMAL, GetReadPaths());
 	LOG(LogType::L_NORMAL, "Get Write Path: ");
@@ -49,11 +45,10 @@ void FileSystem::FSInit()
 	FileSystem::CreateLibraryDirectories();
 }
 
-
 // Extract file name, from last "/" until the "."
-std::string StringLogic::FileNameFromPath(const char* _path)
+std::string StringLogic::FileNameFromPath(const char* path)
 {
-	std::string fileName(_path);
+	std::string fileName(path);
 
 	fileName = fileName.substr(fileName.find_last_of("/\\") + 1);
 	fileName = fileName.substr(0, fileName.find_last_of('.'));
@@ -63,9 +58,9 @@ std::string StringLogic::FileNameFromPath(const char* _path)
 // Convert global path to local path, example:
 // C:\Users\aleja\OneDrive\Escritorio\Universidad\3r Carrera\Motores\Fire-Engine\Fire_Engine\Output\Assests\BakerHouse.fbx
 // to: Assests\BakerHouse.fbx
-std::string StringLogic::GlobalToLocalPath(const char* _globalPath)
+std::string StringLogic::GlobalToLocalPath(const char* globalPath)
 {
-	std::string localPath = FileSystem::NormalizePath(_globalPath);
+	std::string localPath = FileSystem::NormalizePath(globalPath);
 
 	size_t pos = 0;
 	pos = localPath.find(ASSETS_FOLDER);
@@ -90,19 +85,12 @@ ImportType FileSystem::GetTypeFromPath(const char* path)
 		ext[i] = std::tolower(ext[i]);
 	}
 
-	if (ext == "fbx" || ext == "dae")
+	if (ext == "fbx" || ext == "obj" || ext == "stl" || ext == "skp" || ext == "gltf" || ext == "glb" || ext == "usd")
 		return ImportType::MESH;
-	if (ext == "tga" || ext == "png" || ext == "jpg" || ext == "dds")
+	if (ext == "png" || ext == "jpg" || ext == "jpeg" || ext == "dds" || ext == "bmp")
 		return ImportType::TEXTURE;
 
 	return ImportType::NOTYPE;
-}
-
-int close_sdl_rwops(SDL_RWops* rw)
-{
-	RELEASE_ARRAY(rw->hidden.mem.base);
-	SDL_FreeRW(rw);
-	return 0;
 }
 
 void FileSystem::FSDeInit()
@@ -169,9 +157,9 @@ bool FileSystem::IsDirectory(const char* file)
 	return PHYSFS_isDirectory(file) != 0;
 }
 // Substitute "\\" to "/"
-std::string FileSystem::NormalizePath(const char* full_path)
+std::string FileSystem::NormalizePath(const char* fullPath)
 {
-	std::string newPath(full_path);
+	std::string newPath(fullPath);
 	for (int i = 0; i < newPath.size(); ++i)
 	{
 		if (newPath[i] == '\\')
@@ -179,56 +167,15 @@ std::string FileSystem::NormalizePath(const char* full_path)
 	}
 	return newPath;
 }
-std::string FileSystem::UnNormalizePath(const char* full_path)
+std::string FileSystem::UnNormalizePath(const char* fullPath)
 {
-	std::string newPath(full_path);
+	std::string newPath(fullPath);
 	for (int i = 0; i < newPath.size(); ++i)
 	{
 		if (newPath[i] == '/')
 			newPath[i] = '\\';
 	}
 	return newPath;
-}
-// Split file path
-void FileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension)
-{
-	if (full_path != nullptr)
-	{
-		std::string full(full_path);
-		size_t pos_separator = full.find_last_of("\\/");
-		size_t pos_dot = full.find_last_of(".");
-
-		if (path != nullptr)
-		{
-			if (pos_separator < full.length())
-				*path = full.substr(0, pos_separator + 1);
-			else
-				path->clear();
-		}
-
-		if (file != nullptr)
-		{
-			if (pos_separator < full.length())
-				*file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
-			else
-				*file = full.substr(0, pos_dot);
-		}
-
-		if (extension != nullptr)
-		{
-			if (pos_dot < full.length())
-				*extension = full.substr(pos_dot + 1);
-			else
-				extension->clear();
-		}
-	}
-}
-
-unsigned int FileSystem::Load(const char* path, const char* file, char** buffer)
-{
-	std::string full_path(path);
-	full_path += file;
-	return LoadToBuffer(full_path.c_str(), buffer);
 }
 
 // Read a whole file and put it in a new buffer

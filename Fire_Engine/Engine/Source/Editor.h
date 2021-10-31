@@ -10,8 +10,8 @@
 class Tab;
 class GameObject;
 
-enum class TabType {
-
+enum class TabType 
+{
 	ABOUT,
 	CONSOLE,
 	CONFIGURATION,
@@ -42,7 +42,7 @@ public:
 	bool CleanUp();
 
 	void CreateDockSpace();
-	ImGuiID DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass);
+	void DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass);
 
 private:
 	std::vector<Tab*> tabs;
@@ -51,9 +51,4 @@ private:
 
 	std::vector<float> fpsLog;
 	std::vector<float> msLog;
-
-	bool showCase = false;
-
-	// DockingSpace
-	ImGuiID dockId = 0;
 };

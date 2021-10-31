@@ -116,8 +116,7 @@ void Application::FinishUpdate()
 update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
-	PrepareUpdate();	
-
+	PrepareUpdate();
 
 	for (unsigned int i = 0; i < listModules.size() && ret == UPDATE_CONTINUE; i++)
 	{

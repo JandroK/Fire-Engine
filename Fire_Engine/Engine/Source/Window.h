@@ -1,5 +1,4 @@
-#ifndef __Window_H__
-#define __Window_H__
+#pragma once
 
 #include "Module.h"
 #include "SDL/include/SDL.h"
@@ -69,5 +68,3 @@ private:
 	bool isResizable = false;
 	bool fullScreenDesktop = false;
 };
-
-#endif // __Window_H__
