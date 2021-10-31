@@ -27,9 +27,6 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 	Reference = vec3(0.0f, 0.0f, 0.0f);
 }
 
-Camera3D::~Camera3D()
-{}
-
 bool Camera3D::Start()
 {
 	LOG(LogType::L_NORMAL, "Setting up the camera");

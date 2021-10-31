@@ -10,7 +10,7 @@ class Scene : public Module
 {
 public:
 	Scene(Application* app, bool start_enabled = true);
-	virtual ~Scene();
+	virtual ~Scene() {};
 
 	bool Init() override;
 	bool Start() override;

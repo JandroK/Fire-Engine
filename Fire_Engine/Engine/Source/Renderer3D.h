@@ -36,7 +36,7 @@ class Renderer3D : public Module
 {
 public:
 	Renderer3D(Application* app, bool start_enabled = true);
-	~Renderer3D();
+	~Renderer3D() {};
 
 	bool Init();
 	update_status PreUpdate(float dt);

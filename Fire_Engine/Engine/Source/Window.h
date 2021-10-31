@@ -11,9 +11,7 @@ class Window : public Module
 public:
 
 	Window(Application* app, bool start_enabled = true);
-
-	// Destructor
-	virtual ~Window();
+	virtual ~Window() {};
 
 	bool Init();
 	bool CleanUp();

@@ -19,7 +19,7 @@ class Input : public Module
 public:
 	
 	Input(Application* app, bool start_enabled = true);
-	~Input();
+	~Input() { delete[] keyboard; };
 
 	bool Init();
 	update_status PreUpdate(float dt);

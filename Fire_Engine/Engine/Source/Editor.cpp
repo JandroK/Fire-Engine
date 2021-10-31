@@ -37,10 +37,6 @@ Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 	}
 }
 
-Editor::~Editor()
-{
-}
-
 bool Editor::Init()
 {
 	LOG(LogType::L_NORMAL, "Init editor gui with imgui lib version %s", ImGui::GetVersion());

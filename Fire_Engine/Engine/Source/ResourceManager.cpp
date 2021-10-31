@@ -22,10 +22,6 @@ ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(
 	name = "ResourceManager";	
 }
 
-ResourceManager::~ResourceManager()
-{
-}
-
 bool ResourceManager::Init()
 {	
 	FileSystem::FSInit();	

@@ -13,11 +13,6 @@ Window::Window(Application* app, bool startEnabled) : Module(app, startEnabled)
 	screenSurface = NULL;
 }
 
-// Destructor
-Window::~Window()
-{
-}
-
 // Called before render is available
 bool Window::Init()
 {

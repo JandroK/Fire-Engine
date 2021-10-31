@@ -8,7 +8,7 @@ class Hierarchy : public Tab
 {
 public:
 	Hierarchy(Scene* scene);
-	virtual ~Hierarchy();
+	virtual ~Hierarchy() { sceneReference = nullptr; };
 
 	void Draw() override;
 	void SetCurrentScene(Scene* scene) { sceneReference = scene; };

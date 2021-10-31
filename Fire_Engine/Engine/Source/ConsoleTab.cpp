@@ -6,11 +6,6 @@ ConsoleTab::ConsoleTab() : Tab()
 	name = "Console";
 }
 
-ConsoleTab::~ConsoleTab()
-{
-	logs.clear();
-}
-
 void ConsoleTab::Draw()
 {
 	if (ImGui::Begin(name.c_str()))

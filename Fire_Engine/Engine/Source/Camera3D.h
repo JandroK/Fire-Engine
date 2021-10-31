@@ -7,7 +7,7 @@ class Camera3D : public Module
 {
 public:
 	Camera3D(Application* app, bool start_enabled = true);
-	~Camera3D();
+	~Camera3D() {};
 
 	bool Start();
 	update_status Update(float dt);

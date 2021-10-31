@@ -23,10 +23,6 @@ Scene::Scene(Application* app, bool start_enabled) : Module(app, start_enabled),
 	name = "scene";
 }
 
-Scene::~Scene()
-{
-}
-
 bool Scene::Init()
 {
 	LOG(LogType::L_NORMAL, "Loading Scene");

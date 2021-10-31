@@ -13,11 +13,6 @@ Hierarchy::Hierarchy(Scene* scene) : Tab(), sceneReference(scene)
 	name = "Hierarchy";
 }
 
-Hierarchy::~Hierarchy()
-{
-	sceneReference = nullptr;
-}
-
 void Hierarchy::Draw()
 {
 	if (ImGui::Begin(name.c_str()))

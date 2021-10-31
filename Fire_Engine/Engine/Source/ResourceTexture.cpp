@@ -26,10 +26,6 @@ Texture::Texture(std::string path, std::string name) : Resource(ResourceType::TE
 {
 }
 
-Texture::~Texture()
-{
-}
-
 bool Texture::LoadToMemory()
 {
 	LOG(LogType::L_NORMAL, "Texture loaded to memory");

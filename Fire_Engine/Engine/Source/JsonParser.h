@@ -6,7 +6,8 @@ class JsonParser
 {
 public:
 	JsonParser();
-	~JsonParser();
+	~JsonParser() {};
+
 	JSON_Value* InitJsonObject();
 
 	JSON_Value* FileToValue(const char* fileName);

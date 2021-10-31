@@ -7,10 +7,6 @@ JsonParser::JsonParser()
 	rootValue = nullptr;
 }
 
-JsonParser::~JsonParser()
-{
-}
-
 JSON_Value* JsonParser::InitJsonObject()
 {
 	JSON_Value* object = json_value_init_object();

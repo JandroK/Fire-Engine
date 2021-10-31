@@ -17,7 +17,7 @@ class Texture : public Resource
 {
 public:
 	Texture(std::string path, std::string name = "");
-	~Texture();
+	~Texture() {};
 
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;

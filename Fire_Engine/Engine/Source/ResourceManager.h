@@ -12,7 +12,7 @@ class ResourceManager :public Module
 {
 public:
 	ResourceManager(Application* app, bool start_enabled = true);
-	~ResourceManager();
+	~ResourceManager() {};
 
 	bool Init();
 	bool Start();

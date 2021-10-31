@@ -22,7 +22,7 @@ class ConsoleTab : public Tab
 {
 public:
 	ConsoleTab();
-	~ConsoleTab();
+	~ConsoleTab() { logs.clear(); };
 
 	void Draw() override;
 

@@ -47,10 +47,6 @@ Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start
 	}
 }
 
-// Destructor
-Renderer3D::~Renderer3D()
-{}
-
 // Called before render is available
 bool Renderer3D::Init()
 {

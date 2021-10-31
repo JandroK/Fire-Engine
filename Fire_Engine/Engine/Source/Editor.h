@@ -26,7 +26,7 @@ class Editor : public Module
 {
 public:
 	Editor(Application* app, bool start_enabled = true);
-	~Editor();
+	~Editor() {};
 
 	bool Init();
 	bool Start();
