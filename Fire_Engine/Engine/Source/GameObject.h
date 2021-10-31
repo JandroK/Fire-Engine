@@ -39,7 +39,7 @@ public:
 	void Destroy() { pendingToDelete = true;};
 	bool GetPendingToDelete() { return pendingToDelete; };
 
-	Transform* transform;
+	Transform* transform = nullptr;
 
 	bool active = true;
 	bool isStatic = false;

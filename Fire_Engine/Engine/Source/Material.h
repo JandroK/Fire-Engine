@@ -7,7 +7,7 @@ class Material : public Component
 {
 public:
 	Material(GameObject* obj);
-	virtual ~Material();
+	virtual ~Material() { texture = nullptr; };
 
 	void OnEditor() override;
 	int GetTextureID();

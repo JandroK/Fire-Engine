@@ -9,7 +9,7 @@ class Transform : public Component
 {
 public:
 	Transform(GameObject* obj);
-	virtual ~Transform();
+	virtual ~Transform() {};
 
 	void Update() override;
 	void OnEditor() override;

@@ -12,7 +12,7 @@ class Component
 {
 public:
 	Component(GameObject* obj) { owner = obj; };
-	virtual ~Component() {};
+	virtual ~Component() { owner = nullptr; };
 
 	virtual void Update() {};
 	virtual void OnEditor() {};
@@ -25,5 +25,5 @@ public:
 	bool active = true;
 private:
 	ComponentType type;
-	GameObject* owner;
+	GameObject* owner = nullptr;
 };

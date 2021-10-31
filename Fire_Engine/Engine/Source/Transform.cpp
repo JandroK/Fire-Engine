@@ -17,10 +17,6 @@ Transform::Transform(GameObject* obj) : Component(obj)
 	globalTransformTransposed = globalTransform.Transposed();
 }
 
-Transform::~Transform()
-{
-}
-
 void Transform::Update()
 {
 }

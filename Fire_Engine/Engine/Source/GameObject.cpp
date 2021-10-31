@@ -16,6 +16,9 @@ GameObject::GameObject(const char* name) : name(name)
 
 GameObject::~GameObject()
 {
+	transform = nullptr;
+	parent = nullptr;
+
 	// Delete all components
 	RELEASE_VECTOR(components, components.size());
 	components.clear();
