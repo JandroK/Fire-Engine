@@ -40,7 +40,7 @@ To move the camera we will use:
 + "Alt+(R/Mosue)" Orbit 
 + "Scroll mouse" Zoom in and Zoom out
 
- ![Image](/Assets/Screenshoots/game_object.jpg)
+ ![Image](Fire_Engine/Output/Assets/Screenshoots/game_object.jpg)
  
 You can use the mouse wheel to zoom both backwards and forwards.
 
@@ -78,7 +78,7 @@ A quick builder of basic Game Objects with simple primitive shapes.
 - Cylinder
 - Pyramid
 
- ![Image](/Assets/Screenshoots/primitives.jpg)
+ ![Image](Fire_Engine/Output/Assets/Screenshoots/primitives.jpg)
  
 #### Help: 
 In help you can find a small options section where you can activate the demo version of imGui.
