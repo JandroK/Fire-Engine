@@ -10,8 +10,6 @@
 class Tab;
 class GameObject;
 
-#define FPS_MS_LOG_MAXLENGHT 100
-
 enum class TabType {
 
 	ABOUT,

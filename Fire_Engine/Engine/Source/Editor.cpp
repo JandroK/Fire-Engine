@@ -256,11 +256,7 @@ bool Editor::CleanUp()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
-	for (unsigned int i = 0; i < tabs.size(); ++i)
-	{
-		delete tabs[i];
-		tabs[i] = nullptr;
-	}
+	RELEASE_VECTOR(tabs, tabs.size());
 	tabs.clear();
 
 	return ret;

@@ -698,9 +698,6 @@
     <ClCompile Include="Source\Editor.cpp">
       <Filter>Sources\Modules\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Tab.cpp">
-      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ConsoleTab.cpp">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>

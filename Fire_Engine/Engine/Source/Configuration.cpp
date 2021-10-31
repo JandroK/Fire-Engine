@@ -7,9 +7,9 @@ Configuration::Configuration() : Tab()
 	name = "Configuration";
 
 	// Reserve 100 positions
-	fpsLog.reserve(FPS_MS_LOG_MAXLENGHT);
-	msLog.reserve(FPS_MS_LOG_MAXLENGHT);
-	memoryLog.reserve(FPS_MS_LOG_MAXLENGHT);
+	fpsLog.reserve(LOG_MAX_LENGHT);
+	msLog.reserve(LOG_MAX_LENGHT);
+	memoryLog.reserve(LOG_MAX_LENGHT);
 }
 
 Configuration::~Configuration()
@@ -19,26 +19,16 @@ Configuration::~Configuration()
 	memoryLog.clear();
 }
 
-void Configuration::Update()
-{
-	update_status ret = UPDATE_CONTINUE;
-	// Get framerate and calculate the cycle time
-	float currentFPS = floorf(app->GetFrameRate());
-	float currentMS = (1000.f * app->GetDt());
-
-	PushBackLog(&fpsLog, currentFPS);
-	PushBackLog(&msLog, currentMS);
-}
-
 void Configuration::Draw()
 {
-	Update();
+	UpdateLogs();
 
 	if (ImGui::Begin(name.c_str()))
 	{
 		// CollapsingHeader is to create new Header
 		if (ImGui::CollapsingHeader("Options"))
 		{
+			// Save and Load configuration
 			if (ImGui::Button("Save"))app->SaveConfigRequest();
 			ImGui::SameLine();
 			if (ImGui::Button("Load"))app->LoadConfigRequest();
@@ -52,21 +42,21 @@ void Configuration::Draw()
 			{
 				app->renderer3D->vsync = false;
 			}
-			// TextWrapped is to create a simple text
+			// If FPS = 0 the VSync is active
 			IMGUI_PRINT("Limit Framerate: ", (app->maxFPS == 0) ? "VSync" : "%d", app->maxFPS);
 
-			char title[25];
-			sprintf_s(title, 25, "Framerate %.1f", fpsLog[fpsLog.size() - 1]);
-			ImGui::PlotHistogram("##frameRate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-			sprintf_s(title, 25, "Milliseconds %0.1f", msLog[msLog.size() - 1]);
-			ImGui::PlotHistogram("##miliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			// Print Histograms Framerate and Miliseconds
+			char title[20];
+			sprintf_s(title, 20, "Framerate %.1f", fpsLog[fpsLog.size() - 1]);
+			ImGui::PlotHistogram("##FrameRate", &fpsLog[0], fpsLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+			sprintf_s(title, 20, "Milliseconds %0.1f", msLog[msLog.size() - 1]);
+			ImGui::PlotHistogram("##Miliseconds", &msLog[0], msLog.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			ImGui::NewLine();
 
 			// Memory --------------------
-
 			sMStats stats = m_getMemoryStatistics();
-
 			PushBackLog(&memoryLog, stats.totalReportedMemory);
+
 			ImGui::PlotHistogram("##memory", &memoryLog[0], memoryLog.size(), 0, "Memory Consumption", 0.0f, (float)stats.peakReportedMemory * 1.2f, ImVec2(310, 100));
 
 			IMGUI_PRINT("Total Reported Mem: ", "%u", stats.totalReportedMemory);
@@ -79,6 +69,7 @@ void Configuration::Draw()
 			IMGUI_PRINT("Total Alloc Unit Count: ", "%u", stats.totalAllocUnitCount);
 			IMGUI_PRINT("Peak Alloc Unit Count: ", "%u", stats.peakAllocUnitCount);
 		}
+		// Print all OnGUI modules
 		for (unsigned int i = 0; i < app->listModules.size(); ++i)
 		{
 			app->listModules[i]->OnGUI();
@@ -87,9 +78,20 @@ void Configuration::Draw()
 	ImGui::End();
 }
 
+// Get framerate and calculate the cycle time
+void Configuration::UpdateLogs()
+{
+	float currentFPS = floorf(app->GetFrameRate());
+	float currentMS = (1000.f * app->GetDt());
+
+	PushBackLog(&fpsLog, currentFPS);
+	PushBackLog(&msLog, currentMS);
+}
+
+// If the list is full erase first element and push the newLog
 void Configuration::PushBackLog(std::vector<float> *log, float current)
 {
-	if (log->size() <= FPS_MS_LOG_MAXLENGHT) log->push_back(current);
+	if (log->size() <= LOG_MAX_LENGHT) log->push_back(current);
 	else
 	{
 		log->erase(log->begin());

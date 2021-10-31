@@ -348,7 +348,6 @@
     <ClCompile Include="Source\ResourceMesh.cpp" />
     <ClCompile Include="Source\Renderer3D.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
-    <ClCompile Include="Source\Tab.cpp" />
     <ClCompile Include="Source\ResourceTexture.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Window.cpp" />
