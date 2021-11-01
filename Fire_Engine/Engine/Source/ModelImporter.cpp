@@ -45,11 +45,11 @@ void ModelImporter::Import(const char* fullPath,  char* buffer, int bufferSize, 
 		}
 
 		// Load all materials
-		LOG(LogType::L_NORMAL, "Loading materials from %s", fileName);
+		LOG(LogType::L_NORMAL, "Loading materials from %s", fileName.c_str());
 		LoadMaterials(scene, fullPath, modelTextures);
 
 		// Load model as gameObject to scene root
-		LOG(LogType::L_NORMAL, "Loading model as GameObject from %s", fileName);
+		LOG(LogType::L_NORMAL, "Loading model as GameObject from %s", fileName.c_str());
 		NodeToGameObject(scene->mMeshes, modelTextures, modelMeshes, scene->mRootNode, root, fileName.c_str());
 
 		// Clear
@@ -110,53 +110,61 @@ void ModelImporter::LoadMaterials(const aiScene* scene, const char* fullPath, st
 	}
 }
 
-void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sceneTextures, std::vector<Mesh*>& sceneMeshes, aiNode* node, GameObject* objParent, const char* holderName)
+void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sceneTextures, std::vector<Mesh*>& sceneMeshes, aiNode* node, GameObject* objParent, const char* ownerName)
 {
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
-	{
-		Mesh* meshPointer = sceneMeshes[node->mMeshes[i]];
-
-		GameObject* gmNode = new GameObject(node->mName.C_Str());
-		gmNode->SetParent(objParent);
-
-		//Load mesh to GameObject
-		MeshRenderer* gmMeshRenderer = dynamic_cast<MeshRenderer*>(gmNode->AddComponent(ComponentType::MESHRENDERER));
-
-		gmMeshRenderer->SetMesh(meshPointer);
-
-		aiMesh* importedMesh = meshArray[node->mMeshes[i]];
-		if (importedMesh->mMaterialIndex < sceneTextures.size())
-		{
-			Material* material = dynamic_cast<Material*>(gmNode->AddComponent(ComponentType::MATERIAL));
-			material->texture = sceneTextures[importedMesh->mMaterialIndex];
-		}
-
-		PopulateTransform(gmNode, node);
-		objParent->AddChildren(gmNode);
-	}
+	FillGameObject(node, sceneMeshes, objParent, meshArray, sceneTextures);
 
 	if (node->mNumChildren > 0)
 	{
 		GameObject* rootGO = objParent;
-
+		// The models that are only a mesh and these do not have children,
+		// They are added to the hierarchy as children of root
+		// Instead of creating an empty object that does the group function
 		if (node->mNumChildren == 1 && node->mParent == nullptr && node->mChildren[0]->mNumChildren == 0)
 		{
-			LOG(LogType::L_WARNING, "This is a 1 child gameObject, you could ignore the root node parent creation");
-			node->mChildren[0]->mName = holderName;
+			node->mChildren[0]->mName = ownerName;
 		}
 		else
 		{
-			rootGO = new GameObject(holderName);
+			// Connect the new game object with its father
+			rootGO = new GameObject(ownerName);
+			// Set parent (connect object with father)
 			rootGO->SetParent(objParent);
+			// Loading transformation
 			PopulateTransform(rootGO, node);
+			// Add Child (connect father with object) 
 			objParent->AddChildren(rootGO);
 		}
-
-
+		// Recursive
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
 			NodeToGameObject(meshArray, sceneTextures, sceneMeshes, node->mChildren[i], rootGO, node->mChildren[i]->mName.C_Str());
 		}
+	}
+}
+
+void ModelImporter::FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes, GameObject* objParent, aiMesh** meshArray, std::vector<Texture*>& sceneTextures)
+{
+	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	{
+		// Create new GameObject, will fill it and set his parent and add him as son 
+		GameObject* gmEmpty = new GameObject(node->mName.C_Str());
+		gmEmpty->SetParent(objParent);
+
+		// Add mesh component to GameObject and fill it
+		MeshRenderer* gmMeshRenderer = dynamic_cast<MeshRenderer*>(gmEmpty->AddComponent(ComponentType::MESHRENDERER));
+		gmMeshRenderer->SetMesh(sceneMeshes[node->mMeshes[i]]);
+
+		// Fill each mesh with its respective texture 
+		aiMesh* importedMesh = meshArray[node->mMeshes[i]];
+		if (importedMesh->mMaterialIndex < sceneTextures.size())
+		{
+			Material* material = dynamic_cast<Material*>(gmEmpty->AddComponent(ComponentType::MATERIAL));
+			material->texture = sceneTextures[importedMesh->mMaterialIndex];
+		}
+		// Loading transformation
+		PopulateTransform(gmEmpty, node);
+		objParent->AddChildren(gmEmpty);
 	}
 }
 
@@ -165,11 +173,14 @@ void ModelImporter::PopulateTransform(GameObject* child, aiNode* node)
 	aiVector3D translation, scaling;
 	aiQuaternion rotation;
 
+	// Break transformation info in position, scaleand rotation
 	node->mTransformation.Decompose(scaling, rotation, translation);
 
+	// Keep them separated
 	float3 pos(translation.x, translation.y, translation.z);
 	float3 scale(scaling.x, scaling.y, scaling.z);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 
+	// Mix them to form a Matrix for drawing
 	child->transform->SetTransformMatrix(pos, rot, scale, child->GetParent()->transform);
 }

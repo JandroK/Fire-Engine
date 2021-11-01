@@ -34,6 +34,7 @@ void FileSystem::FSInit()
 	assetPath = ExtractLocalDiskBackward(assetPath.c_str());
 	FileSystem::AddPath(assetPath.c_str());
 
+	// Adding ProjectFolder (working directory + AssestsFolder)
 	assetPath = GetBasePath();
 	assetPath = NormalizePath(assetPath.c_str());
 	assetPath += ASSETS_FOLDER;
