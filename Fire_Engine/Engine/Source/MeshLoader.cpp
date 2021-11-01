@@ -44,9 +44,9 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 
 	for (size_t i = 0; i < mesh->numVertex; i++)
 	{
-		mesh->vertices.push_back(importedMesh->mVertices[i].x);
-		mesh->vertices.push_back(importedMesh->mVertices[i].y);
-		mesh->vertices.push_back(importedMesh->mVertices[i].z);
+		mesh->vertex.push_back(importedMesh->mVertices[i].x);
+		mesh->vertex.push_back(importedMesh->mVertices[i].y);
+		mesh->vertex.push_back(importedMesh->mVertices[i].z);
 
 		if (importedMesh->HasNormals())
 		{
@@ -67,7 +67,7 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	if (importedMesh->HasFaces())
 	{
 		mesh->numIndices = importedMesh->mNumFaces * 3;
-		mesh->indices.resize(mesh->numIndices);
+		mesh->indexs.resize(mesh->numIndices);
 		
 		for (uint j = 0; j < importedMesh->mNumFaces; ++j)
 		{
@@ -77,7 +77,7 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 			}
 			else
 			{
-				memcpy(&mesh->indices[j * 3], importedMesh->mFaces[j].mIndices, 3 * sizeof(uint));
+				memcpy(&mesh->indexs[j * 3], importedMesh->mFaces[j].mIndices, 3 * sizeof(uint));
 			}
 		}
 	}

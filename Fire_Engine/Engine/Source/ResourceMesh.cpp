@@ -2,7 +2,7 @@
 #include "Globals.h"
 
 #include "Glew/include/glew.h"
-#include "glmath.h"
+//#include "glmath.h"
 
 Mesh::Mesh() : Resource(ResourceType::MESH)
 {
@@ -29,41 +29,46 @@ Mesh::~Mesh()
 
 bool Mesh::LoadToMemory()
 {
-	// Vertex Buffer GL_ARRAY_BUFFER
-	if (numVertex != 0)
-	{
-		glGenBuffers(1, (GLuint*)&(vertexBufferId));
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertex * 3, &vertices[0], GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}	
 
 	//Index Buffer GL_ELEMENT_ARRAY_BUFFER
-	if (numIndices != 0)
+	if (numIndices != NULL && numIndices != 0)
 	{
 		glGenBuffers(1, (GLuint*)&(indexBufferId));
+		//Bind buffer load index
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * numIndices, &indices[0], GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * numIndices, &indexs[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}	
 
-	// Normals Buffer GL_ARRAY_BUFFER
-	if (numNormals != 0)
-	{		
-		glGenBuffers(1, (GLuint*)&(normalBufferId));
-		glBindBuffer(GL_ARRAY_BUFFER, normalBufferId);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numNormals * 3, &normals[0], GL_STATIC_DRAW);
+	// Vertex Buffer GL_ARRAY_BUFFER
+	if (numVertex != NULL && numVertex != 0)
+	{
+		glGenBuffers(1, (GLuint*)&(vertexBufferId));
+		//Bind buffer load Vetex
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numVertex * 3, &vertex[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}	
+	}
 
 	// TexCoords Buffer GL_ARRAY_BUFFER
-	if (numTexCoords != 0)	
+	if (numTexCoords != NULL && numTexCoords != 0)
 	{
 		glGenBuffers(1, (GLuint*)&(textureBufferId));
+		//Bind buffer load texture
 		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numTexCoords * 2, &texCoords[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}	
+
+	// Normals Buffer GL_ARRAY_BUFFER
+	if (numNormals != NULL && numNormals != 0)
+	{
+		glGenBuffers(1, (GLuint*)&(normalBufferId));
+		//Bind buffer load normals
+		glBindBuffer(GL_ARRAY_BUFFER, normalBufferId);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numNormals * 3, &normals[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 
 	return true;
 }
@@ -71,123 +76,133 @@ bool Mesh::LoadToMemory()
 bool Mesh::UnloadFromMemory()
 {
 	//Clear buffers
-	indices.clear();
-	vertices.clear();
+	indexs.clear();
+	vertex.clear();
 	normals.clear();
 	texCoords.clear();
 
 	return true;
 }
 
-void Mesh::RenderMesh(GLuint textureID)
+void Mesh::Render(GLuint textureID)
 {
-	if (textureID != -1) 
-		glBindTexture(GL_TEXTURE_2D, textureID);
+	if (textureID != -1) glBindTexture(GL_TEXTURE_2D, textureID);
 
+	EnableClientState();
+
+	//-- Draw --//
+	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
+	
+	//-- UnBind Buffers--//
+	UnBindBuffers(textureID);
+	
+	//--Disables States--//
+	DisableClientState();
+}
+
+void Mesh::EnableClientState()
+{
+	// Enable for vertex
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	if (numTexCoords != 0)
 	{
+		// Enable for texture coords
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-	}	
+	}
 	if (numNormals != 0)
 	{
+		// Enable for normals
 		glEnableClientState(GL_NORMAL_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, normalBufferId);
 		glNormalPointer(GL_FLOAT, 0, NULL);
 	}
-	
+	// For indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
+}
 
-	//-- Draw --//
-	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
-	
-	//-- UnBind Buffers--//
-	if (textureID != -1) 
-		glBindTexture(GL_TEXTURE_2D, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
-
-	/*if (numTexCoords != 0) glBindBuffer(GL_TEXTURE_COORD_ARRAY, 0);
-	if (textureID != -1) glBindTexture(GL_TEXTURE_2D, 0);*/
-
-	//--Disables States--//
+void Mesh::DisableClientState()
+{
 	glDisableClientState(GL_VERTEX_ARRAY);
-	if (numNormals != 0) 
+	if (numNormals != 0)
 		glDisableClientState(GL_NORMAL_ARRAY);
-	if (numTexCoords != 0) 
+	if (numTexCoords != 0)
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-void Mesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals)
+void Mesh::UnBindBuffers(const GLuint& textureID)
 {
-	if (*vertexNormals == true)
+	if (textureID != -1)
+		glBindTexture(GL_TEXTURE_2D, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void Mesh::DebugRender(bool* vertexNormals, bool* faceNormals)
+{
+	float normalLenght = 0.1f;
+	if (*vertexNormals == true) RenderVertexNormals(normalLenght);
+
+	if (*faceNormals == true) RenderFaceNormals(normalLenght);
+}
+
+void Mesh::RenderFaceNormals(float normalLenght)
+{
+	//Face normals
+	glColor3f(1, 0, 0);
+	glBegin(GL_LINES);
+
+	float toMiddle[3] = { 0,0,0 };
+	meshABC abc;
+
+	for (int i = 0; i < numIndices; i += 3)
 	{
-		float normalLenght = 0.05f;
-		glPointSize(3.0f);
-		glColor3f(1, 0, 0);
-		glBegin(GL_POINTS);
+		for (int j = 0; j < 3; j++)
+			abc.vecABC[j] = GetIndexVec(&vertex[indexs[i + j] * 3]);
+
+		abc.UpdateABC();
+
+		//(A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z)
+		vec3 middle((abc.A.x + abc.B.x + abc.C.x) / 3.f, (abc.A.y + abc.B.y + abc.C.y) / 3.f, (abc.A.z + abc.B.z + abc.C.z) / 3.f);
+		vec3 crossVec = cross((abc.B - abc.A), (abc.C - abc.A));
+		vec3 normalDirection = normalize(crossVec);
+		glVertex3f(middle.x, middle.y, middle.z);
+		glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
+
+	}
+	glEnd();
+	glPointSize(1.f);
+	glColor3f(1, 1, 1);
+}
+
+void Mesh::RenderVertexNormals(float normalLenght)
+{
+	for (int type = 0; type <= 1; type++)
+	{			
+		glColor3f(1-type, 0+type, 0);
+		(type == 0) ? glPointSize(3.0f), glBegin(GL_POINTS) :glBegin(GL_LINES);
+		
 		for (unsigned int i = 0; i < numVertex * 3; i += 3)
 		{
-			glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
+			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
+			if(type==1)glVertex3f(vertex[i] + normals[i] * normalLenght, vertex[i + 1] + normals[i + 1] * normalLenght, vertex[i + 2] + normals[i + 2] * normalLenght);
 		}
+
+		glColor3f(0+type, 1, 0+type);
+		if (type == 0) glPointSize(1.0f);
 		glEnd();
-		glColor3f(0, 1, 0);
-		glPointSize(1.0f);
-
-		//Vertex normals
-		glColor3f(0, 1, 0);
-		glBegin(GL_LINES);
-		for (unsigned int i = 0; i < numNormals * 3; i += 3)
-		{
-			glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-			glVertex3f(vertices[i] + normals[i] * normalLenght, vertices[i + 1] + normals[i + 1] * normalLenght, vertices[i + 2] + normals[i + 2] * normalLenght);
-		}
-		glEnd();
-		glColor3f(1, 1, 1);
-	}
-
-	if (*faceNormals == true)
-	{
-		float normalLenght = 0.05f;
-		//Face normals
-		glColor3f(1, 0, 0);
-		glBegin(GL_LINES);
-		for (int i = 0; i < numIndices; i += 3)
-		{
-			vec3 A = GetVectorFromIndex(&vertices[indices[i] * 3]);
-
-			vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * 3]);
-
-			vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * 3]);
-
-			vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
-
-			vec3 crossVec = cross((B - A), (C - A));
-			vec3 normalDirection = normalize(crossVec);
-
-			//LOG("%f, %f, %f", middle.x, middle.y, middle.z);
-			glVertex3f(middle.x, middle.y, middle.z);
-			glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
-		}
-		glEnd();
-		glPointSize(1.f);
-		glColor3f(1, 1, 1);
 	}
 }
 
-vec3 Mesh::GetVectorFromIndex(float* startValue)
+vec3 Mesh::GetIndexVec(float* startValue)
 {
 	float x = *startValue;
-	++startValue;
-	float y = *startValue;
-	++startValue;
-	float z = *startValue;
+	float y = *(++startValue);
+	float z = *(++startValue);
 
-	return vec3(x, y, z);
+	return  vec3(x, y, z);
 }

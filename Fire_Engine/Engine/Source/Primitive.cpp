@@ -103,9 +103,9 @@ void Primitive::SetVertices(float vertices[], int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		mesh->vertices.push_back(vertices[i]);
+		mesh->vertex.push_back(vertices[i]);
 	}
-	mesh->numVertex = mesh->vertices.size() / 3;
+	mesh->numVertex = mesh->vertex.size() / 3;
 }
 
 void Primitive::SetTexCoords(float texCoords[], int size)
@@ -121,9 +121,9 @@ void Primitive::SetIndices(int indices[], int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		mesh->indices.push_back(indices[i]);
+		mesh->indexs.push_back(indices[i]);
 	}
-	mesh->numIndices = mesh->indices.size();
+	mesh->numIndices = mesh->indexs.size();
 }
 
 // CUBE ============================================
@@ -199,7 +199,7 @@ void PrimitiveSphere::InnerMesh()
 void PrimitiveSphere::SetVerticesMesh()
 {
 	// clear memory of prev arrays
-	std::vector<float>().swap(mesh->vertices);
+	std::vector<float>().swap(mesh->vertex);
 	std::vector<float>().swap(mesh->texCoords);
 
 	float x, y, z, xz;                              // vertex position
@@ -224,9 +224,9 @@ void PrimitiveSphere::SetVerticesMesh()
 			// vertex position (x, y, z)
 			x = xz * cosf(sectorAngle);             // r * cos(u) * cos(v)
 			z = xz * sinf(sectorAngle);             // r * cos(u) * sin(v)
-			mesh->vertices.push_back(x);
-			mesh->vertices.push_back(y);
-			mesh->vertices.push_back(z);
+			mesh->vertex.push_back(x);
+			mesh->vertex.push_back(y);
+			mesh->vertex.push_back(z);
 
 			// vertex tex coord (s, t) range between [0, 1]
 			s = (float)j / sectors;
@@ -235,7 +235,7 @@ void PrimitiveSphere::SetVerticesMesh()
 			mesh->texCoords.push_back(t);
 		}
 	}
-	mesh->numVertex = mesh->vertices.size() / 3;
+	mesh->numVertex = mesh->vertex.size() / 3;
 	mesh->numTexCoords = mesh->texCoords.size() / 2;
 }
 
@@ -258,21 +258,21 @@ void PrimitiveSphere::SetIndicesMesh()
 			// k1 => k2 => k1+1
 			if (i != 0)
 			{
-				mesh->indices.push_back(k1 + 1);
-				mesh->indices.push_back(k2);
-				mesh->indices.push_back(k1);
+				mesh->indexs.push_back(k1 + 1);
+				mesh->indexs.push_back(k2);
+				mesh->indexs.push_back(k1);
 			}
 
 			// k1+1 => k2 => k2+1
 			if (i != (stacks - 1))
 			{
-				mesh->indices.push_back(k2 + 1);
-				mesh->indices.push_back(k2);
-				mesh->indices.push_back(k1 + 1);
+				mesh->indexs.push_back(k2 + 1);
+				mesh->indexs.push_back(k2);
+				mesh->indexs.push_back(k1 + 1);
 			}
 		}
 	}
-	mesh->numIndices = mesh->indices.size();
+	mesh->numIndices = mesh->indexs.size();
 }
 
 
@@ -313,7 +313,7 @@ std::vector<float> PrimitiveCylinder::GetUnitCircleVertices()
 void PrimitiveCylinder::SetVerticesMesh()
 {
 	// clear memory of prev arrays
-	std::vector<float>().swap(mesh->vertices);
+	std::vector<float>().swap(mesh->vertex);
 	std::vector<float>().swap(mesh->texCoords);
 
 	// get unit circle vectors on XY-plane
@@ -330,15 +330,15 @@ void PrimitiveCylinder::SetVerticesMesh()
 			float ux = unitVertices[k];
 			float uz = unitVertices[k + 2];
 			// position vector
-			mesh->vertices.push_back(ux * radius);             // vx
-			mesh->vertices.push_back(h);                       // vy
-			mesh->vertices.push_back(uz * radius);             // vz
+			mesh->vertex.push_back(ux * radius);             // vx
+			mesh->vertex.push_back(h);                       // vy
+			mesh->vertex.push_back(uz * radius);             // vz
 		}
 	}
 
 	// the starting index for the base/top surface
 	//NOTE: it is used for generating indices later
-	baseCenterIndex = (int)mesh->vertices.size() / 3;
+	baseCenterIndex = (int)mesh->vertex.size() / 3;
 	topCenterIndex = baseCenterIndex + sectorCount + 1; // include center vertex
 
 	// put base and top vertices to arrays
@@ -347,22 +347,22 @@ void PrimitiveCylinder::SetVerticesMesh()
 		float h = -height / 2.0f + i * height;           // y value; -h/2 to h/2
 
 		// center point
-		mesh->vertices.push_back(0);     mesh->vertices.push_back(h);     mesh->vertices.push_back(0);
+		mesh->vertex.push_back(0);     mesh->vertex.push_back(h);     mesh->vertex.push_back(0);
 
 		for (int j = 0, k = 0; j < sectorCount; ++j, k += 3)
 		{
 			float ux = unitVertices[k];
 			float uz = unitVertices[k + 2];
 			// position vector
-			mesh->vertices.push_back(ux * radius);             // vx
-			mesh->vertices.push_back(h);                       // vz
-			mesh->vertices.push_back(uz * radius);             // vy
+			mesh->vertex.push_back(ux * radius);             // vx
+			mesh->vertex.push_back(h);                       // vz
+			mesh->vertex.push_back(uz * radius);             // vy
 			// texture coordinate
 			mesh->texCoords.push_back(-ux * 0.5f + 0.5f);      // s
 			mesh->texCoords.push_back(-uz * 0.5f + 0.5f);      // t
 		}
 	}
-	mesh->numVertex = mesh->vertices.size() / 3;
+	mesh->numVertex = mesh->vertex.size() / 3;
 	mesh->numTexCoords = mesh->texCoords.size() / 2;
 }
 
@@ -377,14 +377,14 @@ void PrimitiveCylinder::SetIndicesMesh()
 	{
 		// 2 triangles per sector
 		// k1 => k1+1 => k2
-		mesh->indices.push_back(k1);
-		mesh->indices.push_back(k1 + 1);
-		mesh->indices.push_back(k2);
+		mesh->indexs.push_back(k1);
+		mesh->indexs.push_back(k1 + 1);
+		mesh->indexs.push_back(k2);
 
 		// k2 => k1+1 => k2+1
-		mesh->indices.push_back(k2);
-		mesh->indices.push_back(k1 + 1);
-		mesh->indices.push_back(k2 + 1);
+		mesh->indexs.push_back(k2);
+		mesh->indexs.push_back(k1 + 1);
+		mesh->indexs.push_back(k2 + 1);
 	}
 
 	// indices for the base surface
@@ -394,15 +394,15 @@ void PrimitiveCylinder::SetIndicesMesh()
 	{
 		if (i < sectorCount - 1)
 		{
-			mesh->indices.push_back(k);
-			mesh->indices.push_back(k + 1);
-			mesh->indices.push_back(baseCenterIndex);
+			mesh->indexs.push_back(k);
+			mesh->indexs.push_back(k + 1);
+			mesh->indexs.push_back(baseCenterIndex);
 		}
 		else // last triangle
 		{
-			mesh->indices.push_back(k);
-			mesh->indices.push_back(baseCenterIndex + 1);
-			mesh->indices.push_back(baseCenterIndex);
+			mesh->indexs.push_back(k);
+			mesh->indexs.push_back(baseCenterIndex + 1);
+			mesh->indexs.push_back(baseCenterIndex);
 		}
 	}
 
@@ -411,18 +411,18 @@ void PrimitiveCylinder::SetIndicesMesh()
 	{
 		if (i < sectorCount - 1)
 		{
-			mesh->indices.push_back(k + 1);
-			mesh->indices.push_back(k);
-			mesh->indices.push_back(topCenterIndex);
+			mesh->indexs.push_back(k + 1);
+			mesh->indexs.push_back(k);
+			mesh->indexs.push_back(topCenterIndex);
 		}
 		else // last triangle
 		{
-			mesh->indices.push_back(topCenterIndex + 1);
-			mesh->indices.push_back(k);
-			mesh->indices.push_back(topCenterIndex);
+			mesh->indexs.push_back(topCenterIndex + 1);
+			mesh->indexs.push_back(k);
+			mesh->indexs.push_back(topCenterIndex);
 		}
 	}
-	mesh->numIndices = mesh->indices.size();
+	mesh->numIndices = mesh->indexs.size();
 }
 
 
