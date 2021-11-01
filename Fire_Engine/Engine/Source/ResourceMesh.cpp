@@ -156,7 +156,6 @@ void Mesh::RenderFaceNormals(float normalLenght)
 	glColor3f(1, 0, 0);
 	glBegin(GL_LINES);
 
-	float toMiddle[3] = { 0,0,0 };
 	meshABC abc;
 
 	for (int i = 0; i < numIndices; i += 3)
@@ -167,11 +166,11 @@ void Mesh::RenderFaceNormals(float normalLenght)
 		abc.UpdateABC();
 
 		//(A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z)
-		vec3 middle((abc.A.x + abc.B.x + abc.C.x) / 3.f, (abc.A.y + abc.B.y + abc.C.y) / 3.f, (abc.A.z + abc.B.z + abc.C.z) / 3.f);
-		vec3 crossVec = cross((abc.B - abc.A), (abc.C - abc.A));
-		vec3 normalDirection = normalize(crossVec);
-		glVertex3f(middle.x, middle.y, middle.z);
-		glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
+		vec3 central((abc.A.x + abc.B.x + abc.C.x) / 3.f, (abc.A.y + abc.B.y + abc.C.y) / 3.f, (abc.A.z + abc.B.z + abc.C.z) / 3.f);
+		vec3 vCross = cross((abc.B - abc.A), (abc.C - abc.A));
+		vec3 normalDirection = normalize(vCross);
+		glVertex3f(central.x, central.y, central.z);
+		glVertex3f(central.x + normalDirection.x * normalLenght, central.y + normalDirection.y * normalLenght, central.z + normalDirection.z * normalLenght);
 
 	}
 	glEnd();
