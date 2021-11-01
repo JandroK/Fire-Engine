@@ -114,7 +114,7 @@ void Scene::Destroy(GameObject* obj)
 	{
 		if (*i._Ptr == obj)
 		{
-			obj->GetParent()->EraseChildren(i);
+			obj->SetIndex(i);
 			break;
 		}
 	}

@@ -39,6 +39,8 @@ public:
 	void Destroy() { pendingToDelete = true;};
 	bool GetPendingToDelete() { return pendingToDelete; };
 
+	void SetIndex(std::vector<GameObject*>::iterator i) { indexList = i; };
+
 	Transform* transform = nullptr;
 
 	bool active = true;
@@ -56,4 +58,5 @@ private:
 	bool showChildrens = false;
 	bool pendingToDelete = false;
 
+	std::vector<GameObject*>::iterator indexList;
 };
