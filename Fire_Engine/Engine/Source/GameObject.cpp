@@ -16,16 +16,16 @@ GameObject::GameObject(const char* name) : name(name), tag("Untagged"), layer("0
 
 GameObject::~GameObject()
 {
-	transform = nullptr;
-	parent = nullptr;
+	// Delete all childrens
+	RELEASE_VECTOR(childrens, childrens.size());
+	childrens.clear();
 
 	// Delete all components
 	RELEASE_VECTOR(components, components.size());
 	components.clear();
 
-	// Delete all childrens
-	RELEASE_VECTOR(childrens, childrens.size());
-	childrens.clear();
+	transform = nullptr;
+	parent = nullptr;
 }
 
 void GameObject::Enable()

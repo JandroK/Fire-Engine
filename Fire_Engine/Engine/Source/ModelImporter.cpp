@@ -26,82 +26,83 @@
 
 #include"MathGeoLib/include/Math/Quat.h"
 
-
-void ModelImporter::Import(const char* fullPath,  char* buffer, int bSize, GameObject* objRoot)
+void ModelImporter::Import(const char* fullPath,  char* buffer, int bufferSize, GameObject* root)
 {
-	const aiScene* scene = aiImportFileFromMemory(buffer, bSize, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
-
+	const aiScene* scene = aiImportFileFromMemory(buffer, bufferSize, aiProcessPreset_TargetRealtime_MaxQuality, nullptr);
 	std::string fileName = StringLogic::FileNameFromPath(fullPath);
 
+	// If the model has meshes continue, otherwise LogError
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		std::vector<Mesh*> sceneMeshes;
-		std::vector<Texture*> testTextures;
-
-		//This should not be here
-		if (scene->HasMaterials())
-		{
-			//Needs to be moved to another place
-			std::string generalPath(fullPath);
-			generalPath = generalPath.substr(0, generalPath.find_last_of("/\\") + 1);
-			for (size_t k = 0; k < scene->mNumMaterials; k++)
-			{
-				aiMaterial* material = scene->mMaterials[k];
-				uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
-
-				if (numTextures > 0)
-				{
-					aiString path;
-					material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-
-					std::string localPath = StringLogic::GlobalToLocalPath(fullPath);
-					localPath = localPath.substr(0, localPath.find_last_of('/') + 1);
-					localPath += FileSystem::NormalizePath(path.C_Str());
-
-					char* buffer = nullptr;
-					int size = FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
-
-					if (buffer != nullptr)
-					{
-						Texture* tex = new Texture(localPath.c_str());
-						tex->LoadToMemory();
-
-						testTextures.push_back(tex);
-
-						RELEASE_ARRAY(buffer)
-					}
-
-					path.Clear();
-				}
-			}
-		}
+		std::vector<Mesh*> modelMeshes;
+		std::vector<Texture*> modelTextures;
 
 		//Load all meshes into mesh vector
+		LOG(LogType::L_NORMAL, "Loading meshes from %s", fileName);
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 		{
-			sceneMeshes.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
+			modelMeshes.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
 		}
 
-		LOG(LogType::L_NORMAL, "-- Loading FBX as GameObject --");
-		NodeToGameObject(scene->mMeshes, testTextures, sceneMeshes, scene->mRootNode, objRoot, fileName.c_str());
+		// Load all materials
+		LOG(LogType::L_NORMAL, "Loading materials from %s", fileName);
+		LoadMaterials(scene, fullPath, modelTextures);
 
-		//Only for memory cleanup, needs an update ASAP
-		for (unsigned int i = 0; i < sceneMeshes.size(); i++)
-		{
-			app->renderer3D->globalMeshes.push_back(sceneMeshes[i]);
-		}
-		for (unsigned int i = 0; i < testTextures.size(); i++)
-		{
-			app->renderer3D->globalTextures.push_back(testTextures[i]);
-		}
+		// Load model as gameObject to scene root
+		LOG(LogType::L_NORMAL, "Loading model as GameObject from %s", fileName);
+		NodeToGameObject(scene->mMeshes, modelTextures, modelMeshes, scene->mRootNode, root, fileName.c_str());
 
-		sceneMeshes.clear();
-		testTextures.clear();
+		modelMeshes.clear();
+		modelTextures.clear();
 
 		aiReleaseImport(scene);
 	}
 	else
-		LOG(LogType::L_ERROR, "Error loading scene % s", fullPath);
+		LOG(LogType::L_ERROR, "Error loading model % s", fullPath);
+}
+
+void ModelImporter::LoadMaterials(const aiScene* scene, const char* fullPath, std::vector<Texture*>& testTextures)
+{
+	// Check if the model has materials
+	if (scene->HasMaterials())
+	{
+		std::string generalPath(fullPath);
+		generalPath = generalPath.substr(0, generalPath.find_last_of("/\\") + 1);
+		for (size_t k = 0; k < scene->mNumMaterials; k++)
+		{
+			aiMaterial* material = scene->mMaterials[k];
+			uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
+
+			if (numTextures > 0)
+			{
+				aiString path;
+				material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
+
+				std::string localPath = StringLogic::GlobalToLocalPath(fullPath);
+				localPath = localPath.substr(0, localPath.find_last_of('/') + 1);
+
+				std::string fileNamePath = FileSystem::NormalizePath(path.C_Str());
+				fileNamePath = fileNamePath.substr(fileNamePath.find_last_of("/\\") + 1);
+
+				localPath += fileNamePath;
+
+				char* buffer = nullptr;
+				int size = FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
+
+				if (buffer != nullptr)
+				{
+					Texture* tex = new Texture(localPath.c_str());
+					tex->LoadToMemory();
+
+					testTextures.push_back(tex);
+
+					RELEASE_ARRAY(buffer)
+				}
+
+				path.Clear();
+			}
+		}
+	}
 }
 
 void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sceneTextures, std::vector<Mesh*>& sceneMeshes, aiNode* node, GameObject* objParent, const char* holderName)

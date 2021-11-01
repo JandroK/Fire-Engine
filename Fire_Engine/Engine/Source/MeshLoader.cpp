@@ -61,10 +61,7 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 		}
 	}
 
-	if (importedMesh->HasVertexColors(0))
-	{
-		LOG(LogType::L_ERROR, "ADD VERTEX COLORS");
-	}
+	importedMesh->HasVertexColors(0);
 
 	// Generate indices
 	if (importedMesh->HasFaces())

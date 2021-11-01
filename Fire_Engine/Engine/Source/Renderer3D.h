@@ -64,10 +64,6 @@ public:
 	bool vsync;
 	bool wireframe = false;
 
-	// Mesh testMesh;
-	std::vector<Mesh*> globalMeshes;
-	std::vector<Texture*> globalTextures;
-
 	// Textures
 	GLuint checkersTexture;
 	GLubyte checkerImage[SQUARE_TEXTURE_W][SQUARE_TEXTURE_H][4];

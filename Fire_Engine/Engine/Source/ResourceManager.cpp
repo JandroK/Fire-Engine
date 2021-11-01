@@ -35,8 +35,6 @@ bool ResourceManager::Start()
 	logo = new Texture("Assets/logo.png", "logo");
 	logo->LoadToMemory();
 
-	app->renderer3D->globalTextures.push_back(logo);
-
 	return true;
 }
 
@@ -87,8 +85,6 @@ void ResourceManager::ImportFile(const char* assetsFile)
 		{
 			Texture* material = new Texture(normalizedPath.c_str());
 			material->LoadToMemory();
-			
-			app->renderer3D->globalTextures.push_back(material);
 
 			Inspector* inspector = dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR));
 			if (inspector && inspector->gameObjectSelected) {
@@ -104,7 +100,8 @@ void ResourceManager::ImportFile(const char* assetsFile)
 			}
 			break;
 		}
-
+		default:
+			break;
 		}
 		RELEASE_ARRAY(buffer);
 	}

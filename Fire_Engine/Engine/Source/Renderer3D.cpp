@@ -275,21 +275,6 @@ bool Renderer3D::CleanUp()
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_TEXTURE_2D);
 
-	for (unsigned int k = 0; k < globalTextures.size(); ++k)
-	{
-		glDeleteTextures(1, &globalTextures[k]->textureID);
-		delete globalTextures[k];
-		globalTextures[k] = nullptr;
-	}
-	globalTextures.clear();
-
-	for (unsigned int i = 0; i < globalMeshes.size(); i++)
-	{
-		delete globalMeshes[i];
-		globalMeshes[i] = nullptr;
-	}
-	globalMeshes.clear();
-
 	SDL_GL_DeleteContext(context);
 
 	return true;

@@ -164,7 +164,7 @@ update_status Editor::ImGuiMenuBar()
 			{
 				// Name  ShortCut  State
 				if (ImGui::MenuItem(tabs[i]->name.c_str(), std::to_string(tabs[i]->shortcut).c_str(), tabs[i]->active, &tabs[i]->active))
-					tabs[i]->active =! tabs[i]->active;
+					tabs[i]->active = !tabs[i]->active;
 			}			
 			ImGui::EndMenu();
 		}

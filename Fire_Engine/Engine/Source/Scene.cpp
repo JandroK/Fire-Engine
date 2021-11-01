@@ -25,7 +25,8 @@ Scene::Scene(Application* app, bool start_enabled) : Module(app, start_enabled),
 
 bool Scene::Init()
 {
-	LOG(LogType::L_NORMAL, "Loading Scene");
+	LOG(LogType::L_NORMAL, "Creating Scene");
+	//Change the name "Root" by the name of scene when it has
 	root = CreateGameObject("Root", nullptr);
 
 	return true;
