@@ -163,7 +163,7 @@ void Application::SaveConfig()
 
 	JsonParser application = jsonFile.SetChild(root, "App");
 
-	application.SetNewJsonNumber(application.ValueToObject(application.GetRootValue()), "FPS", maxFPS);
+	application.SetJNumber(application.ValueToObject(application.GetRootValue()), "FPS", maxFPS);
 
 
 	// Call SaveConfig() in all modules
@@ -174,7 +174,7 @@ void Application::SaveConfig()
 		(*item)->SaveConfig(jsonFile.SetChild(root, (*item)->name));
 	}
 
-	jsonFile.SerializeFile(root, FILE_CONFIG);
+	jsonFile.FileSerialization(root, FILE_CONFIG);
 	saveRequested = false;
 }
 

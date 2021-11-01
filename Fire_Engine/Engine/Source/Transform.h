@@ -27,7 +27,7 @@ private:
 
 	// Local transforms
 	float4x4 localTransform;
-	float3 position, scale = { 0,0,0 };
+	float3 position, scale = { 1,1,1 };
 	Quat rotation = Quat::identity; // Quat is best than float3
 	float3 eulerRotation = { 0,0,0 }; // Need a container that holds the conversion of Quad to float3 for draw it on OnEditor
 

@@ -145,6 +145,7 @@ void Mesh::UnBindBuffers(const GLuint& textureID)
 void Mesh::DebugRender(bool* vertexNormals, bool* faceNormals)
 {
 	float normalLenght = 0.1f;
+
 	if (*vertexNormals == true) RenderVertexNormals(normalLenght);
 
 	if (*faceNormals == true) RenderFaceNormals(normalLenght);
@@ -185,10 +186,16 @@ void Mesh::RenderVertexNormals(float normalLenght)
 		glColor3f(1-type, 0+type, 0);
 		(type == 0) ? glPointSize(3.0f), glBegin(GL_POINTS) :glBegin(GL_LINES);
 		
+		if(type==0)
 		for (unsigned int i = 0; i < numVertex * 3; i += 3)
 		{
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
-			if(type==1)glVertex3f(vertex[i] + normals[i] * normalLenght, vertex[i + 1] + normals[i + 1] * normalLenght, vertex[i + 2] + normals[i + 2] * normalLenght);
+		}
+		if(type==1)
+		for (unsigned int i = 0; i < numNormals * 3; i += 3)
+		{
+			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
+			glVertex3f(vertex[i] + normals[i] * normalLenght, vertex[i + 1] + normals[i + 1] * normalLenght, vertex[i + 2] + normals[i + 2] * normalLenght);
 		}
 
 		glColor3f(0+type, 1, 0+type);

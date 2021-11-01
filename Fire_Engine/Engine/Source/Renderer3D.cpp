@@ -432,8 +432,8 @@ void Renderer3D::OnGUI()
 bool Renderer3D::SaveConfig(JsonParser& node) const
 {
 
-	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "vsync", vsync);
-	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "wireframe", wireframe);
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "vsync", vsync);
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "wireframe", wireframe);
 
 	return true;
 }

@@ -38,7 +38,7 @@ void ModelImporter::Import(const char* fullPath,  char* buffer, int bufferSize, 
 		std::vector<Texture*> modelTextures;
 
 		//Load all meshes into mesh vector
-		LOG(LogType::L_NORMAL, "Loading meshes from %s", fileName);
+		LOG(LogType::L_NORMAL, "Loading meshes from %c", fileName.c_str());
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 		{
 			modelMeshes.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));

@@ -32,9 +32,7 @@ bool Texture::UnloadFromMemory()
 	if (textureID != 0)
 		glDeleteTextures(1, &textureID);
 
-	textureID = 0;
-	texWidth = 0;
-	texHeight = 0;
+	textureID = 0, texWidth = 0, texHeight = 0;
 
 	return true;
 }

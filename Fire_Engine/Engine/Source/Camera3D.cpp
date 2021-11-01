@@ -233,25 +233,25 @@ void Camera3D::CalculateViewMatrix()
 }
 bool Camera3D::SaveConfig(JsonParser& node) const
 {
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.x", X.x);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.y", X.y);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "X.z", X.z);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "X.x", X.x);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "X.y", X.y);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "X.z", X.z);
 
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.x", Y.x);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.y", Y.y);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Y.z", Y.z);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Y.x", Y.x);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Y.y", Y.y);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Y.z", Y.z);
 
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.x", Z.x);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.y", Z.y);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Z.z", Z.z);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Z.x", Z.x);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Z.y", Z.y);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Z.z", Z.z);
 
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.x", Reference.x);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.y", Reference.y);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Reference.z", Reference.z);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Reference.x", Reference.x);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Reference.y", Reference.y);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Reference.z", Reference.z);
 
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.x", Position.x);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.y", Position.y);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "Position.z", Position.z);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Position.x", Position.x);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Position.y", Position.y);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "Position.z", Position.z);
 
 	return true;
 }

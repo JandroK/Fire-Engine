@@ -289,14 +289,14 @@ void Window::OnGUI()
 
 bool Window::SaveConfig(JsonParser& node) const
 {
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "width", width);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "height", height);
-	node.SetNewJsonNumber(node.ValueToObject(node.GetRootValue()), "brightness", brightness);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "width", width);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "height", height);
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "brightness", brightness);
 
-	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "fullscreen", fullScreen);
-	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "fullscreen desktop", fullScreenDesktop);
-	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "borderless", borderless);
-	node.SetNewJsonBool(node.ValueToObject(node.GetRootValue()), "resizable", isResizable);
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "fullscreen", fullScreen);
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "fullscreen desktop", fullScreenDesktop);
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "borderless", borderless);
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "resizable", isResizable);
 
 	return true;
 }

@@ -64,10 +64,13 @@ void Transform::OnEditor()
 			// If the rotation has not been modified (quaternion = identity) then only overwrite scale
 			// But if the rotation yes has been modified then float3x3(rotate) * float3x3::Scale(scale)
 			if (rotation.Equals(Quat::identity))
-				localTransform.Scale(scale);
-			else
-				localTransform.SetRotatePart(float3x3::FromRS(rotation, scale));
-
+			{
+				localTransform[0][0] = scale.x;
+				localTransform[1][1] = scale.y;
+				localTransform[2][2] = scale.z;
+			}
+			else localTransform.SetRotatePart(float3x3::FromRS(rotation, scale));
+			
 			updateTransform = true;
 		}
 		// If some transfomr has been modify update them
