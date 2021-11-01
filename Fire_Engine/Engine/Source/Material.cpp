@@ -51,6 +51,15 @@ bool Material::CompareTextureId(GameObject* node, GameObject* owner, GLuint id)
 	{
 		for (int i = 0; i < numChildrens; i++)
 		{
+			// Security system: The children that are null we want to check them 
+			// Why are NULL? Because we can be in the cleanup process
+			for ( i = i; i < numChildrens; i++)
+			{
+				if (node->GetChildrens()[i] == nullptr) i++;
+			}
+			i--;
+			if (i == numChildrens) break;
+
 			// Exclude the owner of the id from the check
 			if (node->GetChildrens()[i] != owner)
 			{
