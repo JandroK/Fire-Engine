@@ -33,6 +33,9 @@ namespace FileSystem
 	std::string NormalizePath(const char* fullPath);
 	std::string UnNormalizePath(const char* fullPath);
 
+	std::string ExtractLocalDiskBackward(const char* fullPath);
+	std::string ExtractLocalDiskForward(const char* fullPath);
+
 	// Open for Read/Write
 	unsigned int LoadToBuffer(const char* file, char** buffer);
 

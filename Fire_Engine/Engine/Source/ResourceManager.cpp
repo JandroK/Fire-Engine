@@ -47,25 +47,25 @@ bool ResourceManager::CleanUp()
 void ResourceManager::ImportFile(const char* assetsFile)
 {
 	std::string normalizedPath = FileSystem::NormalizePath(assetsFile);
-	std::string relativePath = StringLogic::GlobalToLocalPath(assetsFile);
+	//std::string relativePath = StringLogic::GlobalToLocalPath(assetsFile);
 
 	//Duplicate file
 	//BUG: This will only allow to work with files inside PhysFS dir
 	std::string output = "";
 
-	std::string fileName = StringLogic::GlobalToLocalPath(normalizedPath.c_str());
+	/*std::string fileName = StringLogic::GlobalToLocalPath(normalizedPath.c_str());
 	if (fileName.length() == 0) {
 		fileName = normalizedPath;
-	}
+	}*/
 
-	if (PHYSFS_exists(fileName.c_str()) == 0)
+	/*if (PHYSFS_exists(fileName.c_str()) == 0)
 	{
 		FileSystem::Copy(assetsFile, ASSETS_FOLDER, output);
 		fileName = output;
-	}
+	}*/
 
 	char* buffer = nullptr;
-	uint size = FileSystem::LoadToBuffer(fileName.c_str(), &buffer);
+	uint size = FileSystem::LoadToBuffer(normalizedPath.c_str(), &buffer);
 
 	if (buffer != nullptr && size != 0)
 	{

@@ -30,8 +30,7 @@ void FileSystem::FSInit()
 
 	// Adding ProjectFolder (working directory)
 	std::string assetPath = GetBasePath();
-	//assetPath += ASSETS_FOLDER;
-	assetPath = NormalizePath(assetPath.c_str());
+	assetPath = ExtractLocalDiskBackward(assetPath.c_str());
 	FileSystem::AddPath(assetPath.c_str());
 
 	// Dump list of paths
@@ -178,6 +177,20 @@ std::string FileSystem::UnNormalizePath(const char* fullPath)
 	return newPath;
 }
 
+std::string FileSystem::ExtractLocalDiskBackward(const char* fullPath)
+{
+	std::string path = NormalizePath(fullPath);
+	path = path.substr(0, path.find_first_of('/') + 1);
+	return path;
+}
+
+std::string FileSystem::ExtractLocalDiskForward(const char* fullPath)
+{
+	std::string path = NormalizePath(fullPath);
+	path = path.substr(path.find_first_of("/\\") + 1);
+	return path;
+}
+
 // Read a whole file and put it in a new buffer
 uint FileSystem::LoadToBuffer(const char* file, char** buffer)
 {
@@ -188,7 +201,6 @@ uint FileSystem::LoadToBuffer(const char* file, char** buffer)
 	if (fs_file != nullptr)
 	{
 		PHYSFS_sint64 size = PHYSFS_fileLength(fs_file);
-		//LOG(LogType::L_ERROR, "[%s]", PHYSFS_getLastError())
 
 		if (size > 0)
 		{

@@ -34,7 +34,8 @@ bool Scene::Init()
 
 bool Scene::Start()
 {
-	app->resourceManager->ImportFile("Assets/BakerHouse.fbx");
+	//app->resourceManager->ImportFile("Assets/BakerHouse.fbx");
+	app->resourceManager->ImportFile("Users/Msi/Desktop/Universidad/3r Carrera/Motores/Fire-Engine/Fire_Engine/Output/Assets/BakerHouse.fbx");
 	Transform* transformChimney = root->GetChildrens()[0]->GetChildrens()[0]->transform;
 	Transform* transformBakerhouse = root->GetChildrens()[0]->GetChildrens()[1]->transform;
 	Transform* parentTransform = root->GetChildrens()[0]->transform;

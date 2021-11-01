@@ -116,7 +116,7 @@ update_status Input::PreUpdate(float dt)
 			break;
 
 			case (SDL_DROPFILE):
-			app->resourceManager->ImportFile(StringLogic::GlobalToLocalPath(e.drop.file).c_str());
+			app->resourceManager->ImportFile(FileSystem::ExtractLocalDiskForward(e.drop.file).c_str());
 			SDL_free(e.drop.file);  
 			break;
 			

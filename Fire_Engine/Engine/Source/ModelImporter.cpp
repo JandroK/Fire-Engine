@@ -52,9 +52,9 @@ void ModelImporter::Import(const char* fullPath,  char* buffer, int bufferSize, 
 		LOG(LogType::L_NORMAL, "Loading model as GameObject from %s", fileName);
 		NodeToGameObject(scene->mMeshes, modelTextures, modelMeshes, scene->mRootNode, root, fileName.c_str());
 
+		// Clear
 		modelMeshes.clear();
 		modelTextures.clear();
-
 		aiReleaseImport(scene);
 	}
 	else
@@ -71,26 +71,31 @@ void ModelImporter::LoadMaterials(const aiScene* scene, const char* fullPath, st
 		for (size_t k = 0; k < scene->mNumMaterials; k++)
 		{
 			aiMaterial* material = scene->mMaterials[k];
+			// At the moment only take the diffuse type textures 
 			uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
 
+			// Check if model has textures, because it can have material but not texture 
 			if (numTextures > 0)
 			{
 				aiString path;
 				material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
 
-				std::string localPath = StringLogic::GlobalToLocalPath(fullPath);
+				std::string localPath(fullPath);
 				localPath = localPath.substr(0, localPath.find_last_of('/') + 1);
 
 				std::string fileNamePath = FileSystem::NormalizePath(path.C_Str());
 				fileNamePath = fileNamePath.substr(fileNamePath.find_last_of("/\\") + 1);
 
+				// localPath = from output directory until the end 
 				localPath += fileNamePath;
 
+				// Get the buffer
 				char* buffer = nullptr;
-				int size = FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
+				FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
 
 				if (buffer != nullptr)
 				{
+					// Load texture
 					Texture* tex = new Texture(localPath.c_str());
 					tex->LoadToMemory();
 
