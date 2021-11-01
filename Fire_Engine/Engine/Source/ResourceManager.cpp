@@ -32,7 +32,7 @@ bool ResourceManager::Init()
 bool ResourceManager::Start()
 {
 	// Import Icon
-	logo = new Texture("Assets/logo.png", "logo");
+	logo = new Texture("logo.png", "logo");
 	logo->LoadToMemory();
 
 	return true;
@@ -47,22 +47,8 @@ bool ResourceManager::CleanUp()
 void ResourceManager::ImportFile(const char* assetsFile)
 {
 	std::string normalizedPath = FileSystem::NormalizePath(assetsFile);
-	//std::string relativePath = StringLogic::GlobalToLocalPath(assetsFile);
 
-	//Duplicate file
-	//BUG: This will only allow to work with files inside PhysFS dir
 	std::string output = "";
-
-	/*std::string fileName = StringLogic::GlobalToLocalPath(normalizedPath.c_str());
-	if (fileName.length() == 0) {
-		fileName = normalizedPath;
-	}*/
-
-	/*if (PHYSFS_exists(fileName.c_str()) == 0)
-	{
-		FileSystem::Copy(assetsFile, ASSETS_FOLDER, output);
-		fileName = output;
-	}*/
 
 	char* buffer = nullptr;
 	uint size = FileSystem::LoadToBuffer(normalizedPath.c_str(), &buffer);

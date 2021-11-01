@@ -39,8 +39,6 @@ namespace FileSystem
 	// Open for Read/Write
 	unsigned int LoadToBuffer(const char* file, char** buffer);
 
-	unsigned int Copy(const char* file, const char* dir, std::string& outputFile);
-	unsigned int Save(const char* file, char* buffer, unsigned int size, bool append);
 	bool Remove(const char* file);
 	void GetFileName(const char* file, std::string& fileName, bool extension);
 

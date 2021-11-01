@@ -28,9 +28,15 @@ void FileSystem::FSInit()
 	if (PHYSFS_setWriteDir(".") == 0)
 		LOG(LogType::L_NORMAL, "File System error while creating write dir: %s\n", PHYSFS_getLastError());
 
-	// Adding ProjectFolder (working directory)
+	// Adding a path to search archives (LocalDisk)
+	// This way you can import files from any path
 	std::string assetPath = GetBasePath();
 	assetPath = ExtractLocalDiskBackward(assetPath.c_str());
+	FileSystem::AddPath(assetPath.c_str());
+
+	assetPath = GetBasePath();
+	assetPath = NormalizePath(assetPath.c_str());
+	assetPath += ASSETS_FOLDER;
 	FileSystem::AddPath(assetPath.c_str());
 
 	// Dump list of paths
@@ -176,14 +182,16 @@ std::string FileSystem::UnNormalizePath(const char* fullPath)
 	}
 	return newPath;
 }
-
+// Example: C:\Users\aleja\OneDrive\Escritorio\BakerHouse.fbx
+// return C:\ 
 std::string FileSystem::ExtractLocalDiskBackward(const char* fullPath)
 {
 	std::string path = NormalizePath(fullPath);
 	path = path.substr(0, path.find_first_of('/') + 1);
 	return path;
 }
-
+// Example: C:\Users\aleja\OneDrive\Escritorio\BakerHouse.fbx
+// return Users\aleja\OneDrive\Escritorio\BakerHouse.fbx
 std::string FileSystem::ExtractLocalDiskForward(const char* fullPath)
 {
 	std::string path = NormalizePath(fullPath);
@@ -226,96 +234,6 @@ uint FileSystem::LoadToBuffer(const char* file, char** buffer)
 		LOG(LogType::L_ERROR, "File System error while opening file %s: %s\n", file, PHYSFS_getLastError());
 
 	return ret;
-}
-
-// Duplicate a file to a local PhysFS valid path
-unsigned int FileSystem::Copy(const char* file, const char* dir, std::string& outputFile)
-{
-	uint size = 0;
-
-	if (file == nullptr || dir == nullptr)
-		return size;
-
-	std::FILE* filehandle;
-	fopen_s(&filehandle, file, "rb");
-
-	if (filehandle != nullptr)
-	{
-		fseek(filehandle, 0, SEEK_END);
-		size = ftell(filehandle);
-		rewind(filehandle);
-
-		char* buffer = new char[size];
-		size = fread(buffer, 1, size, filehandle);
-		if (size > 0)
-		{
-			GetFileName(file, outputFile, true);
-			outputFile.insert(0, "/");
-			outputFile.insert(0, dir);
-
-			size = Save(outputFile.data(), buffer, size, false);
-			if (size > 0)
-			{
-				LOG(LogType::L_NORMAL, "FILE SYSTEM: Successfully copied file '%s' in dir '%s'", file, dir);
-			}
-			else
-				LOG(LogType::L_ERROR, "FILE SYSTEM: Could not copy file '%s' in dir '%s'", file, dir);
-		}
-		else
-			LOG(LogType::L_ERROR, "FILE SYSTEM: Could not read from file '%s'", file);
-
-		RELEASE_ARRAY(buffer);
-		fclose(filehandle);
-	}
-	else
-		LOG(LogType::L_ERROR, "FILE SYSTEM: Could not open file '%s' to read", file);
-
-	return size;
-}
-
-unsigned int FileSystem::Save(const char* file, char* buffer, unsigned int size, bool append)
-{
-	uint objCount = 0;
-
-	std::string fileName;
-	GetFileName(file, fileName, true);
-
-	bool exists = Exists(file);
-
-	PHYSFS_file* filehandle = nullptr;
-	if (append)
-		filehandle = PHYSFS_openAppend(file);
-	else
-		filehandle = PHYSFS_openWrite(file);
-
-	if (filehandle != nullptr)
-	{
-		objCount = PHYSFS_writeBytes(filehandle, (const void*)buffer, size);
-
-		if (objCount == size)
-		{
-			if (exists)
-			{
-				if (append)
-				{
-					LOG(LogType::L_NORMAL, "FILE SYSTEM: Append %u bytes to file '%s'", objCount, fileName.data());
-				}
-				else
-					LOG(LogType::L_NORMAL, "FILE SYSTEM: File '%s' overwritten with %u bytes", fileName.data(), objCount);
-			}
-			else
-				LOG(LogType::L_NORMAL, "FILE SYSTEM: New file '%s' created with %u bytes", fileName.data(), objCount);
-		}
-		else
-			LOG(LogType::L_ERROR, "FILE SYSTEM: Could not write to file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
-
-		if (PHYSFS_close(filehandle) == 0)
-			LOG(LogType::L_ERROR, "FILE SYSTEM: Could not close file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
-	}
-	else
-		LOG(LogType::L_ERROR, "FILE SYSTEM: Could not open file '%s' to write. ERROR: %s", fileName.data(), PHYSFS_getLastError());
-
-	return objCount;
 }
 
 bool FileSystem::Remove(const char* file)
