@@ -24,7 +24,7 @@ GameObject::~GameObject()
 	RELEASE_VECTOR(components, components.size());
 	components.clear();
 
-	if (pendingToDelete)this->GetParent()->EraseChildren(indexList);
+	if (pendingToDelete) this->GetParent()->EraseChildren(indexList);
 
 	transform = nullptr;
 	parent = nullptr;
