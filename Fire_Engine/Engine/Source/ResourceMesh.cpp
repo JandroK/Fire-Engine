@@ -190,6 +190,7 @@ void Mesh::RenderVertexNormals(float normalLenght)
 		for (unsigned int i = 0; i < numVertex * 3; i += 3)
 		{
 			glVertex3f(vertex[i], vertex[i + 1], vertex[i + 2]);
+
 		}
 		if(type==1)
 		for (unsigned int i = 0; i < numNormals * 3; i += 3)

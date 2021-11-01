@@ -200,9 +200,11 @@ void PrimitiveSphere::SetVerticesMesh()
 {
 	// clear memory of prev arrays
 	std::vector<float>().swap(mesh->vertex);
+	std::vector<float>().swap(mesh->normals);
 	std::vector<float>().swap(mesh->texCoords);
 
 	float x, y, z, xz;                              // vertex position
+	float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
 	float s, t;                                     // vertex texCoord
 
 	float sectorStep = 2 * PI / sectors;
@@ -228,6 +230,14 @@ void PrimitiveSphere::SetVerticesMesh()
 			mesh->vertex.push_back(y);
 			mesh->vertex.push_back(z);
 
+			// normalized vertex normal (nx, ny, nz)
+			nx = x * lengthInv;
+			ny = y * lengthInv;
+			nz = z * lengthInv;
+			mesh->normals.push_back(nx);
+			mesh->normals.push_back(ny);
+			mesh->normals.push_back(nz);
+
 			// vertex tex coord (s, t) range between [0, 1]
 			s = (float)j / sectors;
 			t = (float)i / stacks;
@@ -236,6 +246,7 @@ void PrimitiveSphere::SetVerticesMesh()
 		}
 	}
 	mesh->numVertex = mesh->vertex.size() / 3;
+	mesh->numNormals = mesh->normals.size() / 3;
 	mesh->numTexCoords = mesh->texCoords.size() / 2;
 }
 
@@ -314,6 +325,7 @@ void PrimitiveCylinder::SetVerticesMesh()
 {
 	// clear memory of prev arrays
 	std::vector<float>().swap(mesh->vertex);
+	std::vector<float>().swap(mesh->normals);
 	std::vector<float>().swap(mesh->texCoords);
 
 	// get unit circle vectors on XY-plane
@@ -328,11 +340,21 @@ void PrimitiveCylinder::SetVerticesMesh()
 		for (int j = 0, k = 0; j <= sectorCount; ++j, k += 3)
 		{
 			float ux = unitVertices[k];
+			float uy = unitVertices[k + 1];
 			float uz = unitVertices[k + 2];
 			// position vector
 			mesh->vertex.push_back(ux * radius);             // vx
 			mesh->vertex.push_back(h);                       // vy
 			mesh->vertex.push_back(uz * radius);             // vz
+
+			// normal vector
+			mesh->normals.push_back(ux);                       // nx
+			mesh->normals.push_back(uz);                       // ny
+			mesh->normals.push_back(uy);                       // nz
+
+			// texture coordinate
+			mesh->texCoords.push_back((float)j / sectorCount); // s
+			mesh->texCoords.push_back(t);
 		}
 	}
 
@@ -345,9 +367,12 @@ void PrimitiveCylinder::SetVerticesMesh()
 	for (int i = 0; i < 2; ++i)
 	{
 		float h = -height / 2.0f + i * height;           // y value; -h/2 to h/2
+		float nz = -1 + i * 2;                           // z value of normal; -1 to 1
 
 		// center point
-		mesh->vertex.push_back(0);     mesh->vertex.push_back(h);     mesh->vertex.push_back(0);
+		mesh->vertex.push_back(0);			mesh->vertex.push_back(h);			mesh->vertex.push_back(0);
+		mesh->normals.push_back(0);			mesh->normals.push_back(nz);		mesh->normals.push_back(0);
+		mesh->texCoords.push_back(0.5f);	mesh->texCoords.push_back(0.5f);
 
 		for (int j = 0, k = 0; j < sectorCount; ++j, k += 3)
 		{
@@ -355,14 +380,21 @@ void PrimitiveCylinder::SetVerticesMesh()
 			float uz = unitVertices[k + 2];
 			// position vector
 			mesh->vertex.push_back(ux * radius);             // vx
-			mesh->vertex.push_back(h);                       // vz
-			mesh->vertex.push_back(uz * radius);             // vy
+			mesh->vertex.push_back(h);                       // vy
+			mesh->vertex.push_back(uz * radius);             // vz
+
+			// normal vector
+			mesh->normals.push_back(0);                        // nx
+			mesh->normals.push_back(nz);                       // ny
+			mesh->normals.push_back(0);                        // n
+
 			// texture coordinate
 			mesh->texCoords.push_back(-ux * 0.5f + 0.5f);      // s
 			mesh->texCoords.push_back(-uz * 0.5f + 0.5f);      // t
 		}
 	}
 	mesh->numVertex = mesh->vertex.size() / 3;
+	mesh->numNormals = mesh->normals.size() / 3;
 	mesh->numTexCoords = mesh->texCoords.size() / 2;
 }
 
