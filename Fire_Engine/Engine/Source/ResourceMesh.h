@@ -4,10 +4,30 @@
 //#include "MathGeoLib/include/Geometry/OBB.h"
 //#include "MathGeoLib/include/Math/float3.h"
 #include <vector>
+#include "glmath.h"
+
 
 typedef unsigned int uint;
 typedef unsigned int GLuint;
-class vec3;
+//class vec3;
+
+
+struct meshABC {
+
+public:
+
+	vec3 vecABC[3] = {  vec3(0, 0, 0), vec3(0, 0, 0), vec3(0, 0, 0) };
+	vec3 A = vecABC[0];
+	vec3 B = vecABC[1];
+	vec3 C = vecABC[2];
+
+	void UpdateABC() {
+		A = vecABC[0];
+		B = vecABC[1];
+		C = vecABC[2];
+	}
+};
+
 
 class Mesh : public Resource
 {
@@ -18,13 +38,18 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	void SetIndices(int indices[], int size);
-	void SetVertices(float vertices[], int size);
-	void SetTexCoords(float texCoords[], int size);
+	//void SetIndices(int indices[], int size);
+	//void SetVertices(float vertices[], int size);
+	//void SetTexCoords(float texCoords[], int size);
 
-	void RenderMesh(GLuint textureID = -1);
-	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals);
-	vec3 GetVectorFromIndex(float* startValue);
+	void Render(GLuint textureID = -1);
+	void EnableClientState();
+	void DisableClientState();
+	void UnBindBuffers(const GLuint& textureID);
+	void DebugRender(bool* vertexNormals, bool* faceNormals);
+	void RenderFaceNormals(float normalLenght);
+	void RenderVertexNormals(float normalLenght);
+	vec3 GetIndexVec(float* startValue);
 
 public:
 	// Buffers ID
@@ -38,8 +63,8 @@ public:
 	uint numTexCoords = 0;
 	uint numNormals = 0;
 	// Vectors
-	std::vector<uint> indices;
-	std::vector<float> vertices;
+	std::vector<uint> indexs;
+	std::vector<float> vertex;
 	std::vector<float> texCoords;
 	std::vector<float> normals;
 

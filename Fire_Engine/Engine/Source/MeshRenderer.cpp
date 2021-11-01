@@ -51,11 +51,11 @@ void MeshRenderer::RenderMesh()
 			id = material->GetTextureID();
 
 		// Draw
-		mesh->RenderMesh(id);
+		mesh->Render(id);
 
 		// If vertexNormals or faceNormals are true draw the Normals
 		if (vertexNormals || faceNormals)
-			mesh->RenderMeshDebug(&vertexNormals, &faceNormals);
+			mesh->DebugRender(&vertexNormals, &faceNormals);
 
 		// Pop the Matrix to OpenGL
 		glPopMatrix();
