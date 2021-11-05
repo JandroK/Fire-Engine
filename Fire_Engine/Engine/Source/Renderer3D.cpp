@@ -1,6 +1,11 @@
 #include "Application.h"
+
+// Module
 #include "Renderer3D.h"
+#include "Window.h"
 #include "Globals.h"
+#include "Camera3D.h"
+#include "Editor.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>

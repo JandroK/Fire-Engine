@@ -9,10 +9,10 @@ public:
 	Camera3D(Application* app, bool start_enabled = true);
 	~Camera3D() {};
 
-	bool Start();
-	update_status Update(float dt);
+	bool Start() override;
+	update_status Update(float dt) override;
 	void CheckInputs();
-	bool CleanUp();
+	bool CleanUp() override;
 
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
 	void Look();
@@ -27,9 +27,9 @@ private:
 
 	void CalculateViewMatrix();
 
-	bool SaveConfig(JsonParser& node) const;
+	bool SaveConfig(JsonParser& node)const override;
 
-	bool LoadConfig(JsonParser& node);
+	bool LoadConfig(JsonParser& node) override;
 
 public:
 	

@@ -3,6 +3,7 @@
 
 #include "Renderer3D.h"
 #include "Mesh.h"
+#include "Editor.h"
 
 #include "GameObject.h"
 #include "Transform.h"

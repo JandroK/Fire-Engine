@@ -1,7 +1,11 @@
 #include "Application.h"
 #include "Editor.h"
 
+// Modules
+#include "Scene.h"
 #include "GameObject.h"
+#include "Window.h"
+#include "Input.h"
 
 // Tabs
 #include "Tab.h"

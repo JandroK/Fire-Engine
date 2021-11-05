@@ -6,6 +6,7 @@
 
 #include "Glew/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
+#include "SDL\include\SDL.h"
 
 class Texture;
 class MeshRenderer;
@@ -38,9 +39,9 @@ public:
 	Renderer3D(Application* app, bool start_enabled = true);
 	~Renderer3D() {};
 
-	bool Init();
-	update_status PreUpdate(float dt);
-	update_status PostUpdate(float dt);
+	bool Init()override;
+	update_status PreUpdate(float dt)override;
+	update_status PostUpdate(float dt)override;
 	bool CleanUp();
 
 	void GetCaps(std::string& caps);
@@ -49,9 +50,9 @@ public:
 
 	void ReGenerateFrameBuffer(int w, int h);
 
-	bool SaveConfig(JsonParser& node) const;
+	bool SaveConfig(JsonParser& node) const override;
 
-	bool LoadConfig(JsonParser& node);
+	bool LoadConfig(JsonParser& node)override;
 
 	Hardware GetHardware() { return hardware; };
 

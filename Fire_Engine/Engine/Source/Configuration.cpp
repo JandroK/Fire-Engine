@@ -2,6 +2,11 @@
 #include "Configuration.h"
 #include "mmgr/mmgr.h"
 
+// Modules
+#include "Renderer3D.h"
+#include "Editor.h"
+
+
 Configuration::Configuration() : Tab()
 {
 	name = "Configuration";

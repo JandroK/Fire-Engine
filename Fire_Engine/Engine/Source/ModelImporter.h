@@ -5,6 +5,7 @@ class aiMesh;
 class aiScene;
 class Texture;
 class GameObject;
+class Mesh;
 
 namespace ModelImporter
 {
