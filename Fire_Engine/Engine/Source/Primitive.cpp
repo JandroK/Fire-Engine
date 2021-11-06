@@ -123,7 +123,7 @@ void Primitive::SetIndices(int indices[], int size)
 	{
 		mesh->indexs.push_back(indices[i]);
 	}
-	mesh->numIndices = mesh->indexs.size();
+	mesh->numIndexs = mesh->indexs.size();
 }
 
 // CUBE ============================================
@@ -283,7 +283,7 @@ void PrimitiveSphere::SetIndicesMesh()
 			}
 		}
 	}
-	mesh->numIndices = mesh->indexs.size();
+	mesh->numIndexs = mesh->indexs.size();
 }
 
 
@@ -454,7 +454,7 @@ void PrimitiveCylinder::SetIndicesMesh()
 			mesh->indexs.push_back(topCenterIndex);
 		}
 	}
-	mesh->numIndices = mesh->indexs.size();
+	mesh->numIndexs = mesh->indexs.size();
 }
 
 

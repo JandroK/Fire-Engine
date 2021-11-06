@@ -27,8 +27,8 @@ void MeshRenderer::OnEditor()
 		// Print mesh information
 		IMGUI_PRINT("Vertices: ", "%i", mesh->numVertex);
 		IMGUI_PRINT("Normals: ", "%i", mesh->numNormals);
-		IMGUI_PRINT("Texture coords: ", "%i", mesh->numIndices);
-		IMGUI_PRINT("Indices: ", "%i", mesh->numIndices);
+		IMGUI_PRINT("Texture coords: ", "%i", mesh->numIndexs);
+		IMGUI_PRINT("Indices: ", "%i", mesh->numIndexs);
 		// You can enable/disable the mode debug
 		ImGui::Checkbox("Vertex Normals", &vertexNormals);
 		ImGui::Checkbox("Face Normals", &faceNormals);

@@ -16,7 +16,9 @@
 
 #include "JsonParser.h"
 
-#define FILE_CONFIG	"../Output/Settings/config.json"
+//#define FILE_CONFIG	"../Output/Settings/config.json"
+#define FILE_CONFIG	"Settings/config.json"
+
 #include "Algorithm/Random/LCG.h"
 
 

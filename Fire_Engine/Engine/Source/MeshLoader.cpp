@@ -66,8 +66,8 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	// Generate indices
 	if (importedMesh->HasFaces())
 	{
-		mesh->numIndices = importedMesh->mNumFaces * 3;
-		mesh->indexs.resize(mesh->numIndices);
+		mesh->numIndexs = importedMesh->mNumFaces * 3;
+		mesh->indexs.resize(mesh->numIndexs);
 		
 		for (uint j = 0; j < importedMesh->mNumFaces; ++j)
 		{

@@ -31,12 +31,12 @@ bool Mesh::LoadToMemory()
 {
 
 	//Index Buffer GL_ELEMENT_ARRAY_BUFFER
-	if (numIndices != NULL && numIndices != 0)
+	if (numIndexs != NULL && numIndexs != 0)
 	{
 		glGenBuffers(1, (GLuint*)&(indexBufferId));
 		//Bind buffer load index
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * numIndices, &indexs[0], GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * numIndexs, &indexs[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}	
 
@@ -91,7 +91,7 @@ void Mesh::Render(GLuint textureID)
 	EnableClientState();
 
 	//-- Draw --//
-	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, numIndexs, GL_UNSIGNED_INT, NULL);
 	
 	//-- UnBind Buffers--//
 	UnBindBuffers(textureID);
@@ -159,7 +159,7 @@ void Mesh::RenderFaceNormals(float normalLenght)
 
 	meshABC abc;
 
-	for (int i = 0; i < numIndices; i += 3)
+	for (int i = 0; i < numIndexs; i += 3)
 	{
 		for (int j = 0; j < 3; j++)
 			abc.vecABC[j] = GetIndexVec(&vertex[indexs[i + j] * 3]);
