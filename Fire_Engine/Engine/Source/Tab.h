@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "imgui/imgui.h"
 
 #define LOG_MAX_LENGHT 100
 

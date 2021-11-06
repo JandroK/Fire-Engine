@@ -2,7 +2,7 @@
 #include "ConsoleTab.h"
 
 // Module
-#include "Editor.h"
+//#include "Editor.h"
 
 ConsoleTab::ConsoleTab() : Tab()
 {

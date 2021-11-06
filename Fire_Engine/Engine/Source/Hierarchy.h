@@ -1,5 +1,6 @@
 #pragma once
 #include "Tab.h"
+#include "imgui/imgui.h"
 
 class Scene;
 class GameObject;
