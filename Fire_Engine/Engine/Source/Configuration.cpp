@@ -40,9 +40,10 @@ void Configuration::Draw()
 		}
 		if (ImGui::CollapsingHeader("Application", ImGuiTreeNodeFlags_DefaultOpen))
 		{
+			
 			// Input Text is to create a text with background and a const text
-			ImGui::InputText("App Name", "Fire Engine", 12);
-			ImGui::InputText("Organization", "UPC CITM", 9);
+			ImGui::InputText("App Name", nameEngine, IM_ARRAYSIZE(nameEngine));
+			ImGui::InputText("Organization", nameOrganization, IM_ARRAYSIZE(nameEngine));
 			if (ImGui::SliderInt("Max FPS", &app->maxFPS, 0, 144))
 			{
 				app->renderer3D->vsync = false;

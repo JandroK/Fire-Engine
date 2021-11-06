@@ -12,7 +12,7 @@
 
 #define INVALID_OGL_VALUE 0xffffffff
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals |  aiProcess_JoinIdenticalVertices )
-
+#define NAME_ENGINE "Fire Engine"
 enum class LogType
 {
 	L_NORMAL,
@@ -89,4 +89,4 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
 #define TITLE "Fire Engine"
-#define ORGANIZATION_NAME "2HD"
+#define ORGANIZATION_NAME "3HD"

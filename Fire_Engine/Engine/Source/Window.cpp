@@ -149,6 +149,7 @@ void Window::SetSize(uint w, uint h)
 	height = h;
 	width = w;
 	SDL_SetWindowSize(window, w, h);
+
 }
 void Window::SetSize()
 {
@@ -214,6 +215,21 @@ void Window::OnResize(int width, int height)
 	this->height = height;
 }
 
+update_status Window::ManageEvent(SDL_Event* e)
+{
+	if (e->window.event == SDL_WINDOWEVENT_CLOSE)
+		return update_status::UPDATE_STOP;
+
+	else if (e->window.event == SDL_WINDOWEVENT_RESIZED)
+	{
+		App->renderer3D->OnResize(e->window.data1, e->window.data2);
+		width = e->window.data1;
+		height = e->window.data2;
+	}
+	return UPDATE_CONTINUE;
+}
+
+
 void Window::OnGUI()
 {
 	if (ImGui::CollapsingHeader("Window"))
@@ -222,18 +238,12 @@ void Window::OnGUI()
 		ImGui::TextWrapped("Icon: ");
 		ImGui::Image((ImTextureID)app->resourceManager->logo->textureID, ImVec2(32, 32));
 
-		if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f))
-		{
-			SetBrightness(brightness);
-		}
-		if (ImGui::SliderInt("Width", &width, 640, current.w))
-		{
-			SetSize(width, height);
-		}
-		if (ImGui::SliderInt("Height", &height, 480, current.h))
-		{
-			SetSize(width, height);
-		}
+		if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f)) SetBrightness(brightness);
+		
+		if (ImGui::SliderInt("Width", &width, 640, current.w)) app->renderer3D->OnResize(width, height);
+		
+		if (ImGui::SliderInt("Height", &height, 480, current.h)) app->renderer3D->OnResize(width, height);
+		
 
 		IMGUI_PRINT("Refresh rate: ", "%d", current.refresh_rate);
 

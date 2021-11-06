@@ -39,6 +39,8 @@ public:
 
 	void OnResize(int width, int height);
 
+	update_status ManageEvent(SDL_Event* e);
+
 	void OnGUI() override;
 
 	bool SaveConfig(JsonParser& node) const override;
