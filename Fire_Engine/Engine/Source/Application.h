@@ -3,17 +3,7 @@
 #include <vector>
 #include <list>
 
-#include "Globals.h"
 #include "Timer.h"
-#include "Module.h"
-#include "ResourceManager.h"
-#include "Renderer3D.h"
-#include "Window.h"
-#include "Input.h"
-#include "Camera3D.h"
-#include "Editor.h"
-#include "Scene.h"
-
 #include "JsonParser.h"
 
 //#define FILE_CONFIG	"../Output/Settings/config.json"
@@ -21,6 +11,14 @@
 
 #include "Algorithm/Random/LCG.h"
 
+class Window;
+class Renderer3D;
+class ResourceManager;
+class Scene;
+class Module;
+class Input;
+class Camera3D;
+class Editor;
 
 class Application
 {

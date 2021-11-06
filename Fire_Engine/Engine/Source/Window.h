@@ -12,8 +12,8 @@ public:
 	Window(Application* app, bool start_enabled = true);
 	virtual ~Window() {};
 
-	bool Init();
-	bool CleanUp();
+	bool Init()override;
+	bool CleanUp()override;
 
 	void SetTitle(const char* title);
 
@@ -41,9 +41,9 @@ public:
 
 	void OnGUI() override;
 
-	bool SaveConfig(JsonParser& node) const;
+	bool SaveConfig(JsonParser& node) const override;
 
-	bool LoadConfig(JsonParser& node);
+	bool LoadConfig(JsonParser& node) override;
 
 	int GetWindowWidth() { return width; };
 	int GetWindowHeight() { return height; };

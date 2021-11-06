@@ -18,12 +18,12 @@ class Input : public Module
 {
 public:
 	
-	Input(Application* app, bool start_enabled = true);
+	Input(Application* app, bool start_enabled = true) ;
 	~Input() { delete[] keyboard; };
 
-	bool Init();
-	update_status PreUpdate(float dt);
-	bool CleanUp();
+	bool Init()override;
+	update_status PreUpdate(float dt) override;
+	bool CleanUp() override;
 
 	KEY_STATE GetKey(int id) const
 	{

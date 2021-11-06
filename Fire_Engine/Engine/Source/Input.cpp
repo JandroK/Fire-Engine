@@ -1,8 +1,15 @@
 #include "Application.h"
+
+//Modules
 #include "Input.h"
+#include "Window.h"
+#include "Editor.h"
+
 #include "Globals.h"
 
 #include "FileSystem.h"
+#include "ResourceManager.h"
+#include "Renderer3D.h"
 
 #define MAX_KEYS 300
 

@@ -1,5 +1,14 @@
 #include "Application.h"
 
+#include "Window.h"
+#include "Renderer3D.h"
+#include "ResourceManager.h"
+#include "Scene.h"
+#include "Module.h"
+#include "Input.h"
+#include "Camera3D.h"
+#include "Editor.h"
+
 
 using namespace std;
 

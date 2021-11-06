@@ -1,8 +1,12 @@
 #include "Application.h"
 #include "Material.h"
 
-#include"Renderer3D.h"
-#include"ResourceTexture.h"
+
+// Modules
+#include "Scene.h"
+#include "Renderer3D.h"
+#include "ResourceTexture.h"
+#include "Editor.h"
 
 #include "ImGui/imgui.h"
 

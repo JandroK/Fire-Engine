@@ -1,11 +1,16 @@
 #include "Application.h"
 #include "ResourceManager.h"
 
+// Modules
+#include "Scene.h"
+#include "Editor.h"
+
 //Importers
 #include "FileSystem.h"
 #include "TextureLoader.h"
 #include "MeshLoader.h"
 #include "ModelImporter.h"
+
 
 //Resources
 #include "ResourceTexture.h"

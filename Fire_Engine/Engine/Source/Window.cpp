@@ -2,8 +2,14 @@
 #include "Window.h"
 #include "Globals.h"
 
+// Modules
+#include "Renderer3D.h"
+#include "Editor.h"
+
 #include "Parson/parson.h"
 #include "ResourceTexture.h"
+#include "ResourceManager.h"
+
 
 Window::Window(Application* app, bool startEnabled) : Module(app, startEnabled)
 {

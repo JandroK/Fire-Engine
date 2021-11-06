@@ -1,6 +1,9 @@
 #include "Application.h"
 #include "ConsoleTab.h"
 
+// Module
+#include "Editor.h"
+
 ConsoleTab::ConsoleTab() : Tab()
 {
 	name = "Console";

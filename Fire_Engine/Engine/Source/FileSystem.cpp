@@ -5,6 +5,7 @@
 #include "DevIL\include\ilu.h"
 #include "DevIL\include\ilut.h"
 #include "MeshLoader.h"
+#include "Editor.h"
 
 // File System Init
 void FileSystem::FSInit()

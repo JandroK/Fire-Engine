@@ -28,8 +28,8 @@ public:
 	Editor(Application* app, bool start_enabled = true);
 	~Editor() {};
 
-	bool Init();
-	bool Start();
+	bool Init() override;
+	bool Start() override;
 	void LogToConsole(const char* msg, LogType _type);
 	
 	void StartFrame();
@@ -39,7 +39,7 @@ public:
 	Tab* GetTab(TabType type);
 	GameObject* GetGameObjectSelected();
 
-	bool CleanUp();
+	bool CleanUp() override;
 
 	void CreateDockSpace();
 	void DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass);

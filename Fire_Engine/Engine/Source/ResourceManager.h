@@ -14,9 +14,9 @@ public:
 	ResourceManager(Application* app, bool start_enabled = true);
 	~ResourceManager() {};
 
-	bool Init();
-	bool Start();
-	bool CleanUp();
+	bool Init()override;
+	bool Start()override;
+	bool CleanUp()override;
 
 	void ImportFile(const char* assetsFile);
 
