@@ -5,6 +5,7 @@
 // Modules
 #include "Renderer3D.h"
 #include "Editor.h"
+#include "Input.h"
 
 #include "Parson/parson.h"
 #include "ResourceTexture.h"
@@ -239,11 +240,11 @@ void Window::OnGUI()
 		ImGui::Image((ImTextureID)app->resourceManager->logo->textureID, ImVec2(32, 32));
 
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f)) SetBrightness(brightness);
-		
-		if (ImGui::SliderInt("Width", &width, 640, current.w)) app->renderer3D->OnResize(width, height);
-		
+
+		ImGui::SliderInt("Width", &tmpW, 640, current.w);
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) app->renderer3D->OnResize(tmpW, height);
+
 		if (ImGui::SliderInt("Height", &height, 480, current.h)) app->renderer3D->OnResize(width, height);
-		
 
 		IMGUI_PRINT("Refresh rate: ", "%d", current.refresh_rate);
 
@@ -251,14 +252,14 @@ void Window::OnGUI()
 			SetFullscreen(fullScreen);
 
 			SDL_GetWindowSize(window, &width, &height);
-			OnResize(width, height);			
+			OnResize(width, height);
 		}
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change fullscreen mode");
 
 		ImGui::SameLine();
 
-		if (ImGui::Checkbox("Resizable", &isResizable)){
+		if (ImGui::Checkbox("Resizable", &isResizable)) {
 			if (!fullScreen && !fullScreenDesktop) SetResizable(isResizable);
 			else isResizable = !isResizable;
 		}
@@ -294,13 +295,14 @@ void Window::OnGUI()
 			SetFullscreenDesktop(fullScreenDesktop);
 
 			SDL_GetWindowSize(window, &width, &height);
-			OnResize(width, height);			
+			OnResize(width, height);
 		}
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Change fullscreen desktop mode");
 
 		ImGui::NewLine();
 	}
+	
 }
 
 bool Window::SaveConfig(JsonParser& node) const

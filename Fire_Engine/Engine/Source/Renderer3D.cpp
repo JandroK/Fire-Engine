@@ -340,6 +340,7 @@ void Renderer3D::ReGenerateFrameBuffer(int w, int h)
 
 void Renderer3D::OnResize(int width, int height)
 {
+
 	glViewport(0, 0, width, height);
 
 	glMatrixMode(GL_PROJECTION);
@@ -350,9 +351,10 @@ void Renderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	App->window->SetSize(width, height);
 
+	App->window->SetSize(width, height);
 	ReGenerateFrameBuffer(width, height);
+
 }
 
 void Renderer3D::OnGUI()
