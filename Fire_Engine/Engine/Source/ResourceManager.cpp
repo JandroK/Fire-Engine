@@ -36,15 +36,25 @@ bool ResourceManager::Init()
 
 bool ResourceManager::Start()
 {
-	// Import Icon
+	// Import Icons
 	logo = new Texture("logo.png", "logo");
 	logo->LoadToMemory();
+
+	backButton = new Texture("icon_back.png", "backButton");
+	backButton->LoadToMemory();
+
+	addButton = new Texture("icon_add.png", "addButton");
+	addButton->LoadToMemory();
 
 	return true;
 }
 
 bool ResourceManager::CleanUp()
 {
+	RELEASE(logo);
+	RELEASE(backButton);
+	RELEASE(addButton);
+
 	FileSystem::FSDeInit();
 	return true;
 }

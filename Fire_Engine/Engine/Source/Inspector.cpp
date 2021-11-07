@@ -1,8 +1,10 @@
 #include "Application.h"
 #include "Inspector.h"
+#include "ResourceManager.h"
 
 #include "GameObject.h"
 #include "Component.h"
+#include "ResourceTexture.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_internal.h"
@@ -12,7 +14,7 @@ Inspector::Inspector() : Tab(), gameObjectSelected(nullptr)
 	name = "Inspector";
 
 	tags = { "Untagged", "Respawn", "Finish", "EditorOnly", "MainCamara", "Player", "GameController" };
-	layers = { "0: Default", "1: TransparentFX", "2: Ignore Raycast", "3: Water", "4: UI", "5: Player" };
+	layers = { "Default", "TransparentFX", "Ignore Raycast", "Water", "UI", "Player" };
 }
 
 void Inspector::Draw()
@@ -22,40 +24,104 @@ void Inspector::Draw()
 		// The inspector is empty if no object is selected 
 		if (gameObjectSelected != nullptr)
 		{
-			// If you write "##" the name become on label and this no draw
-			if (ImGui::Checkbox("##Active", &gameObjectSelected->active))
-			{
-				//Warning: The bool has changed at this point, you have to do the reverse
-				(gameObjectSelected->active == true) ? gameObjectSelected->Enable() : gameObjectSelected->Disable();
-			}
-			ImGui::SameLine();
-
-			// Print the name of GameObject and the static checkbox
-			char* inputName = &gameObjectSelected->name[0];
-			ImGui::InputText("##Name", inputName, gameObjectSelected->name.size() + 1); 
-			ImGui::SameLine();
-			ImGui::Checkbox("Static", &gameObjectSelected->isStatic);
-
-			// Draw tagList and layerList
-			DrawList("Tag", &tags, gameObjectSelected->tag, maxWidthTag);
-			ImGui::SameLine();	
-			DrawList("Layer", &layers, gameObjectSelected->layer, maxWidthLayers);
-
-			// Destroy object selected, pendingToDelete = true
-			if (ImGui::Button("Delete")) {
-				gameObjectSelected->Destroy();
-			}
-			ImGui::Separator();
-
-			// Draw all OnEditors componets
-			for (size_t i = 0; i < gameObjectSelected->GetCompomemts().size(); i++)
-			{
-				gameObjectSelected->GetCompomemts()[i]->OnEditor();
-				ImGui::Separator();
-			}
-		}
+			if(item == ItemType::NONE)
+				DrawDefaultInspector();
+			else
+				DrawEditLists();		
+		}		
 	}
 	ImGui::End();
+}
+
+void Inspector::DrawDefaultInspector()
+{
+	// If you write "##" the name become on label and this no draw
+	if (ImGui::Checkbox("##Active", &gameObjectSelected->active))
+	{
+		//Warning: The bool has changed at this point, you have to do the reverse
+		(gameObjectSelected->active == true) ? gameObjectSelected->Enable() : gameObjectSelected->Disable();
+	}
+	ImGui::SameLine();
+
+	// Print the name of GameObject and the static checkbox
+	char* inputName = &gameObjectSelected->name[0];
+	ImGui::InputText("##Name", inputName, gameObjectSelected->name.size() + 1);
+	ImGui::SameLine();
+	ImGui::Checkbox("Static", &gameObjectSelected->isStatic);
+
+	// Draw tagList and layerList
+	DrawList("Tag", &tags, gameObjectSelected->tag, maxWidthTag);
+	ImGui::SameLine();
+	DrawList("Layer", &layers, gameObjectSelected->layer, maxWidthLayers);
+
+	// Destroy object selected, pendingToDelete = true
+	if (ImGui::Button("Delete")) {
+		gameObjectSelected->Destroy();
+	}
+	ImGui::Separator();
+
+	// Draw all OnEditors componets
+	for (size_t i = 0; i < gameObjectSelected->GetCompomemts().size(); i++)
+	{
+		gameObjectSelected->GetCompomemts()[i]->OnEditor();
+		ImGui::Separator();
+	}
+
+}
+
+void Inspector::DrawEditLists()
+{
+	if (ImGui::ImageButton((ImTextureID)app->resourceManager->backButton->textureID, ImVec2(16, 16)))
+		item = ItemType::NONE;
+
+	// System to determine which node starts open 
+	ImGuiTreeNodeFlags flag = 0;
+	if (item == ItemType::TAG) flag = ImGuiTreeNodeFlags_DefaultOpen;
+	if (ImGui::CollapsingHeader("Tags", flag))
+	{
+		DrawListTagLayer("Tag", tags);
+	}
+
+	if (item == ItemType::LAYER) flag = ImGuiTreeNodeFlags_DefaultOpen;
+	else flag = 0;
+	if (ImGui::CollapsingHeader("Layers", flag))
+	{
+		DrawListTagLayer("Layer", layers);
+	}
+}
+
+void Inspector::DrawListTagLayer(const char* label, std::vector<std::string> list)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		ImGui::Text("%s %d: ",label, i);	ImGui::SameLine();
+		ImGui::Text(list.at(i).c_str());
+	}
+	ImGui::Separator();
+	ImGui::Text("New %s: ", label);	ImGui::SameLine();
+
+	ImGui::PushItemWidth(100);
+	if (label == "Tag")
+		ImGui::InputText("  ", newTag, IM_ARRAYSIZE(newTag));
+	else
+		ImGui::InputText(" ", newLayer, IM_ARRAYSIZE(newLayer));
+	ImGui::PopItemWidth();
+
+	ImGui::SameLine();
+	if (ImGui::ImageButton((ImTextureID)app->resourceManager->addButton->textureID, ImVec2(12, 12)))
+	{
+		if (label == "Tag")
+		{
+			AddTag(newTag);
+			newTag[0] = NULL;
+		}
+		else if (newLayer)
+		{
+			AddLayer(newLayer);
+			newLayer[0] = NULL;
+		}
+	}
+	
 }
 
 std::string Inspector::DrawList(const char* label, std::vector<std::string>* list, std::string &item, int width)
@@ -82,7 +148,7 @@ std::string Inspector::DrawList(const char* label, std::vector<std::string>* lis
 		}
 		ImGui::Separator();
 
-		AddItem(label, item);
+		AddItem(label);
 
 		ImGui::EndCombo();
 	}
@@ -90,30 +156,36 @@ std::string Inspector::DrawList(const char* label, std::vector<std::string>* lis
 
 	return ret;
 }
-// Function in progress, it is necessary to collect the user's input to create an item with the chosen name
-void Inspector::AddItem(const char* label, std::string& item)
+
+void Inspector::AddItem(const char* label)
 {
 	std::string addItem = "Add";
 	addItem.append(label);
 	if (ImGui::Button(addItem.c_str()))
 	{
 		if (label == "Tag")
-			AddTag("InProgressTag");
-		else if (item.compare("Layer"))
-			AddLayer("InProgressLayer");
+			item = ItemType::TAG;
+		else if (label == "Layer")
+			item = ItemType::LAYER;
 	}
 }
 
 void Inspector::AddTag(std::string newTag)
 {
-	tags.push_back(newTag);
-	CalculateMaxWidth(tags, maxWidthTag);
+	if (newTag != "")
+	{
+		tags.push_back(newTag);
+		CalculateMaxWidth(tags, maxWidthTag);
+	}	
 }
 
 void Inspector::AddLayer(std::string newLayer)
 {
-	layers.push_back(newLayer);
-	CalculateMaxWidth(layers, maxWidthLayers);
+	if (newLayer != "")
+	{
+		layers.push_back(newLayer);
+		CalculateMaxWidth(layers, maxWidthLayers);
+	}
 }
 
 // This function calculate the size of the longest text in a string list in pixels

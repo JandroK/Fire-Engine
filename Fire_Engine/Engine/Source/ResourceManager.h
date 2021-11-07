@@ -21,4 +21,6 @@ public:
 	void ImportFile(const char* assetsFile);
 
 	Texture* logo;
+	Texture* backButton;
+	Texture* addButton;
 };

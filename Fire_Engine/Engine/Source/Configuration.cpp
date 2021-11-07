@@ -39,8 +39,7 @@ void Configuration::Draw()
 			if (ImGui::Button("Load"))app->LoadConfigRequest();
 		}
 		if (ImGui::CollapsingHeader("Application", ImGuiTreeNodeFlags_DefaultOpen))
-		{
-			
+		{			
 			// Input Text is to create a text with background and a const text
 			ImGui::InputText("App Name", nameEngine, IM_ARRAYSIZE(nameEngine));
 			ImGui::InputText("Organization", nameOrganization, IM_ARRAYSIZE(nameEngine));
