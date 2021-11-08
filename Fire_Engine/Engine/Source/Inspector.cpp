@@ -19,7 +19,7 @@ Inspector::Inspector() : Tab(), gameObjectSelected(nullptr)
 
 void Inspector::Draw()
 {
-	if (ImGui::Begin(name.c_str()))
+	if (ImGui::Begin(name.c_str(), &active))
 	{
 		// The inspector is empty if no object is selected 
 		if (gameObjectSelected != nullptr)
@@ -102,12 +102,13 @@ void Inspector::DrawListTagLayer(const char* label, std::vector<std::string> lis
 
 	ImGui::PushItemWidth(100);
 	if (label == "Tag")
-		ImGui::InputText("  ", newTag, IM_ARRAYSIZE(newTag));
+		ImGui::InputTextWithHint("  ", "Add new Tag", newTag, IM_ARRAYSIZE(newTag));
 	else
-		ImGui::InputText(" ", newLayer, IM_ARRAYSIZE(newLayer));
+		ImGui::InputTextWithHint(" ","Add new Layer", newLayer, IM_ARRAYSIZE(newLayer));
 	ImGui::PopItemWidth();
 
 	ImGui::SameLine();
+	ImGui::PushID(label);
 	if (ImGui::ImageButton((ImTextureID)app->resourceManager->addButton->textureID, ImVec2(12, 12)))
 	{
 		if (label == "Tag")
@@ -121,6 +122,7 @@ void Inspector::DrawListTagLayer(const char* label, std::vector<std::string> lis
 			newLayer[0] = NULL;
 		}
 	}
+	ImGui::PopID();
 	
 }
 

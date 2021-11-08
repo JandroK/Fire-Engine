@@ -17,7 +17,7 @@ SceneTab::SceneTab() : Tab()
 
 void SceneTab::Draw()
 {
-	if (ImGui::Begin(name.c_str(), NULL , ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
+	if (ImGui::Begin(name.c_str(), &active, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
 	{
 		// Check if some key/mouseButton are pressed
 		if (ImGui::IsWindowHovered())

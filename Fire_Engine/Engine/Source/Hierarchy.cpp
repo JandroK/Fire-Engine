@@ -15,7 +15,7 @@ Hierarchy::Hierarchy(Scene* scene) : Tab(), sceneReference(scene)
 
 void Hierarchy::Draw()
 {
-	if (ImGui::Begin(name.c_str()))
+	if (ImGui::Begin(name.c_str(), &active))
 	{
 		// If exist some scene and this have root draw all game object tree
 		if (sceneReference != nullptr && sceneReference->root != nullptr)

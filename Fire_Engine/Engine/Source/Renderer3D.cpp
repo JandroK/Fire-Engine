@@ -405,15 +405,6 @@ void Renderer3D::OnGUI()
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Enable/Disable GL_CULL_FACE");
 
-		ImGui::SameLine();
-
-		if (ImGui::Checkbox("GL_COLOR_MATERIAL", &colorMaterial)) {
-			if (colorMaterial) glEnable(GL_COLOR_MATERIAL);
-			else glDisable(GL_COLOR_MATERIAL);
-		}
-
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Enable/Disable GL_COLOR_MATERIAL");
 
 		if (ImGui::Checkbox("GL_TEXTURE_2D", &texture2D)) {
 			if (texture2D) glEnable(GL_TEXTURE_2D);
@@ -433,7 +424,7 @@ void Renderer3D::OnGUI()
 		if (ImGui::IsItemHovered())
 			ImGui::SetTooltip("Enable/Disable GL_LIGHTING");
 
-		if (ImGui::Checkbox("Fog", &fog))
+		if (ImGui::Checkbox("GL_FOG_WAR   ", &fog))
 		{
 			if (fog)
 			{
@@ -450,10 +441,20 @@ void Renderer3D::OnGUI()
 					glFogi(GL_FOG_MODE, GL_EXP);
 					glFogf(GL_FOG_DENSITY, fogDensity);
 				}
-				gluPerspective(45.0f, 800.0f / 600.0f, 1.0f, 60.0f); // Fog allows us to shorten the far clipping plane
+				//gluPerspective(45.0f, 800.0f / 600.0f, 1.0f, 60.0f); // Con el fog podemos acercar el far clipping plane
 			}
 			else glDisable(GL_FOG);
 		}
+
+
+		ImGui::SameLine();
+		if (ImGui::Checkbox("GL_COLOR_MATERIAL", &colorMaterial)) {
+			if (colorMaterial) glEnable(GL_COLOR_MATERIAL);
+			else glDisable(GL_COLOR_MATERIAL);
+		}
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Enable/Disable GL_COLOR_MATERIAL");
 
 		if (fog)
 		{

@@ -11,7 +11,7 @@ ConsoleTab::ConsoleTab() : Tab()
 
 void ConsoleTab::Draw()
 {
-	if (ImGui::Begin(name.c_str()))
+	if (ImGui::Begin(name.c_str(), &active))
 	{
 		DrawAppBarConsole();
 

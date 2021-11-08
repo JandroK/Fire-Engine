@@ -28,7 +28,7 @@ void Configuration::Draw()
 {
 	UpdateLogs();
 
-	if (ImGui::Begin(name.c_str()))
+	if (ImGui::Begin(name.c_str(), &active))
 	{
 		// CollapsingHeader is to create new Header
 		if (ImGui::CollapsingHeader("Options"))
