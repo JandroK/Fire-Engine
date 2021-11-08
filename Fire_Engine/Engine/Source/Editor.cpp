@@ -124,7 +124,6 @@ void Editor::StartFrame()
 			tabs[i]->active = !tabs[i]->active;
 		}
 	}
-	ImGui::EndFrame();
 }
 
 update_status Editor::Draw()
@@ -134,8 +133,6 @@ update_status Editor::Draw()
 	StartFrame();
 	ret = ImGuiMenuBar();
 	CreateDockSpace();
-
-	ImGui::NewFrame();
 
 	// Rendering the tabs
 	for (unsigned int i = 0; i < tabs.size(); i++)
