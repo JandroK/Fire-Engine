@@ -48,6 +48,13 @@ bool Editor::Init()
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
@@ -56,6 +63,7 @@ bool Editor::Init()
 	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
 	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
+	
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
@@ -89,6 +97,7 @@ void Editor::LogToConsole(const char* msg, LogType _type)
 
 void Editor::CreateDockSpace()
 {
+	
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
 
 	ImVec2 dockPos(viewport->WorkPos);
@@ -115,6 +124,7 @@ void Editor::StartFrame()
 			tabs[i]->active = !tabs[i]->active;
 		}
 	}
+	ImGui::EndFrame();
 }
 
 update_status Editor::Draw()
@@ -125,6 +135,8 @@ update_status Editor::Draw()
 	ret = ImGuiMenuBar();
 	CreateDockSpace();
 
+	ImGui::NewFrame();
+
 	// Rendering the tabs
 	for (unsigned int i = 0; i < tabs.size(); i++)
 	{
@@ -133,7 +145,7 @@ update_status Editor::Draw()
 			tabs[i]->Draw();
 		}
 	}
-
+	ImGui::EndFrame();
 	ImGui::Render();
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -146,6 +158,7 @@ update_status Editor::Draw()
 		ImGui::RenderPlatformWindowsDefault();
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
+
 	return ret;
 }
 
@@ -266,28 +279,32 @@ GameObject* Editor::GetGameObjectSelected()
 
 void Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass)
 {
-	if (viewport == NULL)
-		viewport = ImGui::GetMainViewport();
+	//if (viewport == NULL)viewport = ImGui::GetMainViewport();
 
-	ImGui::SetNextWindowPos(position);
-	ImGui::SetNextWindowSize(size);
-	ImGui::SetNextWindowViewport(viewport->ID);
+	//ImGui::SetNextWindowPos(position);
+	//ImGui::SetNextWindowSize(size);
+	//ImGui::SetNextWindowViewport(viewport->ID);
 
 	ImGuiWindowFlags host_window_flags = 0;
 	host_window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking;
-	host_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+	host_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;// | ImGuiWindowFlags_MenuBar;
+
 	if (dockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)
 		host_window_flags |= ImGuiWindowFlags_NoBackground;
+
+
+
 
 	char label[32];
 	ImFormatString(label, IM_ARRAYSIZE(label), "DockSpaceViewport_%08X", viewport->ID);
 
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin(label, NULL, host_window_flags);
-	ImGui::PopStyleVar(3);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 10.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 1.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.5f, 0.5f));
 
+	ImGui::Begin(label, NULL, host_window_flags);
+
+	ImGui::PopStyleVar(3);
 	ImGuiID dockspaceId = ImGui::GetID("DockSpace");
 	ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags, windowClass);
 	ImGui::End();
