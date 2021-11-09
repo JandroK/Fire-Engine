@@ -40,6 +40,15 @@ void GameObject::Enable()
 		parent->Enable();
 }
 
+void GameObject::AttachChild(GameObject* child)
+{
+
+	child->parent = this;
+	childrens.push_back(child);
+	child->transform->NewAttachment();
+	child->transform->UpdateTransform();
+}
+
 void GameObject::Update()
 {
 	// Call all components Updates

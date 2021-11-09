@@ -19,8 +19,10 @@ public:
 	void SetTransformMatrix(float3 position, Quat rotation, float3 localScale, Transform* parent);
 	float* GetGlobalTransformT() {return globalTransformTransposed.ptr();};
 
-private:
 	void UpdateTransform();
+	void NewAttachment();
+
+private:
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);
 
 	bool updateTransform = false;

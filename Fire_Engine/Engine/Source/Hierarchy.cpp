@@ -8,6 +8,8 @@
 #include "Inspector.h"
 #include "Input.h"
 
+#include <stack>
+
 Hierarchy::Hierarchy(Scene* scene) : Tab(), sceneReference(scene)
 {
 	name = "Hierarchy";
@@ -28,45 +30,79 @@ void Hierarchy::Draw()
 
 void Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 {
-	// If this game object is active = false draw on mode disabled
-	if (drawAsDisabled == false)
-		drawAsDisabled = !node->active;
+	std::stack<GameObject*> S;
+	std::stack<uint> indents;
+	S.push(app->scene->root);
+	indents.push(0);
 
-	ImGuiTreeNodeFlags flags = SetFlags(node);
+	// No recursive :)
+	while (!S.empty())
+	{
+		GameObject* go = S.top();
+		ImGuiTreeNodeFlags nodeFlags = SetFlags(go);
+		uint indentsAmount = indents.top();
+		S.pop();
+		indents.pop();
 
-	// drawAsDisabled = true draw element on diabled mode
-	if (drawAsDisabled)
-		ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyle().Colors[ImGuiCol_TextDisabled]);
+		for (uint i = 0; i < indentsAmount; ++i)
+		{
+			ImGui::Indent();
+		}
 
-	// This is main function, show gameObject recursively
-	// Return false if the arrow is folded, return true if the arrow is unfolded 
-	bool nodeOpen = ImGui::TreeNodeEx(node, flags, node->name.c_str());
+		if (ImGui::TreeNodeEx(go, nodeFlags, go->name.c_str()))
+		{
+			DragHierarchyObj(go);
 
-	if (drawAsDisabled)
-		ImGui::PopStyleColor();
-
-	RecursiveDrawTree(node, nodeOpen, drawAsDisabled);
+			if (ImGui::IsItemClicked() && !go->IsRoot())
+			{
+				GameObject* &objSelected = dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected;
+				objSelected ? objSelected->isSelected = !objSelected->isSelected : 0;
+				objSelected = go;
+				objSelected->isSelected = !objSelected->isSelected;
+			}
+			for (GameObject* child : go->GetChildrens())
+			{
+				S.push(child);
+				indents.push(indentsAmount + 1);
+			}
+			for (uint i = 0; i < indentsAmount; ++i)
+			{
+				ImGui::Unindent();
+			}
+			ImGui::TreePop();
+		}
+	}
 }
 
-void Hierarchy::RecursiveDrawTree(GameObject* node, bool nodeOpen, bool drawAsDisabled)
+void Hierarchy::DragHierarchyObj(GameObject*& go)
 {
-	// Update state of gameObjsect if is selected, execpt the root
-	if (ImGui::IsItemClicked() && !node->IsRoot())
+	// Root can't be draged
+	if (!go->IsRoot())
 	{
-		dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = node;
-	}
-
-	// If it don't has children we will never show them  
-	node->SetShowChildrens((node->GetChildrens().size() == 0) ? false : nodeOpen);
-
-	if (node->GetShowChildrens() == true)
-	{
-		// Call function recursively
-		for (unsigned int i = 0; i < node->GetChildrens().size(); i++)
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 		{
-			DrawGameObjectsTree(node->GetChildrens()[i], drawAsDisabled);
+			ImGui::SetDragDropPayload("DragDropHierarchy", &go, sizeof(GameObject*), ImGuiCond_Once);
+			ImGui::Text("%s", go->name.c_str());
+			ImGui::EndDragDropSource();
 		}
-		ImGui::TreePop();
+	}	
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DragDropHierarchy"))
+		{
+			IM_ASSERT(payload->DataSize == sizeof(GameObject*));
+			GameObject* droppedGo = (GameObject*)*(const int*)payload->Data;
+			// droppedGo != go->GetParent() ---> Don't can DragDrop father into his child
+			if (droppedGo && droppedGo != go->GetParent())
+			{
+				// Erase of child list of his father
+				droppedGo->GetParent()->EraseChildren(droppedGo->GetParent()->FindChildren(droppedGo));
+				// Attach as new child 
+				go->AttachChild(droppedGo);
+			}
+		}
+		ImGui::EndDragDropTarget();
 	}
 }
 
@@ -77,11 +113,11 @@ ImGuiTreeNodeFlags Hierarchy::SetFlags(GameObject* node)
 
 	// If GameObject doesn't childrens = no collapsing and no arrow
 	if (node->GetChildrens().size() == 0)
-		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+		flags |= ImGuiTreeNodeFlags_Leaf;
 
 	// If GameObject is selected = activeModeSelected
 	if (node == app->editor->GetGameObjectSelected())
-		flags |= ImGuiTreeNodeFlags_::ImGuiTreeNodeFlags_Selected;
+		flags |= ImGuiTreeNodeFlags_Selected;
 
 	return flags;
 }

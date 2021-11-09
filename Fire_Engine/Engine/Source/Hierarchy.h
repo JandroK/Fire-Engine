@@ -16,7 +16,8 @@ public:
 
 private:
 	void DrawGameObjectsTree(GameObject* node, bool drawAsDisabled);
-	void RecursiveDrawTree(GameObject* node, bool nodeOpen, bool drawAsDisabled);
+	void DragHierarchyObj(GameObject*& go);
+
 	ImGuiTreeNodeFlags SetFlags(GameObject* node);
 
 	Scene* sceneReference;

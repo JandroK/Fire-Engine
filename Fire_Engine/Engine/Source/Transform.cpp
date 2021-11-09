@@ -1,3 +1,5 @@
+#include "Application.h"
+#include "Scene.h"
 #include "Transform.h"
 #include "Globals.h"
 
@@ -105,6 +107,7 @@ void Transform::UpdateTransform()
 	transformsToUpdate.clear();
 	updateTransform = false;
 }
+
 //Populates an array of childs in descending order
 Transform* Transform::GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms)
 {
@@ -141,4 +144,13 @@ void Transform::SetTransformMatrix(float3 position, Quat rotation, float3 localS
 		globalTransform = parent->globalTransform * localTransform;
 		globalTransformTransposed = (parent->globalTransform * localTransform).Transposed();
 	}
+}
+
+void Transform::NewAttachment()
+{
+	if (GetOwner()->GetParent() != app->scene->root)
+		localTransform = GetOwner()->GetParent()->transform->globalTransform.Inverted().Mul(globalTransform);
+
+	localTransform.Decompose(position, rotation, scale);
+	eulerRotation = rotation.ToEulerXYZ();
 }
