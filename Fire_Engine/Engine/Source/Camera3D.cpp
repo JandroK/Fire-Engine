@@ -89,10 +89,14 @@ void Camera3D::OrbitRotation()
 {
 	vec3 pivot = vec3(0,0,0);
 	GameObject* gameObject =App->editor->GetGameObjectSelected();
-
 	float3 posGO = { 0, 0, 0 };
 
-	if(gameObject != nullptr)posGO = gameObject->transform->GetPosition();
+	if (gameObject != nullptr)
+	{
+		MeshRenderer* mesh = dynamic_cast<MeshRenderer*>(gameObject->GetComponent(ComponentType::MESHRENDERER));
+		float3 meshCenter = mesh->GetCenterPointInWorldCoords();
+		posGO = meshCenter;
+	}
 	
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
@@ -134,8 +138,6 @@ void Camera3D::OrbitRotation()
 
 void Camera3D::Focus()
 {
-	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
-	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
 	//Focus
 	GameObject*& objSelected = dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected;
 
@@ -146,12 +148,9 @@ void Camera3D::Focus()
 			const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
 			vec3 meshCenterVec = { meshCenter.x, meshCenter.y, meshCenter.z };
 			LookAt(meshCenterVec);
-
 			const float meshRadius = mesh->GetSphereRadius();
-			float currentDistance = meshCenter.Distance( float3(Position.x, Position.y, Position.z));
-			const float desiredDistance = (meshRadius * 2) / atan(cameraFrustum.horizontalFov);
-			Position = Position + Z * (currentDistance - desiredDistance);
-			currentDistance = meshCenter.Distance(float3(Position.x, Position.y, Position.z));
+
+			Position = meshCenterVec + (normalize((Position - meshCenterVec)) * meshRadius *2);
 		}
 		else
 		{
@@ -160,6 +159,15 @@ void Camera3D::Focus()
 			LookAt(pivotVec);
 		}
 	}
+}
+
+void Camera3D::RecalculateProjection()
+{
+	cameraFrustum.type = FrustumType::PerspectiveFrustum;
+	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+	cameraFrustum.farPlaneDistance = farPlaneDistance;
+	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
+	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
 }
 
 void Camera3D::FrontView()

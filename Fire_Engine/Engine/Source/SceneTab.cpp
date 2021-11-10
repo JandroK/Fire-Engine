@@ -28,6 +28,13 @@ void SceneTab::Draw()
 		ImVec2 texOriginalSize = ImVec2(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 		ImVec2 viewportSize = ImGui::GetWindowSize();
 
+		if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
+		{
+			app->camera->aspectRatio = viewportSize.x / viewportSize.y;
+			app->camera->RecalculateProjection();
+		}
+		lastViewportSize = viewportSize;
+
 		ImVec2 startPoint = ImVec2((texOriginalSize.x / 2) - (viewportSize.x / 2), (texOriginalSize.y / 2) + (viewportSize.y / 2));
 		ImVec2 endPoint = ImVec2((texOriginalSize.x / 2) + (viewportSize.x / 2), (texOriginalSize.y / 2) - (viewportSize.y / 2));
 

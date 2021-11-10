@@ -23,6 +23,7 @@ public:
 
 	void OrbitRotation();
 	void CalculateViewMatrix();
+	void RecalculateProjection();
 
 private:
 	void Focus();
@@ -41,7 +42,7 @@ public:
 	Frustum cameraFrustum;
 
 	float aspectRatio = 1.f;
-	float verticalFOV = 60.f;
+	float verticalFOV = 90.f;
 	float nearPlaneDistance = 0.1f;
 	float farPlaneDistance = 5000.f;
 };
