@@ -10,6 +10,7 @@ public:
 	Camera3D(Application* app, bool start_enabled = true);
 	~Camera3D() {};
 
+	void ReStartCamera();
 	bool Start() override;
 	update_status Update(float dt) override;
 	void CheckInputs();

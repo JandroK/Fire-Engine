@@ -27,7 +27,7 @@ bool Scene::Init()
 {
 	LOG(LogType::L_NORMAL, "Creating Scene");
 	//Change the name "Root" by the name of scene when it has
-	root = CreateGameObject("Root", nullptr);
+	root = new GameObject("Root");
 
 	return true;
 }
@@ -85,7 +85,15 @@ GameObject* Scene::CreateGameObject(const char* name, GameObject* parent)
 	GameObject* obj = new GameObject(name);
 
 	if (parent != nullptr)
+	{
 		parent->AddChildren(obj);
+		obj->SetParent(parent);
+	}
+	else
+	{
+		root->AddChildren(obj);
+		obj->SetParent(root);
+	}
 
 	return obj;
 }

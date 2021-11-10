@@ -23,14 +23,20 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 {
 	name = "Camera3D";
 
-	CalculateViewMatrix();
+	ReStartCamera();
+}
 
+void Camera3D::ReStartCamera()
+{
 	X = vec3(1.0f, 0.0f, 0.0f);
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(0.0f, 0.0f, 5.0f);
-	Reference = vec3(0.0f, 0.0f, 0.0f);
+	Position = vec3(5.0f, 4.0f, 5.0f);
+	Reference = vec3(0.0f, 0.2f, 0.0f);
+	LookAt(Reference);
+
+	CalculateViewMatrix();
 }
 
 bool Camera3D::Start()
@@ -79,7 +85,7 @@ void Camera3D::CheckInputs()
 	Reference += newPos;
 
 	// Mouse motion ----------------
-	OrbitRotation();
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) OrbitRotation();
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();

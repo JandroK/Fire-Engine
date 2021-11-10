@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "Window.h"
 #include "Input.h"
+#include "Camera3D.h"
 
 // Tabs
 #include "Tab.h"
@@ -170,6 +171,16 @@ update_status Editor::ImGuiMenuBar()
 		{
 			if (ImGui::MenuItem("Quit", "ESC"))
 				ret = UPDATE_STOP;
+
+			//Cleaning ALL
+			if (ImGui::MenuItem("New","Scene"))
+			{
+				dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
+				app->scene->CleanUp(); //Clean GameObjects 
+				app->scene->Init();
+				app->camera->ReStartCamera();
+			}
+
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
@@ -185,6 +196,10 @@ update_status Editor::ImGuiMenuBar()
 		// Menu of game objects
 		if (ImGui::BeginMenu("Game Objects"))
 		{
+			if (ImGui::MenuItem("GameObject"))
+			{
+				app->scene->CreateGameObject("GameObject");
+			}
 			if (ImGui::MenuItem("Cube", nullptr))
 			{
 				PrimitiveCube cubePrim = PrimitiveCube();
