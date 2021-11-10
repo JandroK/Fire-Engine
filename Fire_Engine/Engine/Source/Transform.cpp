@@ -33,7 +33,7 @@ void Transform::OnEditor()
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Text("Position: ");
-		if (ImGui::DragFloat3("##Position", &position[0], 0.1f))
+		if (ImGui::DragFloat3("##Position", &position[0], 0.1f, true))
 		{
 			// Only overwrite position
 			localTransform.SetCol3(3, position);
@@ -41,7 +41,7 @@ void Transform::OnEditor()
 		}
 
 		ImGui::Text("Rotation: ");
-		if (ImGui::DragFloat3("##Rotation", &eulerRotation[0], 0.1f))
+		if (ImGui::DragFloat3("##Rotation", &eulerRotation[0], 0.1f, true))
 		{
 			// We need to do this because otherwise in the inspector the rotation "?" and "?" are "-0" instead of "0" 
 			if (eulerRotation[0] == 0) eulerRotation[0] = 0;
@@ -61,7 +61,7 @@ void Transform::OnEditor()
 		}
 
 		ImGui::Text("Scale: ");
-		if (ImGui::DragFloat3("##Scale", &scale[0], 0.1f))
+		if (ImGui::DragFloat3("##Scale", &scale[0], 0.1f, true))
 		{
 			// If the rotation has not been modified (quaternion = identity) then only overwrite scale
 			// But if the rotation yes has been modified then float3x3(rotate) * float3x3::Scale(scale)

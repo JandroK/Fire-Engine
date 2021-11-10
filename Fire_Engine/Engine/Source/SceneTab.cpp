@@ -19,11 +19,9 @@ void SceneTab::Draw()
 {
 	if (ImGui::Begin(name.c_str(), &active, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
 	{
-		// Check if some key/mouseButton are pressed
-		if (ImGui::IsWindowHovered())
-		{
-			app->camera->CheckInputs();
-		}
+		// Check Inputs
+		app->camera->CheckInputs();
+
 		// Calculate size of tab scene, get window width and hight and transform the viewport to image and render it 
 		ImVec2 texOriginalSize = ImVec2(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 		ImVec2 viewportSize = ImGui::GetWindowSize();
