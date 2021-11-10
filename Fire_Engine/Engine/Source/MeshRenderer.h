@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Math/float3.h"
 
 class Mesh;
 
@@ -16,6 +17,9 @@ public:
 
 	Mesh* GetMesh() { return mesh; };
 	void SetMesh(Mesh* mesh) { this->mesh = mesh; };
+
+	float3 GetCenterPointInWorldCoords();
+	float GetSphereRadius();
 
 private:
 	Mesh* mesh = nullptr;

@@ -62,3 +62,13 @@ void MeshRenderer::RenderMesh()
 		glPopMatrix();
 	}
 }
+
+float3 MeshRenderer::GetCenterPointInWorldCoords()
+{
+	return GetOwner()->transform->GetGlobalTransform().TransformPos(mesh->centerPoint);
+}
+
+float MeshRenderer::GetSphereRadius()
+{
+	return mesh->radius;
+}

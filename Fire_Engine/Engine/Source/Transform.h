@@ -17,6 +17,7 @@ public:
 	float3 GetPosition() { return position; };
 
 	void SetTransformMatrix(float3 position, Quat rotation, float3 localScale, Transform* parent);
+	float4x4 GetGlobalTransform() {return globalTransform;};
 	float* GetGlobalTransformT() {return globalTransformTransposed.ptr();};
 
 	void UpdateTransform();

@@ -5,6 +5,7 @@
 //#include "MathGeoLib/include/Math/float3.h"
 #include <vector>
 #include "glmath.h"
+#include "Geometry/AABB.h"
 
 
 typedef unsigned int uint;
@@ -38,18 +39,19 @@ public:
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 
-	//void SetIndices(int indices[], int size);
-	//void SetVertices(float vertices[], int size);
-	//void SetTexCoords(float texCoords[], int size);
-
 	void Render(GLuint textureID = -1);
+
 	void EnableClientState();
 	void DisableClientState();
+
 	void UnBindBuffers(const GLuint& textureID);
+
 	void DebugRender(bool* vertexNormals, bool* faceNormals);
 	void RenderFaceNormals(float normalLenght);
 	void RenderVertexNormals(float normalLenght);
+
 	vec3 GetIndexVec(float* startValue);
+	void GenerateBounds();
 
 public:
 	// Buffers ID
@@ -67,6 +69,12 @@ public:
 	std::vector<float> vertex;
 	std::vector<float> texCoords;
 	std::vector<float> normals;
+
+	float3 centerPoint = float3::zero;
+	float radius;
+
+	//Local coords AABB
+	AABB localAABB;
 
 	//AABB* bbox;
 	//OBB* obb;

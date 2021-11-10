@@ -9,6 +9,8 @@
 
 #include "GameObject.h"
 #include "Transform.h"
+#include "Inspector.h"
+#include "MeshRenderer.h"
 
 //#include "MeshRenderer.h"
 //#include "MathGeoLib/include/Geometry/AABB.h"
@@ -59,10 +61,10 @@ void Camera3D::CheckInputs()
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * app->GetDt();
 
-	//if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) newPos.y += speed;
-	//if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT) newPos.y -= speed;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= speed;
 
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) FrontView();
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) Focus();
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
@@ -130,34 +132,41 @@ void Camera3D::OrbitRotation()
 	}
 }
 
+void Camera3D::Focus()
+{
+	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
+	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+	//Focus
+	GameObject*& objSelected = dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected;
+
+	if (objSelected != nullptr)
+	{
+		if (MeshRenderer* mesh = dynamic_cast<MeshRenderer*>(objSelected->GetComponent(ComponentType::MESHRENDERER)))
+		{
+			const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
+			vec3 meshCenterVec = { meshCenter.x, meshCenter.y, meshCenter.z };
+			LookAt(meshCenterVec);
+
+			const float meshRadius = mesh->GetSphereRadius();
+			float currentDistance = meshCenter.Distance( float3(Position.x, Position.y, Position.z));
+			const float desiredDistance = (meshRadius * 2) / atan(cameraFrustum.horizontalFov);
+			Position = Position + Z * (currentDistance - desiredDistance);
+			currentDistance = meshCenter.Distance(float3(Position.x, Position.y, Position.z));
+		}
+		else
+		{
+			float3 pivotFloat = objSelected->transform->GetPosition();
+			vec3 pivotVec = { pivotFloat.x, pivotFloat.y, pivotFloat.z };
+			LookAt(pivotVec);
+		}
+	}
+}
+
 void Camera3D::FrontView()
 {
 	GameObject* gameObject = App->editor->GetGameObjectSelected();
 	float3 posGO = { 0, 0, 0 };
 	vec3 nwPos;
-
-	//float dist = gameObject->components.a;
-	//MeshRenderer* meshRenderer;
-	//Transform* meshTransform;
-	//meshRenderer = dynamic_cast<MeshRenderer*>(gameObject->GetChildrens().at(0)->GetComponent(ComponentType::MESHRENDERER));
-	//meshTransform = dynamic_cast<Transform*>(gameObject->GetChildrens().at(0)->GetComponent(ComponentType::TRANSFORM));
-
-	//meshRenderer->mesh->bbox = new AABB();
-	//meshRenderer->mesh->obb = new OBB();
-
-	//meshRenderer->mesh->bbox->SetNegativeInfinity();
-	//meshRenderer->mesh->bbox->Enclose((float3*)&meshRenderer->mesh->vertices, meshRenderer->mesh->numVertex);
-
-	//
-	//meshRenderer->mesh->obb->Transform(meshTransform->globalTransform);
-
-	//meshRenderer->mesh->bbox->SetNegativeInfinity();
-	//meshRenderer->mesh->bbox->Enclose(*meshRenderer->mesh->obb);
-
-	//float3* corner= new float3();
-
-	//meshRenderer->mesh->bbox->GetCornerPoints(corner);
-	//posGO.z=meshRenderer->mesh->bbox->CenterPoint().z;
 
 	if (gameObject != nullptr)
 	{
@@ -191,16 +200,6 @@ void Camera3D::Look(const vec3 &Position, const vec3 &Reference, bool RotateArou
 	CalculateViewMatrix();
 }
 
-void Camera3D::Look()
-{
-
-	Z = normalize(Position - Reference);
-	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
-	Y = cross(Z, X);
-
-	CalculateViewMatrix();
-}
-
 // -----------------------------------------------------------------
 void Camera3D::LookAt( const vec3 &Spot)
 {
@@ -224,16 +223,9 @@ void Camera3D::Move(const vec3 &Movement)
 }
 
 // -----------------------------------------------------------------
-float* Camera3D::GetViewMatrix()
-{
-	return &ViewMatrix;
-}
-
-// -----------------------------------------------------------------
 void Camera3D::CalculateViewMatrix()
 {
 	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
-	ViewMatrixInverse = inverse(ViewMatrix);
 }
 bool Camera3D::SaveConfig(JsonParser& node) const
 {
@@ -284,7 +276,7 @@ bool Camera3D::LoadConfig(JsonParser& node)
 	Reference.y = (float)node.JsonValToNumber("Reference.y");
 	Reference.z = (float)node.JsonValToNumber("Reference.z");
 
-	Look();
+	LookAt(Reference);
 	//CalculateViewMatrix();
 
 	return true;

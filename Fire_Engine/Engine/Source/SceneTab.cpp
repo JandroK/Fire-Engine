@@ -26,10 +26,10 @@ void SceneTab::Draw()
 		}
 		// Calculate size of tab scene, get window width and hight and transform the viewport to image and render it 
 		ImVec2 texOriginalSize = ImVec2(app->window->GetWindowWidth(), app->window->GetWindowHeight());
-		ImVec2 e = ImGui::GetWindowSize();
+		ImVec2 viewportSize = ImGui::GetWindowSize();
 
-		ImVec2 startPoint = ImVec2((texOriginalSize.x / 2) - (e.x / 2), (texOriginalSize.y / 2) + (e.y / 2));
-		ImVec2 endPoint = ImVec2((texOriginalSize.x / 2) + (e.x / 2), (texOriginalSize.y / 2) - (e.y / 2));
+		ImVec2 startPoint = ImVec2((texOriginalSize.x / 2) - (viewportSize.x / 2), (texOriginalSize.y / 2) + (viewportSize.y / 2));
+		ImVec2 endPoint = ImVec2((texOriginalSize.x / 2) + (viewportSize.x / 2), (texOriginalSize.y / 2) - (viewportSize.y / 2));
 
 		// Normalized coordinates of pixel (10,10) in a 256x256 texture.
 		ImVec2 uv0 = ImVec2(startPoint.x / texOriginalSize.x, startPoint.y / texOriginalSize.y);
@@ -37,7 +37,7 @@ void SceneTab::Draw()
 		ImVec2 uv1 = ImVec2(endPoint.x / texOriginalSize.x, endPoint.y / texOriginalSize.y);
 
 		// Display the 100x200 section starting at (10,10)
-		ImGui::Image((ImTextureID)app->renderer3D->texColorBuffer, e, uv0, uv1);
+		ImGui::Image((ImTextureID)app->renderer3D->texColorBuffer, viewportSize, uv0, uv1);
 	}
 	ImGui::End();
 }

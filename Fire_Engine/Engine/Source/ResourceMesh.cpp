@@ -2,6 +2,7 @@
 #include "Globals.h"
 
 #include "Glew/include/glew.h"
+#include "Geometry/Sphere.h"
 //#include "glmath.h"
 
 Mesh::Mesh() : Resource(ResourceType::MESH)
@@ -212,4 +213,29 @@ vec3 Mesh::GetIndexVec(float* startValue)
 	float z = *(++startValue);
 
 	return  vec3(x, y, z);
+}
+
+void Mesh::GenerateBounds()
+{
+	localAABB.SetNegativeInfinity();
+
+	std::vector<float3> vertices;
+	float3 pointArray;
+	for (int i = 0; i < vertex.size(); i+=3)
+	{
+		pointArray = float3(vertex[i], vertex[i+1], vertex[i+2]);
+		vertices.push_back(pointArray);
+	}
+	
+	localAABB.Enclose(&vertices[0], vertices.size());
+		
+	Sphere sphere;	
+	sphere.r = 0.f;
+	sphere.pos = localAABB.CenterPoint();
+	sphere.Enclose(localAABB);
+
+	radius = sphere.r;
+	centerPoint = sphere.pos;
+
+	vertices.clear();
 }

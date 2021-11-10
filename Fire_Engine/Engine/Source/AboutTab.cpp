@@ -64,7 +64,7 @@ void AboutTab::Draw()
 void AboutTab::PrintLicense()
 {
 	ImGui::Text("License:");
-	ImGui::Text("MIT License \nCopyright(c) 2021 JandroK \n");
+	ImGui::Text("MIT License \nCopyright(c) 2021 JandroK & IsmaUPC & Denisdrk6\n");
 	ImGui::NewLine();
 	ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy");
 	ImGui::Text("of this softwareand associated documentation files (the \"Software\"), to deal");

@@ -86,6 +86,7 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	}
 
 	mesh->LoadToMemory();
+	mesh->GenerateBounds();
 
 	LOG(LogType::L_NORMAL, "New mesh with %d vertices", mesh->numVertex);
 	LOG(LogType::L_NORMAL, "New mesh with %d normals", mesh->numNormals);
