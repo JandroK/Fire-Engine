@@ -40,7 +40,6 @@ bool Input::Init()
 // Called every draw update
 update_status Input::PreUpdate(float dt)
 {
-	update_status ret = UPDATE_CONTINUE;
 	SDL_PumpEvents();
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	
@@ -99,7 +98,7 @@ update_status Input::PreUpdate(float dt)
 
 	mouse_x_motion = mouse_y_motion = 0;
 
-	bool quit = false;
+	update_status ret = UPDATE_CONTINUE;
 	SDL_Event e;
 	while(SDL_PollEvent(&e))
 	{
@@ -124,18 +123,18 @@ update_status Input::PreUpdate(float dt)
 			break;
 			
 			case SDL_QUIT:
-			quit = true;
+				quit = true;
 			break;
 
 			case SDL_WINDOWEVENT:
-				ret = App->window->ManageEvent(&e);
+				App->window->ManageEvent(&e);
 				break;
 			break;
 		}
 	}
 
-	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
-		return UPDATE_STOP;
+	if(keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
+		ret = UPDATE_STOP;
 
 	return ret;
 }

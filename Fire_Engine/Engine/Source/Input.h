@@ -64,6 +64,9 @@ public:
 	void AddInput(const char* entry);
 	void LogInputEvent(uint key, uint state);
 
+	bool GetQuit() { return quit; };
+	void SetQuit(bool ret) { quit = ret; };
+
 private:
 	ImGuiTextBuffer inputBuf;
 	bool need_scroll = false;
@@ -76,4 +79,5 @@ private:
 	int mouse_x_motion;
 	int mouse_y_motion;
 	//int mouse_z_motion;
+	bool quit = false;
 };

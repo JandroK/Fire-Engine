@@ -97,8 +97,7 @@ void Editor::LogToConsole(const char* msg, LogType _type)
 }
 
 void Editor::CreateDockSpace()
-{
-	
+{	
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
 
 	ImVec2 dockPos(viewport->WorkPos);
@@ -146,7 +145,10 @@ update_status Editor::Draw()
 			tabs[i]->Draw();
 		}
 	}
-	if (warningTab) DrawWarningTab();
+	if (warningTab)
+		if (DrawWarningTab("New Scene")) NewScene();
+	if (app->input->GetQuit())
+		if (DrawWarningTab("Exit Engine")) ret = UPDATE_STOP;
 
 	ImGui::EndFrame();
 	ImGui::Render();
@@ -165,32 +167,38 @@ update_status Editor::Draw()
 	return ret;
 }
 
-void Editor::DrawWarningTab()
+bool Editor::DrawWarningTab(std::string text)
 {
+	bool ret = false;
 	if (ImGui::Begin("Warning"))
 	{
-		float offset = ImGui::GetWindowContentRegionMax().x/2 - ImGui::CalcTextSize("New Scene").x/2;
+		float offset = ImGui::GetWindowContentRegionMax().x/2 - ImGui::CalcTextSize(text.c_str()).x/2;
 		ImGui::SetCursorPosX(offset);
-		ImGui::Text("New Scene");
+		ImGui::Text(text.c_str());
 
 		ImGui::NewLine();
-		ImGui::TextWrapped("Are you sure you want to create new scene?");
-		ImGui::TextWrapped("If you close this scene, your changes will be lost. Do you want to close the scene anyway?");
+		ImGui::TextWrapped("Are you sure you want to %s?", text.c_str());
+		ImGui::TextWrapped("If you close the scene, your changes will be lost. Do you want continue anyway?");
 		ImGui::NewLine();
 
 		offset = ImGui::GetWindowContentRegionMax().x / 2 - ImGui::CalcTextSize("YES").x - 6;
 		ImGui::SetCursorPosX(offset);
 		if (ImGui::Button("YES"))
 		{
-			NewScene();
+			ret = true;
 			warningTab = false;
 		}
 		ImGui::SameLine();
 		offset = ImGui::GetWindowContentRegionMax().x / 2 + ImGui::CalcTextSize("NO").x - 6;
 		ImGui::SetCursorPosX(offset);
-		if (ImGui::Button("NO")) warningTab = false;
+		if (ImGui::Button("NO"))
+		{
+			warningTab = false;
+			app->input->SetQuit(false);
+		}
 	}
 	ImGui::End();
+	return ret;
 }
 
 update_status Editor::ImGuiMenuBar()

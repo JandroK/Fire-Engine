@@ -218,10 +218,7 @@ void Window::OnResize(int width, int height)
 
 update_status Window::ManageEvent(SDL_Event* e)
 {
-	if (e->window.event == SDL_WINDOWEVENT_CLOSE)
-		return update_status::UPDATE_STOP;
-
-	else if (e->window.event == SDL_WINDOWEVENT_RESIZED)
+	if (e->window.event == SDL_WINDOWEVENT_RESIZED)
 	{
 		App->renderer3D->OnResize(e->window.data1, e->window.data2);
 		width = e->window.data1;

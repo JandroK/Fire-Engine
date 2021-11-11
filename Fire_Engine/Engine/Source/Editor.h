@@ -34,7 +34,7 @@ public:
 	
 	void StartFrame();
 	update_status Draw();
-	void DrawWarningTab();
+	bool DrawWarningTab(std::string text);
 
 	update_status ImGuiMenuBar();
 	void NewScene();
