@@ -125,6 +125,12 @@ void Editor::StartFrame()
 			tabs[i]->active = !tabs[i]->active;
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
+	{
+		app->scene->CreateGameObject("GameObject");
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
+		NewScene();
 }
 
 update_status Editor::Draw()
@@ -173,12 +179,9 @@ update_status Editor::ImGuiMenuBar()
 				ret = UPDATE_STOP;
 
 			//Cleaning ALL
-			if (ImGui::MenuItem("New","Scene"))
+			if (ImGui::MenuItem("New Scene","Ctrl+N"))
 			{
-				dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
-				app->scene->CleanUp(); //Clean GameObjects 
-				app->scene->Init();
-				app->camera->ReStartCamera();
+				NewScene();
 			}
 
 			ImGui::EndMenu();
@@ -196,41 +199,14 @@ update_status Editor::ImGuiMenuBar()
 		// Menu of game objects
 		if (ImGui::BeginMenu("Game Objects"))
 		{
-			if (ImGui::MenuItem("GameObject"))
+			if (ImGui::MenuItem("Create Empty", "Ctrl+Shift+N"))
 			{
 				app->scene->CreateGameObject("GameObject");
 			}
-			if (ImGui::MenuItem("Cube", nullptr))
+			if (ImGui::BeginMenu("3D Object"))
 			{
-				PrimitiveCube cubePrim = PrimitiveCube();
-				cubePrim.InnerMesh();
-				cubePrim.mesh->LoadToMemory();
-
-				app->scene->CreatePrimitive("Cube", cubePrim.mesh);
-			}
-			if (ImGui::MenuItem("Sphere", nullptr))
-			{
-				PrimitiveSphere spherePrim = PrimitiveSphere();
-				spherePrim.InnerMesh();
-				spherePrim.mesh->LoadToMemory();
-
-				app->scene->CreatePrimitive("Sphere", spherePrim.mesh);
-			}
-			if (ImGui::MenuItem("Cylinder", nullptr))
-			{
-				PrimitiveCylinder cylinderPrim = PrimitiveCylinder();
-				cylinderPrim.InnerMesh();
-				cylinderPrim.mesh->LoadToMemory();
-
-				app->scene->CreatePrimitive("Cylinder", cylinderPrim.mesh);
-			}
-			if (ImGui::MenuItem("Pyramid", nullptr))
-			{
-				PrimitivePyramid pyramidPrim = PrimitivePyramid();
-				pyramidPrim.InnerMesh();
-				pyramidPrim.mesh->LoadToMemory();
-
-				app->scene->CreatePrimitive("Pyramid", pyramidPrim.mesh);
+				PrimitiveMenuItem();
+				ImGui::EndMenu();
 			}
 			ImGui::EndMenu();
 		}
@@ -257,6 +233,50 @@ update_status Editor::ImGuiMenuBar()
 		ImGui::EndMainMenuBar();
 	}
 	return ret;
+}
+
+void Editor::NewScene()
+{
+	dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
+	app->scene->CleanUp(); //Clean GameObjects 
+	app->scene->Init();
+	app->camera->ReStartCamera();
+}
+
+void Editor::PrimitiveMenuItem()
+{
+	if (ImGui::MenuItem("Cube", nullptr))
+	{
+		PrimitiveCube cubePrim = PrimitiveCube();
+		cubePrim.InnerMesh();
+		cubePrim.mesh->LoadToMemory();
+
+		app->scene->CreatePrimitive("Cube", cubePrim.mesh);
+	}
+	if (ImGui::MenuItem("Sphere", nullptr))
+	{
+		PrimitiveSphere spherePrim = PrimitiveSphere();
+		spherePrim.InnerMesh();
+		spherePrim.mesh->LoadToMemory();
+
+		app->scene->CreatePrimitive("Sphere", spherePrim.mesh);
+	}
+	if (ImGui::MenuItem("Cylinder", nullptr))
+	{
+		PrimitiveCylinder cylinderPrim = PrimitiveCylinder();
+		cylinderPrim.InnerMesh();
+		cylinderPrim.mesh->LoadToMemory();
+
+		app->scene->CreatePrimitive("Cylinder", cylinderPrim.mesh);
+	}
+	if (ImGui::MenuItem("Pyramid", nullptr))
+	{
+		PrimitivePyramid pyramidPrim = PrimitivePyramid();
+		pyramidPrim.InnerMesh();
+		pyramidPrim.mesh->LoadToMemory();
+
+		app->scene->CreatePrimitive("Pyramid", pyramidPrim.mesh);
+	}
 }
 
 bool Editor::CleanUp()
@@ -291,21 +311,12 @@ GameObject* Editor::GetGameObjectSelected()
 
 void Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass)
 {
-	//if (viewport == NULL)viewport = ImGui::GetMainViewport();
-
-	//ImGui::SetNextWindowPos(position);
-	//ImGui::SetNextWindowSize(size);
-	//ImGui::SetNextWindowViewport(viewport->ID);
-
 	ImGuiWindowFlags host_window_flags = 0;
 	host_window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking;
 	host_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;// | ImGuiWindowFlags_MenuBar;
 
 	if (dockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)
 		host_window_flags |= ImGuiWindowFlags_NoBackground;
-
-
-
 
 	char label[32];
 	ImFormatString(label, IM_ARRAYSIZE(label), "DockSpaceViewport_%08X", viewport->ID);

@@ -22,6 +22,7 @@ public:
 
 	void UpdateTransform();
 	void NewAttachment();
+	void ResetTransform();
 
 private:
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);

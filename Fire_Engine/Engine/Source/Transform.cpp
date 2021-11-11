@@ -75,6 +75,11 @@ void Transform::OnEditor()
 			
 			updateTransform = true;
 		}
+		ImGui::NewLine();
+		// Reset Transform
+		if (ImGui::Button("Reset Transform"))
+			ResetTransform();
+
 		// If some transfomr has been modify update them
 		if (updateTransform)
 			UpdateTransform();
@@ -153,4 +158,19 @@ void Transform::NewAttachment()
 
 	localTransform.Decompose(position, rotation, scale);
 	eulerRotation = rotation.ToEulerXYZ();
+}
+
+void Transform::ResetTransform()
+{
+	// Inicialize transforms
+	globalTransform.SetIdentity();
+	localTransform.SetIdentity();
+
+	localTransform.Decompose(position, rotation, scale);
+
+	eulerRotation = rotation.ToEulerXYZ();
+
+	globalTransformTransposed = globalTransform.Transposed();
+
+	updateTransform = true;
 }

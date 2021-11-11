@@ -36,6 +36,8 @@ public:
 	update_status Draw();
 
 	update_status ImGuiMenuBar();
+	void NewScene();
+	void PrimitiveMenuItem();
 	Tab* GetTab(TabType type);
 	GameObject* GetGameObjectSelected();
 
