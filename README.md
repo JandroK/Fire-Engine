@@ -58,6 +58,8 @@ You can see that there is the possibility to assign tags to the object and activ
 + "4" Inspector
 + "5" Scene
 + "6" Hierarchy
++ "Ctrl+N" New Scene
++ "Ctrl+Shift+N" New GameObject Empty
 
 #### Configuration:<a name="id.Conf">
 

@@ -126,11 +126,8 @@ void Editor::StartFrame()
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
-	{
 		app->scene->CreateGameObject("GameObject");
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
-		NewScene();
+	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP) warningTab = true;
 }
 
 update_status Editor::Draw()
@@ -149,6 +146,8 @@ update_status Editor::Draw()
 			tabs[i]->Draw();
 		}
 	}
+	if (warningTab) DrawWarningTab();
+
 	ImGui::EndFrame();
 	ImGui::Render();
 	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
@@ -166,6 +165,34 @@ update_status Editor::Draw()
 	return ret;
 }
 
+void Editor::DrawWarningTab()
+{
+	if (ImGui::Begin("Warning"))
+	{
+		float offset = ImGui::GetWindowContentRegionMax().x/2 - ImGui::CalcTextSize("New Scene").x/2;
+		ImGui::SetCursorPosX(offset);
+		ImGui::Text("New Scene");
+
+		ImGui::NewLine();
+		ImGui::TextWrapped("Are you sure you want to create new scene?");
+		ImGui::TextWrapped("If you close this scene, your changes will be lost. Do you want to close the scene anyway?");
+		ImGui::NewLine();
+
+		offset = ImGui::GetWindowContentRegionMax().x / 2 - ImGui::CalcTextSize("YES").x - 6;
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::Button("YES"))
+		{
+			NewScene();
+			warningTab = false;
+		}
+		ImGui::SameLine();
+		offset = ImGui::GetWindowContentRegionMax().x / 2 + ImGui::CalcTextSize("NO").x - 6;
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::Button("NO")) warningTab = false;
+	}
+	ImGui::End();
+}
+
 update_status Editor::ImGuiMenuBar()
 {
 	// Create a MenuBar
@@ -178,11 +205,8 @@ update_status Editor::ImGuiMenuBar()
 			if (ImGui::MenuItem("Quit", "ESC"))
 				ret = UPDATE_STOP;
 
-			//Cleaning ALL
 			if (ImGui::MenuItem("New Scene","Ctrl+N"))
-			{
-				NewScene();
-			}
+				warningTab = true;
 
 			ImGui::EndMenu();
 		}

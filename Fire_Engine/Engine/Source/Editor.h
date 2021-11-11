@@ -34,10 +34,12 @@ public:
 	
 	void StartFrame();
 	update_status Draw();
+	void DrawWarningTab();
 
 	update_status ImGuiMenuBar();
 	void NewScene();
 	void PrimitiveMenuItem();
+
 	Tab* GetTab(TabType type);
 	GameObject* GetGameObjectSelected();
 
@@ -50,6 +52,7 @@ private:
 	std::vector<Tab*> tabs;
 
 	bool show_demo_window = false;
+	bool warningTab = false;
 
 	std::vector<float> fpsLog;
 	std::vector<float> msLog;
