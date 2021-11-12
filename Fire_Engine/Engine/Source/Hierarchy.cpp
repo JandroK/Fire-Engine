@@ -95,14 +95,33 @@ void Hierarchy::DragHierarchyObj(GameObject*& go)
 			// droppedGo != go->GetParent() ---> Don't can DragDrop father into his child
 			if (droppedGo && droppedGo != go->GetParent())
 			{
-				// Erase of child list of his father
-				droppedGo->GetParent()->EraseChildren(droppedGo->GetParent()->FindChildren(droppedGo));
-				// Attach as new child 
-				go->AttachChild(droppedGo);
+				bool ret = true;
+				GameObject* aux = go;
+				GameObject* child = go;
+				ret = AreYouMyDescendent(child, droppedGo);
+				go = aux;
+
+				if(ret)
+				{
+					// Erase of child list of his father
+					droppedGo->GetParent()->EraseChildren(droppedGo->GetParent()->FindChildren(droppedGo));
+					// Attach as new child 
+					go->AttachChild(droppedGo);
+				}				
 			}
 		}
 		ImGui::EndDragDropTarget();
 	}
+}
+
+bool Hierarchy::AreYouMyDescendent(GameObject* child, GameObject* droppedGo)
+{
+	while (child != nullptr)
+	{
+		if (child->GetParent() == droppedGo) return false;
+		child = child->GetParent();
+	}
+	return true;
 }
 
 ImGuiTreeNodeFlags Hierarchy::SetFlags(GameObject* node)
