@@ -16,9 +16,9 @@ public:
 	void CheckInputs();
 	bool CleanUp() override;
 
-	void LookAt(const vec3&Spot);
-	void Look(const vec3& Position, const vec3& Reference, bool RotateAroundReference = false);
-	void Move(const vec3&Movement);
+	void LookAt(const float3&Spot);
+	void Look(const float3& Position, const float3& Reference, bool RotateAroundReference = false);
+	void Move(const float3&Movement);
 
 	float* GetViewMatrix() { return &ViewMatrix; };
 
@@ -35,7 +35,7 @@ private:
 
 public:
 	
-	vec3 X, Y, Z, Position, Reference;
+	float3 X, Y, Z, Position, Reference;
 
 	bool projectionIsDirty = false;
 	mat4x4 ViewMatrix;
@@ -43,7 +43,7 @@ public:
 	Frustum cameraFrustum;
 
 	float aspectRatio = 1.f;
-	float verticalFOV = 90.f;
+	float verticalFOV = 60.f;
 	float nearPlaneDistance = 0.1f;
 	float farPlaneDistance = 5000.f;
 };
