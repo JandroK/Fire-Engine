@@ -9,6 +9,10 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_internal.h"
 
+#include "Guizmo/ImGuizmo.h"
+#include "Guizmo/GraphEditor.h"
+
+
 Inspector::Inspector() : Tab(), gameObjectSelected(nullptr)
 {
 	name = "Inspector";
@@ -24,10 +28,22 @@ void Inspector::Draw()
 		// The inspector is empty if no object is selected 
 		if (gameObjectSelected != nullptr)
 		{
-			if(item == ItemType::NONE)
+			if (item == ItemType::NONE) {
+
 				DrawDefaultInspector();
-			else
+			}
+			else {
+
 				DrawEditLists();		
+				// TODO guizmo 
+				/*
+				ImGuizmo::SetOrthographic(false);
+				ImGuizmo::SetDrawlist();
+				float windowWidth = (float)ImGui::GetWindowWidth();
+				float windowHeight = (float)ImGui::GetWindowHeight();
+				ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+				*/
+			}
 		}		
 	}
 	ImGui::End();
