@@ -28,12 +28,12 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 
 void Camera3D::ReStartCamera()
 {
-	X = vec3(1.0f, 0.0f, 0.0f);
-	Y = vec3(0.0f, 1.0f, 0.0f);
-	Z = vec3(0.0f, 0.0f, 1.0f);
+	X = float3(1.0f, 0.0f, 0.0f);
+	Y = float3(0.0f, 1.0f, 0.0f);
+	Z = float3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(5.0f, 4.0f, 5.0f);
-	Reference = vec3(0.0f, 0.2f, 0.0f);
+	Position = float3(5.0f, 4.0f, 5.0f);
+	Reference = float3(0.0f, 0.2f, 0.0f);
 	LookAt(Reference);
 
 	CalculateViewMatrix();
@@ -62,7 +62,7 @@ update_status Camera3D::Update(float dt)
 
 void Camera3D::CheckInputs()
 {
-	vec3 newPos(0, 0, 0);
+	float3 newPos(0, 0, 0);
 	float speed = 3.0f * app->GetDt();
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed = 8.0f * app->GetDt();
@@ -93,7 +93,7 @@ void Camera3D::CheckInputs()
 
 void Camera3D::OrbitRotation()
 {
-	vec3 pivot = vec3(0,0,0);
+	float3 pivot = float3(0,0,0);
 	GameObject* gameObject =App->editor->GetGameObjectSelected();
 	float3 posGO = { 0, 0, 0 };
 
@@ -110,7 +110,7 @@ void Camera3D::OrbitRotation()
 		int dy = -App->input->GetMouseYMotion();
 		float Sensitivity = 0.25f;
 		app->editor->GetGameObjectSelected();
-		(App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && gameObject !=nullptr) ? pivot= vec3(posGO.x, posGO.y, posGO.z) : pivot= Reference ;
+		(App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && gameObject !=nullptr) ? pivot= float3(posGO.x, posGO.y, posGO.z) : pivot= Reference ;
 		
 		Position -= pivot;
 
@@ -118,25 +118,25 @@ void Camera3D::OrbitRotation()
 		{
 			float DeltaX = (float)dx * Sensitivity;
 
-			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			//X = rotate(X, DeltaX, float3(0.0f, 1.0f, 0.0f)); // RIGHT
+			//Y = rotate(Y, DeltaX, float3(0.0f, 1.0f, 0.0f)); //Up
+			//Z = rotate(Z, DeltaX, float3(0.0f, 1.0f, 0.0f)); // Front
 		}
 
 		if (dy != 0)
 		{
 			float DeltaY = (float)dy * Sensitivity;
 
-			Y = rotate(Y, DeltaY, X);
-			Z = rotate(Z, DeltaY, X);
+			//Y = rotate(Y, DeltaY, X);
+			//Z = rotate(Z, DeltaY, X);
 
 			if (Y.y < 0.0f)
 			{
-				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-				Y = cross(Z, X);
+				Z = float3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+				Y = Z.Cross(X);
 			}
 		}
-		Position = pivot + Z * length(Position);
+		Position = pivot + Z * Position.Length();
 		Reference = pivot;
 
 	}
@@ -152,17 +152,15 @@ void Camera3D::Focus()
 		if (MeshRenderer* mesh = dynamic_cast<MeshRenderer*>(objSelected->GetComponent(ComponentType::MESHRENDERER)))
 		{
 			const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
-			vec3 meshCenterVec = { meshCenter.x, meshCenter.y, meshCenter.z };
-			LookAt(meshCenterVec);
+			LookAt(meshCenter);
 			const float meshRadius = mesh->GetSphereRadius();
 
-			Position = meshCenterVec + (normalize((Position - meshCenterVec)) * meshRadius *2);
+			Position = meshCenter + ((Position - meshCenter).Normalized() * meshRadius *2);
 		}
 		else
 		{
-			float3 pivotFloat = objSelected->transform->GetPosition();
-			vec3 pivotVec = { pivotFloat.x, pivotFloat.y, pivotFloat.z };
-			LookAt(pivotVec);
+			float3 pivot = objSelected->transform->GetPosition();
+			LookAt(pivot);
 		}
 	}
 }
@@ -180,30 +178,30 @@ void Camera3D::FrontView()
 {
 	GameObject* gameObject = App->editor->GetGameObjectSelected();
 	float3 posGO = { 0, 0, 0 };
-	vec3 nwPos;
+	float3 nwPos;
 
 	if (gameObject != nullptr)
 	{
 		posGO = gameObject->transform->GetPosition();
 
-		nwPos = vec3(posGO.x, posGO.y, posGO.z);
+		nwPos = float3(posGO.x, posGO.y, posGO.z);
 		// First param: Right, 
 		// Second param: UP			//With the inverted of the axes the opposite position is obtained
 		// Third param: From
-		Position = nwPos + vec3(0, 0, -10);
+		Position = nwPos + float3(0, 0, -10);
 		LookAt(nwPos);
 	}
 }
 
 // -----------------------------------------------------------------
-void Camera3D::Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference)
+void Camera3D::Look(const float3&Position, const float3&Reference, bool RotateAroundReference)
 {
 	this->Position = Position;
 	this->Reference = Reference;
 
-	Z = normalize(Position - Reference);
-	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
-	Y = cross(Z, X);
+	Z = (Position - Reference).Normalized();
+	X = (float3(0.0f, 1.0f, 0.0f).Cross(Z)).Normalized();
+	Y = Z.Cross(X);
 
 	if(!RotateAroundReference)
 	{
@@ -215,20 +213,20 @@ void Camera3D::Look(const vec3 &Position, const vec3 &Reference, bool RotateArou
 }
 
 // -----------------------------------------------------------------
-void Camera3D::LookAt( const vec3 &Spot)
+void Camera3D::LookAt( const float3&Spot)
 {
 	Reference = Spot;
 
-	Z = normalize(Position - Reference);
-	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
-	Y = cross(Z, X);
+	Z = (Position - Reference).Normalized();
+	X = (float3(0.0f, 1.0f, 0.0f).Cross(Z)).Normalized();
+	Y = Z.Cross(X);
 
 	CalculateViewMatrix();
 }
 
 
 // -----------------------------------------------------------------
-void Camera3D::Move(const vec3 &Movement)
+void Camera3D::Move(const float3&Movement)
 {
 	Position += Movement;
 	Reference += Movement;
@@ -239,7 +237,7 @@ void Camera3D::Move(const vec3 &Movement)
 // -----------------------------------------------------------------
 void Camera3D::CalculateViewMatrix()
 {
-	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -dot(X, Position), -dot(Y, Position), -dot(Z, Position), 1.0f);
+	ViewMatrix = mat4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, X.Dot(Position), -Y.Dot(Position), -Z.Dot(Position), 1.0f);
 }
 bool Camera3D::SaveConfig(JsonParser& node) const
 {

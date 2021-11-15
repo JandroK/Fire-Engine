@@ -175,8 +175,8 @@ bool Renderer3D::Init()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, SQUARE_TEXTURE_W, SQUARE_TEXTURE_H, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
+	App->camera->Move(float3(1.0f, 1.0f, 0.0f));
+	App->camera->LookAt(float3(0, 0, 0));
 
 	//Generate scene buffers
 	ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
