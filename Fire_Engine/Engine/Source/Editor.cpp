@@ -90,7 +90,7 @@ bool Editor::Start()
 }
 void Editor::LogToConsole(const char* msg, LogType _type)
 {
-	ConsoleTab* consoleWindow = dynamic_cast<ConsoleTab*>(GetTab(TabType::CONSOLE));
+	ConsoleTab* consoleWindow = static_cast<ConsoleTab*>(GetTab(TabType::CONSOLE));
 
 	if (consoleWindow != nullptr)
 		consoleWindow->AddLog(msg, _type);
@@ -269,7 +269,7 @@ update_status Editor::ImGuiMenuBar()
 
 void Editor::NewScene()
 {
-	dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
+	static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
 	app->scene->CleanUp(); //Clean GameObjects 
 	app->scene->Init();
 	app->camera->ReStartCamera();
@@ -336,7 +336,7 @@ Tab* Editor::GetTab(TabType type)
 
 GameObject* Editor::GetGameObjectSelected()
 {
-	Inspector* inspector = dynamic_cast<Inspector*>(GetTab(TabType::INSPECTOR));
+	Inspector* inspector = static_cast<Inspector*>(GetTab(TabType::INSPECTOR));
 	return inspector->gameObjectSelected;
 }
 

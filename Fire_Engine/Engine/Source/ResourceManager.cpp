@@ -87,15 +87,15 @@ void ResourceManager::ImportFile(const char* assetsFile)
 			Texture* material = new Texture(normalizedPath.c_str());
 			material->LoadToMemory();
 
-			Inspector* inspector = dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR));
+			Inspector* inspector = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR));
 			if (inspector && inspector->gameObjectSelected) {
-				Material* mat = dynamic_cast<Material*>(inspector->gameObjectSelected->GetComponent(ComponentType::MATERIAL));
+				Material* mat = static_cast<Material*>(inspector->gameObjectSelected->GetComponent(ComponentType::MATERIAL));
 				if (mat)
 				{
 					mat->texture = material;
 				}
 				else {
-					Material* mat = dynamic_cast<Material*>(inspector->gameObjectSelected->AddComponent(ComponentType::MATERIAL));
+					Material* mat = static_cast<Material*>(inspector->gameObjectSelected->AddComponent(ComponentType::MATERIAL));
 					mat->texture = material;
 				}
 			}

@@ -76,6 +76,7 @@ public:
 	unsigned int texColorBuffer = 0;
 	unsigned int rbo = 0;
 
+	PrimitiveCube cube;
 private:
 	Hardware hardware;
 	bool depthTest = true;
@@ -93,7 +94,6 @@ private:
 	float fogDensity = 1.0f;
 
 
-	PrimitiveCube cube;
 	PrimitiveSphere sphere;
 	PrimitiveCylinder cylinder;
 	PrimitivePyramid pyramid;	

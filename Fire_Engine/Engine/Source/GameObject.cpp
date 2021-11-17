@@ -11,7 +11,7 @@
 GameObject::GameObject(const char* name) : name(name), tag("Untagged"), layer("0: Default")
 {
 	// Each GameObject must have a transform component, that's why we add it when creating it
-	transform = dynamic_cast<Transform*>(AddComponent(ComponentType::TRANSFORM));
+	transform = static_cast<Transform*>(AddComponent(ComponentType::TRANSFORM));
 }
 
 GameObject::~GameObject()

@@ -104,7 +104,7 @@ GameObject* Scene::CreatePrimitive(const char* name, Mesh* mesh)
 	primitive->SetParent(root);
 
 	MeshRenderer* meshRenderer;
-	meshRenderer = dynamic_cast<MeshRenderer*>(primitive->AddComponent(ComponentType::MESHRENDERER));
+	meshRenderer = static_cast<MeshRenderer*>(primitive->AddComponent(ComponentType::MESHRENDERER));
 	meshRenderer->SetMesh(mesh);
 
 	root->AddChildren(primitive);
@@ -115,7 +115,7 @@ GameObject* Scene::CreatePrimitive(const char* name, Mesh* mesh)
 void Scene::Destroy(GameObject* obj)
 {
 	// Deselect actual gameObjectSelected
-	dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
+	static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
 
 	// First, must unpin the object from the children list of his father, after will can delete object
 	for (std::vector<GameObject*>::iterator i = obj->GetParent()->GetBeginChildren(); i != obj->GetParent()->GetEndChildren(); ++i)

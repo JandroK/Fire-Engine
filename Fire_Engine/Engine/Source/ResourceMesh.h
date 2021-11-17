@@ -1,17 +1,12 @@
 #pragma once
 #include "Resource.h"
-//#include "MathGeoLib/include/Geometry/AABB.h"
-//#include "MathGeoLib/include/Geometry/OBB.h"
-//#include "MathGeoLib/include/Math/float3.h"
+
 #include <vector>
 #include "glmath.h"
 #include "Geometry/AABB.h"
 
-
 typedef unsigned int uint;
 typedef unsigned int GLuint;
-//class vec3;
-
 
 struct meshABC {
 
@@ -75,7 +70,4 @@ public:
 
 	//Local coords AABB
 	AABB localAABB;
-
-	//AABB* bbox;
-	//OBB* obb;
 };

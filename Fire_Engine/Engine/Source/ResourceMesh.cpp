@@ -3,7 +3,6 @@
 
 #include "Glew/include/glew.h"
 #include "Geometry/Sphere.h"
-//#include "glmath.h"
 
 Mesh::Mesh() : Resource(ResourceType::MESH)
 {
@@ -32,7 +31,7 @@ bool Mesh::LoadToMemory()
 {
 
 	//Index Buffer GL_ELEMENT_ARRAY_BUFFER
-	if (numIndexs != NULL && numIndexs != 0)
+	if (numIndexs != 0)
 	{
 		glGenBuffers(1, (GLuint*)&(indexBufferId));
 		//Bind buffer load index
@@ -42,7 +41,7 @@ bool Mesh::LoadToMemory()
 	}	
 
 	// Vertex Buffer GL_ARRAY_BUFFER
-	if (numVertex != NULL && numVertex != 0)
+	if (numVertex != 0)
 	{
 		glGenBuffers(1, (GLuint*)&(vertexBufferId));
 		//Bind buffer load Vetex
@@ -52,7 +51,7 @@ bool Mesh::LoadToMemory()
 	}
 
 	// TexCoords Buffer GL_ARRAY_BUFFER
-	if (numTexCoords != NULL && numTexCoords != 0)
+	if (numTexCoords != 0)
 	{
 		glGenBuffers(1, (GLuint*)&(textureBufferId));
 		//Bind buffer load texture
@@ -62,7 +61,7 @@ bool Mesh::LoadToMemory()
 	}	
 
 	// Normals Buffer GL_ARRAY_BUFFER
-	if (numNormals != NULL && numNormals != 0)
+	if (numNormals != 0)
 	{
 		glGenBuffers(1, (GLuint*)&(normalBufferId));
 		//Bind buffer load normals
@@ -89,6 +88,7 @@ void Mesh::Render(GLuint textureID)
 {
 	if (textureID != -1) glBindTexture(GL_TEXTURE_2D, textureID);
 
+	//-- Enable States --//
 	EnableClientState();
 
 	//-- Draw --//

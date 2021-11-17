@@ -80,7 +80,7 @@ bool Renderer3D::Init()
 	if(ret == true)
 	{
 		// Print version info
-		dynamic_cast<AboutTab*>(app->editor->GetTab(TabType::ABOUT))->LogVersionDependences();
+		static_cast<AboutTab*>(app->editor->GetTab(TabType::ABOUT))->LogVersionDependences();
 
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
@@ -249,7 +249,7 @@ update_status Renderer3D::PostUpdate(float dt)
 		}
 		renderQueue.clear();
 	}
-	//cube.mesh->RenderMesh();
+	//cube.mesh->Render();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST);

@@ -2,7 +2,6 @@
 #include "MeshRenderer.h"
 
 #include "Renderer3D.h"
-#include "Mesh.h"
 #include "Editor.h"
 
 #include "GameObject.h"
@@ -30,9 +29,11 @@ void MeshRenderer::OnEditor()
 		IMGUI_PRINT("Normals: ", "%i", mesh->numNormals);
 		IMGUI_PRINT("Tex coords: ", "%i", mesh->numIndexs);
 		IMGUI_PRINT("Indices: ", "%i", mesh->numIndexs);
+
 		// You can enable/disable the mode debug
-		ImGui::Checkbox("Vertex Normals", &vertexNormals);
-		ImGui::Checkbox("Face Normals", &faceNormals);
+		ImGui::Checkbox("Vertex Normals", &vertexNormals);	ImGui::SameLine();		ImGui::Checkbox("Face Normals", &faceNormals);
+		// You can enable/disable the bounding boxes
+		ImGui::Checkbox("Show AABB     ", &showAABB);		ImGui::SameLine();		ImGui::Checkbox("Show OBB", &showOBB);
 	}
 }
 
@@ -45,7 +46,7 @@ void MeshRenderer::RenderMesh()
 		glMultMatrixf(GetOwner()->transform->GetGlobalTransformT());
 
 		// Get material component 
-		Material* material = dynamic_cast<Material*>(GetOwner()->GetComponent(ComponentType::MATERIAL));
+		Material* material = static_cast<Material*>(GetOwner()->GetComponent(ComponentType::MATERIAL));
 		GLuint id = -1;
 		// If this gameObject has 
 		if (material != nullptr)
@@ -58,9 +59,34 @@ void MeshRenderer::RenderMesh()
 		if (vertexNormals || faceNormals)
 			mesh->DebugRender(&vertexNormals, &faceNormals);
 
+
 		// Pop the Matrix to OpenGL
 		glPopMatrix();
+		
+		// If showAABB are enable draw the his bounding boxes
+		if (showAABB == true) {
+			float3 points[8];
+			globalAABB.GetCornerPoints(points);
+			DrawBoundingBoxes(points, float3(0.2f, 1.f, 0.101f));
+		}
+		// If showOBB are enable draw the his bounding boxes
+		if (showOBB == true) {
+			float3 points[8];
+			globalOBB.GetCornerPoints(points);
+			DrawBoundingBoxes(points);
+		}
 	}
+}
+
+void MeshRenderer::SetBoundingBoxes(Mesh* mesh)
+{
+	// Generate global AABB
+	globalOBB = mesh->localAABB;
+	globalOBB.Transform(GetOwner()->transform->GetGlobalTransform());
+
+	// Generate global AABB
+	globalAABB.SetNegativeInfinity();
+	globalAABB.Enclose(globalOBB);
 }
 
 float3 MeshRenderer::GetCenterPointInWorldCoords()
@@ -71,4 +97,20 @@ float3 MeshRenderer::GetCenterPointInWorldCoords()
 float MeshRenderer::GetSphereRadius()
 {
 	return mesh->radius;
+}
+
+void MeshRenderer::DrawBoundingBoxes(float3* points, float3 color)
+{
+	glColor3fv(&color.x);
+	glLineWidth(2.f);
+	glBegin(GL_LINES);
+
+	for (int i = 0; i < 24; i++)
+	{
+		glVertex3fv(&points[index[i]].x);
+	}
+
+	glEnd();
+	glLineWidth(1.f);
+	glColor3f(1.f, 1.f, 1.f);
 }

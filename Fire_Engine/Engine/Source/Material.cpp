@@ -66,7 +66,7 @@ bool Material::CompareTextureId(GameObject* node, GameObject* owner, GLuint id)
 			// Exclude the owner of the id from the check
 			if (node->GetChildrens()[i] != owner)
 			{
-				Material* material = dynamic_cast<Material*>(node->GetChildrens()[i]->GetComponent(ComponentType::MATERIAL));
+				Material* material = static_cast<Material*>(node->GetChildrens()[i]->GetComponent(ComponentType::MATERIAL));
 				// Check if this gameObject has material and if so check if the id matches
 				if (material != nullptr && material->texture->textureID == id)
 					ret = true;

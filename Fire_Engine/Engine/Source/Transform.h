@@ -24,6 +24,8 @@ public:
 	void NewAttachment();
 	void ResetTransform();
 
+	void UpdateBoundingBoxes();
+
 private:
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);
 

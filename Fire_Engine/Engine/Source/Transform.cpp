@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "Transform.h"
 #include "Globals.h"
+#include "MeshRenderer.h"
+#include "ResourceMesh.h"
 
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/Math/TransformOps.h"
@@ -105,6 +107,9 @@ void Transform::UpdateTransform()
 				// global = global parent * local
 				transformsToUpdate[i]->globalTransform = parentTra->globalTransform * transformsToUpdate[i]->localTransform;
 				transformsToUpdate[i]->globalTransformTransposed = transformsToUpdate[i]->globalTransform.Transposed();
+
+				//Update Bounding Boxes
+				transformsToUpdate[i]->UpdateBoundingBoxes();
 			}
 		}
 	}
@@ -173,4 +178,18 @@ void Transform::ResetTransform()
 	globalTransformTransposed = globalTransform.Transposed();
 
 	updateTransform = true;
+}
+
+void Transform::UpdateBoundingBoxes()
+{
+	MeshRenderer* mesh = nullptr;
+	mesh = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER));
+	if (mesh != nullptr)
+	{
+		mesh->globalOBB = mesh->GetMesh()->localAABB;
+		mesh->globalOBB.Transform(globalTransform);
+
+		mesh->globalAABB.SetNegativeInfinity();
+		mesh->globalAABB.Enclose(mesh->globalOBB);
+	}	
 }

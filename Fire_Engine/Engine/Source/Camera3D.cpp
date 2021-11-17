@@ -99,7 +99,7 @@ void Camera3D::OrbitRotation()
 
 	if (gameObject != nullptr)
 	{
-		MeshRenderer* mesh = dynamic_cast<MeshRenderer*>(gameObject->GetComponent(ComponentType::MESHRENDERER));
+		MeshRenderer* mesh = static_cast<MeshRenderer*>(gameObject->GetComponent(ComponentType::MESHRENDERER));
 		float3 meshCenter = mesh->GetCenterPointInWorldCoords();
 		posGO = meshCenter;
 	}
@@ -145,11 +145,11 @@ void Camera3D::OrbitRotation()
 void Camera3D::Focus()
 {
 	//Focus
-	GameObject*& objSelected = dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected;
+	GameObject*& objSelected = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected;
 
 	if (objSelected != nullptr)
 	{
-		if (MeshRenderer* mesh = dynamic_cast<MeshRenderer*>(objSelected->GetComponent(ComponentType::MESHRENDERER)))
+		if (MeshRenderer* mesh = static_cast<MeshRenderer*>(objSelected->GetComponent(ComponentType::MESHRENDERER)))
 		{
 			const float3 meshCenter = mesh->GetCenterPointInWorldCoords();
 			LookAt(meshCenter);

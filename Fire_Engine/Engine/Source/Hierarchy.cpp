@@ -54,7 +54,7 @@ void Hierarchy::DrawGameObjectsTree(GameObject* node, bool drawAsDisabled)
 			DragHierarchyObj(go);
 			if (ImGui::IsItemClicked() && !go->IsRoot())
 			{
-				GameObject* &objSelected = dynamic_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected;
+				GameObject* &objSelected = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected;
 				objSelected ? objSelected->isSelected = !objSelected->isSelected : 0;
 				objSelected = go;
 				objSelected->isSelected = !objSelected->isSelected;
