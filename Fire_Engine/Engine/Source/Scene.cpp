@@ -6,11 +6,13 @@
 #include "Component.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
+#include "ComponentCamera.h"
 
 //Modules
 #include "Input.h"
 #include "Editor.h"
 #include "ResourceManager.h"
+#include "Camera3D.h"
 
 #include "GameObject.h"
 #include "Inspector.h"
@@ -34,7 +36,6 @@ bool Scene::Init()
 
 bool Scene::Start()
 {
-	//app->resourceManager->ImportFile("Assets/BakerHouse.fbx");
 	app->resourceManager->ImportFile("BakerHouse.fbx");
 	Transform* transformChimney = root->GetChildrens()[0]->GetChildrens()[0]->transform;
 	Transform* transformBakerhouse = root->GetChildrens()[0]->GetChildrens()[1]->transform;
@@ -45,6 +46,10 @@ bool Scene::Start()
 
 	transformChimney->SetTransformMatrix(transformChimney->GetPosition(), rotationQuat, size, parentTransform);
 	transformBakerhouse->SetTransformMatrix(transformBakerhouse->GetPosition(), rotationQuat, size, parentTransform);
+
+	GameObject* mainCamera = CreateGameObject("MainCamera");
+	mainCamera->AddComponent(ComponentType::CAMERA);
+	this->mainCamera = static_cast<ComponentCamera*>(mainCamera->GetComponent(ComponentType::CAMERA));
 
 	return true;
 }

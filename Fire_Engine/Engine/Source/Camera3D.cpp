@@ -8,16 +8,11 @@
 #include "Globals.h" 
 
 #include "GameObject.h"
-#include "Transform.h"
 #include "Inspector.h"
+
+// Components
+#include "Transform.h"
 #include "MeshRenderer.h"
-
-//#include "MeshRenderer.h"
-//#include "MathGeoLib/include/Geometry/AABB.h"
-
-
-//#include "Math/float4x4.h"
-//#include"MathGeoLib/include/Math/float3.h"
 
 Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -94,7 +89,7 @@ void Camera3D::CheckInputs()
 void Camera3D::OrbitRotation()
 {
 	float3 pivot = float3(0,0,0);
-	GameObject* gameObject =App->editor->GetGameObjectSelected();
+	GameObject* gameObject = App->editor->GetGameObjectSelected();
 	float3 posGO = { 0, 0, 0 };
 
 	if (gameObject != nullptr)
@@ -110,7 +105,7 @@ void Camera3D::OrbitRotation()
 		int dy = -App->input->GetMouseYMotion();
 		float Sensitivity = 0.25f;
 		app->editor->GetGameObjectSelected();
-		(App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && gameObject !=nullptr) ? pivot= float3(posGO.x, posGO.y, posGO.z) : pivot= Reference ;
+		(App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && gameObject !=nullptr) ? pivot = float3(posGO.x, posGO.y, posGO.z) : pivot = Reference;
 		
 		Position -= pivot;
 
@@ -118,7 +113,7 @@ void Camera3D::OrbitRotation()
 		{
 			float DeltaX = (float)dx * Sensitivity;
 
-			//X = rotate(X, DeltaX, float3(0.0f, 1.0f, 0.0f)); // RIGHT
+			//X = rotate(X, DeltaX, float3(0.0f, 1.0f, 0.0f)); // Right
 			//Y = rotate(Y, DeltaX, float3(0.0f, 1.0f, 0.0f)); //Up
 			//Z = rotate(Z, DeltaX, float3(0.0f, 1.0f, 0.0f)); // Front
 		}
@@ -138,7 +133,6 @@ void Camera3D::OrbitRotation()
 		}
 		Position = pivot + Z * Position.Length();
 		Reference = pivot;
-
 	}
 }
 
@@ -167,11 +161,11 @@ void Camera3D::Focus()
 
 void Camera3D::RecalculateProjection()
 {
-	cameraFrustum.type = FrustumType::PerspectiveFrustum;
+	/*cameraFrustum.type = FrustumType::PerspectiveFrustum;
 	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
 	cameraFrustum.farPlaneDistance = farPlaneDistance;
 	cameraFrustum.verticalFov = (verticalFOV * 3.141592 / 2) / 180.f;
-	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);*/
 }
 
 void Camera3D::FrontView()

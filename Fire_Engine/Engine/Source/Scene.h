@@ -5,6 +5,7 @@
 
 class GameObject;
 class Mesh;
+class ComponentCamera;
 
 class Scene : public Module
 {
@@ -24,6 +25,7 @@ public:
 	GameObject* CreatePrimitive(const char* name, Mesh* mesh);
 
 	GameObject* root;
+	ComponentCamera* mainCamera = nullptr;
 
 	std::vector<GameObject*> destroyList;
 

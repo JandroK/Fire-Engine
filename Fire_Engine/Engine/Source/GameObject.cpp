@@ -7,6 +7,7 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Material.h"
+#include "ComponentCamera.h"
 
 GameObject::GameObject(const char* name) : name(name), tag("Untagged"), layer("0: Default")
 {
@@ -72,6 +73,9 @@ Component* GameObject::AddComponent(ComponentType type)
 		break;
 	case ComponentType::MATERIAL:
 		newComponent = new Material(this);
+		break;
+	case ComponentType::CAMERA:
+		newComponent = new ComponentCamera(this);
 		break;
 	}
 

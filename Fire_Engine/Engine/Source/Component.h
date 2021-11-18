@@ -6,6 +6,7 @@ enum class ComponentType
 	TRANSFORM,
 	MESHRENDERER,
 	MATERIAL,
+	CAMERA
 };
 
 class Component

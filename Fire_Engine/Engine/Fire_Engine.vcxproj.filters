@@ -657,6 +657,9 @@
     <ClInclude Include="Source\External\Guizmo\ImZoomSlider.h">
       <Filter>Sources\3rd Party\Guizmo</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ComponentCamera.h">
+      <Filter>Sources\GameObjects\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -901,6 +904,9 @@
     </ClCompile>
     <ClCompile Include="Source\External\Guizmo\ImSequencer.cpp">
       <Filter>Sources\3rd Party\Guizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ComponentCamera.cpp">
+      <Filter>Sources\GameObjects\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

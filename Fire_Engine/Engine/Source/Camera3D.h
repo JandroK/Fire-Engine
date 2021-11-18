@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "glmath.h"
 
-#include "Geometry/Frustum.h"
+#include "Math/float3.h"
 
 class Camera3D : public Module
 {
@@ -12,6 +12,7 @@ public:
 
 	void ReStartCamera();
 	bool Start() override;
+
 	update_status Update(float dt) override;
 	void CheckInputs();
 	bool CleanUp() override;
@@ -39,11 +40,4 @@ public:
 
 	bool projectionIsDirty = false;
 	mat4x4 ViewMatrix;
-
-	Frustum cameraFrustum;
-
-	float aspectRatio = 1.f;
-	float verticalFOV = 60.f;
-	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 5000.f;
 };

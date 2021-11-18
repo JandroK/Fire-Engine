@@ -90,11 +90,9 @@ void ResourceManager::ImportFile(const char* assetsFile)
 			Inspector* inspector = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR));
 			if (inspector && inspector->gameObjectSelected) {
 				Material* mat = static_cast<Material*>(inspector->gameObjectSelected->GetComponent(ComponentType::MATERIAL));
-				if (mat)
+				if (mat) mat->texture = material;
+				else 
 				{
-					mat->texture = material;
-				}
-				else {
 					Material* mat = static_cast<Material*>(inspector->gameObjectSelected->AddComponent(ComponentType::MATERIAL));
 					mat->texture = material;
 				}
