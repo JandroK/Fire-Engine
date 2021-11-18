@@ -48,8 +48,6 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
-	void ReGenerateFrameBuffer(int w, int h);
-
 	bool SaveConfig(JsonParser& node) const override;
 
 	bool LoadConfig(JsonParser& node)override;
@@ -70,12 +68,6 @@ public:
 
 	std::vector<MeshRenderer*> renderQueue;
 
-	// FrameBuffer
-	unsigned int framebuffer = 0;
-	unsigned int texColorBuffer = 0;
-	unsigned int rbo = 0;
-
-	PrimitiveCube cube;
 private:
 	Hardware hardware;
 	bool depthTest = true;

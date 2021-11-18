@@ -179,7 +179,7 @@ bool Renderer3D::Init()
 	App->camera->LookAt(float3(0, 0, 0));
 
 	//Generate scene buffers
-	ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
+	app->camera->cameraScene.ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 
 	// Projection matrix for
 	OnResize(app->window->GetWindowWidth(), app->window->GetWindowHeight());
@@ -190,21 +190,7 @@ bool Renderer3D::Init()
 // PreUpdate: clear buffer
 update_status Renderer3D::PreUpdate(float dt)
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-
-	glLoadIdentity();
-
-	// Recalculate matrix -------------
-	App->camera->CalculateViewMatrix();
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->viewMatrix.Transposed().ptr());
+	app->camera->cameraScene.PreUpdate();
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->position.x, App->camera->position.y, App->camera->position.z);
@@ -242,7 +228,8 @@ update_status Renderer3D::PostUpdate(float dt)
 		renderQueue.clear();
 	}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	app->camera->cameraScene.PostUpdate();
+
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -261,10 +248,6 @@ update_status Renderer3D::PostUpdate(float dt)
 bool Renderer3D::CleanUp()
 {
 	LOG(LogType::L_NO_PRINTABLE, "Destroying 3D Renderer");
-
-	glDeleteFramebuffers(1, &framebuffer);
-	glDeleteTextures(1, &texColorBuffer);
-	glDeleteRenderbuffers(1, &rbo);
 		
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
@@ -293,59 +276,20 @@ void Renderer3D::GetCaps(std::string& caps)
 	caps += (SDL_Has3DNow()) ? "3DNow, " : "";
 }
 
-void Renderer3D::ReGenerateFrameBuffer(int w, int h)
-{
-	if (framebuffer > 0)
-		glDeleteFramebuffers(1, &framebuffer);
-
-	if (texColorBuffer > 0)
-		glDeleteTextures(1, &texColorBuffer);
-
-	if (rbo > 0)
-		glDeleteRenderbuffers(1, &rbo);
-
-
-	glGenFramebuffers(1, &framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	glGenTextures(1, &texColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	// attach it to currently bound framebuffer object
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
-
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		LOG(LogType::L_ERROR, "ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
 void Renderer3D::OnResize(int width, int height)
 {
-
 	glViewport(0, 0, width, height);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(App->camera->cameraScene.frustrum.ProjectionMatrix().Transposed().ptr());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
 
 	App->window->SetSize(width, height);
-	ReGenerateFrameBuffer(width, height);
-
+	app->camera->cameraScene.ReGenerateFrameBuffer(width, height);
 }
 
 void Renderer3D::OnGUI()

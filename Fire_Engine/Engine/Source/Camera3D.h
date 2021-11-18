@@ -2,8 +2,8 @@
 #include "Module.h"
 
 #include "Math/float3.h"
-#include "Math/float4x4.h"
-#include "Geometry/Frustum.h"
+
+#include "ComponentCamera.h"
 
 class Camera3D : public Module
 {
@@ -23,8 +23,6 @@ public:
 	void LookAt(const float3&Spot);
 	void Move(const float3&Movement);
 
-	float4x4 GetViewMatrix() { return viewMatrix; };
-
 	void OrbitRotation();
 	void CalculateViewMatrix();
 	void RecalculateProjection();
@@ -42,8 +40,7 @@ public:
 
 	bool projectionIsDirty = false;
 
-	Frustum cameraFrustum;
-	float4x4 viewMatrix;
+	ComponentCamera cameraScene;
 
 	float cameraSpeed = 5.0f;
 	float cameraSensitivity = 0.15f;
