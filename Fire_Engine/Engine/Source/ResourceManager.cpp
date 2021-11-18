@@ -85,7 +85,8 @@ void ResourceManager::ImportFile(const char* assetsFile)
 		case ImportType::TEXTURE:
 		{
 			Texture* material = new Texture(normalizedPath.c_str());
-			material->LoadToMemory();
+			material->Import(buffer, size, assetsFile);
+			//material->LoadToMemory();
 
 			Inspector* inspector = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR));
 			if (inspector && inspector->gameObjectSelected) {

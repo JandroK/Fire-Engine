@@ -238,6 +238,42 @@ uint FileSystem::LoadToBuffer(const char* file, char** buffer)
 	return ret;
 }
 
+uint FileSystem::Save(const char* file, const void* buffer, unsigned int size, bool append)
+{
+	unsigned int ret = 0;
+
+	bool overwrite = PHYSFS_exists(file) != 0;
+	PHYSFS_file* fs_file = (append) ? PHYSFS_openAppend(file) : PHYSFS_openWrite(file);
+
+	if (fs_file != nullptr)
+	{
+		uint written = (uint)PHYSFS_write(fs_file, (const void*)buffer, 1, size);
+		if (written != size) {
+			LOG(LogType::L_ERROR, "File System error while writing to file %s: %s", file, PHYSFS_getLastError());
+		}
+		else
+		{
+			if (append == true) {
+				LOG(LogType::L_ERROR, "Added %u data to [%s%s]", size, PHYSFS_getWriteDir(), file);
+			}
+			//else if(overwrite == true)
+				//LOG("File [%s%s] overwritten with %u bytes", PHYSFS_getWriteDir(), file, size);
+			else if (overwrite == false)
+				LOG(LogType::L_ERROR, "New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file, size);
+
+			ret = written;
+		}
+
+		if (PHYSFS_close(fs_file) == 0)
+			LOG(LogType::L_ERROR, "File System error while closing file %s: %s", file, PHYSFS_getLastError());
+	}
+	else {
+		LOG(LogType::L_ERROR, "File System error while opening file %s: %s", file, PHYSFS_getLastError());
+	}
+
+	return ret;
+}
+
 bool FileSystem::Remove(const char* file)
 {
 	bool ret = false;
