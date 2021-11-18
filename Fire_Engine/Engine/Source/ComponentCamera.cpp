@@ -79,7 +79,6 @@ void ComponentCamera::CalculateViewMatrix()
 	frustrum.front = frustrum.front.Normalized();
 	frustrum.up = frustrum.up.Normalized();
 	float3::Orthonormalize(frustrum.front, frustrum.up);
-	right = up.Cross(front);
 
 	viewMatrix = cameraFrustum.ViewMatrix();*/
 }
