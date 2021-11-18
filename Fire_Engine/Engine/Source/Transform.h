@@ -26,6 +26,11 @@ public:
 
 	void UpdateBoundingBoxes();
 
+	float3 GetForward();
+	float3 GetUp();
+	float3 GetRight();
+	float3 GetNormalizeAxis(int i);
+
 private:
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);
 

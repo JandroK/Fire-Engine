@@ -47,9 +47,10 @@ bool Scene::Start()
 	transformChimney->SetTransformMatrix(transformChimney->GetPosition(), rotationQuat, size, parentTransform);
 	transformBakerhouse->SetTransformMatrix(transformBakerhouse->GetPosition(), rotationQuat, size, parentTransform);
 
-	GameObject* mainCamera = CreateGameObject("MainCamera");
-	mainCamera->AddComponent(ComponentType::CAMERA);
-	this->mainCamera = static_cast<ComponentCamera*>(mainCamera->GetComponent(ComponentType::CAMERA));
+	GameObject* sceneCamera = CreateGameObject("MainCamera");
+	sceneCamera->AddComponent(ComponentType::CAMERA);
+	mainCamera = static_cast<ComponentCamera*>(sceneCamera->GetComponent(ComponentType::CAMERA));
+	mainCamera->SetIsMainCamera(true);
 
 	return true;
 }

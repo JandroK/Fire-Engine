@@ -1,9 +1,12 @@
 #include "Application.h"
 #include "Scene.h"
-#include "Transform.h"
 #include "Globals.h"
-#include "MeshRenderer.h"
 #include "ResourceMesh.h"
+
+// Components
+#include "Transform.h"
+#include "MeshRenderer.h"
+#include "ComponentCamera.h"
 
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/Math/TransformOps.h"
@@ -110,6 +113,8 @@ void Transform::UpdateTransform()
 
 				//Update Bounding Boxes
 				transformsToUpdate[i]->UpdateBoundingBoxes();
+				ComponentCamera* camera = static_cast<ComponentCamera*>(GetOwner()->GetComponent(ComponentType::CAMERA));
+				if (camera != nullptr) camera->updateCamera = true;
 			}
 		}
 	}
@@ -192,4 +197,22 @@ void Transform::UpdateBoundingBoxes()
 		mesh->globalAABB.SetNegativeInfinity();
 		mesh->globalAABB.Enclose(mesh->globalOBB);
 	}	
+}
+
+float3 Transform::GetRight()
+{
+	return GetNormalizeAxis(0);
+}
+float3 Transform::GetUp()
+{
+	return GetNormalizeAxis(1);
+}
+float3 Transform::GetForward()
+{
+	return GetNormalizeAxis(2);
+}
+
+float3 Transform::GetNormalizeAxis(int i)
+{
+	return globalTransform.RotatePart().Col(i).Normalized();
 }
