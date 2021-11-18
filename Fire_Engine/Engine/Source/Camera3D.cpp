@@ -55,6 +55,36 @@ update_status Camera3D::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
+void Camera3D::OnGUI()
+{
+	if (ImGui::CollapsingHeader("Camera"))
+	{
+		ImGui::Text("Camera Position:");
+		if (ImGui::DragFloat3("##Position", &position[0], 0.1f, true)){}
+
+		ImGui::NewLine();
+		ImGui::PushItemWidth(150);
+
+		if (ImGui::SliderFloat("Vert FOV", &verticalFOV, 10,270))
+		{
+			projectionIsDirty = true;
+		}
+		if (ImGui::SliderFloat("Near plane", &nearPlaneDistance, 0.1f, 10))
+		{
+			projectionIsDirty = true;
+		}
+		if (ImGui::SliderFloat("Far plane", &farPlaneDistance, 11,5000))
+		{
+			projectionIsDirty = true;
+		}
+		if (ImGui::SliderFloat("Speed mov", &cameraSpeed, 1, 100))	{}
+		if (ImGui::SliderFloat("Sensitivity", &cameraSensitivity, 0.01f, 0.5)){}
+
+		ImGui::PopItemWidth();
+		ImGui::NewLine();
+	}
+}
+
 void Camera3D::CheckInputs()
 {
 	float3 newPos(0, 0, 0);

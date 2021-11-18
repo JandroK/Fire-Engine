@@ -12,4 +12,5 @@ public:
 	void OnEditor() override;
 
 	Frustum frustrum;
+	bool showFrustrum = false;
 };

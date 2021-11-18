@@ -214,6 +214,8 @@ update_status Renderer3D::PreUpdate(float dt)
 	// Recalculate matrix -------------
 	App->camera->CalculateViewMatrix();
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->viewMatrix.Transposed().ptr());
 

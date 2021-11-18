@@ -15,6 +15,8 @@ public:
 	bool Start() override;
 
 	update_status Update(float dt) override;
+	void OnGUI() override;
+
 	void CheckInputs();
 	bool CleanUp() override;
 
@@ -43,11 +45,11 @@ public:
 	Frustum cameraFrustum;
 	float4x4 viewMatrix;
 
-	float cameraSpeed = 3.0f;
-	float cameraSensitivity = 0.25f;
+	float cameraSpeed = 5.0f;
+	float cameraSensitivity = 0.15f;
 
 	float aspectRatio = 1.f;
-	float verticalFOV = 60.f;
+	float verticalFOV = 90.f;
 	float nearPlaneDistance = 0.1f;
 	float farPlaneDistance = 5000.f;
 };

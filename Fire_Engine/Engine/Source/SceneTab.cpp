@@ -31,8 +31,8 @@ void SceneTab::Draw()
 
 		if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
 		{
-			//app->camera->aspectRatio = viewportSize.x / viewportSize.y;
-			//app->camera->RecalculateProjection();
+			app->camera->aspectRatio = viewportSize.x / viewportSize.y;
+			app->camera->RecalculateProjection();
 		}
 		lastViewportSize = viewportSize;
 

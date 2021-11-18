@@ -98,19 +98,3 @@ float MeshRenderer::GetSphereRadius()
 {
 	return mesh->radius;
 }
-
-void MeshRenderer::DrawBoundingBoxes(float3* points, float3 color)
-{
-	glColor3fv(&color.x);
-	glLineWidth(2.f);
-	glBegin(GL_LINES);
-
-	for (int i = 0; i < 24; i++)
-	{
-		glVertex3fv(&points[index[i]].x);
-	}
-
-	glEnd();
-	glLineWidth(1.f);
-	glColor3f(1.f, 1.f, 1.f);
-}
