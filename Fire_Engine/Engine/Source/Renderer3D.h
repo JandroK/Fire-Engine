@@ -60,8 +60,7 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	mat3x3 NormalMatrix;
-	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
 	bool vsync;
 	bool wireframe = false;
 
@@ -91,10 +90,5 @@ private:
 	float fogColor[3] = { 0.8f, 0.8f, 0.8f };
 	float fogStart = 10.0f;
 	float fogEnd = 40.0f;
-	float fogDensity = 1.0f;
-
-
-	PrimitiveSphere sphere;
-	PrimitiveCylinder cylinder;
-	PrimitivePyramid pyramid;	
+	float fogDensity = 1.0f;	
 };

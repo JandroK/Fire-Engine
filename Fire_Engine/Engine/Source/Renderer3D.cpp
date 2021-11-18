@@ -183,19 +183,6 @@ bool Renderer3D::Init()
 
 	// Projection matrix for
 	OnResize(app->window->GetWindowWidth(), app->window->GetWindowHeight());
-	
-	// Load Primitives Test
-	//cube.InnerMesh();
-	//cube.mesh->LoadToMemory();
-
-	//sphere.InnerMesh();
-	//sphere.LoadToMemory();
-	
-	//cylinder.InnerMesh();
-	//cylinder.LoadToMemory();
-
-	//pyramid.InnerMesh();
-	//pyramid.LoadToMemory();
 
 	return ret;
 }
@@ -254,12 +241,12 @@ update_status Renderer3D::PostUpdate(float dt)
 		}
 		renderQueue.clear();
 	}
-	//cube.mesh->Render();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	// Draw all tabs
 	ret = app->editor->Draw();
 
@@ -350,8 +337,7 @@ void Renderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
+	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

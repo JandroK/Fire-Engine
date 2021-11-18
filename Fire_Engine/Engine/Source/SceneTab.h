@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Tab.h"
 
 class SceneTab : public Tab

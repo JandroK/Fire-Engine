@@ -3,12 +3,8 @@
 
 // Module 
 #include "Renderer3D.h"
-//#include "Editor.h"
 #include "Window.h"
 #include "Camera3D.h"
-
-
-//#include "OpenGL.h"
 
 SceneTab::SceneTab() : Tab()
 {
