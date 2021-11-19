@@ -129,7 +129,6 @@ update_status Input::PreUpdate(float dt)
 
 			case SDL_WINDOWEVENT:
 				App->window->ManageEvent(&e);
-				app->camera->SetUpdateAspectRatio(true);
 				break;
 			break;
 		}

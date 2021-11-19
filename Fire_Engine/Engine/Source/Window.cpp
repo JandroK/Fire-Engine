@@ -225,6 +225,8 @@ update_status Window::ManageEvent(SDL_Event* e)
 		App->renderer3D->OnResize(e->window.data1, e->window.data2);
 		width = e->window.data1;
 		height = e->window.data2;
+
+		app->camera->SetUpdateAspectRatio(true);
 	}
 	return UPDATE_CONTINUE;
 }
@@ -241,7 +243,6 @@ void Window::OnGUI()
 		if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f)) SetBrightness(brightness);
 
 		ImGui::SliderInt("Width", &tmpW, 640, current.w);
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) app->renderer3D->OnResize(tmpW, height);
 
 		if (ImGui::SliderInt("Height", &height, 480, current.h)) app->renderer3D->OnResize(width, height);
 

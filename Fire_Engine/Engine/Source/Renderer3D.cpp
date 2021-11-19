@@ -289,7 +289,7 @@ void Renderer3D::OnResize(int width, int height)
 
 
 	App->window->SetSize(width, height);
-	app->camera->cameraScene.ReGenerateFrameBuffer(width, height);
+	//app->camera->cameraScene.ReGenerateFrameBuffer(width, height);
 }
 
 void Renderer3D::OnGUI()
