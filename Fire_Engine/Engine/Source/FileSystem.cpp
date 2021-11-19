@@ -26,7 +26,7 @@ void FileSystem::FSInit()
 	SDL_free(basePath);
 
 	//Setting the working directory as the writing directory
-	if (PHYSFS_setWriteDir(".") == 0)
+	if (PHYSFS_setWriteDir(basePath) == 0)
 		LOG(LogType::L_NORMAL, "File System error while creating write dir: %s\n", PHYSFS_getLastError());
 
 	// Adding a path to search archives (LocalDisk)
@@ -39,6 +39,12 @@ void FileSystem::FSInit()
 	assetPath = GetBasePath();
 	assetPath = NormalizePath(assetPath.c_str());
 	assetPath += ASSETS_FOLDER;
+	FileSystem::AddPath(assetPath.c_str());
+
+	// Adding Output folder (for library folder searches (maybe it's better to add Library path))
+	assetPath = GetBasePath();
+	assetPath = NormalizePath(assetPath.c_str());
+	//assetPath += LIBRARY_FOLDER;
 	FileSystem::AddPath(assetPath.c_str());
 
 	// Dump list of paths
@@ -254,12 +260,12 @@ uint FileSystem::Save(const char* file, const void* buffer, unsigned int size, b
 		else
 		{
 			if (append == true) {
-				LOG(LogType::L_ERROR, "Added %u data to [%s%s]", size, PHYSFS_getWriteDir(), file);
+				LOG(LogType::L_NORMAL, "Added %u data to [%s%s]", size, PHYSFS_getWriteDir(), file);
 			}
 			//else if(overwrite == true)
 				//LOG("File [%s%s] overwritten with %u bytes", PHYSFS_getWriteDir(), file, size);
 			else if (overwrite == false)
-				LOG(LogType::L_ERROR, "New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file, size);
+				LOG(LogType::L_NORMAL, "New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file, size);
 
 			ret = written;
 		}

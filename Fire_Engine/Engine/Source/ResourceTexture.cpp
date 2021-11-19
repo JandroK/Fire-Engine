@@ -49,5 +49,6 @@ bool Texture::UnloadFromMemory()
 
 void Texture::Import(char* buffer, int size, const char* name)
 {
-	TextureLoader::SaveToDss(buffer, size, GetLibraryPath());
+	bool dds = TextureLoader::SaveToDds(buffer, size, name);
+	if (dds) path = name; // Change path to library path
 }
