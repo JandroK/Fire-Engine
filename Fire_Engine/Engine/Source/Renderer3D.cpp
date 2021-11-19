@@ -427,11 +427,8 @@ void Renderer3D::OnGUI()
 					glFogf(GL_FOG_END, fogEnd);
 			}
 
-			else
-			{
-				if (ImGui::SliderFloat("Density", &fogDensity, 0.0f, 1.0f));
-					glFogf(GL_FOG_DENSITY, fogDensity);
-			}
+			else if (ImGui::SliderFloat("Density", &fogDensity, 0.0f, 1.0f));
+				glFogf(GL_FOG_DENSITY, fogDensity);
 		}
 	}
 }
