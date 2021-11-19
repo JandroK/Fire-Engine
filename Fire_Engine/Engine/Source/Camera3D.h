@@ -26,9 +26,6 @@ public:
 	void OrbitRotation();
 	void CalculateViewMatrix();
 
-	bool GetUpdateAspectRatio() { return isUpdateAspectRatio; };
-	void SetUpdateAspectRatio(bool ret) { isUpdateAspectRatio = ret; };
-
 private:
 	void Focus();
 	void FrontView();
@@ -41,10 +38,10 @@ public:
 	float3 right, up, front, position, reference;
 
 	bool projectionIsDirty = false;
-	bool isUpdateAspectRatio = false;
 
 	ComponentCamera cameraScene;
 
-	float cameraSpeed = 5.0f;
-	float cameraSensitivity = 0.15f;
+	float cameraSpeed = 10.0f;
+	float zoomSpeed = 5.0f;
+	float cameraSensitivity = 0.1f;
 };

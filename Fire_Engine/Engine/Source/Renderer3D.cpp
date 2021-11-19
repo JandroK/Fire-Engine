@@ -178,9 +178,6 @@ bool Renderer3D::Init()
 	App->camera->Move(float3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(float3(0, 0, 0));
 
-	//Generate scene buffers
-	app->camera->cameraScene.ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
-
 	// Projection matrix for
 	OnResize(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 
@@ -279,17 +276,7 @@ void Renderer3D::GetCaps(std::string& caps)
 void Renderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glLoadMatrixf(App->camera->cameraScene.frustrum.ProjectionMatrix().Transposed().ptr());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-
-	App->window->SetSize(width, height);
-	//app->camera->cameraScene.ReGenerateFrameBuffer(width, height);
+	app->camera->cameraScene.ReGenerateFrameBuffer(width, height);	
 }
 
 void Renderer3D::OnGUI()

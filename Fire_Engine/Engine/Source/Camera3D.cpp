@@ -65,13 +65,14 @@ void Camera3D::OnGUI()
 		ImGui::NewLine();
 		ImGui::PushItemWidth(150);
 
-		if (ImGui::SliderFloat("Vert FOV", &cameraScene.verticalFOV, 10,270))
+		if (ImGui::SliderFloat("FOV", &cameraScene.FOV, 10,270))
 			projectionIsDirty = true;
 
 		ImGui::SliderFloat("Near plane", &cameraScene.frustrum.nearPlaneDistance, 0.1f, 10);
 		ImGui::SliderFloat("Far plane", &cameraScene.frustrum.farPlaneDistance, 11, 500);
 
 		ImGui::SliderFloat("Speed mov", &cameraSpeed, 1, 100);
+		ImGui::SliderFloat("Speed zoom", &zoomSpeed, 1, 50);
 		ImGui::SliderFloat("Sensitivity", &cameraSensitivity, 0.01f, 0.5);
 
 		ImGui::PopItemWidth();
@@ -100,7 +101,7 @@ void Camera3D::CheckInputs()
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += right * speed;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
 
-	newPos += speed * front * app->input->GetWheel();
+	newPos += zoomSpeed * front * app->input->GetWheel();
 
 	position += newPos;
 	reference += newPos;
@@ -161,6 +162,7 @@ void Camera3D::OrbitRotation()
 				front = rotateX * front;
 				CalculateViewMatrix();
 			}
+			reference = position + cameraScene.frustrum.front * 10;
 		}		
 	}
 }
@@ -232,7 +234,10 @@ void Camera3D::Move(const float3&Movement)
 void Camera3D::CalculateViewMatrix()
 {
 	if (projectionIsDirty)
-		cameraScene.RecalculateProjection();
+	{
+		cameraScene.RecalculateProjection(cameraScene.aspectRatio);
+		projectionIsDirty = false;
+	}
 
 	cameraScene.frustrum.pos = position;
 	cameraScene.frustrum.front = front.Normalized();
@@ -292,7 +297,7 @@ bool Camera3D::LoadConfig(JsonParser& node)
 	reference.z = (float)node.JsonValToNumber("Reference.z");
 
 	LookAt(reference);
-	cameraScene.RecalculateProjection();
+	cameraScene.RecalculateProjection(cameraScene.aspectRatio);
 
 	return true;
 }

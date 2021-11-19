@@ -20,13 +20,13 @@ public:
 	bool GetIsMainCamera() { return isMainCamera; };
 	void SetIsMainCamera(bool ret) { isMainCamera = ret; };
 
-	void RecalculateProjection(float aspectRatio = 1);
+	void RecalculateProjection(float aspectRatio);
 
 	bool updateCamera = false;
 	Frustum frustrum;
 	float4x4 viewMatrix;
 
-	float verticalFOV = 90.f;
+	float FOV = 90.f;
 	float aspectRatio = 1;
 
 	// FrameBuffer
@@ -38,6 +38,4 @@ private:
 
 	bool isMainCamera = false;
 	bool showFrustrum = false;
-	bool projectionIsDirty = false;
-
 };

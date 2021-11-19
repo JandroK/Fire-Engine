@@ -78,10 +78,9 @@ void ComponentCamera::OnEditor()
 
 		ImGui::PushItemWidth(150);
 
-		if (ImGui::SliderFloat("Vert FOV", &frustrum.verticalFov, 10, 270))
-		{
-			projectionIsDirty = true;
-		}
+		ImGui::DragFloat("Verti FOV: ", &frustrum.verticalFov, 0.1f, 0.0f, 300.f);
+		ImGui::DragFloat("Horiz FOV: ", &frustrum.horizontalFov, 0.1f, 0.0f, 300.f);
+
 		if (ImGui::DragFloat("Near plane", &frustrum.nearPlaneDistance, 0.1f))
 		{
 			if (frustrum.nearPlaneDistance < 0.1f) frustrum.nearPlaneDistance = 0.1f;
@@ -113,6 +112,8 @@ void ComponentCamera::PreUpdate()
 
 void ComponentCamera::ReGenerateFrameBuffer(int w, int h)
 {
+	RecalculateProjection(w / h);
+
 	if (framebuffer > 0)
 		glDeleteFramebuffers(1, &framebuffer);
 
@@ -155,10 +156,9 @@ void ComponentCamera::PostUpdate()
 
 void ComponentCamera::RecalculateProjection(float aspectR)
 {
-	if (aspectR != 1) 
-		aspectRatio = aspectR;
+	aspectRatio = aspectR;
 	frustrum.type = FrustumType::PerspectiveFrustum;
 
-	frustrum.verticalFov = (verticalFOV * PI / 2) / 180.f;
+	frustrum.verticalFov = (FOV * PI / 2) / 180.f;
 	frustrum.horizontalFov = 2.f * atanf(tanf(frustrum.verticalFov * 0.5f) * aspectRatio);
 }
