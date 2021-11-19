@@ -43,7 +43,7 @@ GLuint TextureLoader::LoadToMemory(char* buffer, int size, int* w, int* h)
 	return glID;
 }
 
-void TextureLoader::SaveToDss(char* buffer, int size, const char* name)
+bool TextureLoader::SaveToDds(char* buffer, int size, const char* name)
 {
 	ILuint imageID;
 	ilGenImages(1, &imageID);
@@ -52,6 +52,8 @@ void TextureLoader::SaveToDss(char* buffer, int size, const char* name)
 	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
 	{
 		LOG(LogType::L_ERROR, "Image not loaded");
+		ilDeleteImages(1, &imageID);
+		return false;
 	}
 
 	ILuint newSize;
@@ -66,4 +68,7 @@ void TextureLoader::SaveToDss(char* buffer, int size, const char* name)
 		FileSystem::Save(name, buffer, newSize);
 		RELEASE_ARRAY(data);
 	}
+
+	ilDeleteImages(1, &imageID);
+	return true;
 }
