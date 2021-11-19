@@ -8,5 +8,7 @@ public:
 	virtual ~SceneTab() {};
 
 	void Draw() override;
+	void RecalculateAspectRatio();
+
 	ImVec2 lastViewportSize;
 };

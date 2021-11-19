@@ -2,7 +2,6 @@
 #include "GameTab.h"
 
 // Module 
-#include "Renderer3D.h"
 #include "Window.h"
 #include "Camera3D.h"
 
@@ -20,17 +19,12 @@ void GameTab::Draw()
 		{
 			app->camera->CheckInputs();
 		}
+		if (app->camera->GetUpdateAspectRatio() == true) 
+			RecalculateAspectRatio();
 
 		// Calculate size of tab scene, get window width and hight and transform the viewport to image and render it 
 		ImVec2 texOriginalSize = ImVec2(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 		ImVec2 viewportSize = ImGui::GetWindowSize();
-
-		if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
-		{
-			app->camera->aspectRatio = viewportSize.x / viewportSize.y;
-			app->camera->RecalculateProjection();
-		}
-		lastViewportSize = viewportSize;
 
 		ImVec2 startPoint = ImVec2((texOriginalSize.x / 2) - (viewportSize.x / 2), (texOriginalSize.y / 2) + (viewportSize.y / 2));
 		ImVec2 endPoint = ImVec2((texOriginalSize.x / 2) + (viewportSize.x / 2), (texOriginalSize.y / 2) - (viewportSize.y / 2));
@@ -44,4 +38,17 @@ void GameTab::Draw()
 		ImGui::Image((ImTextureID)app->camera->cameraScene.texColorBuffer, viewportSize, uv0, uv1);
 	}
 	ImGui::End();
+}
+
+void GameTab::RecalculateAspectRatio()
+{
+	ImVec2 viewportSize = ImGui::GetWindowSize();
+
+	if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
+	{
+		app->camera->cameraScene.RecalculateProjection(viewportSize.x / viewportSize.y);
+	}
+	lastViewportSize = viewportSize;
+
+	app->camera->SetUpdateAspectRatio(false);
 }

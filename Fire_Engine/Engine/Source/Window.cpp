@@ -6,10 +6,12 @@
 #include "Renderer3D.h"
 #include "Editor.h"
 #include "Input.h"
+#include "Camera3D.h"
 
 #include "Parson/parson.h"
 #include "ResourceTexture.h"
 #include "ResourceManager.h"
+
 
 
 Window::Window(Application* app, bool startEnabled) : Module(app, startEnabled)

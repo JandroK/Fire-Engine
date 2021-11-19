@@ -152,3 +152,13 @@ void ComponentCamera::PostUpdate()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+void ComponentCamera::RecalculateProjection(float aspectR)
+{
+	if (aspectR != 1) 
+		aspectRatio = aspectR;
+	frustrum.type = FrustumType::PerspectiveFrustum;
+
+	frustrum.verticalFov = (verticalFOV * PI / 2) / 180.f;
+	frustrum.horizontalFov = 2.f * atanf(tanf(frustrum.verticalFov * 0.5f) * aspectRatio);
+}

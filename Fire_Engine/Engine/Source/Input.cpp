@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Window.h"
 #include "Editor.h"
+#include "Camera3D.h"
 
 #include "Globals.h"
 
@@ -128,6 +129,7 @@ update_status Input::PreUpdate(float dt)
 
 			case SDL_WINDOWEVENT:
 				App->window->ManageEvent(&e);
+				app->camera->SetUpdateAspectRatio(true);
 				break;
 			break;
 		}
