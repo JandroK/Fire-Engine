@@ -223,6 +223,7 @@ update_status Renderer3D::PostUpdate(float dt)
 
 	app->camera->cameraScene.PostUpdate();
 
+	// Game Camera
 	if (app->scene->mainCamera != nullptr)
 	{
 		app->scene->mainCamera->PreUpdate();
@@ -242,7 +243,9 @@ update_status Renderer3D::PostUpdate(float dt)
 		{
 			for (size_t i = 0; i < renderQueue.size(); i++)
 			{
-				renderQueue[i]->RenderMesh();
+				// Frustrum Culling
+				if(app->scene->mainCamera->frustrum.Intersects(renderQueue[i]->globalAABB))
+					renderQueue[i]->RenderMesh();
 			}
 		}
 
