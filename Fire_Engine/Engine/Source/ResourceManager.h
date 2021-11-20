@@ -19,8 +19,20 @@ public:
 	bool CleanUp()override;
 
 	void ImportFile(const char* assetsFile);
+	bool GetOverwritting() { return overwritting; };
+	void Overwrite();
+	void DrawOverwriteTab();
+	void NewCounterFile();
 
 	Texture* logo;
 	Texture* backButton;
 	Texture* addButton;
+
+private:
+	// Overriding file variables
+	Resource* ovResource;
+	bool overwritting = false;
+	const char* ovPath;
+	char* ovBuffer;
+	uint ovSize;
 };
