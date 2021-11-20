@@ -34,6 +34,7 @@ public:
 	void LogToConsole(const char* msg, LogType _type);
 	
 	void StartFrame();
+	void CheckShortCuts();
 	update_status Draw();
 	bool DrawWarningTab(std::string text);
 

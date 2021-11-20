@@ -14,6 +14,7 @@ public:
 	virtual ~Scene() {};
 
 	bool Init() override;
+	void CreateCamera();
 	bool Start() override;
 
 	update_status PreUpdate(float dt) override;
@@ -21,7 +22,9 @@ public:
 
 	bool CleanUp() override;
 
-	GameObject* CreateGameObject(const char* name, GameObject* parent = nullptr);
+	GameObject* CreateGameObjectEmpty(const char* name);
+	GameObject* CreateGameObjectChild(const char* name, GameObject* parent);
+	GameObject* CreateGameObjectParent(const char* name, GameObject* child);
 	GameObject* CreatePrimitive(const char* name, Mesh* mesh);
 
 	GameObject* root;

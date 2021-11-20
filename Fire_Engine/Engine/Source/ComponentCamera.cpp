@@ -1,9 +1,10 @@
 #include "Application.h"
 #include "ComponentCamera.h"
-
 #include "Globals.h"
+
 #include "Scene.h"
 #include "Camera3D.h"
+#include "Window.h"
 
 #include "Transform.h"
 
@@ -70,7 +71,10 @@ void ComponentCamera::OnEditor()
 			if (app->scene->mainCamera != nullptr)
 				app->scene->mainCamera->isMainCamera = false;
 			if (isMainCamera)
+			{ 
 				app->scene->mainCamera = this;
+				ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
+			}
 			else
 				app->scene->mainCamera = nullptr;
 		}
