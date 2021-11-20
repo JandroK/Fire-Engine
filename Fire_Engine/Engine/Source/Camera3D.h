@@ -1,9 +1,10 @@
 #pragma once
 #include "Module.h"
-
 #include "Math/float3.h"
-
 #include "ComponentCamera.h"
+#include "Geometry/LineSegment.h"
+
+#include "Imgui/imgui.h"
 
 class Camera3D : public Module
 {
@@ -16,9 +17,12 @@ public:
 
 	update_status Update(float dt) override;
 	void OnGUI() override;
+	bool CleanUp() override;
 
 	void CheckInputs();
-	bool CleanUp() override;
+	void GenerateRay();
+	ImVec2 NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point);
+
 
 	void LookAt(const float3&Spot);
 	void Move(const float3&Movement);
@@ -40,6 +44,7 @@ public:
 	bool projectionIsDirty = false;
 
 	ComponentCamera cameraScene;
+	LineSegment ray;
 
 	float cameraSpeed = 10.0f;
 	float zoomSpeed = 5.0f;

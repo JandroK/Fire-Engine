@@ -85,6 +85,7 @@ void ResourceManager::ImportFile(const char* assetsFile)
 		case ImportType::TEXTURE:
 		{
 			Texture* material = new Texture(normalizedPath.c_str());
+
 			if (FileSystem::Exists(material->GetLibraryPath()))
 			{
 				overwritting = true;
@@ -94,28 +95,28 @@ void ResourceManager::ImportFile(const char* assetsFile)
 			}
 			else
 			{
-				material->Import(buffer, size, material->GetLibraryPath());
 
+				material->Import(buffer, size, material->GetLibraryPath());
 				material->LoadToMemory();
 
-				Inspector* inspector = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR));
-				if (inspector && inspector->gameObjectSelected) {
-					Material* mat = static_cast<Material*>(inspector->gameObjectSelected->GetComponent(ComponentType::MATERIAL));
+				GameObject* objSelected = app->editor->GetGameObjectSelected();
+				if (objSelected != nullptr) {
+					Material* mat = static_cast<Material*>(objSelected->GetComponent(ComponentType::MATERIAL));
 					if (mat) mat->texture = material;
 					else
 					{
-						Material* mat = static_cast<Material*>(inspector->gameObjectSelected->AddComponent(ComponentType::MATERIAL));
+						Material* mat = static_cast<Material*>(objSelected->AddComponent(ComponentType::MATERIAL));
 						mat->texture = material;
 					}
 				}
+				break;
 			}
-			break;
 		}
 		default:
 			break;
 		}
-		if(!overwritting) RELEASE_ARRAY(buffer); // Having this inside an if may caouse memory leaks;
-	}
+		if (!overwritting) RELEASE_ARRAY(buffer); // Having this inside an if may caouse memory leaks;
+		}
 }
 
 void ResourceManager::Overwrite()
