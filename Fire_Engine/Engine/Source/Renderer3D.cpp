@@ -6,6 +6,7 @@
 #include "Globals.h"
 #include "Camera3D.h"
 #include "Editor.h"
+#include "Scene.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -202,14 +203,10 @@ update_status Renderer3D::PreUpdate(float dt)
 update_status Renderer3D::PostUpdate(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
-	//glClearColor(0.f, 0.f, 0.f, 1.f);
-	//glClear(GL_COLOR_BUFFER_BIT);
-	// Axis and grid
 	
 	PrimitivePlane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-
 
 	// Comprobe wireframe mode
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -222,10 +219,36 @@ update_status Renderer3D::PostUpdate(float dt)
 		{
 			renderQueue[i]->RenderMesh();
 		}
-		renderQueue.clear();
 	}
 
 	app->camera->cameraScene.PostUpdate();
+
+	if (app->scene->mainCamera != nullptr)
+	{
+		app->scene->mainCamera->PreUpdate();
+
+		// light 0 on cam pos
+		lights[0].SetPos(App->camera->position.x, App->camera->position.y, App->camera->position.z);
+
+		for (uint i = 0; i < MAX_LIGHTS; ++i)
+			lights[i].Render();
+
+		PrimitivePlane p(0, 1, 0, 0);
+		p.axis = true;
+		p.Render();
+
+		// Draw all meshes
+		if (!renderQueue.empty())
+		{
+			for (size_t i = 0; i < renderQueue.size(); i++)
+			{
+				renderQueue[i]->RenderMesh();
+			}
+		}
+
+		app->scene->mainCamera->PostUpdate();
+	}
+
 
 	glDisable(GL_DEPTH_TEST);
 	glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -234,6 +257,7 @@ update_status Renderer3D::PostUpdate(float dt)
 	// Draw all tabs
 	ret = app->editor->Draw();
 
+	renderQueue.clear();
 	SDL_GL_SwapWindow(app->window->window);
 
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -276,7 +300,10 @@ void Renderer3D::GetCaps(std::string& caps)
 void Renderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
-	app->camera->cameraScene.ReGenerateFrameBuffer(width, height);	
+
+	app->camera->cameraScene.ReGenerateFrameBuffer(width, height);
+	if(app->scene->mainCamera != nullptr)
+		app->scene->mainCamera->ReGenerateFrameBuffer(width, height);
 }
 
 void Renderer3D::OnGUI()

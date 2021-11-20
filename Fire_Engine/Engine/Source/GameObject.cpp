@@ -43,7 +43,6 @@ void GameObject::Enable()
 
 void GameObject::AttachChild(GameObject* child)
 {
-
 	child->parent = this;
 	childrens.push_back(child);
 	child->transform->NewAttachment();
