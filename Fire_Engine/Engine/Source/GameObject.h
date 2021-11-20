@@ -36,7 +36,7 @@ public:
 
 	GameObject* GetParent() { return parent; };
 	void SetParent(GameObject* obj) { parent = obj; };
-	std::vector<Component*> GetCompomemts() { return components; };
+	std::vector<Component*> GetCompoments() { return components; };
 
 	bool IsRoot() { return (parent == nullptr) ? true : false; };
 	void Destroy() { pendingToDelete = true;};
@@ -54,12 +54,14 @@ public:
 	std::string layer;
 
 private:
-	GameObject* parent = nullptr;
-	std::vector<Component*> components;
-	std::vector<GameObject*> childrens;
 
 	bool showChildrens = false;
 	bool pendingToDelete = false;
 
 	std::vector<GameObject*>::iterator indexList;
+
+	GameObject* parent = nullptr;
+	std::vector<Component*> components;
+	std::vector<GameObject*> childrens;
+
 };

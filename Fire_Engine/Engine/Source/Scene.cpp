@@ -37,6 +37,9 @@ bool Scene::Init()
 	mainCamera = static_cast<ComponentCamera*>(sceneCamera->GetComponent(ComponentType::CAMERA));
 	mainCamera->SetIsMainCamera(true);
 
+	jsonFile.FileToValue(SCENE_CONFIG);
+
+
 	return true;
 }
 
@@ -172,6 +175,60 @@ void Scene::Destroy(GameObject* obj)
 void Scene::UpdateGameObjects()
 {
 	RecursiveUpdate(root);
+
+	if (saveSceneRequest)SaveScene();
+}
+
+bool Scene::SaveScene()
+{
+	LOG(LogType::L_NORMAL, "Saving scene");
+
+	rootFile = jsonFile.GetRootValue();
+
+	JsonParser scene = jsonFile.SetChild(rootFile, "GameObjects");
+
+	SaveGameObjects(root, scene.SetChild(scene.GetRootValue(), root->name.c_str()));
+
+	jsonFile.FileSerialization(rootFile, SCENE_CONFIG);
+	saveSceneRequest = false;
+	return true;
+}
+
+void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
+{
+	//node.SetChild(node.GetRootValue(), "Child");
+	for (size_t i = 0; i < parentGO->GetChildrens().size(); i++)
+	{
+		SaveGameObjects(parentGO->GetChildrens()[i], node.SetChild(node.SetChild(node.GetRootValue(), "Child").GetRootValue(), parentGO->GetChildrens()[i]->name.c_str()));
+
+		node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
+
+		node.SetJBool(node.ValueToObject(node.GetRootValue()), "active", parentGO->active);
+		node.SetJBool(node.ValueToObject(node.GetRootValue()), "isStatic", parentGO->isStatic);
+		node.SetJBool(node.ValueToObject(node.GetRootValue()), "isSelected", parentGO->isSelected);
+
+		node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
+		node.SetJString(node.ValueToObject(node.GetRootValue()), "tag", parentGO->tag.c_str());
+		node.SetJString(node.ValueToObject(node.GetRootValue()), "layer", parentGO->layer.c_str());
+
+		node.SetJBool(node.ValueToObject(node.GetRootValue()), "showChildrens", parentGO->GetShowChildrens());
+		node.SetJBool(node.ValueToObject(node.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
+
+		JsonParser& components =node.SetChild(node.GetRootValue(), "components");
+
+		for (size_t i = 0; i < parentGO->GetCompoments().size(); i++)
+		{
+			components.SetJBool(node.ValueToObject(node.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
+			parentGO->GetCompoments().at(i)->GetType();
+		}
+
+	}
+}
+
+bool Scene::LoadScene()
+{
+
+	return true;
 }
 
 void Scene::RecursiveUpdate(GameObject* parent)
