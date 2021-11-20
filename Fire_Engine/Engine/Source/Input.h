@@ -35,6 +35,12 @@ public:
 		return mouse_buttons[id];
 	}
 
+	void GetMousePosition(int& x, int& y) const
+	{
+		x = mouse_x;
+		y = mouse_y;
+	}
+
 	int GetMouseX() const
 	{
 		return mouse_x;

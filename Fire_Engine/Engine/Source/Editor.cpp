@@ -7,6 +7,7 @@
 #include "Window.h"
 #include "Input.h"
 #include "Camera3D.h"
+#include "ResourceManager.h"
 
 // Tabs
 #include "Tab.h"
@@ -162,6 +163,7 @@ update_status Editor::Draw()
 		if (DrawWarningTab("New Scene")) NewScene();
 	if (app->input->GetQuit())
 		if (DrawWarningTab("Exit Engine")) ret = UPDATE_STOP;
+	if (app->resourceManager->GetOverwritting()) app->resourceManager->DrawOverwriteTab();
 
 	ImGui::EndFrame();
 	ImGui::Render();
@@ -298,7 +300,7 @@ update_status Editor::ImGuiMenuBar()
 
 void Editor::NewScene()
 {
-	static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
+	SetGameObjectSelected(nullptr);
 	app->scene->CleanUp(); //Clean GameObjects 
 	app->scene->Init();
 	app->camera->ReStartCamera();
@@ -311,6 +313,7 @@ void Editor::PrimitiveMenuItem()
 		PrimitiveCube cubePrim = PrimitiveCube();
 		cubePrim.InnerMesh();
 		cubePrim.mesh->LoadToMemory();
+		cubePrim.mesh->GenerateBounds();
 
 		app->scene->CreatePrimitive("Cube", cubePrim.mesh);
 	}
@@ -319,6 +322,7 @@ void Editor::PrimitiveMenuItem()
 		PrimitiveSphere spherePrim = PrimitiveSphere();
 		spherePrim.InnerMesh();
 		spherePrim.mesh->LoadToMemory();
+		spherePrim.mesh->GenerateBounds();
 
 		app->scene->CreatePrimitive("Sphere", spherePrim.mesh);
 	}
@@ -327,6 +331,7 @@ void Editor::PrimitiveMenuItem()
 		PrimitiveCylinder cylinderPrim = PrimitiveCylinder();
 		cylinderPrim.InnerMesh();
 		cylinderPrim.mesh->LoadToMemory();
+		cylinderPrim.mesh->GenerateBounds();
 
 		app->scene->CreatePrimitive("Cylinder", cylinderPrim.mesh);
 	}
@@ -335,6 +340,7 @@ void Editor::PrimitiveMenuItem()
 		PrimitivePyramid pyramidPrim = PrimitivePyramid();
 		pyramidPrim.InnerMesh();
 		pyramidPrim.mesh->LoadToMemory();
+		pyramidPrim.mesh->GenerateBounds();
 
 		app->scene->CreatePrimitive("Pyramid", pyramidPrim.mesh);
 	}
@@ -365,10 +371,12 @@ Tab* Editor::GetTab(TabType type)
 
 GameObject* Editor::GetGameObjectSelected()
 {
-	Inspector* inspector = static_cast<Inspector*>(GetTab(TabType::INSPECTOR));
-	return inspector->gameObjectSelected;
+	return static_cast<Inspector*>(GetTab(TabType::INSPECTOR))->gameObjectSelected;
 }
-
+void Editor::SetGameObjectSelected(GameObject* obj)
+{
+	static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = obj;
+}
 
 void Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeFlags dockspaceFlags, ImVec2 position, ImVec2 size, const ImGuiWindowClass* windowClass)
 {

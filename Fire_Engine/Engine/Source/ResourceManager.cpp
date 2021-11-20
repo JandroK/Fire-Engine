@@ -85,24 +85,134 @@ void ResourceManager::ImportFile(const char* assetsFile)
 		case ImportType::TEXTURE:
 		{
 			Texture* material = new Texture(normalizedPath.c_str());
-			material->Import(buffer, size, material->GetLibraryPath());
-			material->LoadToMemory();
 
-			Inspector* inspector = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR));
-			if (inspector && inspector->gameObjectSelected) {
-				Material* mat = static_cast<Material*>(inspector->gameObjectSelected->GetComponent(ComponentType::MATERIAL));
-				if (mat) mat->texture = material;
-				else 
-				{
-					Material* mat = static_cast<Material*>(inspector->gameObjectSelected->AddComponent(ComponentType::MATERIAL));
-					mat->texture = material;
-				}
+			if (FileSystem::Exists(material->GetLibraryPath()))
+			{
+				overwritting = true;
+				ovResource = material;
+				ovBuffer = buffer;
+				ovPath = material->GetLibraryPath();
 			}
-			break;
+			else
+			{
+
+				material->Import(buffer, size, material->GetLibraryPath());
+				material->LoadToMemory();
+
+				GameObject* objSelected = app->editor->GetGameObjectSelected();
+				if (objSelected != nullptr) {
+					Material* mat = static_cast<Material*>(objSelected->GetComponent(ComponentType::MATERIAL));
+					if (mat) mat->texture = material;
+					else
+					{
+						Material* mat = static_cast<Material*>(objSelected->AddComponent(ComponentType::MATERIAL));
+						mat->texture = material;
+					}
+				}
+				break;
+			}
 		}
 		default:
 			break;
 		}
-		RELEASE_ARRAY(buffer);
+		if (!overwritting) RELEASE_ARRAY(buffer); // Having this inside an if may caouse memory leaks;
+		}
+}
+
+void ResourceManager::Overwrite()
+{
+	switch (ovResource->GetType())
+	{
+	case ResourceType::MESH:
+	{
+		ModelImporter::Import(ovPath, ovBuffer, ovSize, app->scene->root);
+		break;
 	}
+	case ResourceType::TEXTURE:
+	{
+		Texture* material = (Texture*)ovResource;
+		material->Import(ovBuffer, ovSize, ovPath);
+
+		ovResource->LoadToMemory();
+
+		Inspector* inspector = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR));
+		if (inspector && inspector->gameObjectSelected) {
+			Material* mat = static_cast<Material*>(inspector->gameObjectSelected->GetComponent(ComponentType::MATERIAL));
+			if (mat) mat->texture = material;
+			else
+			{
+				Material* mat = static_cast<Material*>(inspector->gameObjectSelected->AddComponent(ComponentType::MATERIAL));
+				mat->texture = material;
+			}
+		}
+		break;
+	}
+	default:
+		break;
+	}
+
+	overwritting = false;
+	RELEASE_ARRAY(ovBuffer);
+}
+
+void ResourceManager::DrawOverwriteTab()
+{
+	if (ImGui::Begin("Warning"))
+	{
+		float offset = ImGui::GetWindowContentRegionMax().x / 2 - ImGui::CalcTextSize("Override file").x / 2;
+		ImGui::SetCursorPosX(offset);
+		ImGui::Text("Override file");
+
+		ImGui::NewLine();
+		ImGui::TextWrapped("Are you sure you want to overwrite %s?", ovPath);
+		ImGui::TextWrapped("You can create a new file with a counter on it's name.");
+		ImGui::NewLine();
+
+		offset = ImGui::GetWindowContentRegionMax().x / 3 - ImGui::CalcTextSize("OVERWRITE").x - 6;
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::Button("OVERWRITE"))
+		{
+			Overwrite();
+			overwritting = false;
+		}
+		ImGui::SameLine();
+		offset = ImGui::GetWindowContentRegionMax().x / 3 + ImGui::CalcTextSize("CANCEL").x / 2;
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::Button("CREATE NEW"))
+		{
+			NewCounterFile();
+			overwritting = false;
+		}
+		ImGui::SameLine();
+		offset = ImGui::GetWindowContentRegionMax().x / 3 * 2 + ImGui::CalcTextSize("CANCEL").x - 6;
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::Button("CANCEL"))
+		{
+			overwritting = false;
+		}
+	}
+	ImGui::End();
+}
+
+void ResourceManager::NewCounterFile()
+{
+	std::string num = "_";
+	std::string path(ovPath);
+	std::string ext = path.substr(path.find_last_of("."));
+	path = path.substr(0, path.find_last_of(".")).c_str();
+	std::string resetter = path.c_str();
+
+	std::string tester = path;
+	for (int i = 1; !num.compare("_"); i++)
+	{
+		path = path + "_" + std::to_string(i) + ext;
+		if (!FileSystem::Exists(path.c_str()))
+		{
+			ovPath = path.c_str();
+			break;
+		}
+		path = resetter;
+	}
+
+	Overwrite();
 }

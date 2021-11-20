@@ -5,6 +5,8 @@
 #include "Camera3D.h"
 #include "Editor.h"
 #include "Input.h"
+#include "Window.h"
+#include "Renderer3D.h"
 
 #include "GameObject.h"
 #include "Inspector.h"
@@ -109,8 +111,33 @@ void Camera3D::CheckInputs()
 	// Mouse motion ----------------
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT) OrbitRotation();
 
+	// Create ray
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) GenerateRay();
+
 	// Recalculate matrix -------------
 	if(!newPos.Equals(float3::zero)) CalculateViewMatrix();
+}
+
+void Camera3D::GenerateRay()
+{
+	ImVec2 position = ImGui::GetMousePos();
+	ImVec2 normal = NormalizeOnWindow(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y + ImGui::GetFrameHeight(), ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), position);
+	normal.x = (normal.x - 0.5f) / 0.5f;
+	normal.y = -((normal.y - 0.5f) / 0.5f);
+
+	ray = cameraScene.frustrum.UnProjectLineSegment(normal.x, normal.y);
+
+	app->renderer3D->MousePicking(ray);
+}
+
+ImVec2 Camera3D::NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point)
+{
+	ImVec2 normalizedPoint;
+
+	normalizedPoint.x = (point.x - x) / ((x + w) - x);
+	normalizedPoint.y = (point.y - y) / ((y + h) - y);
+
+	return normalizedPoint;
 }
 
 void Camera3D::OrbitRotation()
@@ -170,7 +197,7 @@ void Camera3D::OrbitRotation()
 void Camera3D::Focus()
 {
 	//Focus
-	GameObject*& objSelected = static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected;
+	GameObject* objSelected = app->editor->GetGameObjectSelected();
 
 	if (objSelected != nullptr)
 	{
