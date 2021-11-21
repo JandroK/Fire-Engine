@@ -19,6 +19,9 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 {
 	name = "Camera3D";
 
+	operation = ImGuizmo::OPERATION::TRANSLATE;
+	mode = ImGuizmo::MODE::WORLD;
+
 	ReStartCamera();
 }
 
@@ -82,6 +85,24 @@ void Camera3D::OnGUI()
 	}
 
 	if (projectionIsDirty) CalculateViewMatrix();
+}
+
+void Camera3D::DrawGuizmo(GameObject* obj)
+{
+	ImGuizmo::BeginFrame();
+	ImGuizmo::Enable(true);
+
+	Transform* transform = static_cast<Transform*>(obj->GetComponent(ComponentType::TRANSFORM));
+	ImVec2 cornerPos = ImGui::GetWindowPos();
+	ImVec2 size = ImGui::GetContentRegionMax();
+
+	int offset = ImGui::GetFrameHeight() / 2;
+	ImGuizmo::SetRect(cornerPos.x, cornerPos.y + offset, size.x, size.y);
+	ImGuizmo::SetDrawlist();
+	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, transform->GetGlobalTransformT()))
+	{
+
+	}
 }
 
 void Camera3D::CheckInputs()

@@ -5,6 +5,7 @@
 #include "Geometry/LineSegment.h"
 
 #include "Imgui/imgui.h"
+#include "Guizmo/ImGuizmo.h"
 
 class Camera3D : public Module
 {
@@ -17,6 +18,7 @@ public:
 
 	update_status Update(float dt) override;
 	void OnGUI() override;
+	void DrawGuizmo(GameObject* obj);
 	bool CleanUp() override;
 
 	void CheckInputs();
@@ -36,6 +38,9 @@ private:
 
 	bool SaveConfig(JsonParser& node)const override;
 	bool LoadConfig(JsonParser& node) override;
+
+	ImGuizmo::OPERATION operation;
+	ImGuizmo::MODE mode;
 
 public:
 	

@@ -11,8 +11,8 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <map>
-#include "Geometry/Triangle.h"
 
+#include "Geometry/Triangle.h"
 #include "GPUDetected/DeviceId.h"
 
 // Components

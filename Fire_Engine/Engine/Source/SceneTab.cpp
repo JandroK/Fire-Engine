@@ -3,6 +3,7 @@
 
 // Module 
 #include "Camera3D.h"
+#include "Editor.h"
 
 SceneTab::SceneTab() : Tab()
 {
@@ -22,6 +23,9 @@ void SceneTab::Draw()
 		ImVec2 size = ImGui::GetContentRegionAvail();
 		app->camera->cameraScene.RecalculateProjection(size.x / size.y);
 		ImGui::Image((ImTextureID)app->camera->cameraScene.texColorBuffer, size, ImVec2(0, 1), ImVec2(1, 0));
+
+		if(app->editor->GetGameObjectSelected() != nullptr)
+			app->camera->DrawGuizmo(app->editor->GetGameObjectSelected());
 	}
 	ImGui::End();
 }

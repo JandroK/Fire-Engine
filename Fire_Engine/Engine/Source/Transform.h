@@ -5,6 +5,8 @@
 #include"Math/float3.h"
 #include"Math/Quat.h"
 
+//#include "Guizmo/ImGuizmo.h"
+
 class Transform : public Component
 {
 public:
@@ -13,6 +15,8 @@ public:
 
 	void Update() override;
 	void OnEditor() override;
+
+	void CheckStateOperation();
 
 	float3 GetPosition() { return position; };
 	void SetPosition(float3 pos) { position = pos; };
@@ -32,6 +36,8 @@ public:
 	float3 GetUp();
 	float3 GetRight();
 	float3 GetNormalizeAxis(int i);
+
+
 
 private:
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);

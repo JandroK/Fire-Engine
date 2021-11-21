@@ -37,6 +37,8 @@ void Transform::OnEditor()
 	// There is more code but it is more efficient
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		CheckStateOperation();
+
 		ImGui::Text("Position: ");
 		if (ImGui::DragFloat3("##Position", &position[0], 0.1f, true))
 		{
@@ -80,6 +82,16 @@ void Transform::OnEditor()
 			
 			updateTransform = true;
 		}
+
+		/*if (operation != ImGuizmo::SCALE)
+		{
+			if (ImGui::RadioButton("Local", mode == ImGuizmo::LOCAL))
+				mode = ImGuizmo::LOCAL;
+			ImGui::SameLine();
+			if (ImGui::RadioButton("World", mode == ImGuizmo::WORLD))
+				mode = ImGuizmo::WORLD;
+		}*/
+
 		ImGui::NewLine();
 		// Reset Transform
 		if (ImGui::Button("Reset Transform"))
@@ -89,6 +101,24 @@ void Transform::OnEditor()
 		if (updateTransform)
 			UpdateTransform();
 	}
+}
+
+void Transform::CheckStateOperation()
+{
+	//if (ImGui::IsKeyPressed(90))
+	//	operation = ImGuizmo::TRANSLATE;
+	//if (ImGui::IsKeyPressed(69))
+	//	operation = ImGuizmo::ROTATE;
+	//if (ImGui::IsKeyPressed(82)) // r Key
+	//	operation = ImGuizmo::SCALE;
+	//if (ImGui::RadioButton("Translate", operation == ImGuizmo::TRANSLATE))
+	//	operation = ImGuizmo::TRANSLATE;
+	//ImGui::SameLine();
+	//if (ImGui::RadioButton("Rotate", operation == ImGuizmo::ROTATE))
+	//	operation = ImGuizmo::ROTATE;
+	//ImGui::SameLine();
+	//if (ImGui::RadioButton("Scale", operation == ImGuizmo::SCALE))
+	//	operation = ImGuizmo::SCALE;
 }
 
 // Update globalTransform of children from the component owner
