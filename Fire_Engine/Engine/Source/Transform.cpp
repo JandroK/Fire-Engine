@@ -127,12 +127,15 @@ void Transform::CheckStateMode()
 
 void Transform::CheckStateOperation()
 {
-	if (ImGui::IsKeyPressed(90))
+	if (ImGui::IsKeyPressed(26)) //SDL_SCANCODE_W = 26
 		app->camera->operation = ImGuizmo::TRANSLATE;
-	if (ImGui::IsKeyPressed(69))
+	if (ImGui::IsKeyPressed(8)) //SDL_SCANCODE_E = 8
 		app->camera->operation = ImGuizmo::ROTATE;
-	if (ImGui::IsKeyPressed(82)) // r Key
+	if (ImGui::IsKeyPressed(21)) //SDL_SCANCODE_R = 21
 		app->camera->operation = ImGuizmo::SCALE;
+	if (ImGui::IsKeyPressed(23)) //SDL_SCANCODE_T = 23
+		app->camera->operation = ImGuizmo::BOUNDS;
+
 	if (ImGui::RadioButton("Translate", app->camera->operation == ImGuizmo::TRANSLATE))
 		app->camera->operation = ImGuizmo::TRANSLATE;
 	ImGui::SameLine();
@@ -141,6 +144,9 @@ void Transform::CheckStateOperation()
 	ImGui::SameLine();
 	if (ImGui::RadioButton("Scale", app->camera->operation == ImGuizmo::SCALE))
 		app->camera->operation = ImGuizmo::SCALE;
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Bounds", app->camera->operation == ImGuizmo::BOUNDS))
+		app->camera->operation = ImGuizmo::BOUNDS;
 }
 
 // Update globalTransform of children from the component owner

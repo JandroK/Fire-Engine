@@ -93,14 +93,18 @@ void Camera3D::DrawGuizmo(GameObject* obj)
 	ImGuizmo::Enable(true);
 
 	Transform* transform = static_cast<Transform*>(obj->GetComponent(ComponentType::TRANSFORM));
+	MeshRenderer* mesh = static_cast<MeshRenderer*>(obj->GetComponent(ComponentType::MESHRENDERER));
 	ImVec2 cornerPos = ImGui::GetWindowPos();
 	ImVec2 size = ImGui::GetContentRegionMax();
 	ImGuizmo::SetRect(cornerPos.x, cornerPos.y, size.x, size.y);
 	ImGuizmo::SetDrawlist();
 
 	float4x4 matrix = transform->GetGlobalTransform().Transposed();
+	float3 points[8];
+	mesh->globalAABB.GetCornerPoints(points);
+	float boundSnap = 1.0f;
 
-	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, matrix.ptr())
+	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, matrix.ptr(),0,0, points->ptr(), &boundSnap)
 		&& app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		transform->SetTransformMFromM(matrix.Transposed());
 }
@@ -112,16 +116,16 @@ void Camera3D::CheckInputsKeyBoard()
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		speed *= 2;
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += speed;
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= speed;
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) newPos.y += speed;
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) newPos.y -= speed;
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) Focus();
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += front * speed;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= front * speed;
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) newPos += front * speed;
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) newPos -= front * speed;
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += right * speed;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) newPos += right * speed;
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) newPos -= right * speed;
 
 	position += newPos;
 	reference += newPos;
