@@ -32,7 +32,6 @@ const char* Resource::GetFormatExt()
 {
 	switch (type)
 	{
-	case ResourceType::TEXTURE: return "ftx";
 	case ResourceType::MESH: return "fme";
 	default: return "unknown";
 	}

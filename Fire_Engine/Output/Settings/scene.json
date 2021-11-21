@@ -1,0 +1,22 @@
+{
+    "GameObjects": {
+        "Root": {
+            "Child": {
+                "BakerHouse": {}
+            },
+            "IsRoot": true,
+            "active": true,
+            "isStatic": false,
+            "isSelected": false,
+            "name": "Root",
+            "tag": "Untagged",
+            "layer": "0: Default",
+            "showChildrens": false,
+            "pendingToDelete": false,
+            "components": {},
+            "hild": {
+                "MainCamera": {}
+            }
+        }
+    }
+}

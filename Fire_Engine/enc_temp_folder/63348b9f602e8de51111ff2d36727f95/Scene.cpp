@@ -147,7 +147,6 @@ GameObject* Scene::CreatePrimitive(const char* name, Mesh* mesh)
 	MeshRenderer* meshRenderer;
 	meshRenderer = static_cast<MeshRenderer*>(primitive->AddComponent(ComponentType::MESHRENDERER));
 	meshRenderer->SetMesh(mesh);
-	meshRenderer->SetBoundingBoxes(mesh);
 
 	root->AddChildren(primitive);
 
@@ -157,7 +156,7 @@ GameObject* Scene::CreatePrimitive(const char* name, Mesh* mesh)
 void Scene::Destroy(GameObject* obj)
 {
 	// Deselect actual gameObjectSelected
-	app->editor->SetGameObjectSelected(nullptr);
+	static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = nullptr;
 
 	// First, must unpin the object from the children list of his father, after will can delete object
 	for (std::vector<GameObject*>::iterator i = obj->GetParent()->GetBeginChildren(); i != obj->GetParent()->GetEndChildren(); ++i)
@@ -200,7 +199,7 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 	//node.SetChild(node.GetRootValue(), "Child");
 	for (size_t i = 0; i < parentGO->GetChildrens().size(); i++)
 	{
-		SaveGameObjects(parentGO->GetChildrens()[i], node.SetChild(node.SetChild(node.GetRootValue(), "Child").GetRootValue(), parentGO->GetChildrens()[i]->name.c_str()));
+		SaveGameObjects(parentGO->GetChildrens()[i], node.SetChild(node.SetChild(node.GetRootValue(), ("Child"+i)).GetRootValue(), parentGO->GetChildrens()[i]->name.c_str()));
 
 		node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
 

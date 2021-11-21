@@ -7,6 +7,7 @@
 #include "Window.h"
 #include "Input.h"
 #include "Camera3D.h"
+#include "ResourceManager.h"
 
 // Tabs
 #include "Tab.h"
@@ -139,6 +140,7 @@ void Editor::CheckShortCuts()
 	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
 		app->scene->CreateGameObjectParent("GameObjectParent", GetGameObjectSelected());
 	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP) warningTab = true;
+	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) App->scene->SaveSceneRequest();
 }
 
 update_status Editor::Draw()
@@ -161,6 +163,7 @@ update_status Editor::Draw()
 		if (DrawWarningTab("New Scene")) NewScene();
 	if (app->input->GetQuit())
 		if (DrawWarningTab("Exit Engine")) ret = UPDATE_STOP;
+	if (app->resourceManager->GetOverwritting()) app->resourceManager->DrawOverwriteTab();
 
 	ImGui::EndFrame();
 	ImGui::Render();
@@ -227,6 +230,9 @@ update_status Editor::ImGuiMenuBar()
 
 			if (ImGui::MenuItem("New Scene","Ctrl+N"))
 				warningTab = true;
+
+			if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
+				app->scene->SaveSceneRequest();
 
 			ImGui::EndMenu();
 		}
