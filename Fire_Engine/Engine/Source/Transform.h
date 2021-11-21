@@ -25,10 +25,11 @@ public:
 	void SetEulerRotaion(float3 rot) { eulerRotation = rot; };
 
 	void SetTransformMatrix(float3 position, Quat rotation, float3 localScale, Transform* parent);
-	void SetTransformMFromGlobalM(float4x4 globalMatrix);
+	void SetTransformMFromM(float4x4 matrix);
 
 	float4x4 GetGlobalTransform() {return globalTransform;};
 	float4x4 GetGlobalTransformT() { return globalTransformTransposed; };
+	float4x4 GetLocalTransform() { return localTransform; };
 
 	void UpdateTransform();
 	void NewAttachment();

@@ -63,7 +63,12 @@ void Transform::OnEditor()
 
 void Transform::EditTransform(float4x4& trans, float3& pos, Quat& rot, float3& euler, float3& scale)
 {
-	ImGui::Text("Position: ");
+	std::string reference;
+	if (app->camera->mode == ImGuizmo::LOCAL)
+		reference = "local";
+	else reference = "global";
+
+	ImGui::Text("Position %s: ", reference.c_str());
 	if (ImGui::DragFloat3("##Position", &pos[0], 0.1f, true))
 	{
 		// Only overwrite position
@@ -71,7 +76,7 @@ void Transform::EditTransform(float4x4& trans, float3& pos, Quat& rot, float3& e
 		updateTransform = true;
 	}
 
-	ImGui::Text("Rotation: ");
+	ImGui::Text("Rotation %s: ", reference.c_str());
 	if (ImGui::DragFloat3("##Rotation", &euler[0], 0.1f, true))
 	{
 		// We need to do this because otherwise in the inspector the rotation "?" and "?" are "-0" instead of "0" 
@@ -91,7 +96,7 @@ void Transform::EditTransform(float4x4& trans, float3& pos, Quat& rot, float3& e
 		updateTransform = true;
 	}
 
-	ImGui::Text("Scale: ");
+	ImGui::Text("Scale %s: ", reference.c_str());
 	if (ImGui::DragFloat3("##Scale", &scale[0], 0.1f, true))
 	{
 		// If the rotation has not been modified (quaternion = identity) then only overwrite scale
@@ -230,11 +235,13 @@ void Transform::SetTransformMatrix(float3 position, Quat rotation, float3 localS
 	}
 }
 
-void Transform::SetTransformMFromGlobalM(float4x4 globalMatrix)
+void Transform::SetTransformMFromM(float4x4 matrix)
 {
-	globalTransform = globalMatrix;
-	localTransform = GetOwner()->GetParent()->transform->globalTransform.Inverted() * globalTransform;
+	globalTransform = matrix;
+	globalTransform.Decompose(worldPosition, worldRotation, worldScale);
+	worldEulerRotation = worldRotation.ToEulerXYZ() * RADTODEG;
 
+	localTransform = GetOwner()->GetParent()->transform->globalTransform.Inverted() * globalTransform;
 	localTransform.Decompose(position, rotation, scale);
 	eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
 

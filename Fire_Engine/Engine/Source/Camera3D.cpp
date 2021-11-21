@@ -93,15 +93,16 @@ void Camera3D::DrawGuizmo(GameObject* obj)
 	ImGuizmo::Enable(true);
 
 	Transform* transform = static_cast<Transform*>(obj->GetComponent(ComponentType::TRANSFORM));
-	float4x4 matrix = transform->GetGlobalTransformT();
 	ImVec2 cornerPos = ImGui::GetWindowPos();
 	ImVec2 size = ImGui::GetContentRegionMax();
-
 	ImGuizmo::SetRect(cornerPos.x, cornerPos.y, size.x, size.y);
 	ImGuizmo::SetDrawlist();
+
+	float4x4 matrix = transform->GetGlobalTransform().Transposed();
+
 	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, matrix.ptr())
 		&& app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
-		transform->SetTransformMFromGlobalM(matrix.Transposed());
+		transform->SetTransformMFromM(matrix.Transposed());
 }
 
 void Camera3D::CheckInputsKeyBoard()
