@@ -21,8 +21,10 @@ Transform::Transform(GameObject* obj) : Component(obj)
 	localTransform.SetIdentity();
 
 	localTransform.Decompose(position, rotation, scale);
+	globalTransform.Decompose(worldPosition, worldRotation, worldScale);
 
 	eulerRotation = rotation.ToEulerXYZ();
+	worldEulerRotation = worldRotation.ToEulerXYZ();
 
 	globalTransformTransposed = globalTransform.Transposed();
 }
@@ -42,49 +44,9 @@ void Transform::OnEditor()
 	{
 		CheckStateOperation();
 
-		ImGui::Text("Position: ");
-		if (ImGui::DragFloat3("##Position", &position[0], 0.1f, true))
-		{
-			// Only overwrite position
-			localTransform.SetCol3(3, position);
-			updateTransform = true;
-		}
-
-		ImGui::Text("Rotation: ");
-		if (ImGui::DragFloat3("##Rotation", &eulerRotation[0], 0.1f, true))
-		{
-			// We need to do this because otherwise in the inspector the rotation "?" and "?" are "-0" instead of "0" 
-			if (eulerRotation[0] == 0) eulerRotation[0] = 0;
-			if (eulerRotation[2] == 0) eulerRotation[2] = 0;
-
-			// Calculate quaternion
-			rotation = Quat::FromEulerXYZ(eulerRotation.x * DEGTORAD, eulerRotation.y * DEGTORAD, eulerRotation.z * DEGTORAD);
-
-			// If the scale has not been modified (sum of the diagonal of matrix = 0) then only overwrite rotate
-			// But if the scale yes has been modified then float3x3(rotate) * float3x3::Scale(scale)
-			if (localTransform.Trace() == 0)
-				localTransform.SetRotatePart(rotation);
-			else
-				localTransform.SetRotatePart(float3x3::FromRS(rotation, scale));
-
-			updateTransform = true;
-		}
-
-		ImGui::Text("Scale: ");
-		if (ImGui::DragFloat3("##Scale", &scale[0], 0.1f, true))
-		{
-			// If the rotation has not been modified (quaternion = identity) then only overwrite scale
-			// But if the rotation yes has been modified then float3x3(rotate) * float3x3::Scale(scale)
-			if (rotation.Equals(Quat::identity))
-			{
-				localTransform[0][0] = scale.x;
-				localTransform[1][1] = scale.y;
-				localTransform[2][2] = scale.z;
-			}
-			else localTransform.SetRotatePart(float3x3::FromRS(rotation, scale));
-			
-			updateTransform = true;
-		}
+		if(app->camera->mode == ImGuizmo::LOCAL)
+			EditTransform(localTransform, position, rotation, eulerRotation, scale);
+		else EditTransform(globalTransform, worldPosition, worldRotation, worldEulerRotation, worldScale);
 
 		CheckStateMode();
 
@@ -96,6 +58,53 @@ void Transform::OnEditor()
 		// If some transfomr has been modify update them
 		if (updateTransform)
 			UpdateTransform();
+	}
+}
+
+void Transform::EditTransform(float4x4& trans, float3& pos, Quat& rot, float3& euler, float3& scale)
+{
+	ImGui::Text("Position: ");
+	if (ImGui::DragFloat3("##Position", &pos[0], 0.1f, true))
+	{
+		// Only overwrite position
+		trans.SetCol3(3, pos);
+		updateTransform = true;
+	}
+
+	ImGui::Text("Rotation: ");
+	if (ImGui::DragFloat3("##Rotation", &euler[0], 0.1f, true))
+	{
+		// We need to do this because otherwise in the inspector the rotation "?" and "?" are "-0" instead of "0" 
+		if (euler[0] == 0) euler[0] = 0;
+		if (euler[2] == 0) euler[2] = 0;
+
+		// Calculate quaternion
+		rot = Quat::FromEulerXYZ(euler.x * DEGTORAD, euler.y * DEGTORAD, euler.z * DEGTORAD);
+
+		// If the scale has not been modified (sum of the diagonal of matrix = 0) then only overwrite rotate
+		// But if the scale yes has been modified then float3x3(rotate) * float3x3::Scale(scale)
+		if (trans.Trace() == 0)
+			trans.SetRotatePart(rot);
+		else
+			trans.SetRotatePart(float3x3::FromRS(rot, scale));
+
+		updateTransform = true;
+	}
+
+	ImGui::Text("Scale: ");
+	if (ImGui::DragFloat3("##Scale", &scale[0], 0.1f, true))
+	{
+		// If the rotation has not been modified (quaternion = identity) then only overwrite scale
+		// But if the rotation yes has been modified then float3x3(rotate) * float3x3::Scale(scale)
+		if (rot.Equals(Quat::identity))
+		{
+			trans[0][0] = scale.x;
+			trans[1][1] = scale.y;
+			trans[2][2] = scale.z;
+		}
+		else trans.SetRotatePart(float3x3::FromRS(rot, scale));
+
+		updateTransform = true;
 	}
 }
 
@@ -146,7 +155,29 @@ void Transform::UpdateTransform()
 
 			if (parentTra != nullptr) {
 				// global = global parent * local
-				transformsToUpdate[i]->globalTransform = parentTra->globalTransform * transformsToUpdate[i]->localTransform;
+				if (app->camera->mode == ImGuizmo::LOCAL)
+				{
+					transformsToUpdate[i]->globalTransform = parentTra->globalTransform * transformsToUpdate[i]->localTransform;
+					transformsToUpdate[i]->globalTransform.Decompose(transformsToUpdate[i]->worldPosition, transformsToUpdate[i]->worldRotation, transformsToUpdate[i]->worldScale);
+					transformsToUpdate[i]->worldEulerRotation = transformsToUpdate[i]->worldRotation.ToEulerXYZ() * RADTODEG;
+				}
+				// local = global parent inverse * global
+				else
+				{
+					if (i == 0)
+					{
+						localTransform = parentTra->globalTransform.Inverted() * globalTransform;
+						localTransform.Decompose(position, rotation, scale);
+						eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
+					}
+					else
+					{
+						transformsToUpdate[i]->globalTransform = parentTra->globalTransform * transformsToUpdate[i]->localTransform;
+						transformsToUpdate[i]->globalTransform.Decompose(transformsToUpdate[i]->worldPosition, transformsToUpdate[i]->worldRotation, transformsToUpdate[i]->worldScale);
+						transformsToUpdate[i]->worldEulerRotation = transformsToUpdate[i]->worldRotation.ToEulerXYZ() * RADTODEG;
+					}
+				}
+
 				transformsToUpdate[i]->globalTransformTransposed = transformsToUpdate[i]->globalTransform.Transposed();
 
 				//Update Bounding Boxes

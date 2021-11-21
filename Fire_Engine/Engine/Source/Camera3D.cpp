@@ -178,7 +178,7 @@ void Camera3D::OrbitRotation()
 		float3 posGO = { 0, 0, 0 };
 
 		if (gameObject != nullptr)
-			posGO = gameObject->transform->GetPosition();
+			posGO = gameObject->transform->GetGlobalTransform().Col3(3);
 
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();
