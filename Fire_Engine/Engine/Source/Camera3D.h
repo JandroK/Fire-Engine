@@ -21,7 +21,8 @@ public:
 	void DrawGuizmo(GameObject* obj);
 	bool CleanUp() override;
 
-	void CheckInputs();
+	void CheckInputsKeyBoard();
+	void CheckInputsMouse();
 	void GenerateRay();
 	ImVec2 NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point);
 
@@ -39,8 +40,6 @@ private:
 	bool SaveConfig(JsonParser& node)const override;
 	bool LoadConfig(JsonParser& node) override;
 
-	ImGuizmo::OPERATION operation;
-	ImGuizmo::MODE mode;
 
 public:
 	
@@ -51,7 +50,10 @@ public:
 	ComponentCamera cameraScene;
 	LineSegment ray;
 
+	ImGuizmo::OPERATION operation;
+	ImGuizmo::MODE mode;
+
 	float cameraSpeed = 10.0f;
-	float zoomSpeed = 5.0f;
+	float zoomSpeed = 50.0f;
 	float cameraSensitivity = 0.1f;
 };

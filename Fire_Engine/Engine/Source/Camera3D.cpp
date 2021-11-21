@@ -77,7 +77,7 @@ void Camera3D::OnGUI()
 		ImGui::SliderFloat("Far plane", &cameraScene.frustrum.farPlaneDistance, 11, 500);
 
 		ImGui::SliderFloat("Speed mov", &cameraSpeed, 1, 100);
-		ImGui::SliderFloat("Speed zoom", &zoomSpeed, 1, 50);
+		ImGui::SliderFloat("Speed zoom", &zoomSpeed, 1, 200);
 		ImGui::SliderFloat("Sensitivity", &cameraSensitivity, 0.01f, 0.5);
 
 		ImGui::PopItemWidth();
@@ -93,19 +93,18 @@ void Camera3D::DrawGuizmo(GameObject* obj)
 	ImGuizmo::Enable(true);
 
 	Transform* transform = static_cast<Transform*>(obj->GetComponent(ComponentType::TRANSFORM));
+	float4x4 matrix = transform->GetGlobalTransformT();
 	ImVec2 cornerPos = ImGui::GetWindowPos();
 	ImVec2 size = ImGui::GetContentRegionMax();
 
-	int offset = ImGui::GetFrameHeight() / 2;
-	ImGuizmo::SetRect(cornerPos.x, cornerPos.y + offset, size.x, size.y);
+	ImGuizmo::SetRect(cornerPos.x, cornerPos.y, size.x, size.y);
 	ImGuizmo::SetDrawlist();
-	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, transform->GetGlobalTransformT()))
-	{
-
-	}
+	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, matrix.ptr())
+		&& app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		transform->SetTransformMFromGlobalM(matrix.Transposed());
 }
 
-void Camera3D::CheckInputs()
+void Camera3D::CheckInputsKeyBoard()
 {
 	float3 newPos = float3::zero;
 	float speed = cameraSpeed * app->GetDt();
@@ -120,11 +119,21 @@ void Camera3D::CheckInputs()
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos += front * speed;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos -= front * speed;
 
-
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos += right * speed;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
 
-	newPos += zoomSpeed * front * app->input->GetWheel();
+	position += newPos;
+	reference += newPos;
+
+	// Recalculate matrix -------------
+	if (!newPos.Equals(float3::zero)) CalculateViewMatrix();
+}
+
+void Camera3D::CheckInputsMouse()
+{
+	float3 newPos = float3::zero;
+	float speed = zoomSpeed * app->GetDt();
+	newPos += speed * front * app->input->GetWheel();
 
 	position += newPos;
 	reference += newPos;
@@ -136,7 +145,7 @@ void Camera3D::CheckInputs()
 	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) GenerateRay();
 
 	// Recalculate matrix -------------
-	if(!newPos.Equals(float3::zero)) CalculateViewMatrix();
+	if (!newPos.Equals(float3::zero)) CalculateViewMatrix();
 }
 
 void Camera3D::GenerateRay()

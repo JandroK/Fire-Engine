@@ -43,7 +43,7 @@ void MeshRenderer::RenderMesh()
 	{
 		// Push the Matrix to OpenGL
 		glPushMatrix();
-		glMultMatrixf(GetOwner()->transform->GetGlobalTransformT());
+		glMultMatrixf(GetOwner()->transform->GetGlobalTransformT().ptr());
 
 		// Get material component 
 		Material* material = static_cast<Material*>(GetOwner()->GetComponent(ComponentType::MATERIAL));

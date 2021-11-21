@@ -11,6 +11,9 @@
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/Math/TransformOps.h"
 
+#include "Guizmo/ImGuizmo.h"
+#include "Camera3D.h"
+
 Transform::Transform(GameObject* obj) : Component(obj)
 {
 	// Inicialize transforms
@@ -83,14 +86,7 @@ void Transform::OnEditor()
 			updateTransform = true;
 		}
 
-		/*if (operation != ImGuizmo::SCALE)
-		{
-			if (ImGui::RadioButton("Local", mode == ImGuizmo::LOCAL))
-				mode = ImGuizmo::LOCAL;
-			ImGui::SameLine();
-			if (ImGui::RadioButton("World", mode == ImGuizmo::WORLD))
-				mode = ImGuizmo::WORLD;
-		}*/
+		CheckStateMode();
 
 		ImGui::NewLine();
 		// Reset Transform
@@ -103,22 +99,34 @@ void Transform::OnEditor()
 	}
 }
 
+void Transform::CheckStateMode()
+{
+	if (app->camera->operation != ImGuizmo::SCALE)
+	{
+		if (ImGui::RadioButton("Local", app->camera->mode == ImGuizmo::LOCAL))
+			app->camera->mode = ImGuizmo::LOCAL;
+		ImGui::SameLine();
+		if (ImGui::RadioButton("World", app->camera->mode == ImGuizmo::WORLD))
+			app->camera->mode = ImGuizmo::WORLD;
+	}
+}
+
 void Transform::CheckStateOperation()
 {
-	//if (ImGui::IsKeyPressed(90))
-	//	operation = ImGuizmo::TRANSLATE;
-	//if (ImGui::IsKeyPressed(69))
-	//	operation = ImGuizmo::ROTATE;
-	//if (ImGui::IsKeyPressed(82)) // r Key
-	//	operation = ImGuizmo::SCALE;
-	//if (ImGui::RadioButton("Translate", operation == ImGuizmo::TRANSLATE))
-	//	operation = ImGuizmo::TRANSLATE;
-	//ImGui::SameLine();
-	//if (ImGui::RadioButton("Rotate", operation == ImGuizmo::ROTATE))
-	//	operation = ImGuizmo::ROTATE;
-	//ImGui::SameLine();
-	//if (ImGui::RadioButton("Scale", operation == ImGuizmo::SCALE))
-	//	operation = ImGuizmo::SCALE;
+	if (ImGui::IsKeyPressed(90))
+		app->camera->operation = ImGuizmo::TRANSLATE;
+	if (ImGui::IsKeyPressed(69))
+		app->camera->operation = ImGuizmo::ROTATE;
+	if (ImGui::IsKeyPressed(82)) // r Key
+		app->camera->operation = ImGuizmo::SCALE;
+	if (ImGui::RadioButton("Translate", app->camera->operation == ImGuizmo::TRANSLATE))
+		app->camera->operation = ImGuizmo::TRANSLATE;
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Rotate", app->camera->operation == ImGuizmo::ROTATE))
+		app->camera->operation = ImGuizmo::ROTATE;
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Scale", app->camera->operation == ImGuizmo::SCALE))
+		app->camera->operation = ImGuizmo::SCALE;
 }
 
 // Update globalTransform of children from the component owner
@@ -189,6 +197,19 @@ void Transform::SetTransformMatrix(float3 position, Quat rotation, float3 localS
 		globalTransform = parent->globalTransform * localTransform;
 		globalTransformTransposed = (parent->globalTransform * localTransform).Transposed();
 	}
+}
+
+void Transform::SetTransformMFromGlobalM(float4x4 globalMatrix)
+{
+	globalTransform = globalMatrix;
+	localTransform = GetOwner()->GetParent()->transform->globalTransform.Inverted() * globalTransform;
+
+	localTransform.Decompose(position, rotation, scale);
+	eulerRotation = rotation.ToEulerXYZ() * RADTODEG;
+
+	globalTransformTransposed = globalTransform.Transposed();
+
+	updateTransform = true;
 }
 
 void Transform::NewAttachment()

@@ -5,8 +5,6 @@
 #include"Math/float3.h"
 #include"Math/Quat.h"
 
-//#include "Guizmo/ImGuizmo.h"
-
 class Transform : public Component
 {
 public:
@@ -16,6 +14,8 @@ public:
 	void Update() override;
 	void OnEditor() override;
 
+	void CheckStateMode();
+
 	void CheckStateOperation();
 
 	float3 GetPosition() { return position; };
@@ -23,8 +23,10 @@ public:
 	void SetEulerRotaion(float3 rot) { eulerRotation = rot; };
 
 	void SetTransformMatrix(float3 position, Quat rotation, float3 localScale, Transform* parent);
+	void SetTransformMFromGlobalM(float4x4 globalMatrix);
+
 	float4x4 GetGlobalTransform() {return globalTransform;};
-	float* GetGlobalTransformT() {return globalTransformTransposed.ptr();};
+	float4x4 GetGlobalTransformT() { return globalTransformTransposed; };
 
 	void UpdateTransform();
 	void NewAttachment();
@@ -37,9 +39,8 @@ public:
 	float3 GetRight();
 	float3 GetNormalizeAxis(int i);
 
-
-
 private:
+
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);
 
 	bool updateTransform = false;

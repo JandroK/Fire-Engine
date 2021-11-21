@@ -14,11 +14,10 @@ void SceneTab::Draw()
 {
 	if (ImGui::Begin(name.c_str(), &active, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse))
 	{
-		// Check if some key/mouseButton are pressed
 		if (ImGui::IsWindowHovered())
-		{
-			app->camera->CheckInputs();
-		}
+			app->camera->CheckInputsMouse();
+
+		app->camera->CheckInputsKeyBoard();
 
 		ImVec2 size = ImGui::GetContentRegionAvail();
 		app->camera->cameraScene.RecalculateProjection(size.x / size.y);
