@@ -72,6 +72,8 @@ public:
 	std::vector<MeshRenderer*> renderQueue;
 
 private:
+	PrimitivePlane plane;
+
 	Hardware hardware;
 	bool depthTest = true;
 	bool cullFace = true;
@@ -87,4 +89,6 @@ private:
 	float fogStart = 10.0f;
 	float fogEnd = 40.0f;
 	float fogDensity = 1.0f;	
+	float oldFarPlane = 100.0f;
+	float fogFarPlane = 45.0f;
 };

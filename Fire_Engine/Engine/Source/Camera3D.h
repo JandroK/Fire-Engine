@@ -33,6 +33,8 @@ public:
 	void OrbitRotation();
 	void CalculateViewMatrix();
 
+	float* GetFarPlane() { return &cameraScene.frustrum.farPlaneDistance; }; // Used to change far plane when fog is active
+
 private:
 	void Focus();
 	void FrontView();

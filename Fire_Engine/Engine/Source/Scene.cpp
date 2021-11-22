@@ -39,7 +39,6 @@ bool Scene::Init()
 
 	jsonFile.FileToValue(SCENE_CONFIG);
 
-
 	return true;
 }
 
