@@ -2,7 +2,8 @@
     "GameObjects": {
         "Root": {
             "Child": {
-                "BakerHouse": {}
+                "BakerHouse": {},
+                "MainCamera": {}
             },
             "IsRoot": true,
             "active": true,
@@ -13,9 +14,8 @@
             "layer": "0: Default",
             "showChildrens": false,
             "pendingToDelete": false,
-            "components": {},
-            "hild": {
-                "MainCamera": {}
+            "components": {
+                "pendingToDelete": false
             }
         }
     }
