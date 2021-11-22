@@ -72,6 +72,8 @@ public:
 	std::vector<MeshRenderer*> renderQueue;
 
 private:
+	PrimitivePlane plane;
+
 	Hardware hardware;
 	bool depthTest = true;
 	bool cullFace = true;

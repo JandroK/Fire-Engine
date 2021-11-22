@@ -186,6 +186,9 @@ bool Renderer3D::Init()
 	// Projection matrix for
 	OnResize(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 
+	plane = PrimitivePlane(0, 1, 0, 0);
+	plane.axis = true;
+
 	return ret;
 }
 
@@ -208,9 +211,7 @@ update_status Renderer3D::PostUpdate(float dt)
 {
 	update_status ret = UPDATE_CONTINUE;
 	
-	PrimitivePlane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
+	plane.Render();
 
 	// Comprobe wireframe mode
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -241,9 +242,7 @@ update_status Renderer3D::PostUpdate(float dt)
 		for (uint i = 0; i < MAX_LIGHTS; ++i)
 			lights[i].Render();
 
-		PrimitivePlane p(0, 1, 0, 0);
-		p.axis = true;
-		p.Render();
+		plane.Render();
 
 		// Draw all meshes
 		if (!renderQueue.empty())
