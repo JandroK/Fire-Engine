@@ -304,6 +304,8 @@ bool Renderer3D::CleanUp()
 
 	SDL_GL_DeleteContext(context);
 
+	RELEASE(plane.mesh);
+
 	return true;
 }
 
