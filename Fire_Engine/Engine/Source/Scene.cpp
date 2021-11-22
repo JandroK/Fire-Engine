@@ -201,6 +201,11 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 	for (size_t i = 0; i <= parentGO->GetChildrens().size(); i++)
 	{
 
+		if (parentGO->GetChildrens().size() > i)
+		{
+			SaveGameObjects(parentGO->GetChildrens()[i], child.SetChild(child.GetRootValue(), parentGO->GetChildrens()[i]->name.c_str()));
+		}
+
 		node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
 
 		node.SetJBool(node.ValueToObject(node.GetRootValue()), "active", parentGO->active);
@@ -214,19 +219,15 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 		node.SetJBool(node.ValueToObject(node.GetRootValue()), "showChildrens", parentGO->GetShowChildrens());
 		node.SetJBool(node.ValueToObject(node.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
 
-		JsonParser& components =node.SetChild(node.GetRootValue(), "components");
-
+		JsonParser& components = node.SetChild(node.GetRootValue(), "components");
 		for (size_t i = 0; i < parentGO->GetCompoments().size(); i++)
 		{
 			components.SetJBool(components.ValueToObject(components.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
 			parentGO->GetCompoments().at(i)->GetType();
 		}
-		
-		if (parentGO->GetChildrens().size() > i)
-		{
-			SaveGameObjects(parentGO->GetChildrens()[i], node.SetChild(child.GetRootValue(), parentGO->GetChildrens()[i]->name.c_str()));
-		}
 	}
+
+	
 }
 
 bool Scene::LoadScene()
