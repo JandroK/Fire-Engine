@@ -46,6 +46,8 @@ public:
 	GameObject* GetGameObjectSelected();
 	void SetGameObjectSelected(GameObject* obj);
 
+	void AlignWithView();
+
 	bool CleanUp() override;
 
 	void CreateDockSpace();

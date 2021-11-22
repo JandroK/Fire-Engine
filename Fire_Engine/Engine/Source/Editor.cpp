@@ -20,6 +20,7 @@
 #include "GameTab.h"
 
 #include "Primitive.h"
+#include "Transform.h"
 
 Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 {	
@@ -133,14 +134,42 @@ void Editor::StartFrame()
 
 void Editor::CheckShortCuts()
 {
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
-		app->scene->CreateGameObjectEmpty("GameObject");
-	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
-		app->scene->CreateGameObjectChild("GameObjectChild", GetGameObjectSelected());
-	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
-		app->scene->CreateGameObjectParent("GameObjectParent", GetGameObjectSelected());
-	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_N) == KEY_UP) warningTab = true;
-	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) App->scene->SaveSceneRequest();
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
+			{
+				app->scene->CreateGameObjectEmpty("GameObject");
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
+			{
+				app->scene->CreateGameObjectParent("GameObjectParent", GetGameObjectSelected());
+			}
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
+		{
+			warningTab = true;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+		{
+			App->scene->SaveSceneRequest();
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_UP)
+		{
+			AlignWithView();
+		}
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
+			{
+				app->scene->CreateGameObjectChild("GameObjectChild", GetGameObjectSelected());
+			}
+		}
+	}
 }
 
 update_status Editor::Draw()
@@ -249,6 +278,7 @@ update_status Editor::ImGuiMenuBar()
 		// Menu of game objects
 		if (ImGui::BeginMenu("Game Objects"))
 		{
+			ImGui::Text("---CREATE---");
 			if (ImGui::MenuItem("Create Empty", "Ctrl+Shift+N"))
 			{
 				app->scene->CreateGameObjectEmpty("GameObject");
@@ -269,6 +299,11 @@ update_status Editor::ImGuiMenuBar()
 			if (ImGui::MenuItem("Camera"))
 			{
 				app->scene->CreateCamera();
+			}
+			ImGui::Text("---OPTIONS---");
+			if (ImGui::MenuItem("Align with view", "Ctrl+L"))
+			{
+				AlignWithView();
 			}
 
 			ImGui::EndMenu();
@@ -403,4 +438,18 @@ void Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeF
 	ImGuiID dockspaceId = ImGui::GetID("DockSpace");
 	ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags, windowClass);
 	ImGui::End();
+}
+
+void Editor::AlignWithView()
+{
+	GameObject* temp = GetGameObjectSelected();
+	if (temp != nullptr)
+	{
+		Transform* transform = static_cast<Transform*>(temp->GetComponent(ComponentType::TRANSFORM));
+		float4x4 matrix = transform->GetGlobalTransform();
+		matrix.SetTranslatePart(app->camera->position);
+		float3x3 rot{ app->camera->right, app->camera->up, app->camera->front };
+		matrix.SetRotatePart(rot.ToQuat());
+		transform->SetTransformMFromM(matrix);
+	}
 }
