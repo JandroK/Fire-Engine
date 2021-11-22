@@ -186,7 +186,7 @@ bool Renderer3D::Init()
 	// Projection matrix for
 	OnResize(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 
-	plane.SetPos(0, 1, 0);
+	plane.SetPos(0, 0, 0);
 	plane.constant = 0;
 	plane.axis = true;
 	return ret;
@@ -303,8 +303,6 @@ bool Renderer3D::CleanUp()
 	renderQueue.clear();
 
 	SDL_GL_DeleteContext(context);
-
-	RELEASE(plane.mesh);
 
 	return true;
 }
