@@ -23,6 +23,7 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 	mode = ImGuizmo::MODE::WORLD;
 
 	ReStartCamera();
+	oldRotation = { right, front, up };
 }
 
 void Camera3D::ReStartCamera()

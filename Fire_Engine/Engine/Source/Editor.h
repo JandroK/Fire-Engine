@@ -47,6 +47,8 @@ public:
 	void SetGameObjectSelected(GameObject* obj);
 
 	void AlignWithView();
+	void AlignViewWithSelected();
+	void ResetViewRotation();
 
 	bool CleanUp() override;
 

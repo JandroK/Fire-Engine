@@ -146,6 +146,10 @@ void Editor::CheckShortCuts()
 			{
 				app->scene->CreateGameObjectParent("GameObjectParent", GetGameObjectSelected());
 			}
+			else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
+			{
+				AlignWithView();
+			}
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
 		{
@@ -154,10 +158,6 @@ void Editor::CheckShortCuts()
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
 		{
 			App->scene->SaveSceneRequest();
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_L) == KEY_UP)
-		{
-			AlignWithView();
 		}
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
@@ -168,6 +168,14 @@ void Editor::CheckShortCuts()
 			{
 				app->scene->CreateGameObjectChild("GameObjectChild", GetGameObjectSelected());
 			}
+			else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
+			{
+				AlignViewWithSelected();
+			}
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
+		{
+			ResetViewRotation();
 		}
 	}
 }
@@ -301,9 +309,17 @@ update_status Editor::ImGuiMenuBar()
 				app->scene->CreateCamera();
 			}
 			ImGui::Text("---OPTIONS---");
-			if (ImGui::MenuItem("Align with view", "Ctrl+L"))
+			if (ImGui::MenuItem("Align with view", "Ctrl+Shift+F"))
 			{
 				AlignWithView();
+			}
+			if (ImGui::MenuItem("Align view to selected", "Alt+Shift+F"))
+			{
+				AlignViewWithSelected();
+			}
+			if (ImGui::MenuItem("Reset view rotation", "Alt+F"))
+			{
+				ResetViewRotation();
 			}
 
 			ImGui::EndMenu();
@@ -452,4 +468,29 @@ void Editor::AlignWithView()
 		matrix.SetRotatePart(rot.ToQuat());
 		transform->SetTransformMFromM(matrix);
 	}
+}
+
+void Editor::AlignViewWithSelected()
+{
+	GameObject* temp = GetGameObjectSelected();
+	if (temp != nullptr)
+	{
+		Transform* transform = static_cast<Transform*>(temp->GetComponent(ComponentType::TRANSFORM));
+		float4x4 matrix = transform->GetGlobalTransform();
+
+		app->camera->position = transform->GetPosition();
+		float3x3 rot = matrix.RotatePart();
+		app->camera->right = rot.Col3(0);
+		app->camera->front = rot.Col3(1);
+		app->camera->up = rot.Col3(2);
+		app->camera->CalculateViewMatrix();
+	}
+}
+
+void Editor::ResetViewRotation()
+{
+		app->camera->right = app->camera->oldRotation.Col3(0);
+		app->camera->front = app->camera->oldRotation.Col3(1);
+		app->camera->up = app->camera->oldRotation.Col3(2);
+		app->camera->CalculateViewMatrix();
 }

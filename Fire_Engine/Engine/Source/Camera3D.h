@@ -46,6 +46,7 @@ private:
 public:
 	
 	float3 right, up, front, position, reference;
+	float3x3 oldRotation; // Used to reset view rotation
 
 	bool projectionIsDirty = false;
 
