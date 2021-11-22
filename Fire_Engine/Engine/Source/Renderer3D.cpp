@@ -429,13 +429,24 @@ void Renderer3D::OnGUI()
 					glFogi(GL_FOG_MODE, GL_EXP);
 					glFogf(GL_FOG_DENSITY, fogDensity);
 				}
-				gluPerspective(45.0f, 800.0f / 600.0f, 1.0f, 60.0f); // Con el fog podemos acercar el far clipping plane
+
+				// Set far plane nearer the camera when fog is active
+				float* newFarPlane = &app->scene->mainCamera->frustrum.farPlaneDistance;
+				oldFarPlane = *newFarPlane;
+				*newFarPlane = fogFarPlane;
+				gluPerspective(45.0f, 800.0f / 600.0f, 1.0f, *newFarPlane);
+				newFarPlane = nullptr;
 			}
-			else glDisable(GL_FOG);
+			else
+			{
+				glDisable(GL_FOG);
+				app->scene->mainCamera->frustrum.farPlaneDistance = oldFarPlane; // Reset camera far plane
+			}
 		}
 
 		if (fog)
 		{
+			if (app->scene->mainCamera->frustrum.farPlaneDistance != fogFarPlane) fogFarPlane = app->scene->mainCamera->frustrum.farPlaneDistance; // Not very efficient
 			ImGui::Text("----FOG----");
 
 			if (ImGui::Checkbox("Linear", &fogLinear) && fogExpo)
