@@ -290,7 +290,6 @@ update_status Editor::ImGuiMenuBar()
 		// Menu of game objects
 		if (ImGui::BeginMenu("Game Objects"))
 		{
-			ImGui::Text("---CREATE---");
 			if (ImGui::MenuItem("Create Empty", "Ctrl+Shift+N"))
 			{
 				app->scene->CreateGameObjectEmpty("GameObject");
@@ -312,22 +311,34 @@ update_status Editor::ImGuiMenuBar()
 			{
 				app->scene->CreateCamera();
 			}
-			ImGui::Text("---OPTIONS---");
-			if (ImGui::MenuItem("Align with view", "Ctrl+Shift+F"))
-			{
-				AlignWithView();
-			}
-			if (ImGui::MenuItem("Align view to selected", "Alt+Shift+F"))
-			{
-				AlignViewWithSelected();
-			}
+			ImGui::Separator();
 			if (ImGui::MenuItem("Reset view rotation", "Alt+F"))
 			{
 				ResetViewRotation();
 			}
+			bool isSelected = true;
+			if (GetGameObjectSelected() == nullptr) isSelected = false;
+			if (!isSelected)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(128, 128, 128, 255));
+				ImGui::PushStyleColor(ImGuiCol_HeaderHovered, IM_COL32(128, 128, 128, 100));
+			}
+			if (ImGui::MenuItem("Align with view", "Ctrl+Shift+F"))
+			{
+				if (isSelected) AlignWithView();
+			}
+			if (ImGui::MenuItem("Align view to selected", "Alt+Shift+F"))
+			{
+				if (isSelected) AlignViewWithSelected();
+			}
 			if (ImGui::MenuItem("Toggle Active State", "Alt+Shift+A"))
 			{
-				ToggleActiveState();
+				if (isSelected) ToggleActiveState();
+			}
+			if (!isSelected)
+			{
+				ImGui::PopStyleColor();
+				ImGui::PopStyleColor();
 			}
 
 			ImGui::EndMenu();
