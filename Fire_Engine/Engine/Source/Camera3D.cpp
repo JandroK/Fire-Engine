@@ -100,11 +100,8 @@ void Camera3D::DrawGuizmo(GameObject* obj)
 	ImGuizmo::SetDrawlist();
 
 	float4x4 matrix = transform->GetGlobalTransform().Transposed();
-	//float3 points[8];
-	//mesh->globalAABB.GetCornerPoints(points);
-	//float boundSnap = 1.0f;
 
-	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, matrix.ptr())//,0,0, points->ptr(), &boundSnap)
+	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, matrix.ptr())
 		&& app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		transform->SetTransformMFromM(matrix.Transposed());
 }
@@ -194,9 +191,21 @@ void Camera3D::OrbitRotation()
 			const float newDeltaY = (float)dy * cameraSensitivity;
 
 			reference = posGO;
-			Quat pivot = Quat::RotateY(up.y >= 0.f ? newDeltaX * .1f : -newDeltaX * .1f);
+			Quat pivot = Quat::RotateY(newDeltaX * .1f);
 
-			pivot = pivot * math::Quat::RotateAxisAngle(right, -newDeltaY * .1f);
+			if (abs(up.y) < 0.3f) // Avoid gimball lock on up & down apex
+			{
+				// Look down
+				if (position.y > reference.y && newDeltaY < 0.f)
+					pivot = pivot * math::Quat::RotateAxisAngle(right, newDeltaY * .1f);
+				// Look Up
+				if (position.y < reference.y && newDeltaY > 0.f)
+					pivot = pivot * math::Quat::RotateAxisAngle(right, newDeltaY * .1f);
+			}
+			else
+			{
+				pivot = pivot * math::Quat::RotateAxisAngle(right, newDeltaY * .1f);
+			}
 
 			position = pivot * (position - reference) + reference;
 
