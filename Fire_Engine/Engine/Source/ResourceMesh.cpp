@@ -10,6 +10,10 @@ Mesh::Mesh() : Resource(ResourceType::MESH)
 
 Mesh::~Mesh()
 {
+	CleanUp();
+}
+void Mesh::CleanUp()
+{
 	//Clear buffers (Should not happen on Mesh components)
 	if (indexBufferId != -1)
 		glDeleteBuffers(1, &indexBufferId);

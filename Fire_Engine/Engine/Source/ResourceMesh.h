@@ -48,6 +48,8 @@ public:
 	vec3 GetIndexVec(float* startValue);
 	void GenerateBounds();
 
+	void CleanUp();
+
 public:
 	// Buffers ID
 	uint indexBufferId = 0;

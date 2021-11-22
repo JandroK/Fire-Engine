@@ -300,6 +300,8 @@ bool Renderer3D::CleanUp()
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_TEXTURE_2D);
 
+	renderQueue.clear();
+
 	SDL_GL_DeleteContext(context);
 
 	return true;

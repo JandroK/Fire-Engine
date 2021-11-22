@@ -359,6 +359,9 @@ bool Editor::CleanUp()
 	RELEASE_VECTOR(tabs, tabs.size());
 	tabs.clear();
 
+	fpsLog.clear();
+	msLog.clear();
+
 	return ret;
 }
 
