@@ -172,6 +172,10 @@ void Editor::CheckShortCuts()
 			{
 				AlignViewWithSelected();
 			}
+			else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+			{
+				ToggleActiveState();
+			}
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
 		{
@@ -320,6 +324,10 @@ update_status Editor::ImGuiMenuBar()
 			if (ImGui::MenuItem("Reset view rotation", "Alt+F"))
 			{
 				ResetViewRotation();
+			}
+			if (ImGui::MenuItem("Toggle Active State", "Alt+Shift+A"))
+			{
+				ToggleActiveState();
 			}
 
 			ImGui::EndMenu();
@@ -493,4 +501,11 @@ void Editor::ResetViewRotation()
 		app->camera->front = app->camera->oldRotation.Col3(1);
 		app->camera->up = app->camera->oldRotation.Col3(2);
 		app->camera->CalculateViewMatrix();
+}
+
+void Editor::ToggleActiveState()
+{
+	GameObject* temp = GetGameObjectSelected();
+	if (temp != nullptr)
+		temp->active = !temp->active;
 }

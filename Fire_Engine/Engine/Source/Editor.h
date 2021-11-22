@@ -49,6 +49,7 @@ public:
 	void AlignWithView();
 	void AlignViewWithSelected();
 	void ResetViewRotation();
+	void ToggleActiveState();
 
 	bool CleanUp() override;
 
