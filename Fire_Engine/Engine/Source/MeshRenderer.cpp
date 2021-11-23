@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Material.h"
+//#include "Camera3D.h"
 
 #include "ImGui/imgui.h"
 
@@ -64,9 +65,35 @@ void MeshRenderer::RenderMesh()
 		if (vertexNormals || faceNormals)
 			mesh->DebugRender(&vertexNormals, &faceNormals);
 
-
 		// Pop the Matrix to OpenGL
 		glPopMatrix();
+
+		//Transform* outline = new Transform(GetOwner());
+		if (app->editor->GetGameObjectSelected() == GetOwner())
+		{
+			//float3 difference = (app->camera->position - this->GetCenterPointInWorldCoords()).Normalized() * 0.2f;
+			float4x4 matrix = GetOwner()->transform->GetGlobalTransform();
+			float4x4 reserve = matrix;
+
+			float scaleFactor = 1.01f;
+			//Scale is the matrix's diagonal
+			matrix[0][0] *= scaleFactor;
+			matrix[1][1] *= scaleFactor;
+			matrix[2][2] *= scaleFactor;
+			//matrix.SetTranslatePart(GetOwner()->transform->GetPosition()/* - difference*/);
+
+			GetOwner()->transform->UpdateTransform();
+			GetOwner()->transform->SetTransformMFromM(matrix);
+
+			glPushMatrix();
+			glMultMatrixf(GetOwner()->transform->GetGlobalTransformT().ptr());
+			glColor4f(1, 0, 0, 0.2f);
+			mesh->Render(-1);
+			glPopMatrix();
+			GetOwner()->transform->SetTransformMFromM(reserve);
+			glColor4f(1, 1, 1, 1);
+		}
+		//RELEASE(outline);
 		
 		// If showAABB are enable draw the his bounding boxes
 		if (showAABB == true) {

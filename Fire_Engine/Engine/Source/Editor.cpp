@@ -306,7 +306,7 @@ update_status Editor::ImGuiMenuBar()
 				std::string path = app->resourceManager->OpenFileName();
 				if (!path.empty())
 				{
-					path = path.substr(3);
+					path = path.substr(3); // Path has "C:\\" which makes FileSystem think it's a dangerous file and won't load it.
 					app->resourceManager->ImportFile(path.c_str());
 				}
 			}
