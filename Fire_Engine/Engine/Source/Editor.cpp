@@ -24,6 +24,8 @@
 #include "Material.h"
 #include "MeshRenderer.h"
 
+#include <string>
+
 Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 {	
 	name = "Editor";
@@ -298,6 +300,17 @@ update_status Editor::ImGuiMenuBar()
 			if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
 				app->scene->SaveSceneRequest();
 
+			ImGui::Separator();
+			if (ImGui::MenuItem("Import Asset"))
+			{
+				std::string path = app->resourceManager->OpenFileName();
+				if (!path.empty())
+				{
+					path = path.substr(3);
+					app->resourceManager->ImportFile(path.c_str());
+				}
+			}
+
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit"))
@@ -379,15 +392,7 @@ update_status Editor::ImGuiMenuBar()
 			ImGui::PushID("Scale");
 			if (ImGui::BeginMenu("Snap Options"))
 			{
-				if (ImGui::SliderFloat("X", &app->camera->sSnap[0], 0.0f, 1.0f, "%.2f"));
-				if (ImGui::SliderFloat("Y", &app->camera->sSnap[1], 0.0f, 1.0f, "%.2f"));
-				if (ImGui::SliderFloat("Z", &app->camera->sSnap[2], 0.0f, 1.0f, "%.2f"));
-				if (ImGui::SliderFloat("All", &app->camera->allSsnap, 0.0f, 1.0f, "%.2f"))
-				{
-					app->camera->sSnap[0] = app->camera->allSsnap;
-					app->camera->sSnap[1] = app->camera->allSsnap;
-					app->camera->sSnap[2] = app->camera->allSsnap;
-				}
+				ImGui::SliderFloat("All", &app->camera->allSsnap, 0.0f, 1.0f, "%.2f");
 				ImGui::EndMenu();
 			}
 			ImGui::PopID();
@@ -399,6 +404,7 @@ update_status Editor::ImGuiMenuBar()
 
 			ImGui::EndMenu();
 		}
+
 		if (ImGui::BeginMenu("View"))
 		{
 			for (int i = 0; i < tabs.size(); i++)

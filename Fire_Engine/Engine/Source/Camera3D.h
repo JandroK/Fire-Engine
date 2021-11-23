@@ -60,10 +60,9 @@ public:
 	bool translateSnap = false;
 	bool scaleSnap = false;
 
-	int allRsnap = 5;
 	float tSnap[3] = { 1.0f, 1.0f, 1.0f };
 	float allTsnap = 1.0f;
-	float sSnap[3] = { 0.5f, 0.5f, 0.5f };
+	int allRsnap = 5;
 	float allSsnap = 0.5f;
 
 	float cameraSpeed = 10.0f;

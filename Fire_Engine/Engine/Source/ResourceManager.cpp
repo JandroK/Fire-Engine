@@ -216,3 +216,28 @@ void ResourceManager::NewCounterFile()
 
 	Overwrite();
 }
+
+// Returns an empty string if dialog is canceled
+std::string ResourceManager::OpenFileName(char* filter, HWND owner) {
+	OPENFILENAME ofn;
+	char fileName[MAX_PATH] = "";
+	ZeroMemory(&ofn, sizeof(ofn)); // Limpia el bloque de memoria de la variable "ofn"
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = owner; // Ventana que tiene la dialogue box
+	ofn.lpstrFilter = filter; // Filtros para los tipos de archivo
+	ofn.lpstrFile = fileName; // Guarda el path al archivo seleccionado
+	ofn.nMaxFile = MAX_PATH; // Tamaño máximo del buffer de "ofn.lpstrFile"
+	ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY; // Flags para el dialogue box
+	// OFN_EXPLORER: las modificaciones de Open dialogue box usan métodos custom con el estilo del explorer.
+	// OFN_FILEMUSTEXIST: en el text field del doalogue box solo se pueden escribir nombres de archivos que existan.
+	// OFN_HIDEREADONLY: oculta la checkBox de "solo lectura";
+	ofn.lpstrDefExt = ""; // Si el usuario no escribe la extension del archivo, se usa la que tiene este por defecto.
+
+	std::string fileNameStr;
+
+	if (GetOpenFileName(&ofn)) // Abre el dialogue box
+		fileNameStr = fileName;
+
+	return fileNameStr;
+}
