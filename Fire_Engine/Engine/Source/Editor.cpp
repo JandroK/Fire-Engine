@@ -153,6 +153,21 @@ void Editor::CheckShortCuts()
 				AlignWithView();
 			}
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_LALT))
+		{
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP)
+			{
+				App->camera->translateSnap = !App->camera->translateSnap;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_E) == KEY_UP)
+			{
+				App->camera->rotateSnap = !App->camera->rotateSnap;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
+			{
+				App->camera->scaleSnap = !App->camera->scaleSnap;
+			}
+		}
 		else if (App->input->GetKey(SDL_SCANCODE_N) == KEY_UP)
 		{
 			warningTab = true;
@@ -301,6 +316,87 @@ update_status Editor::ImGuiMenuBar()
 				ImGui::PopStyleColor();
 			}
 
+			ImGui::Separator();
+
+			//Translate snap options
+			DrawShortcut("Snap Translate", "Ctrl+Alt+W", true);
+			ImGui::Checkbox("Snap Translate", &app->camera->translateSnap);
+			if (!app->camera->translateSnap)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(128, 128, 128, 255));
+				ImGui::PushStyleColor(ImGuiCol_HeaderHovered, IM_COL32(128, 128, 128, 100));
+			}
+			ImGui::PushID("Translate");
+			if (ImGui::BeginMenu("Snap Options"))
+			{
+				if (ImGui::SliderFloat("X", &app->camera->tSnap[0], 0.0f, 10.0f, "%.2f"));
+				if (ImGui::SliderFloat("Y", &app->camera->tSnap[1], 0.0f, 10.0f, "%.2f"));
+				if (ImGui::SliderFloat("Z", &app->camera->tSnap[2], 0.0f, 10.0f, "%.2f"));
+				if (ImGui::SliderFloat("All", &app->camera->allTsnap, 0.0f, 10.0f, "%.2f"))
+				{
+					app->camera->tSnap[0] = app->camera->allTsnap;
+					app->camera->tSnap[1] = app->camera->allTsnap;
+					app->camera->tSnap[2] = app->camera->allTsnap;
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+			if (!app->camera->translateSnap)
+			{
+				ImGui::PopStyleColor();
+				ImGui::PopStyleColor();
+			}
+
+			//Rotation snap options
+			DrawShortcut("Snap Rotation", "Ctrl+Alt+E", true);
+			ImGui::Checkbox("Snap Rotation", &app->camera->rotateSnap);
+			if (!app->camera->rotateSnap)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(128, 128, 128, 255));
+				ImGui::PushStyleColor(ImGuiCol_HeaderHovered, IM_COL32(128, 128, 128, 100));
+			}
+			ImGui::PushID("Rotation");
+			if (ImGui::BeginMenu("Snap Options"))
+			{
+				ImGui::SliderInt("All", &app->camera->allRsnap, 0, 90);
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+			if (!app->camera->rotateSnap)
+			{
+				ImGui::PopStyleColor();
+				ImGui::PopStyleColor();
+			}
+
+			//Sacle snap options
+			DrawShortcut("Snap Scale", "Ctrl+Alt+R", true);
+			ImGui::Checkbox("Snap Scale", &app->camera->scaleSnap);
+			if (!app->camera->scaleSnap)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(128, 128, 128, 255));
+				ImGui::PushStyleColor(ImGuiCol_HeaderHovered, IM_COL32(128, 128, 128, 100));
+			}
+			ImGui::PushID("Scale");
+			if (ImGui::BeginMenu("Snap Options"))
+			{
+				if (ImGui::SliderFloat("X", &app->camera->sSnap[0], 0.0f, 1.0f, "%.2f"));
+				if (ImGui::SliderFloat("Y", &app->camera->sSnap[1], 0.0f, 1.0f, "%.2f"));
+				if (ImGui::SliderFloat("Z", &app->camera->sSnap[2], 0.0f, 1.0f, "%.2f"));
+				if (ImGui::SliderFloat("All", &app->camera->allSsnap, 0.0f, 1.0f, "%.2f"))
+				{
+					app->camera->sSnap[0] = app->camera->allSsnap;
+					app->camera->sSnap[1] = app->camera->allSsnap;
+					app->camera->sSnap[2] = app->camera->allSsnap;
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::PopID();
+			if (!app->camera->scaleSnap)
+			{
+				ImGui::PopStyleColor();
+				ImGui::PopStyleColor();
+			}
+
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
@@ -310,7 +406,7 @@ update_status Editor::ImGuiMenuBar()
 				// Name  ShortCut  State
 				if (ImGui::MenuItem(tabs[i]->name.c_str(), std::to_string(tabs[i]->shortcut).c_str(), tabs[i]->active, &tabs[i]->active))
 					tabs[i]->active = !tabs[i]->active;
-			}			
+			}
 			ImGui::EndMenu();
 		}
 		// Menu of game objects
@@ -576,4 +672,26 @@ void Editor::Duplicate(GameObject* obj, GameObject* parent)
 			Duplicate(obj->GetChildrens().at(i), duplicated);
 		}
 		SetGameObjectSelected(duplicated);
+}
+
+void Editor::DrawShortcut(const char* label, const char* shortcut, bool ckeckbox)
+{
+	ImGuiWindow* window = ImGui::GetCurrentWindow();
+	ImVec2 pos = window->DC.CursorPos;
+	if (ckeckbox)
+	{
+		pos.x += 23;
+		pos.y += 3;
+	}
+	const ImGuiMenuColumns* offsets = &window->DC.MenuColumns;
+	ImGuiContext& g = *GImGui;
+	ImGuiStyle& style = g.Style;
+	ImVec2 label_size = ImGui::CalcTextSize(label, NULL, true);
+	float shortcut_w = (shortcut && shortcut[0]) ? ImGui::CalcTextSize(shortcut, NULL).x : 0.0f;
+	float checkmark_w = IM_FLOOR(g.FontSize * 1.20f);
+	float min_w = window->DC.MenuColumns.DeclColumns(NULL, label_size.x, shortcut_w, checkmark_w); // Feedback for next frame
+	float stretch_w = ImMax(0.0f, ImGui::GetContentRegionAvail().x - min_w);
+	ImGui::PushStyleColor(ImGuiCol_Text, style.Colors[ImGuiCol_TextDisabled]);
+	ImGui::RenderText(pos + ImVec2(offsets->OffsetShortcut + stretch_w, 0.0f), shortcut, NULL, false);
+	ImGui::PopStyleColor();
 }

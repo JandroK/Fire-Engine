@@ -102,7 +102,12 @@ void Camera3D::DrawGuizmo(GameObject* obj)
 
 	float4x4 matrix = transform->GetGlobalTransform().Transposed();
 
-	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, matrix.ptr())
+	float snap[3];
+	if (translateSnap && operation == ImGuizmo::OPERATION::TRANSLATE) { snap[0] = tSnap[0]; snap[1] = tSnap[1]; snap[2] = tSnap[2]; }
+	else if (rotateSnap && operation == ImGuizmo::OPERATION::ROTATE) snap[0] = snap[1] = snap[2] = allRsnap;
+	else if (scaleSnap && operation == ImGuizmo::OPERATION::SCALE) { snap[0] = sSnap[0]; snap[1] = sSnap[1]; snap[2] = sSnap[2]; }
+
+	if (ImGuizmo::Manipulate(cameraScene.viewMatrix.Transposed().ptr(), cameraScene.frustrum.ProjectionMatrix().Transposed().ptr(), operation, mode, matrix.ptr(), 0, (float*)snap)
 		&& app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		transform->SetTransformMFromM(matrix.Transposed());
 }
