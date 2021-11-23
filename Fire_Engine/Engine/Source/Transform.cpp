@@ -311,3 +311,18 @@ float3 Transform::GetNormalizeAxis(int i)
 {
 	return globalTransform.RotatePart().Col(i).Normalized();
 }
+
+void Transform::operator=(Transform* transform)
+{
+	this->eulerRotation = transform->eulerRotation;
+	this->globalTransform = transform->globalTransform;
+	this->globalTransformTransposed = transform->globalTransformTransposed;
+	this->localTransform = transform->localTransform;
+	this->position = transform->position;
+	this->rotation = transform->rotation;
+	this->scale = transform->scale;
+	this->worldEulerRotation = transform->worldEulerRotation;
+	this->worldPosition = transform->worldPosition;
+	this->worldRotation = transform->worldRotation;
+	this->worldScale = transform->worldScale;
+}

@@ -42,6 +42,8 @@ public:
 	float3 GetRight();
 	float3 GetNormalizeAxis(int i);
 
+	void operator=(Transform*);
+
 private:
 
 	Transform* GetRecursiveTransforms(Transform* node, std::vector<Transform*>& transforms);

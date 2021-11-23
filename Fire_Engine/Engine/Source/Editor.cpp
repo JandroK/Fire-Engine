@@ -21,6 +21,8 @@
 
 #include "Primitive.h"
 #include "Transform.h"
+#include "Material.h"
+#include "MeshRenderer.h"
 
 Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 {	
@@ -159,6 +161,10 @@ void Editor::CheckShortCuts()
 		{
 			App->scene->SaveSceneRequest();
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+		{
+			Duplicate(GetGameObjectSelected(), GetGameObjectSelected()->GetParent());
+		}
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT)
 	{
@@ -264,6 +270,8 @@ update_status Editor::ImGuiMenuBar()
 
 	if (ImGui::BeginMainMenuBar())
 	{
+		bool isSelected = true;
+		if (GetGameObjectSelected() == nullptr) isSelected = false;
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("Quit", "ESC"))
@@ -274,6 +282,24 @@ update_status Editor::ImGuiMenuBar()
 
 			if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
 				app->scene->SaveSceneRequest();
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Edit"))
+		{
+			if (!isSelected)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(128, 128, 128, 255));
+				ImGui::PushStyleColor(ImGuiCol_HeaderHovered, IM_COL32(128, 128, 128, 100));
+			}
+			if (ImGui::MenuItem("Duplicate", "Ctrl+D"))
+				if (isSelected) Duplicate(GetGameObjectSelected(), GetGameObjectSelected()->GetParent());
+
+			if (!isSelected)
+			{
+				ImGui::PopStyleColor();
+				ImGui::PopStyleColor();
+			}
 
 			ImGui::EndMenu();
 		}
@@ -316,8 +342,6 @@ update_status Editor::ImGuiMenuBar()
 			{
 				ResetViewRotation();
 			}
-			bool isSelected = true;
-			if (GetGameObjectSelected() == nullptr) isSelected = false;
 			if (!isSelected)
 			{
 				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(128, 128, 128, 255));
@@ -519,4 +543,37 @@ void Editor::ToggleActiveState()
 	GameObject* temp = GetGameObjectSelected();
 	if (temp != nullptr)
 		temp->active = !temp->active;
+}
+
+void Editor::Duplicate(GameObject* obj, GameObject* parent)
+{
+		GameObject* duplicated = new GameObject(obj->name.c_str());
+		static_cast<Transform*>(duplicated->GetCompoments().at(0))->operator=(static_cast<Transform*>(obj->GetCompoments().at(0)));
+
+		for (int i = 1; i < obj->GetCompoments().size(); i++)
+		{
+			duplicated->AddComponent(obj->GetCompoments().at(i)->GetType());
+			switch (obj->GetCompoments().at(i)->GetType())
+			{
+			case ComponentType::MESHRENDERER:
+				static_cast<MeshRenderer*>(duplicated->GetCompoments().at(i))->SetMesh(static_cast<MeshRenderer*>(obj->GetCompoments().at(i))->GetMesh());
+				static_cast<MeshRenderer*>(duplicated->GetCompoments().at(i))->globalAABB = static_cast<MeshRenderer*>(obj->GetCompoments().at(i))->globalAABB;
+				static_cast<MeshRenderer*>(duplicated->GetCompoments().at(i))->globalOBB = static_cast<MeshRenderer*>(obj->GetCompoments().at(i))->globalOBB;
+
+			case ComponentType::MATERIAL:
+				static_cast<Material*>(duplicated->GetCompoments().at(i))->texture = static_cast<Material*>(obj->GetCompoments().at(i))->texture;
+			default:
+				break;
+			}
+			//duplicated->GetCompoments().at(i) = temp->GetCompoments().at(i);
+			duplicated->GetCompoments().at(i)->SetOwner(duplicated);
+		}
+		duplicated->SetParent(parent);
+		duplicated->GetParent()->AddChildren(duplicated);
+
+		for (int i = 0; i < obj->GetChildrens().size(); i++)
+		{
+			Duplicate(obj->GetChildrens().at(i), duplicated);
+		}
+		SetGameObjectSelected(duplicated);
 }

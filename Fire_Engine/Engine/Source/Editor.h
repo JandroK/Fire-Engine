@@ -50,6 +50,7 @@ public:
 	void AlignViewWithSelected();
 	void ResetViewRotation();
 	void ToggleActiveState();
+	void Duplicate(GameObject* obj, GameObject* parent);
 
 	bool CleanUp() override;
 
