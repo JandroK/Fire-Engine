@@ -127,11 +127,11 @@ void Transform::CheckStateMode()
 
 void Transform::CheckStateOperation()
 {
-	if (ImGui::IsKeyPressed(21)) //SDL_SCANCODE_R = 21
+	if (ImGui::IsKeyPressed(26)) //SDL_SCANCODE_W = 26
 		app->camera->operation = ImGuizmo::TRANSLATE;
-	if (ImGui::IsKeyPressed(23)) //SDL_SCANCODE_T = 23
+	if (ImGui::IsKeyPressed(8)) //SDL_SCANCODE_E = 8
 		app->camera->operation = ImGuizmo::ROTATE;
-	if (ImGui::IsKeyPressed(28)) //SDL_SCANCODE_Y = 28
+	if (ImGui::IsKeyPressed(21)) //SDL_SCANCODE_R = 21
 		app->camera->operation = ImGuizmo::SCALE;
 	//if (ImGui::IsKeyPressed(23)) //SDL_SCANCODE_T = 23
 	//	app->camera->operation = ImGuizmo::BOUNDS;

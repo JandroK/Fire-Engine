@@ -300,6 +300,8 @@ bool Renderer3D::CleanUp()
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_TEXTURE_2D);
 
+	RELEASE(plane.mesh);
+
 	renderQueue.clear();
 
 	SDL_GL_DeleteContext(context);
