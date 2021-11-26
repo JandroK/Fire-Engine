@@ -197,7 +197,10 @@ bool Scene::SaveScene()
 void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 {
 	//node.SetChild(node.GetRootValue(), "Child");
-	JsonParser& child = node.SetChild(node.GetRootValue(), "Child");
+	JsonParser& child=node;
+		
+	if(parentGO->GetChildrens().size()>0)child = node.SetChild(node.GetRootValue(), "Child");
+
 	for (size_t i = 0; i <= parentGO->GetChildrens().size(); i++)
 	{
 
