@@ -35,14 +35,6 @@ void Inspector::Draw()
 			else {
 
 				DrawEditLists();		
-				// TODO guizmo 
-				/*
-				ImGuizmo::SetOrthographic(false);
-				ImGuizmo::SetDrawlist();
-				float windowWidth = (float)ImGui::GetWindowWidth();
-				float windowHeight = (float)ImGui::GetWindowHeight();
-				ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-				*/
 			}
 		}		
 	}

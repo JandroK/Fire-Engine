@@ -5,10 +5,10 @@
 
 enum class ComponentType
 {
-	TRANSFORM,
-	MESHRENDERER,
-	MATERIAL,
-	CAMERA
+	TRANSFORM = 0,
+	MESHRENDERER = 1,
+	MATERIAL = 2,
+	CAMERA = 3
 };
 
 class Component

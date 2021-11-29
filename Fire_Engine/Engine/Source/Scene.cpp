@@ -218,7 +218,7 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 	JsonParser& components = node.SetChild(node.GetRootValue(), "components");
 	for (size_t i = 0; i < parentGO->GetCompoments().size(); i++)
 	{
-		components.SetJBool(components.ValueToObject(components.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
+		components.SetJNumber(components.ValueToObject(components.GetRootValue()), "Type", (int)parentGO->GetCompoments().at(i)->GetType());
 		parentGO->GetCompoments().at(i)->GetType();
 	}
 
