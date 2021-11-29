@@ -199,6 +199,8 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 	//node.SetChild(node.GetRootValue(), "Child");
 	std::string num;
 	JsonParser& child = node;
+	Transform* transform;
+	float4x4 localTransform;
 
 	node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
 	node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
@@ -215,10 +217,50 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 	node.SetJBool(node.ValueToObject(node.GetRootValue()), "showChildrens", parentGO->GetShowChildrens());
 	node.SetJBool(node.ValueToObject(node.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
 
-	JsonParser& components = node.SetChild(node.GetRootValue(), "components");
+	//Create father Components
+	JsonParser components = node.SetChild(node.GetRootValue(), "components");
+	JsonParser tmp=node;
 	for (size_t i = 0; i < parentGO->GetCompoments().size(); i++)
 	{
-		components.SetJNumber(components.ValueToObject(components.GetRootValue()), "Type", (int)parentGO->GetCompoments().at(i)->GetType());
+		// Create Child of component
+		num = "Component " + std::to_string(i);
+		tmp = components.SetChild(components.GetRootValue(), num.c_str());
+
+		tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "Type", (int)parentGO->GetCompoments().at(i)->GetType());
+		tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "active", parentGO->GetCompoments().at(i)->active);
+		
+		switch ((ComponentType)parentGO->GetCompoments().at(i)->GetType())
+		{
+			case ComponentType::TRANSFORM:
+				num = "";
+				transform = static_cast<Transform*>(parentGO->GetComponent(ComponentType::TRANSFORM));
+				localTransform = transform->GetLocalTransform();
+				for (int i = 0; i < 4; i++)
+					for (int j = 0; j < 4; j++)
+					{
+						if (i == 0 && j == 0)num += std::to_string(localTransform.At(i, j));
+						else num += "," + std::to_string(localTransform.At(i, j));
+					}
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LocalTransform", num.c_str());
+
+				break;
+
+			case ComponentType::MESHRENDERER:
+				//MeshRenderer* mesh = static_cast<MeshRenderer*>(parentGO->GetComponent(ComponentType::MESHRENDERER));
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", parentGO->name.c_str());
+
+				break;
+
+			case ComponentType::MATERIAL:
+				break;
+
+			case ComponentType::CAMERA:
+				break;
+
+			default:
+				break;
+
+		}
 		parentGO->GetCompoments().at(i)->GetType();
 	}
 
