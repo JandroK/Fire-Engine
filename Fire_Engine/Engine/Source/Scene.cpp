@@ -197,40 +197,40 @@ bool Scene::SaveScene()
 void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 {
 	//node.SetChild(node.GetRootValue(), "Child");
-	JsonParser& child=node;
-		
-	if(parentGO->GetChildrens().size()>0)child = node.SetChild(node.GetRootValue(), "Child");
+	std::string num;
+	JsonParser& child = node;
 
-	for (size_t i = 0; i <= parentGO->GetChildrens().size(); i++)
+	node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
+
+	node.SetJString(node.ValueToObject(node.GetRootValue()), "tag", parentGO->tag.c_str());
+	node.SetJString(node.ValueToObject(node.GetRootValue()), "layer", parentGO->layer.c_str());
+
+
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "active", parentGO->active);
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "isStatic", parentGO->isStatic);
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "isSelected", parentGO->isSelected);
+
+
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "showChildrens", parentGO->GetShowChildrens());
+	node.SetJBool(node.ValueToObject(node.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
+
+	JsonParser& components = node.SetChild(node.GetRootValue(), "components");
+	for (size_t i = 0; i < parentGO->GetCompoments().size(); i++)
 	{
-
-		if (parentGO->GetChildrens().size() > i)
-		{
-			SaveGameObjects(parentGO->GetChildrens()[i], child.SetChild(child.GetRootValue(), parentGO->GetChildrens()[i]->name.c_str()));
-		}
-
-		node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
-
-		node.SetJBool(node.ValueToObject(node.GetRootValue()), "active", parentGO->active);
-		node.SetJBool(node.ValueToObject(node.GetRootValue()), "isStatic", parentGO->isStatic);
-		node.SetJBool(node.ValueToObject(node.GetRootValue()), "isSelected", parentGO->isSelected);
-
-		node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
-		node.SetJString(node.ValueToObject(node.GetRootValue()), "tag", parentGO->tag.c_str());
-		node.SetJString(node.ValueToObject(node.GetRootValue()), "layer", parentGO->layer.c_str());
-
-		node.SetJBool(node.ValueToObject(node.GetRootValue()), "showChildrens", parentGO->GetShowChildrens());
-		node.SetJBool(node.ValueToObject(node.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
-
-		JsonParser& components = node.SetChild(node.GetRootValue(), "components");
-		for (size_t i = 0; i < parentGO->GetCompoments().size(); i++)
-		{
-			components.SetJBool(components.ValueToObject(components.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
-			parentGO->GetCompoments().at(i)->GetType();
-		}
+		components.SetJBool(components.ValueToObject(components.GetRootValue()), "pendingToDelete", parentGO->GetPendingToDelete());
+		parentGO->GetCompoments().at(i)->GetType();
 	}
 
-	
+	for (size_t i = 0; i <= parentGO->GetChildrens().size(); i++) 
+	{
+
+		num ="Child "+ std::to_string(i);
+		
+		if (parentGO->GetChildrens().size() > i) {
+			SaveGameObjects(parentGO->GetChildrens()[i], child.SetChild(child.GetRootValue(), num.c_str()));
+		}
+	}
 }
 
 bool Scene::LoadScene()

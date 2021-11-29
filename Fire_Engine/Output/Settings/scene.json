@@ -1,76 +1,72 @@
 {
     "GameObjects": {
         "Root": {
-            "Child": {
-                "BakerHouse": {
-                    "Child": {
-                        "Chimney": {
-                            "IsRoot": false,
-                            "active": true,
-                            "isStatic": false,
-                            "isSelected": false,
-                            "name": "Chimney",
-                            "tag": "Untagged",
-                            "layer": "0: Default",
-                            "showChildrens": false,
-                            "pendingToDelete": false,
-                            "components": {
-                                "pendingToDelete": false
-                            }
-                        },
-                        "IsRoot": false,
-                        "active": true,
-                        "isStatic": false,
-                        "isSelected": false,
-                        "name": "BakerHouse",
-                        "tag": "Untagged",
-                        "layer": "0: Default",
-                        "showChildrens": false,
-                        "pendingToDelete": false,
-                        "components": {
-                            "pendingToDelete": false
-                        },
-                        "Baker_house": {
-                            "IsRoot": false,
-                            "active": true,
-                            "isStatic": false,
-                            "isSelected": false,
-                            "name": "Baker_house",
-                            "tag": "Untagged",
-                            "layer": "0: Default",
-                            "showChildrens": false,
-                            "pendingToDelete": false,
-                            "components": {
-                                "pendingToDelete": false
-                            }
-                        }
-                    }
-                },
-                "IsRoot": true,
+            "name": "Root",
+            "IsRoot": true,
+            "tag": "Untagged",
+            "layer": "0: Default",
+            "active": true,
+            "isStatic": false,
+            "isSelected": false,
+            "showChildrens": false,
+            "pendingToDelete": false,
+            "components": {
+                "pendingToDelete": false
+            },
+            "Child 0": {
+                "name": "BakerHouse",
+                "IsRoot": false,
+                "tag": "Untagged",
+                "layer": "0: Default",
                 "active": true,
                 "isStatic": false,
                 "isSelected": false,
-                "name": "Root",
-                "tag": "Untagged",
-                "layer": "0: Default",
                 "showChildrens": false,
                 "pendingToDelete": false,
                 "components": {
                     "pendingToDelete": false
                 },
-                "MainCamera": {
+                "Child 0": {
+                    "name": "Chimney",
                     "IsRoot": false,
+                    "tag": "Untagged",
+                    "layer": "0: Default",
                     "active": true,
                     "isStatic": false,
                     "isSelected": false,
-                    "name": "MainCamera",
-                    "tag": "Untagged",
-                    "layer": "0: Default",
                     "showChildrens": false,
                     "pendingToDelete": false,
                     "components": {
                         "pendingToDelete": false
                     }
+                },
+                "Child 1": {
+                    "name": "Baker_house",
+                    "IsRoot": false,
+                    "tag": "Untagged",
+                    "layer": "0: Default",
+                    "active": true,
+                    "isStatic": false,
+                    "isSelected": false,
+                    "showChildrens": false,
+                    "pendingToDelete": false,
+                    "components": {
+                        "pendingToDelete": false
+                    }
+                }
+            },
+            "Child 1": {
+                "name": "MainCamera",
+                "IsRoot": false,
+                "tag": "Untagged",
+                "layer": "0: Default",
+                "active": true,
+                "isStatic": false,
+                "isSelected": false,
+                "showChildrens": false,
+                "pendingToDelete": false,
+                "components": {
+                    "pendingToDelete": false
                 }
             }
         }
