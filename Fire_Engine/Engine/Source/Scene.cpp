@@ -17,6 +17,8 @@
 #include "GameObject.h"
 #include "Inspector.h"
 #include "ResourceMesh.h"
+#include "Material.h"
+#include "ResourceTexture.h"
 
 #include"MathGeoLib/include/Math/Quat.h"
 
@@ -197,10 +199,13 @@ bool Scene::SaveScene()
 void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 {
 	//node.SetChild(node.GetRootValue(), "Child");
-	std::string num;
+	std::string num, strTmp;
 	JsonParser& child = node;
 	Transform* transform;
-	float4x4 localTransform;
+	float4x4 localTransform,globalTransform;
+
+	MeshRenderer* mesh;
+	Material* material;
 
 	node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
 	node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
@@ -235,23 +240,30 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 				num = "";
 				transform = static_cast<Transform*>(parentGO->GetComponent(ComponentType::TRANSFORM));
 				localTransform = transform->GetLocalTransform();
+				globalTransform = transform->GetGlobalTransform();
 				for (int i = 0; i < 4; i++)
 					for (int j = 0; j < 4; j++)
 					{
-						if (i == 0 && j == 0)num += std::to_string(localTransform.At(i, j));
-						else num += "," + std::to_string(localTransform.At(i, j));
+						if (i == 0 && j == 0)num += std::to_string(localTransform.At(i, j)), strTmp+= std::to_string(globalTransform.At(i, j));
+						else num += "," + std::to_string(localTransform.At(i, j)), strTmp += "," + std::to_string(globalTransform.At(i, j));
 					}
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LocalTransform", num.c_str());
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "GlobalTransform", strTmp.c_str());
 
 				break;
 
 			case ComponentType::MESHRENDERER:
-				//MeshRenderer* mesh = static_cast<MeshRenderer*>(parentGO->GetComponent(ComponentType::MESHRENDERER));
+				mesh = static_cast<MeshRenderer*>(parentGO->GetComponent(ComponentType::MESHRENDERER));
+				//mesh->GetMesh()->GetAssetPath();
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", parentGO->name.c_str());
 
 				break;
 
 			case ComponentType::MATERIAL:
+				material = static_cast<Material*>(parentGO->GetComponent(ComponentType::MATERIAL));
+				
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "Material", material->texture->path.c_str());
+
 				break;
 
 			case ComponentType::CAMERA:
@@ -266,12 +278,9 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 
 	for (size_t i = 0; i <= parentGO->GetChildrens().size(); i++) 
 	{
-
 		num ="Child "+ std::to_string(i);
-		
-		if (parentGO->GetChildrens().size() > i) {
+		if (parentGO->GetChildrens().size() > i) 
 			SaveGameObjects(parentGO->GetChildrens()[i], child.SetChild(child.GetRootValue(), num.c_str()));
-		}
 	}
 }
 
