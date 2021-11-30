@@ -21,6 +21,7 @@ public:
 	update_status Update(float dt) override;
 	void OnGUI() override;
 	void DrawGuizmo(GameObject* obj);
+	void DrawSpacePartition();
 	bool CleanUp() override;
 
 	void CheckInputsKeyBoard();

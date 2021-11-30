@@ -12,6 +12,13 @@ QuadTreeBase::~QuadTreeBase()
 	goStatics.clear();
 }
 
+float3* QuadTreeBase::GetRootBoundingBox()
+{
+	float3 points[8];
+	root->boundingBox.GetCornerPoints(points);
+	return points;
+}
+
 // Draw the bounding box of the root and their nodes recursively 
 void QuadTreeBase::Draw(QT_Node* node)
 {
@@ -43,6 +50,7 @@ void QuadTreeBase::DeleteRoot()
 	if (root != nullptr)
 		delete root;
 }
+
 // Function used for draw bounding box (as AABB/OBB)
 void QuadTreeBase::DrawBoundingBoxes(float3* points, float3 color)
 {

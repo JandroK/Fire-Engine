@@ -224,6 +224,7 @@ update_status Renderer3D::PostUpdate(float dt)
 			if (app->camera->cameraScene.frustrum.Intersects(renderQueue[i]->globalOBB))
 				renderQueue[i]->DrawMesh();
 		}
+		app->camera->DrawSpacePartition();
 	}
 
 	// Draw the Ray

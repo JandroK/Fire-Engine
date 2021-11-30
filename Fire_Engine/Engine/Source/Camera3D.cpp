@@ -120,6 +120,12 @@ void Camera3D::DrawGuizmo(GameObject* obj)
 		transform->SetTransformMFromM(matrix.Transposed());
 }
 
+void Camera3D::DrawSpacePartition()
+{
+	if (cameraScene.frustrum.Intersects(quadTree->root->boundingBox))
+		quadTree->Draw(quadTree->root);
+}
+
 void Camera3D::CheckInputsKeyBoard()
 {
 	float3 newPos = float3::zero;
