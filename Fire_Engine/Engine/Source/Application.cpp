@@ -111,13 +111,13 @@ void Application::FinishUpdate()
 	{
 		Uint32 last_frame_ms = ms_timer.Read();
 		float wait_time = (1000.f / (float)screenRefresh) - (float)last_frame_ms;
-		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
+		if(wait_time > 0)SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
 	}
 	else if (maxFPS > 0)
 	{
 		Uint32 last_frame_ms = ms_timer.Read();
 		float wait_time = (1000.f / (float)maxFPS) - (float)last_frame_ms;
-		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
+		if (wait_time > 0)SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
 	}
 }
 
