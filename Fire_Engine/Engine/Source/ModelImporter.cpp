@@ -42,6 +42,7 @@ void ModelImporter::Import(const char* fullPath,  char* buffer, int bufferSize, 
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 		{
 			modelMeshes.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
+			modelMeshes.at(i)->SetAssetsPath(fullPath);
 		}
 
 		// Load all materials

@@ -42,6 +42,7 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 	std::string fileName = MESHES_FOLDER;
 	fileName += importedMesh->mName.C_Str();
 	fileName += mesh->GetFormatExt();
+	mesh->SetLibraryPath(fileName.c_str());
 
 	if (FileSystem::Exists(fileName.c_str()))
 	{

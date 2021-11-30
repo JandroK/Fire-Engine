@@ -1,20 +1,12 @@
 #include "ResourceMesh.h"
 #include "Globals.h"
+#include "FileSystem.h"
 
 #include "Glew/include/glew.h"
 #include "Geometry/Sphere.h"
 
 Mesh::Mesh() : Resource(ResourceType::MESH)
 {
-	/*std::string libraryPath;
-	if (path.find("/") != std::string::npos)
-	{
-		int pos = path.find_last_of("/");
-		libraryPath = "Library/Textures" + path.substr(pos, path.find_last_of(".") - pos) + ".dds";
-	}
-	else
-		libraryPath = "Library/Textures/" + path.substr(0, path.find_last_of(".")) + ".dds";
-	SetLibraryPath(libraryPath.c_str());*/
 }
 
 Mesh::~Mesh()
@@ -286,11 +278,62 @@ char* Mesh::SaveToFME(uint& size)
 	bytes = normalsSize;
 	memcpy(cursor, normals.data(), bytes);
 	cursor += bytes;
-
+	//std::copy(moments.getValues().begin(), moments.getValues().end(), data_x);
 	return buffer;
 }
 
 void Mesh::LoadFromFME(const char* fileName)
 {
+	char* buffer;
+	uint size = FileSystem::LoadToBuffer(fileName, &buffer);
 
+	char* cursor = buffer;
+
+	uint counters[4];
+	uint bytes = sizeof(counters);
+	memcpy(counters, cursor, bytes);
+	cursor += bytes;
+
+	numIndexs = counters[0];
+	numVertex = counters[1];
+	numTexCoords = counters[2];
+	numNormals = counters[3];
+
+	uint indexSize = (sizeof(uint) * numIndexs);
+	uint vertexSize = (sizeof(uint) * numVertex * 3);
+	uint texCoordsSize = (sizeof(uint) * numTexCoords * 2);
+	uint normalsSize = (sizeof(uint) * numNormals * 3);
+
+	bytes = indexSize;
+	uint* indexBuffer = new uint[numIndexs];
+	memcpy(indexBuffer, cursor, bytes);
+	indexs.assign(indexBuffer, indexBuffer + numIndexs);
+	cursor += bytes;
+
+	bytes = vertexSize;
+	float* vertexBuffer = new float[numVertex * 3];
+	memcpy(vertexBuffer, cursor, bytes);
+	vertex.assign(vertexBuffer, vertexBuffer + (numVertex * 3));
+	cursor += bytes;
+
+	bytes = texCoordsSize;
+	float* texCoordsBuffer = new float[numTexCoords * 2];
+	memcpy(texCoordsBuffer, cursor, bytes);
+	texCoords.assign(texCoordsBuffer, texCoordsBuffer + (numTexCoords * 2));
+	cursor += bytes;
+
+	bytes = normalsSize;
+	float* normalsBuffer = new float[numNormals * 3];
+	memcpy(normalsBuffer, cursor, bytes);
+	normals.assign(normalsBuffer, normalsBuffer + (numNormals * 3));
+	cursor += bytes;
+
+	RELEASE_ARRAY(indexBuffer);
+	RELEASE_ARRAY(vertexBuffer);
+	RELEASE_ARRAY(texCoordsBuffer);
+	RELEASE_ARRAY(normalsBuffer);
+	RELEASE_ARRAY(buffer);
+
+	LoadToMemory();
+	GenerateBounds();
 }
