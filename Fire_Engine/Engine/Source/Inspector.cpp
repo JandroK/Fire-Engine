@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "Inspector.h"
 #include "ResourceManager.h"
+#include "Camera3D.h"
+#include "QuadTreeBase.h"
 
 #include "GameObject.h"
 #include "ResourceTexture.h"
@@ -57,7 +59,13 @@ void Inspector::DrawDefaultInspector()
 	char* inputName = &gameObjectSelected->name[0];
 	ImGui::InputText("##Name", inputName, gameObjectSelected->name.size() + 1);
 	ImGui::SameLine();
-	ImGui::Checkbox("Static", &gameObjectSelected->isStatic);
+	if (ImGui::Checkbox("Static", &gameObjectSelected->isStatic))
+	{
+		if (gameObjectSelected->isStatic)
+			app->camera->quadTree->AddGameObject(gameObjectSelected);
+		else
+			app->camera->quadTree->RemoveGameObject(gameObjectSelected);
+	}
 
 	// Draw tagList and layerList
 	DrawList("Tag", &tags, gameObjectSelected->tag, maxWidthTag);

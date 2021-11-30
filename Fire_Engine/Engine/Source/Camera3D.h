@@ -7,6 +7,8 @@
 #include "Imgui/imgui.h"
 #include "Guizmo/ImGuizmo.h"
 
+class QuadTreeBase;
+
 class Camera3D : public Module
 {
 public:
@@ -23,7 +25,10 @@ public:
 
 	void CheckInputsKeyBoard();
 	void CheckInputsMouse();
+
 	void GenerateRay();
+	void MousePicking(LineSegment ray);
+
 	ImVec2 NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point);
 
 	void LookAt(const float3&Spot);
@@ -41,9 +46,10 @@ private:
 	bool SaveConfig(JsonParser& node)const override;
 	bool LoadConfig(JsonParser& node) override;
 
-
 public:
 	
+	QuadTreeBase* quadTree = nullptr;
+
 	float3 right, up, front, position, reference;
 	float3x3 oldRotation; // Used to reset view rotation
 

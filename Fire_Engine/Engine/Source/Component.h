@@ -45,9 +45,11 @@ public:
 	bool active = true;
 private:
 
-	int index[24] = { 0, 2, 2, 6, 6, 4, 4, 0,
-					0, 1, 1, 3, 3, 2, 4, 5,
-					6, 7, 5, 7, 3, 7, 1, 5 };
+	int index[24] =
+	{ 0, 2, 2, 6, 6, 4, 4, 0,
+	  0, 1, 1, 3, 3, 2, 4, 5,
+	  6, 7, 5, 7, 3, 7, 1, 5
+	};
 
 	ComponentType type;
 	GameObject* owner = nullptr;

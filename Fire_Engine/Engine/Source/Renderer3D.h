@@ -49,13 +49,13 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
+	void GlDebugMode();
+
 	bool SaveConfig(JsonParser& node) const override;
 
 	bool LoadConfig(JsonParser& node)override;
 
 	Hardware GetHardware() { return hardware; };
-
-	void MousePicking(LineSegment ray);
 
 public:
 
@@ -81,14 +81,4 @@ private:
 	bool lighting = true;
 	bool colorMaterial = true;
 	bool texture2D = true;
-
-	bool fog = false;
-	bool fogLinear = true;
-	bool fogExpo = false;
-	float fogColor[3] = { 0.8f, 0.8f, 0.8f };
-	float fogStart = 10.0f;
-	float fogEnd = 40.0f;
-	float fogDensity = 1.0f;	
-	float oldFarPlane = 100.0f;
-	float fogFarPlane = 45.0f;
 };

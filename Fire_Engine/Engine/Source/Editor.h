@@ -19,6 +19,8 @@ enum class TabType
 	HIERARCHY,
 	SCENE,
 	GAME,
+	FOGWAR,
+	QUADTREE,
 
 	MAX
 };

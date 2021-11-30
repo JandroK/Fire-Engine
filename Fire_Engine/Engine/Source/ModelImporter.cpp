@@ -42,6 +42,7 @@ void ModelImporter::Import(const char* fullPath,  char* buffer, int bufferSize, 
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 		{
 			modelMeshes.push_back(MeshLoader::LoadMesh(scene->mMeshes[i]));
+			modelMeshes.at(i)->SetAssetsPath(fullPath);
 		}
 
 		// Load all materials
@@ -91,12 +92,13 @@ void ModelImporter::LoadMaterials(const aiScene* scene, const char* fullPath, st
 
 				// Get the buffer
 				char* buffer = nullptr;
-				FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
+				uint size = FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
 
 				if (buffer != nullptr)
 				{
 					// Load texture
 					Texture* tex = new Texture(localPath.c_str());
+					if(!FileSystem::Exists(tex->GetLibraryPath())) tex->Import(buffer, size, tex->GetLibraryPath());
 					tex->LoadToMemory();
 
 					testTextures.push_back(tex);
