@@ -312,13 +312,21 @@ GameObject* Scene::LoadGameObject(JsonParser parent)
 	gamObj->SetShowChildrens( parent.JsonValToBool("showChildrens"));
 	gamObj->SetPendingToDelete( parent.JsonValToBool("pendingToDelete"));
 
-	JsonParser components= parent.GetChild(parent.GetRootValue(),"components");
+	LoadComponents(parent, num, gamObj, transform);
+
+
+	return gamObj;
+}
+
+void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj, Transform*& transform)
+{
+	JsonParser components = parent.GetChild(parent.GetRootValue(), "components");
 	JsonParser tmp = components;
-	
+
 	for (int i = 0; i < 4; i++)
 	{
-		num = "Component "+ std::to_string(i);
-		if (components.ExistChild(components.GetRootValue(), num.c_str())) 
+		num = "Component " + std::to_string(i);
+		if (components.ExistChild(components.GetRootValue(), num.c_str()))
 		{
 			tmp = components.GetChild(components.GetRootValue(), num.c_str());
 			switch ((ComponentType)tmp.JsonValToNumber("Type"))
@@ -349,7 +357,6 @@ GameObject* Scene::LoadGameObject(JsonParser parent)
 
 		}
 	}
-	return gamObj;
 }
 
 float4x4 Scene::strMatrixToF4x4(const char* convert)
