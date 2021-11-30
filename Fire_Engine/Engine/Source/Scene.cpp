@@ -4,7 +4,6 @@
 
 //Components
 #include "Component.h"
-#include "Transform.h"
 #include "MeshRenderer.h"
 #include "ComponentCamera.h"
 
@@ -180,6 +179,7 @@ void Scene::UpdateGameObjects()
 	RecursiveUpdate(root);
 
 	if (saveSceneRequest)SaveScene();
+	if (loadSceneRequest)LoadScene();
 }
 
 bool Scene::SaveScene()
@@ -245,9 +245,11 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 				for (int i = 0; i < 4; i++)
 					for (int j = 0; j < 4; j++)
 					{
-						if (i == 0 && j == 0)num += std::to_string(localTransform.At(i, j)), strTmp+= std::to_string(globalTransform.At(i, j));
-						else num += "," + std::to_string(localTransform.At(i, j)), strTmp += "," + std::to_string(globalTransform.At(i, j));
+						num += std::to_string(localTransform.At(i, j)), strTmp+= std::to_string(globalTransform.At(i, j));
+						strTmp += ",";
+						num += ",";
 					}
+			
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LocalTransform", num.c_str());
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "GlobalTransform", strTmp.c_str());
 
@@ -255,19 +257,12 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 
 			case ComponentType::MESHRENDERER:
 				mesh = static_cast<MeshRenderer*>(parentGO->GetComponent(ComponentType::MESHRENDERER));
-				//mesh->GetMesh()->GetAssetPath();
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", parentGO->name.c_str());
-
 				break;
 
 			case ComponentType::MATERIAL:
 				material = static_cast<Material*>(parentGO->GetComponent(ComponentType::MATERIAL));
-				
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "Material", material->texture->path.c_str());
-
-				break;
-
-			case ComponentType::CAMERA:
 				break;
 
 			default:
@@ -288,7 +283,99 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 bool Scene::LoadScene()
 {
 
+	LOG(LogType::L_NORMAL, "Loading configurations");
+
+	rootFile = jsonFile.GetRootValue();
+
+	rootGO = jsonFile.GetChild(rootFile, "GameObjects");
+	//rootGO=
+	LoadGameObject(rootGO.GetChild(rootGO.GetRootValue(), "Root"));
+
+	loadSceneRequest = false;
+
 	return true;
+}
+
+GameObject* Scene::LoadGameObject(JsonParser parent)
+{
+	std::string num;
+	Transform* transform;
+	std::string convert;
+
+	std::string name=parent.JsonValToString("name");
+	GameObject* gamObj = new GameObject(name.c_str());
+	gamObj->tag= parent.JsonValToString("tag");
+	gamObj->layer= parent.JsonValToString("layer");
+	gamObj->active= parent.JsonValToBool("active");
+	gamObj->isStatic= parent.JsonValToBool("isStatic");
+	gamObj->isSelected = parent.JsonValToBool("isSelected");
+	gamObj->SetShowChildrens( parent.JsonValToBool("showChildrens"));
+	gamObj->SetPendingToDelete( parent.JsonValToBool("pendingToDelete"));
+
+	JsonParser components= parent.GetChild(parent.GetRootValue(),"components");
+	JsonParser tmp = components;
+	
+	for (int i = 0; i < 4; i++)
+	{
+		num = "Component "+ std::to_string(i);
+		if (components.ExistChild(components.GetRootValue(), num.c_str())) 
+		{
+			tmp = components.GetChild(components.GetRootValue(), num.c_str());
+			switch ((ComponentType)tmp.JsonValToNumber("Type"))
+			{
+			case ComponentType::TRANSFORM:
+				gamObj->AddComponent(ComponentType::TRANSFORM);
+				transform = static_cast<Transform*>(gamObj->GetComponent(ComponentType::TRANSFORM));
+				transform->SetLocalTransform(strMatrixToF4x4(tmp.JsonValToString("LocalTransform")));
+				transform->SetLocalTransform(strMatrixToF4x4(tmp.JsonValToString("GlobalTransform")));
+
+				gamObj;
+				//gamObj->GetCompoments().end(). = ;
+
+				break;
+			case ComponentType::MESHRENDERER:
+				gamObj->AddComponent(ComponentType::MESHRENDERER);
+
+				break;
+			case ComponentType::MATERIAL:
+				gamObj->AddComponent(ComponentType::MATERIAL);
+
+				break;
+			default:
+				break;
+			}
+
+			//gamObj->AddComponent();
+
+		}
+	}
+	return gamObj;
+}
+
+float4x4 Scene::strMatrixToF4x4(const char* convert)
+{
+	std::string text = convert;
+	std::string delimiter = ",";
+	std::vector<float> floatArray{};
+
+	size_t pos = 0;
+	while ((pos = text.find(delimiter)) != std::string::npos) {
+		floatArray.push_back(stof(text.substr(0, pos)));
+		text.erase(0, pos + delimiter.length());
+	}
+
+	float4x4 matrix;
+	int count = 0;
+
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++)
+		{
+
+			matrix.At(i, j) = floatArray.at(count);
+			++count;
+		}
+
+	return matrix;
 }
 
 void Scene::RecursiveUpdate(GameObject* parent)

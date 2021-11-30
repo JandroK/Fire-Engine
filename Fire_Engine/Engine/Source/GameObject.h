@@ -24,6 +24,8 @@ public:
 	bool GetShowChildrens() { return showChildrens; };
 	void SetShowChildrens(bool active) { showChildrens = active; };
 
+	
+
 	std::vector<GameObject*> GetChildrens() { return childrens; };
 	void AddChildren(GameObject* children) { childrens.push_back(children); };
 	void AttachChild(GameObject* child);
@@ -41,6 +43,7 @@ public:
 	bool IsRoot() { return (parent == nullptr) ? true : false; };
 	void Destroy() { pendingToDelete = true;};
 	bool GetPendingToDelete() { return pendingToDelete; };
+	void SetPendingToDelete(bool isPendingToDelete) {  pendingToDelete= isPendingToDelete; };
 
 	Transform* transform = nullptr;
 
