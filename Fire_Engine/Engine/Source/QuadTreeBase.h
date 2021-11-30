@@ -19,12 +19,17 @@ public:
 
 	void AddGameObject(GameObject* obj) { goStatics.push_back(obj); };
 	void RemoveGameObject(GameObject* obj) { goStatics.remove(obj); };
+
+	float3* GetRootBoundingBox();
 	int GetNumGOStatics() { return goStatics.size(); };
 
 	void DrawBoundingBoxes(float3* points, float3 color = float3::one);
 
 	bool drawQuadTree = false;
 	QT_Node* root = nullptr;
+
+	int maxDivisions = 10;	// Maximum number of depth  
+	int maxGObyNode = 1;	// Maximum number of objects by node 
 
 private:
 	// List of all static gameObjects of the scene
