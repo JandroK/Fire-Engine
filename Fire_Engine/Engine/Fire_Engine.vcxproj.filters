@@ -666,6 +666,12 @@
     <ClInclude Include="Source\FogWarTab.h">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QuadTreeTab.h">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QuadTreeBase.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -919,6 +925,12 @@
     </ClCompile>
     <ClCompile Include="Source\FogWarTab.cpp">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QuadTreeTab.cpp">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QuadTreeBase.cpp">
+      <Filter>Sources\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -49,13 +49,13 @@ public:
 	void OnResize(int width, int height);
 	void OnGUI() override;
 
+	void GlDebugMode();
+
 	bool SaveConfig(JsonParser& node) const override;
 
 	bool LoadConfig(JsonParser& node)override;
 
 	Hardware GetHardware() { return hardware; };
-
-	void MousePicking(LineSegment ray);
 
 public:
 

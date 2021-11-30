@@ -20,6 +20,7 @@ enum class TabType
 	SCENE,
 	GAME,
 	FOGWAR,
+	QUADTREE,
 
 	MAX
 };

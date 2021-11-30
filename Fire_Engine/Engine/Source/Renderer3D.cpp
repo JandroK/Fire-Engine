@@ -10,9 +10,7 @@
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
-#include <map>
 
-#include "Geometry/Triangle.h"
 #include "GPUDetected/DeviceId.h"
 
 // Components
@@ -366,57 +364,62 @@ void Renderer3D::OnGUI()
 	}
 	if (ImGui::CollapsingHeader("Debug"))
 	{
-		if (ImGui::Checkbox("GL_DEPTH_TEST", &depthTest)) {
-			if(depthTest) glEnable(GL_DEPTH_TEST);
-			else glDisable(GL_DEPTH_TEST);
-		}
-
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Enable/Disable GL_DEPTH_TEST");
-
-		ImGui::SameLine();
-
-		if (ImGui::Checkbox("GL_CULL_FACE", &cullFace)) {
-			if (cullFace) glEnable(GL_CULL_FACE);
-			else glDisable(GL_CULL_FACE);
-		}
-
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Enable/Disable GL_CULL_FACE");
-
-
-		if (ImGui::Checkbox("GL_TEXTURE_2D", &texture2D)) {
-			if (texture2D) glEnable(GL_TEXTURE_2D);
-			else glDisable(GL_TEXTURE_2D);
-		}
-
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Enable/Disable GL_TEXTURE_2D");
-
-		ImGui::SameLine();
-
-		if (ImGui::Checkbox("GL_LIGHTING", &lighting)) {
-			if (lighting) glEnable(GL_LIGHTING);
-			else glDisable(GL_LIGHTING);
-		}
-
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Enable/Disable GL_LIGHTING");
-
-		if (ImGui::Checkbox("RAY_CASTING  ", &viewRay))
-
-			if (ImGui::IsItemHovered())
-				ImGui::SetTooltip("Enable/Disable can view ray");
-
-		ImGui::SameLine();
-		if (ImGui::Checkbox("GL_COLOR_MATERIAL", &colorMaterial)) {
-			if (colorMaterial) glEnable(GL_COLOR_MATERIAL);
-			else glDisable(GL_COLOR_MATERIAL);
-		}
-
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("Enable/Disable GL_COLOR_MATERIAL");
+		GlDebugMode();
 	}
+}
+
+void Renderer3D::GlDebugMode()
+{
+	if (ImGui::Checkbox("GL_DEPTH_TEST", &depthTest)) {
+		if (depthTest) glEnable(GL_DEPTH_TEST);
+		else glDisable(GL_DEPTH_TEST);
+	}
+
+	if (ImGui::IsItemHovered())
+		ImGui::SetTooltip("Enable/Disable GL_DEPTH_TEST");
+
+	ImGui::SameLine();
+
+	if (ImGui::Checkbox("GL_CULL_FACE", &cullFace)) {
+		if (cullFace) glEnable(GL_CULL_FACE);
+		else glDisable(GL_CULL_FACE);
+	}
+
+	if (ImGui::IsItemHovered())
+		ImGui::SetTooltip("Enable/Disable GL_CULL_FACE");
+
+
+	if (ImGui::Checkbox("GL_TEXTURE_2D", &texture2D)) {
+		if (texture2D) glEnable(GL_TEXTURE_2D);
+		else glDisable(GL_TEXTURE_2D);
+	}
+
+	if (ImGui::IsItemHovered())
+		ImGui::SetTooltip("Enable/Disable GL_TEXTURE_2D");
+
+	ImGui::SameLine();
+
+	if (ImGui::Checkbox("GL_LIGHTING", &lighting)) {
+		if (lighting) glEnable(GL_LIGHTING);
+		else glDisable(GL_LIGHTING);
+	}
+
+	if (ImGui::IsItemHovered())
+		ImGui::SetTooltip("Enable/Disable GL_LIGHTING");
+
+	if (ImGui::Checkbox("RAY_CASTING  ", &viewRay))
+
+		if (ImGui::IsItemHovered())
+			ImGui::SetTooltip("Enable/Disable can view ray");
+
+	ImGui::SameLine();
+	if (ImGui::Checkbox("GL_COLOR_MATERIAL", &colorMaterial)) {
+		if (colorMaterial) glEnable(GL_COLOR_MATERIAL);
+		else glDisable(GL_COLOR_MATERIAL);
+	}
+
+	if (ImGui::IsItemHovered())
+		ImGui::SetTooltip("Enable/Disable GL_COLOR_MATERIAL");
 }
 
 bool Renderer3D::SaveConfig(JsonParser& node) const
@@ -433,63 +436,4 @@ bool Renderer3D::LoadConfig(JsonParser& node)
 	wireframe = node.JsonValToBool("wireframe");
 
 	return true;
-}
-
-void Renderer3D::MousePicking(LineSegment ray)
-{
-	float dNear = 0;
-	float dFar = 0;
-	// Use maps because with the key can ordered by distance
-	std::map<float, MeshRenderer*> possibleHitList;
-
-	// First we test against all OBBs (is more accurate than using AABB)
-	for (std::vector<MeshRenderer*>::iterator it = renderQueue.begin(); it != renderQueue.end(); ++it)
-	{
-		// Add to the list all the OBBs that intersect with the ray (the entry distance is used as the map key) 
-		if (ray.Intersects((*it)->globalOBB, dNear, dFar))
-			possibleHitList[dNear] = (*it);
-	}
-
-	// Add to the list all the triangles (from mesh) that intersect with the ray
-	std::map<float, MeshRenderer*> hitList;
-
-	for (std::map<float, MeshRenderer*>::const_iterator it = possibleHitList.begin(); it != possibleHitList.end(); ++it)
-	{
-		const Mesh* mesh = (*it).second->GetMesh();
-		if (mesh != nullptr)
-		{
-			// Transform once the ray into Game Object space to test against all triangles
-			LineSegment localRay = ray;
-			localRay.Transform((*it).second->GetOwner()->transform->GetGlobalTransform().Inverted());
-
-			Triangle tri;
-			for (uint i = 0; i < mesh->numIndexs; i += 3)
-			{
-				// Create the triangle 
-				tri.a = float3(&mesh->vertex[mesh->indexs[i] * 3]);
-				tri.b = float3(&mesh->vertex[mesh->indexs[i + 1] * 3]);
-				tri.c = float3(&mesh->vertex[mesh->indexs[i + 2] * 3]);
-
-				// Test the ray against all mesh triangles
-				float dist = 0;
-				if (localRay.Intersects(tri, &dist, nullptr))
-				{
-					hitList[dist] = (*it).second;
-				}
-			}
-		}
-	}
-
-	bool selected = false;
-	if (hitList.begin() != hitList.end())
-	{
-		App->editor->SetGameObjectSelected((*hitList.begin()).second->GetOwner());
-		selected = true;
-	}
-	possibleHitList.clear();
-	hitList.clear();
-
-	//If nothing is selected, set selected gameObject to null
-	if (!selected)
-		App->editor->SetGameObjectSelected(nullptr);
 }

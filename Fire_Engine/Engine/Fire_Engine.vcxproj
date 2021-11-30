@@ -264,6 +264,8 @@
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\MeshRenderer.h" />
     <ClInclude Include="Source\ModelImporter.h" />
+    <ClInclude Include="Source\QuadTreeBase.h" />
+    <ClInclude Include="Source\QuadTreeTab.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneTab.h" />
@@ -350,6 +352,8 @@
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\MeshRenderer.cpp" />
     <ClCompile Include="Source\ModelImporter.cpp" />
+    <ClCompile Include="Source\QuadTreeBase.cpp" />
+    <ClCompile Include="Source\QuadTreeTab.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneTab.cpp" />

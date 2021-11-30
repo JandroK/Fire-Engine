@@ -19,6 +19,7 @@
 #include "SceneTab.h"
 #include "GameTab.h"
 #include "FogWarTab.h"
+#include "QuadTreeTab.h"
 
 #include "Primitive.h"
 #include "Transform.h"
@@ -44,6 +45,7 @@ Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 	tabs[static_cast<unsigned int>(TabType::SCENE)] = new SceneTab();
 	tabs[static_cast<unsigned int>(TabType::GAME)] = new GameTab();
 	tabs[static_cast<unsigned int>(TabType::FOGWAR)] = new FogWarTab();
+	tabs[static_cast<unsigned int>(TabType::QUADTREE)] = new QuadTreeTab();
 
 	// Assign a shortcut to each tab
 	for (int i = 0; i < tabs.size(); i++)

@@ -15,6 +15,11 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 
+#include <map>
+#include "Geometry/Triangle.h"
+#include "QuadTreeBase.h"
+
+
 Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	name = "Camera3D";
@@ -24,6 +29,8 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 
 	ReStartCamera();
 	oldRotation = { right, front, up };
+
+	quadTree = new QuadTreeBase;
 }
 
 void Camera3D::ReStartCamera()
@@ -51,6 +58,7 @@ bool Camera3D::Start()
 bool Camera3D::CleanUp()
 {
 	LOG(LogType::L_NO_PRINTABLE, "Cleaning camera");
+	delete quadTree;
 
 	return true;
 }
@@ -157,18 +165,6 @@ void Camera3D::CheckInputsMouse()
 
 	// Recalculate matrix -------------
 	if (!newPos.Equals(float3::zero)) CalculateViewMatrix();
-}
-
-void Camera3D::GenerateRay()
-{
-	ImVec2 position = ImGui::GetMousePos();
-	ImVec2 normal = NormalizeOnWindow(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y + ImGui::GetFrameHeight(), ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), position);
-	normal.x = (normal.x - 0.5f) / 0.5f;
-	normal.y = -((normal.y - 0.5f) / 0.5f);
-
-	ray = cameraScene.frustrum.UnProjectLineSegment(normal.x, normal.y);
-
-	app->renderer3D->MousePicking(ray);
 }
 
 ImVec2 Camera3D::NormalizeOnWindow(float x, float y, float w, float h, ImVec2 point)
@@ -325,6 +321,77 @@ void Camera3D::CalculateViewMatrix()
 	right = up.Cross(front);
 
 	cameraScene.viewMatrix = cameraScene.frustrum.ViewMatrix();
+}
+
+void Camera3D::GenerateRay()
+{
+	ImVec2 position = ImGui::GetMousePos();
+	ImVec2 normal = NormalizeOnWindow(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y + ImGui::GetFrameHeight(), ImGui::GetWindowSize().x, ImGui::GetWindowSize().y - ImGui::GetFrameHeight(), position);
+	normal.x = (normal.x - 0.5f) / 0.5f;
+	normal.y = -((normal.y - 0.5f) / 0.5f);
+
+	ray = cameraScene.frustrum.UnProjectLineSegment(normal.x, normal.y);
+
+	MousePicking(ray);
+}
+
+void Camera3D::MousePicking(LineSegment ray)
+{
+	float dNear = 0;
+	float dFar = 0;
+	// Use maps because with the key can ordered by distance
+	std::map<float, MeshRenderer*> possibleHitList;
+
+	// First we test against all OBBs (is more accurate than using AABB)
+	for (std::vector<MeshRenderer*>::iterator it = app->renderer3D->renderQueue.begin(); it != app->renderer3D->renderQueue.end(); ++it)
+	{
+		// Add to the list all the OBBs that intersect with the ray (the entry distance is used as the map key) 
+		if (ray.Intersects((*it)->globalOBB, dNear, dFar))
+			possibleHitList[dNear] = (*it);
+	}
+
+	// Add to the list all the triangles (from mesh) that intersect with the ray
+	std::map<float, MeshRenderer*> hitList;
+
+	for (std::map<float, MeshRenderer*>::const_iterator it = possibleHitList.begin(); it != possibleHitList.end(); ++it)
+	{
+		const Mesh* mesh = (*it).second->GetMesh();
+		if (mesh != nullptr)
+		{
+			// Transform once the ray into Game Object space to test against all triangles
+			LineSegment localRay = ray;
+			localRay.Transform((*it).second->GetOwner()->transform->GetGlobalTransform().Inverted());
+
+			Triangle tri;
+			for (uint i = 0; i < mesh->numIndexs; i += 3)
+			{
+				// Create the triangle 
+				tri.a = float3(&mesh->vertex[mesh->indexs[i] * 3]);
+				tri.b = float3(&mesh->vertex[mesh->indexs[i + 1] * 3]);
+				tri.c = float3(&mesh->vertex[mesh->indexs[i + 2] * 3]);
+
+				// Test the ray against all mesh triangles
+				float dist = 0;
+				if (localRay.Intersects(tri, &dist, nullptr))
+				{
+					hitList[dist] = (*it).second;
+				}
+			}
+		}
+	}
+
+	bool selected = false;
+	if (hitList.begin() != hitList.end())
+	{
+		App->editor->SetGameObjectSelected((*hitList.begin()).second->GetOwner());
+		selected = true;
+	}
+	possibleHitList.clear();
+	hitList.clear();
+
+	//If nothing is selected, set selected gameObject to null
+	if (!selected)
+		App->editor->SetGameObjectSelected(nullptr);
 }
 
 bool Camera3D::SaveConfig(JsonParser& node) const
