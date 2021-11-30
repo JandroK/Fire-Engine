@@ -64,7 +64,8 @@ bool Scene::Start()
 	root->EraseChildren(root->FindChildren(root->GetChildrens()[0]));
 	root->AttachChild(mainCamera->GetOwner());
 	Transform* transformCamera = static_cast<Transform*>(mainCamera->GetOwner()->GetComponent(ComponentType::TRANSFORM));
-	transformCamera->SetPosition(float3(0, 1, -12));
+	transformCamera->SetPosition(float3(0,1,-12));
+	transformCamera->SetTransformMFromM(transformCamera->GetLocalTransform());
 
 	return true;
 }
