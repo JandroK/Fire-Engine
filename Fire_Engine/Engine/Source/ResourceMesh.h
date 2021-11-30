@@ -31,6 +31,9 @@ public:
 	Mesh();
 	~Mesh();
 
+	char* SaveToFME(uint& size);
+	void LoadFromFME(const char* fileName);
+
 	bool LoadToMemory() override;
 	bool UnloadFromMemory() override;
 

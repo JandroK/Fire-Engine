@@ -6,6 +6,15 @@
 
 Mesh::Mesh() : Resource(ResourceType::MESH)
 {
+	/*std::string libraryPath;
+	if (path.find("/") != std::string::npos)
+	{
+		int pos = path.find_last_of("/");
+		libraryPath = "Library/Textures" + path.substr(pos, path.find_last_of(".") - pos) + ".dds";
+	}
+	else
+		libraryPath = "Library/Textures/" + path.substr(0, path.find_last_of(".")) + ".dds";
+	SetLibraryPath(libraryPath.c_str());*/
 }
 
 Mesh::~Mesh()
@@ -241,4 +250,47 @@ void Mesh::GenerateBounds()
 	centerPoint = sphere.pos;
 
 	vertices.clear();
+}
+
+char* Mesh::SaveToFME(uint& size)
+{
+	uint counters[4] = { numIndexs, numVertex, numTexCoords, numNormals };
+
+	uint countersSize = sizeof(counters);
+	uint indexSize = (sizeof(uint) * numIndexs);
+	uint vertexSize = (sizeof(uint) * numVertex * 3);
+	uint texCoordsSize = (sizeof(uint) * numTexCoords * 2);
+	uint normalsSize = (sizeof(uint) * numNormals * 3);
+
+	size = sizeof(counters) + indexSize + vertexSize + texCoordsSize + normalsSize;
+
+	char* buffer = new char[size];
+	char* cursor = buffer;
+
+	uint bytes = countersSize;
+	memcpy(cursor, counters, bytes);
+	cursor += bytes;
+
+	bytes = indexSize;
+	memcpy(cursor, indexs.data(), bytes);
+	cursor += bytes;
+
+	bytes = vertexSize;
+	memcpy(cursor, vertex.data(), bytes);
+	cursor += bytes;
+
+	bytes = texCoordsSize;
+	memcpy(cursor, texCoords.data(), bytes);
+	cursor += bytes;
+
+	bytes = normalsSize;
+	memcpy(cursor, normals.data(), bytes);
+	cursor += bytes;
+
+	return buffer;
+}
+
+void Mesh::LoadFromFME(const char* fileName)
+{
+
 }
