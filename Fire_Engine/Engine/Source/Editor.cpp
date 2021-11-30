@@ -304,6 +304,9 @@ update_status Editor::ImGuiMenuBar()
 			if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
 				app->scene->SaveSceneRequest();
 
+			if (ImGui::MenuItem("Load Scene"))
+				app->scene->LoadSceneRequest();
+
 			ImGui::Separator();
 			if (ImGui::MenuItem("Import Asset"))
 			{

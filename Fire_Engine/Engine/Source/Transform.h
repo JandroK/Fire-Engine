@@ -28,6 +28,10 @@ public:
 	void SetTransformMatrix(float3 position, Quat rotation, float3 localScale, Transform* parent);
 	void SetTransformMFromM(float4x4 matrix);
 
+
+	void SetLocalTransform(float4x4 matrix) { localTransform = matrix; };
+	void SetGlobalTransform(float4x4 matrix) { globalTransform = matrix; };
+
 	float4x4 GetGlobalTransform() {return globalTransform;};
 	float4x4 GetGlobalTransformT() { return globalTransformTransposed; };
 	float4x4 GetLocalTransform() { return localTransform; };

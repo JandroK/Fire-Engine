@@ -2,6 +2,7 @@
 #include "Module.h"
 
 #include<vector>
+#include "Transform.h"
 
 class GameObject;
 class Mesh;
@@ -27,6 +28,7 @@ public:
 	GameObject* CreateGameObjectParent(const char* name, GameObject* child);
 	GameObject* CreatePrimitive(const char* name, Mesh* mesh);
 	void SaveSceneRequest() { saveSceneRequest = true; }
+	void LoadSceneRequest() { loadSceneRequest = true; }
 	GameObject* root;
 	ComponentCamera* mainCamera = nullptr;
 
@@ -39,12 +41,19 @@ private:
 	bool SaveScene();
 	void SaveGameObjects(GameObject* parent, JsonParser& rootFile);
 	bool LoadScene();
+
+	GameObject* LoadGameObject(JsonParser root);
+
+	float4x4 strMatrixToF4x4(const char* convert);
+
 	void RecursiveUpdate(GameObject* parent);
 
 	JsonParser jsonFile;
 	JSON_Value* rootFile;
+	JsonParser rootGO;
 
 	bool saveSceneRequest = false;
+	bool loadSceneRequest = false;
 
 
 };

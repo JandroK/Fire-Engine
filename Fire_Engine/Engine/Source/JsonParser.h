@@ -14,13 +14,15 @@ public:
 
 	JSON_Object* ValueToObject(JSON_Value* value) const;
 
-	const char* ValueToString(const char* name) const;
+	const char* JsonValToString(const char* name) const;
 
 	double JsonValToNumber(const char* name) const;
 
 	bool JsonValToBool(const char* name) const;
 
 	JsonParser GetChild(JSON_Value* parent, const char* name);
+
+	bool ExistChild(JSON_Value* parent, const char* name);
 
 	JSON_Status FileSerialization(JSON_Value* value, const char* fileName) const;
 
