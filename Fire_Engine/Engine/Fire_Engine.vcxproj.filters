@@ -663,6 +663,9 @@
     <ClInclude Include="Source\GameTab.h">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FogWarTab.h">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -912,6 +915,9 @@
       <Filter>Sources\GameObjects\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameTab.cpp">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FogWarTab.cpp">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
   </ItemGroup>
