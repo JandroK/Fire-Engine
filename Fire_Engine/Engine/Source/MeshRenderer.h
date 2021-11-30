@@ -15,7 +15,7 @@ public:
 	void Update() override;
 	void OnEditor() override;
 
-	void RenderMesh();
+	void DrawMesh();
 
 	Mesh* GetMesh() { return mesh; };
 	void SetMesh(Mesh* mesh) { this->mesh = mesh; };

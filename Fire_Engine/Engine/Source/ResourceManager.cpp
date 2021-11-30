@@ -4,6 +4,7 @@
 // Modules
 #include "Scene.h"
 #include "Editor.h"
+#include "Camera3D.h"
 
 //Importers
 #include "FileSystem.h"
@@ -40,6 +41,9 @@ bool ResourceManager::Start()
 	logo = new Texture("logo.png", "logo");
 	logo->LoadToMemory();
 
+	defaultTexture = new Texture("default_texture.png", "defaultTexture");
+	defaultTexture->LoadToMemory();
+
 	backButton = new Texture("icon_back.png", "backButton");
 	backButton->LoadToMemory();
 
@@ -52,6 +56,7 @@ bool ResourceManager::Start()
 bool ResourceManager::CleanUp()
 {
 	RELEASE(logo);
+	RELEASE(defaultTexture);
 	RELEASE(backButton);
 	RELEASE(addButton);
 
@@ -95,7 +100,6 @@ void ResourceManager::ImportFile(const char* assetsFile)
 			}
 			else
 			{
-
 				material->Import(buffer, size, material->GetLibraryPath());
 				material->LoadToMemory();
 

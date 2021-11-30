@@ -43,7 +43,7 @@ void MeshRenderer::OnEditor()
 	}
 }
 
-void MeshRenderer::RenderMesh()
+void MeshRenderer::DrawMesh()
 {
 	if (active)
 	{

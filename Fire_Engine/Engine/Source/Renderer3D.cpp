@@ -222,7 +222,9 @@ update_status Renderer3D::PostUpdate(float dt)
 	{
 		for (size_t i = 0; i < renderQueue.size(); i++)
 		{
-			renderQueue[i]->RenderMesh();
+			// Frustrum Culling
+			if (app->camera->cameraScene.frustrum.Intersects(renderQueue[i]->globalOBB))
+				renderQueue[i]->DrawMesh();
 		}
 	}
 
@@ -251,7 +253,7 @@ update_status Renderer3D::PostUpdate(float dt)
 			{
 				// Frustrum Culling
 				if(app->scene->mainCamera->frustrum.Intersects(renderQueue[i]->globalOBB))
-					renderQueue[i]->RenderMesh();
+					renderQueue[i]->DrawMesh();
 			}
 		}
 

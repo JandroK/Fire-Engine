@@ -29,6 +29,7 @@ private:
 	void AddItem(const char* label);
 
 	void DrawDefaultInspector();
+	void DrawAddComponet();
 	void DrawEditLists();
 	void DrawListTagLayer(const char* label, std::vector<std::string> list);
 
@@ -41,6 +42,7 @@ private:
 	// This values isn't hardcoded!, this values have been extracted from the "CalculateMaxWidth" function
 	int maxWidthTag = 125;
 	int maxWidthLayers = 125;
+	int maxWidthAddC = 118;
 
 	char newTag[16] = "";
 	char newLayer[16] = "";

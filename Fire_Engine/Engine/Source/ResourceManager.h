@@ -27,6 +27,7 @@ public:
 	std::string OpenFileName(char* filter = "All Files (*.*)\0*.*\0""Textues (*.png, .dds*)\0*.PNG*;*.DDS*\0""3D models (*.fbx*)\0*.fbx*\0", HWND owner = NULL);
 
 	Texture* logo;
+	Texture* defaultTexture;
 	Texture* backButton;
 	Texture* addButton;
 

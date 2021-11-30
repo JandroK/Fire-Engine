@@ -3,7 +3,6 @@
 #include "ResourceManager.h"
 
 #include "GameObject.h"
-#include "Component.h"
 #include "ResourceTexture.h"
 
 #include "ImGui/imgui.h"
@@ -12,6 +11,9 @@
 #include "Guizmo/ImGuizmo.h"
 #include "Guizmo/GraphEditor.h"
 
+// Components
+#include "Component.h"
+#include "Material.h"
 
 Inspector::Inspector() : Tab(), gameObjectSelected(nullptr)
 {
@@ -74,7 +76,42 @@ void Inspector::DrawDefaultInspector()
 		gameObjectSelected->GetCompoments()[i]->OnEditor();
 		ImGui::Separator();
 	}
+	ImGui::NewLine();
 
+	// Draw Add Component button
+	DrawAddComponet();
+}
+
+void Inspector::DrawAddComponet()
+{
+	ImGui::PushItemWidth(maxWidthAddC);
+	float offset = (ImGui::GetWindowContentRegionMax().x - maxWidthAddC) / 2;
+	ImGui::SetCursorPosX(offset);
+	if (ImGui::BeginCombo("##AddComponent", "Add Component"))
+	{
+		// First check if this game object hasn't this component type
+		/*if (gameObjectSelected->GetComponent(ComponentType::MESHRENDERER) == nullptr)
+		{
+		if (ImGui::Selectable("Mesh"))
+		gameObjectSelected->AddComponent(ComponentType::MESHRENDERER);
+		}*/
+		if (gameObjectSelected->GetComponent(ComponentType::MATERIAL) == nullptr)
+		{
+			if (ImGui::Selectable("Material"))
+			{
+				Material* mat = static_cast<Material*>(gameObjectSelected->AddComponent(ComponentType::MATERIAL));
+				mat->texture = app->resourceManager->defaultTexture;
+			}
+		}
+		if (gameObjectSelected->GetComponent(ComponentType::CAMERA) == nullptr)
+		{
+			if (ImGui::Selectable("Camera"))
+				gameObjectSelected->AddComponent(ComponentType::CAMERA);
+		}
+
+		ImGui::EndCombo();
+	}
+	ImGui::PopItemWidth();
 }
 
 void Inspector::DrawEditLists()

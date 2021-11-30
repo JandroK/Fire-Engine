@@ -1,12 +1,12 @@
 #include "Application.h"
 #include "Material.h"
 
-
 // Modules
 #include "Scene.h"
 #include "Renderer3D.h"
 #include "ResourceTexture.h"
 #include "Editor.h"
+#include "ResourceManager.h"
 
 #include "ImGui/imgui.h"
 
@@ -17,7 +17,7 @@ Material::Material(GameObject* obj) : Component(obj)
 Material::~Material()
 {
 	// Only delete texture if nobody is using it  
-	if (!CompareTextureId(app->scene->root, this->GetOwner(), texture->textureID))
+	if (!CompareTextureId(app->scene->root, this->GetOwner(), texture->textureID) && texture != app->resourceManager->defaultTexture)
 		delete texture;
 	texture = nullptr;
 }
