@@ -282,7 +282,6 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 
 bool Scene::LoadScene()
 {
-
 	LOG(LogType::L_NORMAL, "Loading configurations");
 
 	rootFile = jsonFile.GetRootValue();
@@ -313,7 +312,6 @@ GameObject* Scene::LoadGameObject(JsonParser parent)
 	gamObj->SetPendingToDelete( parent.JsonValToBool("pendingToDelete"));
 
 	LoadComponents(parent, num, gamObj, transform);
-
 
 	return gamObj;
 }
