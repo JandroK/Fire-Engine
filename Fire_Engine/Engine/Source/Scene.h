@@ -44,6 +44,8 @@ private:
 
 	GameObject* LoadGameObject(JsonParser root);
 
+	void LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj, Transform*& transform);
+
 	float4x4 strMatrixToF4x4(const char* convert);
 
 	void RecursiveUpdate(GameObject* parent);
