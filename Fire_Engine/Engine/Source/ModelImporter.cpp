@@ -92,12 +92,13 @@ void ModelImporter::LoadMaterials(const aiScene* scene, const char* fullPath, st
 
 				// Get the buffer
 				char* buffer = nullptr;
-				FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
+				uint size = FileSystem::LoadToBuffer(localPath.c_str(), &buffer);
 
 				if (buffer != nullptr)
 				{
 					// Load texture
 					Texture* tex = new Texture(localPath.c_str());
+					if(!FileSystem::Exists(tex->GetLibraryPath())) tex->Import(buffer, size, tex->GetLibraryPath());
 					tex->LoadToMemory();
 
 					testTextures.push_back(tex);
