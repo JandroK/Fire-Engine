@@ -17,6 +17,7 @@ void QuadTreeTab::Draw()
 	{
 		ImGui::Checkbox("Render QuadTree", &app->camera->quadTree->drawQuadTree);
 		IMGUI_PRINT("Static Game Objects: ", "%i", app->camera->quadTree->GetNumGOStatics());
+		IMGUI_PRINT("Current divisions: ", "%i", app->camera->quadTree->numSubDivisions);
 		ImGui::NewLine();
 
 		ImGui::PushItemWidth(100);

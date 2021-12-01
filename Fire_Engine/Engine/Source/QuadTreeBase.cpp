@@ -118,8 +118,18 @@ QT_Node::~QT_Node()
 
 void QT_Node::Insert(GameObject* go)
 {
+	// Calculate depth level
+	QT_Node* node = this;
+	int depth = 0;
+	while (node->parent != nullptr)
+	{
+		depth++;
+		node = node->parent;
+	}
+	if (depth > quadTree->numSubDivisions) quadTree->numSubDivisions = depth;
+
 	// If I have not been split and I can still fit more objects
-	if (!HasChildrens() && (objects.size() < quadTree->maxGObyNode || quadTree->numSubDivisions >= quadTree->maxDivisions))
+	if (!HasChildrens() && (objects.size() < quadTree->maxGObyNode || depth >= quadTree->maxDivisions))
 		objects.push_back(go);
 	else
 	{
@@ -151,9 +161,8 @@ void QT_Node::CreateNodes()
 		aabb.SetFromCenterAndSize(newCenter[i], size);
 		childrens[i] = new QT_Node(aabb);
 		childrens[i]->quadTree = quadTree;
+		childrens[i]->parent = this;
 	}
-
-	quadTree->numSubDivisions++;
 }
 
 void QT_Node::ReDistributeChilds()
