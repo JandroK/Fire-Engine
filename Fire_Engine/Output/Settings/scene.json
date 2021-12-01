@@ -61,7 +61,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Baker_house.png"
+                            "Material": "Library\/Textures\/Baker_house.dds"
                         }
                     }
                 },
@@ -90,7 +90,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Baker_house.png"
+                            "Material": "Library\/Textures\/Baker_house.dds"
                         }
                     }
                 }

@@ -169,6 +169,27 @@ bool FileSystem::IsDirectory(const char* file)
 {
 	return PHYSFS_isDirectory(file) != 0;
 }
+
+std::vector<const char*> FileSystem::GetFilesFromFolder(const char* folder)
+{
+	char** filesArray = PHYSFS_enumerateFiles(folder);
+	std::vector<const char*> files;
+	for (int i = 0; filesArray[i] != NULL; i++)
+	{
+		//SHOULD CODE A WAY TO DETECT BETTER IF ITS A FOLDER
+		//RIGHT NOW IF NO FILE EXTENSION EXISTS IT WILL BE CONSIDERED A FOLDER
+		/*if (IsDirectory(filesArray[i]))
+		{
+			std::string temp = filesArray[i];
+			temp = temp + ".folder";
+
+			filesArray[i] = temp.c_str();
+		}*/
+		files.push_back(filesArray[i]);
+	}
+	return files;
+}
+
 // Substitute "\\" to "/"
 std::string FileSystem::NormalizePath(const char* fullPath)
 {

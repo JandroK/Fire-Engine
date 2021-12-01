@@ -84,6 +84,7 @@ void ResourceManager::ImportFile(const char* assetsFile)
 		}
 		case ImportType::MESH:
 		{
+			app->editor->UpdateAssets();
 			ModelImporter::Import(normalizedPath.c_str(), buffer, size, app->scene->root);
 			break;
 		}
@@ -100,6 +101,7 @@ void ResourceManager::ImportFile(const char* assetsFile)
 			}
 			else
 			{
+				app->editor->UpdateAssets();
 				material->Import(buffer, size, material->GetLibraryPath());
 				material->LoadToMemory();
 
@@ -125,6 +127,7 @@ void ResourceManager::ImportFile(const char* assetsFile)
 
 void ResourceManager::Overwrite()
 {
+	app->editor->UpdateAssets();
 	switch (ovResource->GetType())
 	{
 	case ResourceType::MESH:

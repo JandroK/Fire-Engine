@@ -46,7 +46,7 @@ bool Scene::Init()
 bool Scene::Start()
 {
 	// Import BakerHouse by default
-	app->resourceManager->ImportFile("BakerHouse.fbx");
+	app->resourceManager->ImportFile("Resources/BakerHouse.fbx");
 
 	// Edit his tramsformation because his original transforms are breken (scale = (100,100,100) and rotate 90º)
 	Transform* transformChimney = root->GetChildrens()[1]->GetChildrens()[0]->transform;
@@ -327,7 +327,7 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 		if (components.ExistChild(components.GetRootValue(), num.c_str()))
 		{
 			tmp = components.GetChild(components.GetRootValue(), num.c_str());
-			switch ((ComponentType)tmp.JsonValToNumber("Type"))
+			switch ((ComponentType)(int)tmp.JsonValToNumber("Type"))
 			{
 			case ComponentType::TRANSFORM:
 				gamObj->AddComponent(ComponentType::TRANSFORM);

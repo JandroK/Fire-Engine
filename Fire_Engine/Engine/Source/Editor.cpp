@@ -20,6 +20,7 @@
 #include "GameTab.h"
 #include "FogWarTab.h"
 #include "QuadTreeTab.h"
+#include "AssetsTab.h"
 
 #include "Primitive.h"
 #include "Transform.h"
@@ -46,6 +47,7 @@ Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 	tabs[static_cast<unsigned int>(TabType::GAME)] = new GameTab();
 	tabs[static_cast<unsigned int>(TabType::FOGWAR)] = new FogWarTab();
 	tabs[static_cast<unsigned int>(TabType::QUADTREE)] = new QuadTreeTab();
+	tabs[static_cast<unsigned int>(TabType::ASSETS)] = new AssetsTab();
 
 	// Assign a shortcut to each tab
 	for (int i = 0; i < tabs.size(); i++)
@@ -214,6 +216,13 @@ void Editor::CheckShortCuts()
 update_status Editor::Draw()
 {	
 	update_status ret = update_status::UPDATE_CONTINUE;
+
+	// Update assets on assets tab
+	if (updateAssets)
+	{
+		static_cast<AssetsTab*>(tabs[9])->UpdateAssets();
+		updateAssets = false;
+	}
 
 	StartFrame();
 	ret = ImGuiMenuBar();
@@ -707,4 +716,9 @@ void Editor::DrawShortcut(const char* label, const char* shortcut, bool ckeckbox
 	ImGui::PushStyleColor(ImGuiCol_Text, style.Colors[ImGuiCol_TextDisabled]);
 	ImGui::RenderText(pos + ImVec2(offsets->OffsetShortcut + stretch_w, 0.0f), shortcut, NULL, false);
 	ImGui::PopStyleColor();
+}
+
+void Editor::UpdateAssets()
+{
+	updateAssets = true;
 }
