@@ -14,7 +14,9 @@ public:
 	~QuadTreeBase();
 
 	void Draw(QT_Node* node);
-	void ReGenerateRootLimits(AABB limits);
+	void ReCalculateRootLimits();
+
+	void ReGenerateRoot(AABB limits);
 	void DeleteRoot();
 
 	void AddGameObject(GameObject* obj) { goStatics.push_back(obj); };

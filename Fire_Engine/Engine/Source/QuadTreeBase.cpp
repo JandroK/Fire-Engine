@@ -1,9 +1,10 @@
 #include "QuadTreeBase.h"
 #include "Glew/include/glew.h"
+#include "MeshRenderer.h"
 
 QuadTreeBase::QuadTreeBase(AABB aabb)
 {
-	ReGenerateRootLimits(aabb);
+	ReGenerateRoot(aabb);
 }
 
 QuadTreeBase::~QuadTreeBase()
@@ -22,7 +23,7 @@ float3* QuadTreeBase::GetRootBoundingBox()
 // Draw the bounding box of the root and their nodes recursively 
 void QuadTreeBase::Draw(QT_Node* node)
 {
-	if (drawQuadTree)
+	if (drawQuadTree && !goStatics.empty())
 	{
 		float3 points[8];
 		node->boundingBox.GetCornerPoints(points);
@@ -37,8 +38,28 @@ void QuadTreeBase::Draw(QT_Node* node)
 	}
 }
 
+void QuadTreeBase::ReCalculateRootLimits()
+{
+	// Calculate the min and max point of all static GO for generate the global bounding box
+	if (!goStatics.empty())
+	{
+		std::list<GameObject*>::iterator it = goStatics.begin();
+		float3 minPoint = static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB.minPoint;
+		float3 maxPoint = static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB.maxPoint;
+		it++;
+
+		for (it; it != goStatics.end(); it++)
+		{
+			minPoint = minPoint.Min(static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB.minPoint);
+			maxPoint = maxPoint.Max(static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB.maxPoint);
+		}
+
+		ReGenerateRoot(AABB(minPoint, maxPoint));
+	}	
+}
+
 // Delete old root and regenerate new because his limts has changed
-void QuadTreeBase::ReGenerateRootLimits(AABB limits)
+void QuadTreeBase::ReGenerateRoot(AABB limits)
 {
 	DeleteRoot();
 	root = new QT_Node(limits);

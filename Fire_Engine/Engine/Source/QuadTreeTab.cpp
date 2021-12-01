@@ -29,6 +29,11 @@ void QuadTreeTab::Draw()
 			app->camera->quadTree->maxDivisions = 1;
 		if (app->camera->quadTree->maxGObyNode < 1)
 			app->camera->quadTree->maxGObyNode = 1;
+
+		if (ImGui::Button("Generate QuadTree"))
+		{
+			app->camera->quadTree->ReCalculateRootLimits();
+		}
 	}
 	ImGui::End();
 }
