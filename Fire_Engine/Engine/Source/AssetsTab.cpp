@@ -1,5 +1,6 @@
 #include "AssetsTab.h"
 #include "FileSystem.h"
+#include <algorithm>
 
 AssetsTab::AssetsTab() : Tab()
 {
@@ -7,6 +8,7 @@ AssetsTab::AssetsTab() : Tab()
 	parentFolder = new Folder(ASSETS_FOLDER, ASSETS_FOLDER);
 	parentFolder->parent = nullptr;
 	currentFolder = parentFolder;
+	currentFolderPath = currentFolder->fullPath;
 	//parentFolder->name = ASSETS_FOLDER;
 	//parentFolder->fullPath = ASSETS_FOLDER;
 	//parentFolder = { ASSETS_FOLDER, nullptr };
@@ -16,10 +18,6 @@ void AssetsTab::Draw()
 {
 	if (ImGui::Begin(name.c_str(), &active))
 	{
-		/*for (int i = 0; i < parentFolder->childFolders.size(); i++)
-		{
-			//DrawFolder(parentFolder.childFolders.at(i));
-		}*/
 		DrawFolder(currentFolder);
 	}
 	ImGui::End();
@@ -27,7 +25,8 @@ void AssetsTab::Draw()
 
 void AssetsTab::UpdateAssets()
 {
-	LoadAssets(parentFolder);
+	//LoadAssets(parentFolder);
+	Reload();
 }
 
 void AssetsTab::LoadAssets(Folder* parentFolder)
@@ -50,6 +49,10 @@ void AssetsTab::LoadAssets(Folder* parentFolder)
 			//folder->fullPath = asset.fullPath + "/";
 			LoadAssets(folder);
 			parentFolder->childFolders.push_back(folder);
+			std::string assetPath = FileSystem::GetBasePath();
+			assetPath = FileSystem::NormalizePath(assetPath.c_str());
+			assetPath += folder->fullPath;
+			FileSystem::AddPath(assetPath.c_str());
 		}
 		else if(asset.type != AssetType::OTHER) parentFolder->assets.push_back(asset);
 	}
@@ -64,9 +67,13 @@ AssetType AssetsTab::CheckAssetType(const char* assetName)
 	{
 		ext = ext.substr(pointPos);
 
-		if (ext == ".fbx") return AssetType::FBX;
+		/*std::for_each(ext.begin(), ext.end(), [](char& c) {
+			c = ::tolower(c);
+			});*/
 
-		else if (ext == ".png" || ext == ".jpg" || ext == ".dds") return AssetType::TEXTURE;
+		if (ext == ".fbx" || ext == ".FBX") return AssetType::FBX;
+
+		else if (ext == ".png" || ext == ".PNG" || ext == ".jpg" || ext == ".JPG" || ext == ".dds" || ext == ".DDS") return AssetType::TEXTURE;
 
 		else return AssetType::OTHER;
 	}
@@ -83,30 +90,65 @@ void AssetsTab::DrawFolder(Folder* folder)
 	font->Scale = 1.0f;
 	ImGui::PopFont();
 
+	if (ImGui::Button("Reload"))
+		Reload();
+
 	ImGui::Separator();
-	/*for (int i = 0; i < folder.childFolders.size(); i++)
-	{
-		DrawFolder(folder.childFolders.at(i));
-	}*/
+
 	if (folder->name != ASSETS_FOLDER)
 	{
 		if (ImGui::Button("BACK"))
 		{
 			currentFolder = folder->parent;
+			currentFolderPath = currentFolder->fullPath;
 		}
 	}
 
 	for (int i = 0; i < currentFolder->childFolders.size(); i++)
 	{
-		if(ImGui::Button(currentFolder->childFolders.at(i)->name))
+		if (ImGui::Button(currentFolder->childFolders.at(i)->name))
+		{
 			currentFolder = currentFolder->childFolders.at(i);
-		//ImGui::Text(folder.childFolders.at(i).name);
+			currentFolderPath = currentFolder->fullPath;
+		}
 	}
 
 	for (int i = 0; i < currentFolder->assets.size(); i++)
 	{
 		ImGui::Text(currentFolder->assets.at(i).name);
-		//ImGui::BeginGroup();
-		//ImGui::ImageButton()
 	}
+}
+
+void AssetsTab::Reload()
+{
+	std::string temp = currentFolder->fullPath;
+	currentFolder = parentFolder;
+	currentFolderPath = currentFolder->fullPath;
+	RemoveSearchPaths(currentFolder);
+	RELEASE_VECTOR(parentFolder->childFolders, parentFolder->childFolders.size());
+	parentFolder->childFolders.clear();
+	parentFolder->assets.clear();
+	LoadAssets(currentFolder);
+	for (int i = 0; i < currentFolder->childFolders.size(); i++)
+	{
+		if (currentFolder->childFolders.at(i)->fullPath == temp)
+		{
+			currentFolder = currentFolder->childFolders.at(i);
+			break;
+		}
+	}
+}
+
+void AssetsTab::RemoveSearchPaths(Folder* folder)
+{
+	for (int i = 0; i < folder->childFolders.size(); i++)
+	{
+		RemoveSearchPaths(folder->childFolders.at(i));
+	}
+
+	std::string assetPath = FileSystem::GetBasePath();
+	assetPath = FileSystem::NormalizePath(assetPath.c_str());
+	assetPath += folder->fullPath;
+
+	if(folder->parent != nullptr) FileSystem::RemovePath(assetPath.c_str());
 }

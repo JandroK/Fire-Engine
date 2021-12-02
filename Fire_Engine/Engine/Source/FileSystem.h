@@ -26,6 +26,7 @@ namespace FileSystem
 
 	// Utility functions
 	bool AddPath(const char* path_or_zip);
+	bool RemovePath(const char* dir);
 	bool Exists(const char* file);
 	bool CreateDir(const char* dir);
 	bool IsDirectory(const char* file);
@@ -40,6 +41,7 @@ namespace FileSystem
 	// Open for Read/Write
 	unsigned int LoadToBuffer(const char* file, char** buffer);
 	unsigned int Save(const char* file, const void* buffer, unsigned int size, bool append = false);
+	void Copy(const char* source, const char* dest, char* buffer);
 
 	bool Remove(const char* file);
 	void GetFileName(const char* file, std::string& fileName, bool extension);

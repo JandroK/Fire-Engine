@@ -49,6 +49,8 @@ Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 	tabs[static_cast<unsigned int>(TabType::QUADTREE)] = new QuadTreeTab();
 	tabs[static_cast<unsigned int>(TabType::ASSETS)] = new AssetsTab();
 
+	currentFolder = &static_cast<AssetsTab*>(GetTab(TabType::ASSETS))->currentFolderPath;
+
 	// Assign a shortcut to each tab
 	for (int i = 0; i < tabs.size(); i++)
 	{
@@ -94,6 +96,8 @@ bool Editor::Init()
 	// Setup Platform/Renderer backends
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL3_Init();
+
+	static_cast<AssetsTab*>(GetTab(TabType::ASSETS))->UpdateAssets();
 
     return true;
 }
@@ -220,7 +224,7 @@ update_status Editor::Draw()
 	// Update assets on assets tab
 	if (updateAssets)
 	{
-		static_cast<AssetsTab*>(tabs[9])->UpdateAssets();
+		static_cast<AssetsTab*>(GetTab(TabType::ASSETS))->UpdateAssets();
 		updateAssets = false;
 	}
 
@@ -721,4 +725,9 @@ void Editor::DrawShortcut(const char* label, const char* shortcut, bool ckeckbox
 void Editor::UpdateAssets()
 {
 	updateAssets = true;
+}
+
+std::string* Editor::GetCurrentFolder()
+{
+	return currentFolder;
 }

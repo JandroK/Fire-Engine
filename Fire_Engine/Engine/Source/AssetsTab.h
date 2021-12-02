@@ -43,6 +43,11 @@ public:
 	void DrawFolder(Folder* folder);
 
 	void UpdateAssets();
+	void Reload();
+
+	void RemoveSearchPaths(Folder* folder);
+
+	std::string currentFolderPath;
 
 private:
 	Folder* parentFolder;

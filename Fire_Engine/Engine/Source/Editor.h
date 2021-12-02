@@ -63,6 +63,8 @@ public:
 
 	void DrawShortcut(const char* label, const char* shortcut, bool checkBox = false);
 
+	std::string* GetCurrentFolder();
+
 private:
 	std::vector<Tab*> tabs;
 
@@ -73,4 +75,6 @@ private:
 	std::vector<float> msLog;
 
 	bool updateAssets = false;
+
+	std::string* currentFolder;
 };

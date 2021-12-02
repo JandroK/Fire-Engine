@@ -31,6 +31,8 @@ public:
 	Texture* backButton;
 	Texture* addButton;
 
+	bool dragDropped = false;
+
 private:
 	// Overriding file variables
 	Resource* ovResource;
@@ -38,4 +40,5 @@ private:
 	const char* ovPath;
 	char* ovBuffer;
 	uint ovSize;
+	std::string* currentFolderPath;
 };

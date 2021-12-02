@@ -38,17 +38,19 @@ bool ResourceManager::Init()
 bool ResourceManager::Start()
 {
 	// Import Icons
-	logo = new Texture("logo.png", "logo");
+	logo = new Texture("Resources/logo.png", "logo");
 	logo->LoadToMemory();
 
 	defaultTexture = new Texture("default_texture.png", "defaultTexture");
 	defaultTexture->LoadToMemory();
 
-	backButton = new Texture("icon_back.png", "backButton");
+	backButton = new Texture("Resources/icon_back.png", "backButton");
 	backButton->LoadToMemory();
 
-	addButton = new Texture("icon_add.png", "addButton");
+	addButton = new Texture("Resources/icon_add.png", "addButton");
 	addButton->LoadToMemory();
+
+	currentFolderPath = app->editor->GetCurrentFolder();
 
 	return true;
 }
@@ -66,7 +68,28 @@ bool ResourceManager::CleanUp()
 
 void ResourceManager::ImportFile(const char* assetsFile)
 {
+	// Assets tab stuff
+
 	std::string normalizedPath = FileSystem::NormalizePath(assetsFile);
+	bool exists = false;
+	exists = FileSystem::Exists(assetsFile);
+	// If file was grad and dropped from somewhere else than current folder, copy it to current folder
+	if (dragDropped)
+	{
+		std::string temp;
+		FileSystem::GetFileName(normalizedPath.c_str(), temp, true);
+		std::string fileName = *currentFolderPath;
+		fileName += temp;
+		exists = FileSystem::Exists(fileName.c_str());
+		if (!exists)
+		{
+			std::string dst = fileName;
+			char* buffer = nullptr;
+			FileSystem::Copy(normalizedPath.c_str(), dst.c_str(), buffer);
+			RELEASE_ARRAY(buffer);
+		}
+		dragDropped = false;
+	}
 
 	std::string output = "";
 
@@ -84,7 +107,7 @@ void ResourceManager::ImportFile(const char* assetsFile)
 		}
 		case ImportType::MESH:
 		{
-			app->editor->UpdateAssets();
+			if(!exists) app->editor->UpdateAssets();
 			ModelImporter::Import(normalizedPath.c_str(), buffer, size, app->scene->root);
 			break;
 		}
@@ -101,7 +124,7 @@ void ResourceManager::ImportFile(const char* assetsFile)
 			}
 			else
 			{
-				app->editor->UpdateAssets();
+				if(!exists) app->editor->UpdateAssets();
 				material->Import(buffer, size, material->GetLibraryPath());
 				material->LoadToMemory();
 

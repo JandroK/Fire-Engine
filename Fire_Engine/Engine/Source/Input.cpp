@@ -118,6 +118,7 @@ update_status Input::PreUpdate(float dt)
 			break;
 
 			case (SDL_DROPFILE):
+			app->resourceManager->dragDropped = true;
 			if(!app->resourceManager->GetOverwritting()) app->resourceManager->ImportFile(FileSystem::ExtractLocalDiskForward(e.drop.file).c_str());
 			SDL_free(e.drop.file);  
 			break;

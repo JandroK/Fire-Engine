@@ -68,6 +68,7 @@ std::string StringLogic::FileNameFromPath(const char* path)
 
 	return fileName;
 }
+
 // Convert global path to local path, example:
 // C:\Users\aleja\OneDrive\Escritorio\Universidad\3r Carrera\Motores\Fire-Engine\Fire_Engine\Output\Assests\BakerHouse.fbx
 // to: Assests\BakerHouse.fbx
@@ -148,6 +149,22 @@ bool FileSystem::AddPath(const char* path_or_zip)
 
 	return ret;
 }
+
+// Remove folder from search path
+bool FileSystem::RemovePath(const char* path)
+{
+	bool ret = false;
+
+	if (PHYSFS_unmount(path) == 0)
+	{
+		LOG(LogType::L_ERROR, "File System error while adding a path or zip: %s\n", PHYSFS_getLastError());
+	}
+	else
+		ret = true;
+
+	return ret;
+}
+
 // Return all existing paths
 const char* FileSystem::GetReadPaths()
 {
@@ -346,4 +363,14 @@ void FileSystem::OnGui()
 		IMGUI_PRINT("Read Paths: ", GetReadPaths());
 		IMGUI_PRINT("Write Path: ", GetWritePath());
 	}	
+}
+
+void FileSystem::Copy(const char* src, const char* dst, char* buffer)
+{
+	int size = LoadToBuffer(src, &buffer);
+
+	if (buffer != nullptr)
+	{
+		Save(dst, buffer, size);
+	}
 }
