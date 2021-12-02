@@ -605,6 +605,11 @@ GameObject* Editor::GetGameObjectSelected()
 {
 	return static_cast<Inspector*>(GetTab(TabType::INSPECTOR))->gameObjectSelected;
 }
+void Editor::SetStyle(int _style)
+{
+	style = _style;
+	Style::SetStyle(style);
+}
 void Editor::SetGameObjectSelected(GameObject* obj)
 {
 	static_cast<Inspector*>(app->editor->GetTab(TabType::INSPECTOR))->gameObjectSelected = obj;

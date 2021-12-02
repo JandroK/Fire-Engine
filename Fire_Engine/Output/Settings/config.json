@@ -6,6 +6,7 @@
         "width": 1280,
         "height": 720,
         "brightness": 1,
+        "style": 5,
         "fullscreen": false,
         "fullscreen desktop": false,
         "borderless": false,
