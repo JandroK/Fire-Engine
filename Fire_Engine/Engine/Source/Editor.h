@@ -21,6 +21,7 @@ enum class TabType
 	GAME,
 	FOGWAR,
 	QUADTREE,
+	ASSETS,
 
 	MAX
 };
@@ -47,6 +48,7 @@ public:
 	Tab* GetTab(TabType type);
 	GameObject* GetGameObjectSelected();
 	void SetGameObjectSelected(GameObject* obj);
+	void UpdateAssets();
 
 	void AlignWithView();
 	void AlignViewWithSelected();
@@ -69,4 +71,6 @@ private:
 
 	std::vector<float> fpsLog;
 	std::vector<float> msLog;
+
+	bool updateAssets = false;
 };

@@ -15,8 +15,12 @@ void QuadTreeTab::Draw()
 {
 	if (ImGui::Begin(name.c_str(), &active))
 	{
-		ImGui::Checkbox("Render QuadTree", &app->camera->quadTree->drawQuadTree);
+		ImGui::Checkbox("Render QuadTree", &app->camera->quadTree->drawQTree);
+		ImGui::Checkbox("Use Mouse Picking", &app->camera->quadTree->pickQTree);
+
+		ImGui::NewLine();
 		IMGUI_PRINT("Static Game Objects: ", "%i", app->camera->quadTree->GetNumGOStatics());
+		IMGUI_PRINT("Current divisions: ", "%i", app->camera->quadTree->numSubDivisions);
 		ImGui::NewLine();
 
 		ImGui::PushItemWidth(100);
@@ -30,6 +34,7 @@ void QuadTreeTab::Draw()
 		if (app->camera->quadTree->maxGObyNode < 1)
 			app->camera->quadTree->maxGObyNode = 1;
 
+		ImGui::NewLine();
 		if (ImGui::Button("Generate QuadTree"))
 		{
 			app->camera->quadTree->ReCalculateRootLimits();

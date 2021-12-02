@@ -13,6 +13,20 @@ QuadTreeBase::~QuadTreeBase()
 	goStatics.clear();
 }
 
+// Delete old root and regenerate new because his limts has changed
+void QuadTreeBase::ReGenerateRoot(AABB limits)
+{
+	DeleteRoot();
+	root = new QT_Node(limits);
+	root->quadTree = this;
+}
+
+void QuadTreeBase::DeleteRoot()
+{
+	if (root != nullptr)
+		delete root;
+}
+
 float3* QuadTreeBase::GetRootBoundingBox()
 {
 	float3 points[8];
@@ -23,7 +37,7 @@ float3* QuadTreeBase::GetRootBoundingBox()
 // Draw the bounding box of the root and their nodes recursively 
 void QuadTreeBase::Draw(QT_Node* node)
 {
-	if (drawQuadTree && !goStatics.empty())
+	if (drawQTree && !goStatics.empty())
 	{
 		float3 points[8];
 		node->boundingBox.GetCornerPoints(points);
@@ -55,21 +69,14 @@ void QuadTreeBase::ReCalculateRootLimits()
 		}
 
 		ReGenerateRoot(AABB(minPoint, maxPoint));
+		numSubDivisions = 0;
+
+		// Add Game Object
+		for (std::list<GameObject*>::iterator it = goStatics.begin(); it != goStatics.end(); it++)
+		{
+			root->Insert((*it));
+		}
 	}	
-}
-
-// Delete old root and regenerate new because his limts has changed
-void QuadTreeBase::ReGenerateRoot(AABB limits)
-{
-	DeleteRoot();
-	root = new QT_Node(limits);
-	root->quadTree = this;
-}
-
-void QuadTreeBase::DeleteRoot()
-{
-	if (root != nullptr)
-		delete root;
 }
 
 // Function used for draw bounding box (as AABB/OBB)
@@ -103,7 +110,100 @@ QT_Node::~QT_Node()
 			if (childrens[i] != nullptr)
 			{
 				delete childrens[i];
+				childrens[i] = nullptr;
 			}
 		}
+	}
+}
+
+void QT_Node::Insert(GameObject* go)
+{
+	// Calculate depth level
+	QT_Node* node = this;
+	int depth = 0;
+	while (node->parent != nullptr)
+	{
+		depth++;
+		node = node->parent;
+	}
+	if (depth > quadTree->numSubDivisions) quadTree->numSubDivisions = depth;
+
+	// If I have not been split and I can still fit more objects
+	if (!HasChildrens() && (objects.size() < quadTree->maxGObyNode || depth >= quadTree->maxDivisions))
+		objects.push_back(go);
+	else
+	{
+		if (!HasChildrens() && quadTree->numSubDivisions < quadTree->maxDivisions)
+			CreateNodes();
+
+		objects.push_back(go);
+		ReDistributeChilds();
+	}
+}
+
+void QT_Node::CreateNodes()
+{
+	AABB aabb;
+	float3 newCenter[4];
+	float3 center = boundingBox.CenterPoint();
+	float3 size = boundingBox.HalfSize();
+	size.y *= 2;
+	float sizeX = size.x * 0.5f;
+	float sizeZ = size.z * 0.5f;
+
+	newCenter[0] = { center.x - sizeX, center.y, center.z + sizeZ };	// NW
+	newCenter[1] = { center.x + sizeX, center.y, center.z + sizeZ };	// NE
+	newCenter[2] = { center.x - sizeX, center.y, center.z - sizeZ };	// SW
+	newCenter[3] = { center.x + sizeX, center.y, center.z - sizeZ };	// SE
+
+	for (int i = 0; i < 4; i++)
+	{
+		aabb.SetFromCenterAndSize(newCenter[i], size);
+		childrens[i] = new QT_Node(aabb);
+		childrens[i]->quadTree = quadTree;
+		childrens[i]->parent = this;
+	}
+}
+
+void QT_Node::ReDistributeChilds()
+{
+	// Redistribute all game objects in the nodes
+	for (std::list<GameObject*>::iterator it = objects.begin(); it != objects.end();)
+	{
+		AABB globalAABB(static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB);
+
+		// Check with how many nodes the object intersects 
+		bool intersects[4];
+		for (int i = 0; i < 4; ++i)
+			intersects[i] = childrens[i]->boundingBox.Intersects(globalAABB);
+
+		// If bounding box of object has intersect with all of them, we go to the next
+		if (intersects[0] && intersects[1] && intersects[2] && intersects[3]) ++it;  
+		else
+		{
+			for (int i = 0; i < 4; ++i)
+				if (intersects[i]) childrens[i]->Insert((*it));
+			it = objects.erase(it);
+		}
+	}
+}
+
+//Function used for MousePicking (to static GameObjects) 
+void QT_Node::CollectIntersections(std::map<float, MeshRenderer*>& objects, LineSegment ray)
+{
+	if (ray.Intersects(boundingBox))
+	{
+		float dNear = 0;
+		float dFar = 0;
+		MeshRenderer* mesh;
+		for (std::list<GameObject*>::const_iterator it = this->objects.begin(); it != this->objects.end(); ++it)
+		{
+			mesh = static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER));
+			if (ray.Intersects(mesh->globalOBB, dNear, dFar))
+				objects[dNear] = mesh;
+		}
+		// Check Intersections with all nodes recursively
+		for (int i = 0; i < 4; ++i)
+			if (childrens[i] != nullptr) childrens[i]->CollectIntersections(objects, ray);
 	}
 }

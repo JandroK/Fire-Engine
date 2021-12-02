@@ -18,7 +18,9 @@
 #include "ResourceMesh.h"
 #include "Material.h"
 #include "ResourceTexture.h"
+
 #include "Texture.h"
+#include "QuadTreeBase.h"
 
 #include"MathGeoLib/include/Math/Quat.h"
 
@@ -47,9 +49,9 @@ bool Scene::Init()
 bool Scene::Start()
 {
 	// Import BakerHouse by default
-	app->resourceManager->ImportFile("BakerHouse.fbx");
+	app->resourceManager->ImportFile("Resources/BakerHouse.fbx");
 
-	// Edit his tramsformation because his original transforms are breken (scale = (100,100,100) and rotate 90º)
+	// Edit his tramsformation because his original transforms are breken (scale = (100,100,100) and rotate 90ï¿½)
 	Transform* transformChimney = root->GetChildrens()[1]->GetChildrens()[0]->transform;
 	Transform* transformBakerhouse = root->GetChildrens()[1]->GetChildrens()[1]->transform;
 	Transform* parentTransform = root->GetChildrens()[1]->transform;
@@ -171,6 +173,9 @@ void Scene::Destroy(GameObject* obj)
 				obj->SetIndex(i);
 				break;
 			}
+			obj->SetIndex(i);
+			app->camera->quadTree->RemoveGameObject(obj);
+			break;
 		}
 	}
 

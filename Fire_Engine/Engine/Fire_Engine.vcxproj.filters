@@ -672,6 +672,9 @@
     <ClInclude Include="Source\QuadTreeBase.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AssetsTab.h">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -931,6 +934,9 @@
     </ClCompile>
     <ClCompile Include="Source\QuadTreeBase.cpp">
       <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AssetsTab.cpp">
+      <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

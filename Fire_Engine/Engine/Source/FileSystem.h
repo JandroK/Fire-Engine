@@ -29,6 +29,7 @@ namespace FileSystem
 	bool Exists(const char* file);
 	bool CreateDir(const char* dir);
 	bool IsDirectory(const char* file);
+	std::vector<const char*> GetFilesFromFolder(const char* folder);
 
 	std::string NormalizePath(const char* fullPath);
 	std::string UnNormalizePath(const char* fullPath);

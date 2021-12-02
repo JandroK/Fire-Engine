@@ -4,13 +4,14 @@
 #include "Math/float3.h"
 #include "Geometry/AABB.h"
 #include "Geometry/LineSegment.h"
+#include <map>
 
 class QT_Node;
 
 class QuadTreeBase
 {
 public:
-	QuadTreeBase(AABB aabb = AABB(float3(-10, -10, -10),float3(10, 10, 10)));
+	QuadTreeBase(AABB aabb = AABB(float3(0, 0, 0),float3(0, 0, 0)));
 	~QuadTreeBase();
 
 	void Draw(QT_Node* node);
@@ -19,19 +20,22 @@ public:
 	void ReGenerateRoot(AABB limits);
 	void DeleteRoot();
 
-	void AddGameObject(GameObject* obj) { goStatics.push_back(obj); };
-	void RemoveGameObject(GameObject* obj) { goStatics.remove(obj); };
+	void AddGameObject(GameObject* obj) { goStatics.push_back(obj); ReCalculateRootLimits(); };
+	void RemoveGameObject(GameObject* obj) { goStatics.remove(obj); ReCalculateRootLimits(); };
 
 	float3* GetRootBoundingBox();
 	int GetNumGOStatics() { return goStatics.size(); };
 
-	void DrawBoundingBoxes(float3* points, float3 color = float3::one);
+	void DrawBoundingBoxes(float3* points, float3 color = float3(1, 0.9f, 0));
 
-	bool drawQuadTree = false;
 	QT_Node* root = nullptr;
+	
+	bool drawQTree = false;
+	bool pickQTree = false;
 
 	int maxDivisions = 10;	// Maximum number of depth  
 	int maxGObyNode = 1;	// Maximum number of objects by node 
+	unsigned int numSubDivisions = 0;
 
 private:
 	// List of all static gameObjects of the scene
@@ -44,6 +48,7 @@ private:
 	};
 };
 
+class MeshRenderer;
 // This class represents each partition of its parent's space
 class QT_Node
 {
@@ -52,6 +57,12 @@ public:
 	~QT_Node();
 
 	bool HasChildrens() { return (childrens[0] != nullptr) ? true : false; };
+
+	void Insert(GameObject* go);
+	void CreateNodes();
+	void ReDistributeChilds();
+
+	void CollectIntersections(std::map<float, MeshRenderer*>& objects, LineSegment ray);
 
 public:
 	// Each partition has 1 parent
@@ -65,5 +76,4 @@ public:
 	QuadTreeBase* quadTree = nullptr;
 
 	AABB boundingBox;
-	unsigned int numSubDivisions = 0;
 };

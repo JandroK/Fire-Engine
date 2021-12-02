@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="Source\AboutTab.h" />
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\AssetsTab.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Component.h" />
     <ClInclude Include="Source\ComponentCamera.h" />
@@ -290,6 +291,7 @@
   <ItemGroup>
     <ClCompile Include="Source\AboutTab.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\AssetsTab.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\ComponentCamera.cpp" />
     <ClCompile Include="Source\Configuration.cpp" />

@@ -56,6 +56,4 @@ private:
 
 	bool saveSceneRequest = false;
 	bool loadSceneRequest = false;
-
-
 };
