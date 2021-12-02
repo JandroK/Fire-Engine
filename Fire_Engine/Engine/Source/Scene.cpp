@@ -171,11 +171,9 @@ void Scene::Destroy(GameObject* obj)
 			if (*i._Ptr == obj)
 			{
 				obj->SetIndex(i);
+				app->camera->quadTree->RemoveGameObject(obj);
 				break;
 			}
-			obj->SetIndex(i);
-			app->camera->quadTree->RemoveGameObject(obj);
-			break;
 		}
 	}
 
