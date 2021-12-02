@@ -73,4 +73,7 @@ private:
 	std::vector<float> msLog;
 
 	bool updateAssets = false;
+
+	int style = 5;
+	std::vector<std::string> stylesList;
 };
