@@ -27,6 +27,7 @@
 #include "Material.h"
 #include "MeshRenderer.h"
 
+#include "Style.h"
 #include <string>
 
 Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
@@ -56,6 +57,8 @@ Editor::Editor(Application* app, bool start_enabled): Module(app, start_enabled)
 	{
 		tabs[i]->shortcut = i + 1;
 	}
+	
+	stylesList = { "Deep Dark", "Red & Dark", "Green & Blue", "Classic Dark", "Visual Studio", "Gold & Black", "Smooth Dark" };
 }
 
 bool Editor::Init()
@@ -104,8 +107,10 @@ bool Editor::Init()
 
 bool Editor::Start()
 {
+	Style::SetStyle(style);
     return true;
 }
+
 void Editor::LogToConsole(const char* msg, LogType _type)
 {
 	ConsoleTab* consoleWindow = static_cast<ConsoleTab*>(GetTab(TabType::CONSOLE));
@@ -509,6 +514,18 @@ update_status Editor::ImGuiMenuBar()
 			}			
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Set Style"))
+		{
+			for (int i = 0; i < stylesList.size(); i++)
+			{
+				if (ImGui::MenuItem(stylesList.at(i).c_str()))
+				{
+					Style::SetStyle(i);
+					style = i;
+				}
+			}
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 	}
 	return ret;
@@ -591,6 +608,11 @@ Tab* Editor::GetTab(TabType type)
 GameObject* Editor::GetGameObjectSelected()
 {
 	return static_cast<Inspector*>(GetTab(TabType::INSPECTOR))->gameObjectSelected;
+}
+void Editor::SetStyle(int _style)
+{
+	style = _style;
+	Style::SetStyle(style);
 }
 void Editor::SetGameObjectSelected(GameObject* obj)
 {

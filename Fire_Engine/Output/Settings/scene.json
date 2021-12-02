@@ -56,12 +56,12 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Chimney"
+                            "Mesh": "Resources\/BakerHouse.fbx"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/Baker_house.dds"
+                            "Material": "Resources\/Baker_house.png"
                         }
                     }
                 },
@@ -85,12 +85,12 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Baker_house"
+                            "Mesh": "Resources\/BakerHouse.fbx"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/Baker_house.dds"
+                            "Material": "Resources\/Baker_house.png"
                         }
                     }
                 }

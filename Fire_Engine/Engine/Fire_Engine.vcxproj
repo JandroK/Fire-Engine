@@ -270,6 +270,7 @@
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneTab.h" />
+    <ClInclude Include="Source\Style.h" />
     <ClInclude Include="Source\TextureLoader.h" />
     <ClInclude Include="Source\JsonParser.h" />
     <ClInclude Include="Source\Light.h" />

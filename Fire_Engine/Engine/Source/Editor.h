@@ -46,7 +46,10 @@ public:
 	void PrimitiveMenuItem();
 
 	Tab* GetTab(TabType type);
+	int GetStyle() {return style;};
 	GameObject* GetGameObjectSelected();
+
+	void SetStyle(int _style);
 	void SetGameObjectSelected(GameObject* obj);
 	void UpdateAssets();
 
@@ -77,4 +80,7 @@ private:
 	bool updateAssets = false;
 
 	std::string* currentFolder;
+	
+	int style = 5;
+	std::vector<std::string> stylesList;
 };
