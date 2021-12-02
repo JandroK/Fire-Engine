@@ -37,7 +37,7 @@ float3* QuadTreeBase::GetRootBoundingBox()
 // Draw the bounding box of the root and their nodes recursively 
 void QuadTreeBase::Draw(QT_Node* node)
 {
-	if (drawQuadTree && !goStatics.empty())
+	if (drawQTree && !goStatics.empty())
 	{
 		float3 points[8];
 		node->boundingBox.GetCornerPoints(points);
@@ -185,5 +185,24 @@ void QT_Node::ReDistributeChilds()
 				if (intersects[i]) childrens[i]->Insert((*it));
 			it = objects.erase(it);
 		}
+	}
+}
+//Function used for MousePicking (to static GameObjects) 
+void QT_Node::CollectIntersections(std::map<float, MeshRenderer*>& objects, LineSegment ray)
+{
+	if (ray.Intersects(boundingBox))
+	{
+		float dNear = 0;
+		float dFar = 0;
+		MeshRenderer* mesh;
+		for (std::list<GameObject*>::const_iterator it = this->objects.begin(); it != this->objects.end(); ++it)
+		{
+			mesh = static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER));
+			if (ray.Intersects(mesh->globalOBB, dNear, dFar))
+				objects[dNear] = mesh;
+		}
+		// Check Intersections with all nodes recursively
+		for (int i = 0; i < 4; ++i)
+			if (childrens[i] != nullptr) childrens[i]->CollectIntersections(objects, ray);
 	}
 }

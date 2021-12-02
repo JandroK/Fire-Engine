@@ -4,6 +4,7 @@
 #include "Math/float3.h"
 #include "Geometry/AABB.h"
 #include "Geometry/LineSegment.h"
+#include <map>
 
 class QT_Node;
 
@@ -19,16 +20,18 @@ public:
 	void ReGenerateRoot(AABB limits);
 	void DeleteRoot();
 
-	void AddGameObject(GameObject* obj) { goStatics.push_back(obj); };
-	void RemoveGameObject(GameObject* obj) { goStatics.remove(obj); };
+	void AddGameObject(GameObject* obj) { goStatics.push_back(obj); ReCalculateRootLimits(); };
+	void RemoveGameObject(GameObject* obj) { goStatics.remove(obj); ReCalculateRootLimits(); };
 
 	float3* GetRootBoundingBox();
 	int GetNumGOStatics() { return goStatics.size(); };
 
 	void DrawBoundingBoxes(float3* points, float3 color = float3(1, 0.9f, 0));
 
-	bool drawQuadTree = false;
 	QT_Node* root = nullptr;
+	
+	bool drawQTree = false;
+	bool pickQTree = false;
 
 	int maxDivisions = 10;	// Maximum number of depth  
 	int maxGObyNode = 1;	// Maximum number of objects by node 
@@ -45,6 +48,7 @@ private:
 	};
 };
 
+class MeshRenderer;
 // This class represents each partition of its parent's space
 class QT_Node
 {
@@ -53,9 +57,12 @@ public:
 	~QT_Node();
 
 	bool HasChildrens() { return (childrens[0] != nullptr) ? true : false; };
+
 	void Insert(GameObject* go);
 	void CreateNodes();
 	void ReDistributeChilds();
+
+	void CollectIntersections(std::map<float, MeshRenderer*>& objects, LineSegment ray);
 
 public:
 	// Each partition has 1 parent

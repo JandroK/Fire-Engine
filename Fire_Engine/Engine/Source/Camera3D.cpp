@@ -348,13 +348,20 @@ void Camera3D::MousePicking(LineSegment ray)
 	// Use maps because with the key can ordered by distance
 	std::map<float, MeshRenderer*> possibleHitList;
 
-	// First we test against all OBBs (is more accurate than using AABB)
-	for (std::vector<MeshRenderer*>::iterator it = app->renderer3D->renderQueue.begin(); it != app->renderer3D->renderQueue.end(); ++it)
+	if (quadTree->pickQTree && quadTree->root != nullptr)
 	{
-		// Add to the list all the OBBs that intersect with the ray (the entry distance is used as the map key) 
-		if (ray.Intersects((*it)->globalOBB, dNear, dFar))
-			possibleHitList[dNear] = (*it);
+		quadTree->root->CollectIntersections(possibleHitList, ray);
 	}
+	else
+	{
+		// First we test against all OBBs (is more accurate than using AABB)
+		for (std::vector<MeshRenderer*>::iterator it = app->renderer3D->renderQueue.begin(); it != app->renderer3D->renderQueue.end(); ++it)
+		{
+			// Add to the list all the OBBs that intersect with the ray (the entry distance is used as the map key) 
+			if (ray.Intersects((*it)->globalOBB, dNear, dFar))
+				possibleHitList[dNear] = (*it);
+		}
+	}	
 
 	// Add to the list all the triangles (from mesh) that intersect with the ray
 	std::map<float, MeshRenderer*> hitList;
