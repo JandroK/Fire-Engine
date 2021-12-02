@@ -18,6 +18,7 @@
 #include "ResourceMesh.h"
 #include "Material.h"
 #include "ResourceTexture.h"
+#include "Texture.h"
 
 #include"MathGeoLib/include/Math/Quat.h"
 
@@ -160,13 +161,16 @@ void Scene::Destroy(GameObject* obj)
 	// Deselect actual gameObjectSelected
 	app->editor->SetGameObjectSelected(nullptr);
 
-	// First, must unpin the object from the children list of his father, after will can delete object
-	for (std::vector<GameObject*>::iterator i = obj->GetParent()->GetBeginChildren(); i != obj->GetParent()->GetEndChildren(); ++i)
+	if (!obj->IsRoot())
 	{
-		if (*i._Ptr == obj)
+		// First, must unpin the object from the children list of his father, after will can delete object
+		for (std::vector<GameObject*>::iterator i = obj->GetParent()->GetBeginChildren(); i != obj->GetParent()->GetEndChildren(); ++i)
 		{
-			obj->SetIndex(i);
-			break;
+			if (*i._Ptr == obj)
+			{
+				obj->SetIndex(i);
+				break;
+			}
 		}
 	}
 
@@ -257,7 +261,7 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 
 			case ComponentType::MESHRENDERER:
 				mesh = static_cast<MeshRenderer*>(parentGO->GetComponent(ComponentType::MESHRENDERER));
-				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", parentGO->name.c_str());
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", mesh->GetMesh()->GetAssetPath());
 				break;
 
 			case ComponentType::MATERIAL:
@@ -284,25 +288,30 @@ bool Scene::LoadScene()
 {
 	LOG(LogType::L_NORMAL, "Loading configurations");
 
+	Destroy(root);
+
 	rootFile = jsonFile.GetRootValue();
 
 	rootGO = jsonFile.GetChild(rootFile, "GameObjects");
-	//rootGO=
-	LoadGameObject(rootGO.GetChild(rootGO.GetRootValue(), "Root"));
+	root=LoadGameObject(rootGO.GetChild(rootGO.GetRootValue(), "Root"));
 
 	loadSceneRequest = false;
 
 	return true;
 }
 
-GameObject* Scene::LoadGameObject(JsonParser parent)
+GameObject* Scene::LoadGameObject(JsonParser parent, GameObject* father)
 {
 	std::string num;
-	Transform* transform;
 	std::string convert;
-
 	std::string name=parent.JsonValToString("name");
+
 	GameObject* gamObj = new GameObject(name.c_str());
+
+	LOG(LogType::L_NORMAL, (std::string("\n Loading ") + name).c_str());
+
+	if (!parent.JsonValToBool("IsRoot"))gamObj->SetParent(father);
+
 	gamObj->tag= parent.JsonValToString("tag");
 	gamObj->layer= parent.JsonValToString("layer");
 	gamObj->active= parent.JsonValToBool("active");
@@ -311,40 +320,64 @@ GameObject* Scene::LoadGameObject(JsonParser parent)
 	gamObj->SetShowChildrens( parent.JsonValToBool("showChildrens"));
 	gamObj->SetPendingToDelete( parent.JsonValToBool("pendingToDelete"));
 
-	LoadComponents(parent, num, gamObj, transform);
+	LoadComponents(parent, num, gamObj);
+	int count=0;
+	num = "Child " + std::to_string(count);
+	while(parent.ExistChild(parent.GetRootValue(), num.c_str()))
+	{
+		gamObj->AttachChild(LoadGameObject(parent.GetChild(parent.GetRootValue(), num.c_str()), gamObj));
+		++count;
+		num = "Child "+ std::to_string(count);
+	}
 
 	return gamObj;
 }
 
-void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj, Transform*& transform)
-{
+void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj)
+{	
+	
+	Transform* transform;
+	MeshRenderer* meshRender;
+	Material* material;	
+	LOG(LogType::L_NORMAL,"Loading Components \n");
+
 	JsonParser components = parent.GetChild(parent.GetRootValue(), "components");
 	JsonParser tmp = components;
 
 	for (int i = 0; i < 4; i++)
 	{
 		num = "Component " + std::to_string(i);
+		LOG(LogType::L_NORMAL, (std::string("Loading ") + num).c_str());
+
 		if (components.ExistChild(components.GetRootValue(), num.c_str()))
 		{
 			tmp = components.GetChild(components.GetRootValue(), num.c_str());
-			switch ((ComponentType)tmp.JsonValToNumber("Type"))
+			switch ((ComponentType)(int)tmp.JsonValToNumber("Type"))
 			{
 			case ComponentType::TRANSFORM:
-				gamObj->AddComponent(ComponentType::TRANSFORM);
-				transform = static_cast<Transform*>(gamObj->GetComponent(ComponentType::TRANSFORM));
-				transform->SetLocalTransform(strMatrixToF4x4(tmp.JsonValToString("LocalTransform")));
-				transform->SetLocalTransform(strMatrixToF4x4(tmp.JsonValToString("GlobalTransform")));
+				//gamObj->AddComponent(ComponentType::TRANSFORM);
+				//transform = gamObj->transform;
+				gamObj->transform->SetGlobalTransform(strMatrixToF4x4(tmp.JsonValToString("GlobalTransform")));
+				if (!gamObj->IsRoot()) gamObj->transform->SetTransformMFromM(gamObj->transform->GetGlobalTransform());
+				gamObj->transform->SetLocalTransform(strMatrixToF4x4(tmp.JsonValToString("LocalTransform")));
 
-				gamObj;
-				//gamObj->GetCompoments().end(). = ;
+				//gamObj->transform = transform;
 
 				break;
 			case ComponentType::MESHRENDERER:
-				gamObj->AddComponent(ComponentType::MESHRENDERER);
+				//gamObj->AddComponent(ComponentType::MESHRENDERER);
+				meshRender = static_cast<MeshRenderer*>(gamObj->GetComponent(ComponentType::MESHRENDERER));
+				// meshRender->SetMesh(Mesh(tmp.JsonValToString("Mesh")));
 
 				break;
 			case ComponentType::MATERIAL:
 				gamObj->AddComponent(ComponentType::MATERIAL);
+				material = static_cast<Material*>(gamObj->GetComponent(ComponentType::MATERIAL));
+				material->active = tmp.JsonValToBool("active");
+				material->texture=new Texture(tmp.JsonValToString("Material"), gamObj->name);
+				//material->texture->SetAssetsPath();
+				material->SetOwner(gamObj);
+				
 
 				break;
 			default:
@@ -354,6 +387,7 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 			//gamObj->AddComponent();
 
 		}
+		else break;
 	}
 }
 
