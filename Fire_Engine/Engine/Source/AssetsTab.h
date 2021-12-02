@@ -37,7 +37,7 @@ class AssetsTab : public Tab
 {
 public:
 	AssetsTab();
-	virtual ~AssetsTab() {RELEASE_ARRAY(parentFolder)};
+	virtual ~AssetsTab() { RELEASE_VECTOR(parentFolder->childFolders, parentFolder->childFolders.size()); RELEASE(parentFolder)};
 
 	void Draw() override;
 	void DrawFolder(Folder* folder);

@@ -187,6 +187,7 @@ void QT_Node::ReDistributeChilds()
 		}
 	}
 }
+
 //Function used for MousePicking (to static GameObjects) 
 void QT_Node::CollectIntersections(std::map<float, MeshRenderer*>& objects, LineSegment ray)
 {
