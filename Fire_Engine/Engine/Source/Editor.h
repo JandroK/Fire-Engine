@@ -9,6 +9,7 @@
 
 class Tab;
 class GameObject;
+class Asset;
 
 enum class TabType 
 {
@@ -67,6 +68,8 @@ public:
 	void DrawShortcut(const char* label, const char* shortcut, bool checkBox = false);
 
 	std::string* GetCurrentFolder();
+	Asset* GetSelectedAsset();
+	void DestroySelectedAsset();
 
 private:
 	std::vector<Tab*> tabs;

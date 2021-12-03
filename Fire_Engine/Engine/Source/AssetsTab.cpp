@@ -109,9 +109,27 @@ void AssetsTab::DrawFolder(Folder* folder)
 		}
 	}
 
+	ImGuiTreeNodeFlags nodeFlags;
+
 	for (int i = 0; i < currentFolder->assets.size(); i++)
 	{
-		ImGui::Text(currentFolder->assets.at(i).name);
+		if (currentFolder->assets.at(i).remove)
+		{
+			currentFolder->assets.erase(std::next(currentFolder->assets.begin(), i));
+			break;
+		}
+		if (selectedAsset == &currentFolder->assets.at(i)) nodeFlags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Selected;
+		else nodeFlags = ImGuiTreeNodeFlags_Leaf;
+		if (ImGui::TreeNodeEx(&currentFolder->assets.at(i), nodeFlags, currentFolder->assets.at(i).name))
+		{
+			if (ImGui::IsItemClicked())
+			{
+				selectedAsset = &currentFolder->assets.at(i);
+			}
+
+			ImGui::TreePop();
+		}
+		//ImGui::Text(currentFolder->assets.at(i).name);
 	}
 }
 
@@ -147,4 +165,21 @@ void AssetsTab::RemoveSearchPaths(Folder* folder)
 	assetPath += folder->fullPath;
 
 	if(folder->parent != nullptr) FileSystem::RemovePath(assetPath.c_str());
+}
+
+Asset* AssetsTab::GetSelectedAsset()
+{
+	return selectedAsset;
+}
+
+void Asset::Destroy()
+{
+	FileSystem::Remove(this->fullPath.c_str());
+
+	//TODO: remove library file with GUID on .meta file
+	/*std::string libraryPath;
+	FileSystem::Remove(libraryPath.c_str());*/
+
+	//TODO: remove .meta file
+	this->remove = true;
 }

@@ -26,6 +26,7 @@
 #include "Transform.h"
 #include "Material.h"
 #include "MeshRenderer.h"
+#include "ResourceTexture.h"
 
 #include "Style.h"
 #include <string>
@@ -703,9 +704,15 @@ void Editor::Duplicate(GameObject* obj, GameObject* parent)
 				static_cast<MeshRenderer*>(duplicated->GetCompoments().at(i))->SetMesh(static_cast<MeshRenderer*>(obj->GetCompoments().at(i))->GetMesh());
 				static_cast<MeshRenderer*>(duplicated->GetCompoments().at(i))->globalAABB = static_cast<MeshRenderer*>(obj->GetCompoments().at(i))->globalAABB;
 				static_cast<MeshRenderer*>(duplicated->GetCompoments().at(i))->globalOBB = static_cast<MeshRenderer*>(obj->GetCompoments().at(i))->globalOBB;
+				break;
 
 			case ComponentType::MATERIAL:
+				//static_cast<Material*>(duplicated->GetCompoments().at(i))->texture = new Texture(static_cast<Material*>(obj->GetCompoments().at(i))->texture->GetAssetPath());
+				//static_cast<Material*>(duplicated->GetCompoments().at(i))->texture->texHeight = static_cast<Material*>(obj->GetCompoments().at(i))->texture->texHeight;
+				//static_cast<Material*>(duplicated->GetCompoments().at(i))->texture->texWidth = static_cast<Material*>(obj->GetCompoments().at(i))->texture->texWidth;
+				//static_cast<Material*>(duplicated->GetCompoments().at(i))->texture->textureID = static_cast<Material*>(obj->GetCompoments().at(i))->texture->textureID;
 				static_cast<Material*>(duplicated->GetCompoments().at(i))->texture = static_cast<Material*>(obj->GetCompoments().at(i))->texture;
+				break;
 			default:
 				break;
 			}
@@ -752,4 +759,14 @@ void Editor::UpdateAssets()
 std::string* Editor::GetCurrentFolder()
 {
 	return currentFolder;
+}
+
+Asset* Editor::GetSelectedAsset()
+{
+	return static_cast<AssetsTab*>(GetTab(TabType::ASSETS))->GetSelectedAsset();
+}
+
+void Editor::DestroySelectedAsset()
+{
+	static_cast<AssetsTab*>(GetTab(TabType::ASSETS))->GetSelectedAsset()->Destroy();
 }

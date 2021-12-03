@@ -14,10 +14,13 @@ enum class AssetType
 class Asset
 {
 public:
+	void Destroy();
+
 	AssetType type;
 	const char* name;
 	const char* folder;
 	std::string fullPath;
+	bool remove = false;
 };
 
 class Folder
@@ -47,6 +50,8 @@ public:
 
 	void RemoveSearchPaths(Folder* folder);
 
+	Asset* GetSelectedAsset();
+
 	std::string currentFolderPath;
 
 private:
@@ -54,4 +59,5 @@ private:
 	Folder* currentFolder;
 	void LoadAssets(Folder* folder);
 	AssetType CheckAssetType(const char* assetName);
+	Asset* selectedAsset = nullptr;
 };
