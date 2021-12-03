@@ -17,12 +17,16 @@ public:
 
 	void DrawMesh();
 
+	void DrawSelectedShader();
+
 	Mesh* GetMesh() { return mesh; };
 	void SetMesh(Mesh* mesh) { this->mesh = mesh; };
 	void SetBoundingBoxes(Mesh* mesh);
 
 	float3 GetCenterPointInWorldCoords();
 	float GetSphereRadius();
+
+	bool CompareMeshId(GameObject* node, GameObject* owner, GLuint id);
 
 	AABB globalAABB;
 	OBB globalOBB;

@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Material.h"
-//#include "Camera3D.h"
+#include "Scene.h"
 
 #include "ImGui/imgui.h"
 
@@ -17,7 +17,10 @@ MeshRenderer::MeshRenderer(GameObject* obj) : Component(obj)
 
 MeshRenderer::~MeshRenderer()
 {
-	delete mesh; mesh = nullptr;
+	// Only delete Mesh if nobody is using it  
+	if (!CompareMeshId(app->scene->root, this->GetOwner(), mesh->indexBufferId))
+		delete mesh; 
+	mesh = nullptr;
 }
 
 void MeshRenderer::Update()
@@ -68,32 +71,7 @@ void MeshRenderer::DrawMesh()
 		// Pop the Matrix to OpenGL
 		glPopMatrix();
 
-		//Transform* outline = new Transform(GetOwner());
-		if (app->editor->GetGameObjectSelected() == GetOwner())
-		{
-			//float3 difference = (app->camera->position - this->GetCenterPointInWorldCoords()).Normalized() * 0.2f;
-			float4x4 matrix = GetOwner()->transform->GetGlobalTransform();
-			float4x4 reserve = matrix;
-
-			float scaleFactor = 1.01f;
-			//Scale is the matrix's diagonal
-			matrix[0][0] *= scaleFactor;
-			matrix[1][1] *= scaleFactor;
-			matrix[2][2] *= scaleFactor;
-			//matrix.SetTranslatePart(GetOwner()->transform->GetPosition()/* - difference*/);
-
-			GetOwner()->transform->UpdateTransform();
-			GetOwner()->transform->SetTransformMFromM(matrix);
-
-			glPushMatrix();
-			glMultMatrixf(GetOwner()->transform->GetGlobalTransformT().ptr());
-			glColor4f(1, 0, 0, 0.2f);
-			mesh->Render(-1);
-			glPopMatrix();
-			GetOwner()->transform->SetTransformMFromM(reserve);
-			glColor4f(1, 1, 1, 1);
-		}
-		//RELEASE(outline);
+		DrawSelectedShader();
 		
 		// If showAABB are enable draw the his bounding boxes
 		if (showAABB == true) {
@@ -108,6 +86,36 @@ void MeshRenderer::DrawMesh()
 			DrawBoundingBoxes(points);
 		}
 	}
+}
+
+void MeshRenderer::DrawSelectedShader()
+{
+	//Transform* outline = new Transform(GetOwner());
+	if (app->editor->GetGameObjectSelected() == GetOwner())
+	{
+		//float3 difference = (app->camera->position - this->GetCenterPointInWorldCoords()).Normalized() * 0.2f;
+		float4x4 matrix = GetOwner()->transform->GetGlobalTransform();
+		float4x4 reserve = matrix;
+
+		float scaleFactor = 1.01f;
+		//Scale is the matrix's diagonal
+		matrix[0][0] *= scaleFactor;
+		matrix[1][1] *= scaleFactor;
+		matrix[2][2] *= scaleFactor;
+		//matrix.SetTranslatePart(GetOwner()->transform->GetPosition()/* - difference*/);
+
+		GetOwner()->transform->UpdateTransform();
+		GetOwner()->transform->SetTransformMFromM(matrix);
+
+		glPushMatrix();
+		glMultMatrixf(GetOwner()->transform->GetGlobalTransformT().ptr());
+		glColor4f(1, 0, 0, 0.2f);
+		mesh->Render(-1);
+		glPopMatrix();
+		GetOwner()->transform->SetTransformMFromM(reserve);
+		glColor4f(1, 1, 1, 1);
+	}
+	//RELEASE(outline);
 }
 
 void MeshRenderer::SetBoundingBoxes(Mesh* mesh)
@@ -129,4 +137,40 @@ float3 MeshRenderer::GetCenterPointInWorldCoords()
 float MeshRenderer::GetSphereRadius()
 {
 	return mesh->radius;
+}
+
+bool MeshRenderer::CompareMeshId(GameObject* node, GameObject* owner, GLuint id)
+{
+	bool ret = false;
+	int numChildrens = node->GetChildrens().size();
+
+	// If don't have childrens stop recursive
+	if (numChildrens != 0)
+	{
+		for (int i = 0; i < numChildrens; i++)
+		{
+			// Security system: The children that are null we want to check them 
+			// Why are NULL? Because we can be in the cleanup process
+			for (int j = i; j < numChildrens; j++)
+			{
+				if (node->GetChildrens()[j] == nullptr) i++;
+			}
+			if (i == numChildrens) break;
+
+			// Exclude the owner of the id from the check
+			if (node->GetChildrens()[i] != owner)
+			{
+				MeshRenderer* meshR = static_cast<MeshRenderer*>(node->GetChildrens()[i]->GetComponent(ComponentType::MESHRENDERER));
+				// Check if this gameObject has material and if so check if the id matches
+				if (meshR != nullptr && mesh->indexBufferId == id)
+					ret = true;
+				// Otherwise check if this gameObject has childrens and the recursion begins
+				else if (node->GetChildrens()[i]->GetChildrens().size() != 0)
+					ret = CompareMeshId(node->GetChildrens()[i], owner, id);
+			}
+			if (ret) break;
+		}
+	}
+	return ret;
+	return false;
 }
