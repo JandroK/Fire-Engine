@@ -75,7 +75,7 @@ AssetType AssetsTab::CheckAssetType(const char* assetName)
 
 		if (ext == ".fbx") return AssetType::FBX;
 
-		else if (ext == ".png" || ext == ".jpg" || ext == ".dds") return AssetType::TEXTURE;
+		else if (ext == ".png" || ext == ".jpg" || ext == ".dds" || ext == ".tga") return AssetType::TEXTURE;
 
 		else return AssetType::OTHER;
 	}
