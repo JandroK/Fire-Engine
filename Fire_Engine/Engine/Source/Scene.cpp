@@ -91,6 +91,9 @@ update_status Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && app->editor->GetGameObjectSelected() != nullptr)
 		app->editor->GetGameObjectSelected()->Destroy();
 
+	if (app->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && app->editor->GetSelectedAsset() != nullptr)
+		app->editor->DestroySelectedAsset();
+
 	UpdateGameObjects();
 
 	return update_status::UPDATE_CONTINUE;
