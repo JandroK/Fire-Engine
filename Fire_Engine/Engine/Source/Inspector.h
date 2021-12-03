@@ -36,6 +36,8 @@ private:
 	void AddTag(std::string newTag);
 	void AddLayer(std::string newLayer);
 
+	void RecursiveSetStaticObjects(GameObject* obj, bool ret);
+
 	std::vector<std::string> tags;
 	std::vector<std::string> layers;
 

@@ -61,8 +61,10 @@ bool Scene::Start()
 
 	transformChimney->SetTransformMatrix(transformChimney->GetPosition(), rotationQuat, size, parentTransform);
 	transformBakerhouse->SetTransformMatrix(transformBakerhouse->GetPosition(), rotationQuat, size, parentTransform);
+
 	transformChimney->SetUpdateTransform(true);
 	transformBakerhouse->SetUpdateTransform(true);
+	parentTransform->SetUpdateTransform(true);
 
 	// We extract the camera from the list of root children for a moment and we return it to put 
 	// so that it appears first in the hierarchy 

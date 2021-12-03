@@ -22,9 +22,7 @@ public:
 	void Disable() { active = false; };
 
 	bool GetShowChildrens() { return showChildrens; };
-	void SetShowChildrens(bool active) { showChildrens = active; };
-
-	
+	void SetShowChildrens(bool active) { showChildrens = active; };	
 
 	std::vector<GameObject*> GetChildrens() { return childrens; };
 	void AddChildren(GameObject* children) { childrens.push_back(children); };

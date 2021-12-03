@@ -57,15 +57,18 @@ void QuadTreeBase::ReCalculateRootLimits()
 	// Calculate the min and max point of all static GO for generate the global bounding box
 	if (!goStatics.empty())
 	{
-		std::list<GameObject*>::iterator it = goStatics.begin();
-		float3 minPoint = static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB.minPoint;
-		float3 maxPoint = static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB.maxPoint;
-		it++;
+		float3 minPoint = float3::nan;
+		float3 maxPoint = float3::nan;
 
-		for (it; it != goStatics.end(); it++)
+		for (std::list<GameObject*>::iterator it = goStatics.begin(); it != goStatics.end(); it++)
 		{
-			minPoint = minPoint.Min(static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB.minPoint);
-			maxPoint = maxPoint.Max(static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER))->globalAABB.maxPoint);
+			MeshRenderer* mesh = static_cast<MeshRenderer*>((*it)->GetComponent(ComponentType::MESHRENDERER));
+			if (mesh != nullptr)
+			{
+				minPoint = minPoint.Min(mesh->globalAABB.minPoint);
+				maxPoint = maxPoint.Max(mesh->globalAABB.maxPoint);
+			}
+			
 		}
 
 		ReGenerateRoot(AABB(minPoint, maxPoint));

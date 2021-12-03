@@ -43,7 +43,7 @@
                     "layer": "0: Default",
                     "active": true,
                     "isStatic": false,
-                    "isSelected": false,
+                    "isSelected": true,
                     "showChildrens": false,
                     "pendingToDelete": false,
                     "components": {

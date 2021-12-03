@@ -13,6 +13,7 @@
 // Components
 #include "Component.h"
 #include "Material.h"
+#include "MeshRenderer.h"
 
 Inspector::Inspector() : Tab(), gameObjectSelected(nullptr)
 {
@@ -57,12 +58,7 @@ void Inspector::DrawDefaultInspector()
 	ImGui::InputText("##Name", inputName, gameObjectSelected->name.size() + 1);
 	ImGui::SameLine();
 	if (ImGui::Checkbox("Static", &gameObjectSelected->isStatic))
-	{
-		if (gameObjectSelected->isStatic)
-			app->camera->quadTree->AddGameObject(gameObjectSelected);
-		else
-			app->camera->quadTree->RemoveGameObject(gameObjectSelected);
-	}
+		RecursiveSetStaticObjects(gameObjectSelected, gameObjectSelected->isStatic);
 
 	// Draw tagList and layerList
 	DrawList("Tag", &tags, gameObjectSelected->tag, maxWidthTag);
@@ -85,6 +81,24 @@ void Inspector::DrawDefaultInspector()
 
 	// Draw Add Component button
 	DrawAddComponet();
+}
+
+void Inspector::RecursiveSetStaticObjects(GameObject* obj, bool ret)
+{
+	MeshRenderer* mesh = static_cast<MeshRenderer*>(obj->GetComponent(ComponentType::MESHRENDERER));
+	obj->isStatic = ret;
+	if (mesh != nullptr)
+	{
+		if (ret)
+			app->camera->quadTree->AddGameObject(obj);
+		else
+			app->camera->quadTree->RemoveGameObject(obj);
+	}
+	for (int i = 0; i < obj->GetChildrens().size(); i++)
+	{
+		RecursiveSetStaticObjects(obj->GetChildrens()[i], ret);
+	}
+
 }
 
 void Inspector::DrawAddComponet()
