@@ -65,11 +65,17 @@ AssetType AssetsTab::CheckAssetType(const char* assetName)
 	int pointPos = ext.find_last_of(".");
 	if (pointPos != -1)
 	{
+
+		for (int i = 0; i < ext.length(); i++)
+		{
+			ext[i] = std::tolower(ext[i]);
+		}
+
 		ext = ext.substr(pointPos);
 
-		if (ext == ".fbx" || ext == ".FBX") return AssetType::FBX;
+		if (ext == ".fbx") return AssetType::FBX;
 
-		else if (ext == ".png" || ext == ".PNG" || ext == ".jpg" || ext == ".JPG" || ext == ".dds" || ext == ".DDS") return AssetType::TEXTURE;
+		else if (ext == ".png" || ext == ".jpg" || ext == ".dds") return AssetType::TEXTURE;
 
 		else return AssetType::OTHER;
 	}
