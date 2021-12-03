@@ -11,7 +11,6 @@
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/Math/TransformOps.h"
 
-#include "Guizmo/ImGuizmo.h"
 #include "Camera3D.h"
 
 Transform::Transform(GameObject* obj) : Component(obj)
@@ -31,6 +30,8 @@ Transform::Transform(GameObject* obj) : Component(obj)
 
 void Transform::Update()
 {
+	if (updateTransform)
+		UpdateTransform();
 }
 
 void Transform::OnEditor()
@@ -194,7 +195,8 @@ void Transform::UpdateTransform()
 				//Update Bounding Boxes
 				transformsToUpdate[i]->UpdateBoundingBoxes();
 				ComponentCamera* camera = static_cast<ComponentCamera*>(GetOwner()->GetComponent(ComponentType::CAMERA));
-				if (camera != nullptr) camera->updateCamera = true;
+				if (camera != nullptr) 
+					camera->updateCamera = true;
 			}
 		}
 	}

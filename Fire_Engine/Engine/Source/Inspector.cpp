@@ -10,9 +10,6 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_internal.h"
 
-#include "Guizmo/ImGuizmo.h"
-#include "Guizmo/GraphEditor.h"
-
 // Components
 #include "Component.h"
 #include "Material.h"
