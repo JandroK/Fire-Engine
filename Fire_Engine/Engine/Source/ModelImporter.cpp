@@ -184,7 +184,6 @@ void ModelImporter::FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes
 		// Add mesh component to GameObject and fill it
 		MeshRenderer* gmMeshRenderer = static_cast<MeshRenderer*>(gmEmpty->AddComponent(ComponentType::MESHRENDERER));
 		gmMeshRenderer->SetMesh(sceneMeshes[node->mMeshes[i]]);
-		gmMeshRenderer->SetBoundingBoxes(sceneMeshes[node->mMeshes[i]]);
 
 		// Fill each mesh with its respective texture 
 		aiMesh* importedMesh = meshArray[node->mMeshes[i]];
@@ -196,6 +195,7 @@ void ModelImporter::FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes
 		// Loading transformation
 		PopulateTransform(gmEmpty, node, con);
 		objParent->AddChildren(gmEmpty);
+		gmMeshRenderer->SetBoundingBoxes(sceneMeshes[node->mMeshes[i]]);
 	}
 }
 
