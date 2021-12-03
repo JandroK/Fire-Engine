@@ -22,9 +22,6 @@
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
 #include "Assimp/include/postprocess.h"
-#include "Assimp/include/cfileio.h"
-
-#include"MathGeoLib/include/Math/Quat.h"
 
 void ModelImporter::Import(const char* fullPath,  char* buffer, int bufferSize, GameObject* root)
 {
@@ -114,7 +111,10 @@ void ModelImporter::LoadMaterials(const aiScene* scene, const char* fullPath, st
 
 void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& sceneTextures, std::vector<Mesh*>& sceneMeshes, aiNode* node, GameObject* objParent, const char* ownerName)
 {
-	FillGameObject(node, sceneMeshes, objParent, meshArray, sceneTextures);
+	ConversionF con;
+
+	CalculateAcumulativeTransformation(node, con);
+	FillGameObject(node, sceneMeshes, objParent, meshArray, sceneTextures, con);
 
 	if (node->mNumChildren > 0)
 	{
@@ -133,7 +133,7 @@ void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& 
 			// Set parent (connect object with father)
 			rootGO->SetParent(objParent);
 			// Loading transformation
-			PopulateTransform(rootGO, node);
+			PopulateTransform(rootGO, node, con);
 			// Add Child (connect father with object) 
 			objParent->AddChildren(rootGO);
 		}
@@ -145,7 +145,35 @@ void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& 
 	}
 }
 
-void ModelImporter::FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes, GameObject* objParent, aiMesh** meshArray, std::vector<Texture*>& sceneTextures)
+void ModelImporter::CalculateAcumulativeTransformation(aiNode*& node, ConversionF& con)
+{
+	//Decomposing transform matrix into translation rotation and scale
+	node->mTransformation.Decompose(con.scaleAi, con.rotAi, con.posAi);
+	con.AssimpToFloat();
+
+	std::string nodeName = node->mName.C_Str();
+	bool dummyFound = true;
+	while (dummyFound)
+	{
+		dummyFound = false;
+
+		//All dummy modules have one children (next dummy module or last module containing the mesh)
+		if (node->mMetaData == nullptr && node->mNumChildren == 1)
+		{
+			//Dummy module have only one child node, so we use that one as our next node
+			node = node->mChildren[0];
+
+			// Accumulate transform 
+			node->mTransformation.Decompose(con.scaleAi, con.rotAi, con.posAi);
+			con.AcumulativeTransform();
+
+			nodeName = node->mName.C_Str();
+			dummyFound = true;
+		}
+	}
+}
+
+void ModelImporter::FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes, GameObject* objParent, aiMesh** meshArray, std::vector<Texture*>& sceneTextures, ConversionF con)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -166,24 +194,12 @@ void ModelImporter::FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes
 			material->texture = sceneTextures[importedMesh->mMaterialIndex];
 		}
 		// Loading transformation
-		PopulateTransform(gmEmpty, node);
+		PopulateTransform(gmEmpty, node, con);
 		objParent->AddChildren(gmEmpty);
 	}
 }
 
-void ModelImporter::PopulateTransform(GameObject* child, aiNode* node)
+void ModelImporter::PopulateTransform(GameObject* child, aiNode* node, ConversionF con)
 {
-	aiVector3D translation, scaling;
-	aiQuaternion rotation;
-
-	// Break transformation info in position, scaleand rotation
-	node->mTransformation.Decompose(scaling, rotation, translation);
-
-	// Keep them separated
-	float3 pos(translation.x, translation.y, translation.z);
-	float3 scale(scaling.x, scaling.y, scaling.z);
-	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
-
-	// Mix them to form a Matrix for drawing
-	child->transform->SetTransformMatrix(pos, rot, scale, child->GetParent()->transform);
+	child->transform->SetTransformMatrix(con.pos, con.rot, con.scale, child->GetParent()->transform);
 }
