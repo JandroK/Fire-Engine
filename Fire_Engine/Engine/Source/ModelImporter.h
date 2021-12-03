@@ -43,5 +43,5 @@ namespace ModelImporter
 	void CalculateAcumulativeTransformation(aiNode*& node, ConversionF& con);
 	void FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes, GameObject* objParent, aiMesh** meshArray, std::vector<Texture*>& sceneTextures, ConversionF con);
 	
-	void PopulateTransform(GameObject* child, aiNode* node, ConversionF con);
+	void PopulateTransform(GameObject* child, ConversionF con);
 }

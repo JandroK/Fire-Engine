@@ -133,7 +133,7 @@ void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& 
 			// Set parent (connect object with father)
 			rootGO->SetParent(objParent);
 			// Loading transformation
-			PopulateTransform(rootGO, node, con);
+			PopulateTransform(rootGO, con);
 			// Add Child (connect father with object) 
 			objParent->AddChildren(rootGO);
 		}
@@ -193,13 +193,14 @@ void ModelImporter::FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes
 			material->texture = sceneTextures[importedMesh->mMaterialIndex];
 		}
 		// Loading transformation
-		PopulateTransform(gmEmpty, node, con);
+		PopulateTransform(gmEmpty, con);
 		objParent->AddChildren(gmEmpty);
 		gmMeshRenderer->SetBoundingBoxes(sceneMeshes[node->mMeshes[i]]);
 	}
 }
 
-void ModelImporter::PopulateTransform(GameObject* child, aiNode* node, ConversionF con)
+void ModelImporter::PopulateTransform(GameObject* child, ConversionF con)
 {
+	// Break transformation info in position, scaleand rotation
 	child->transform->SetTransformMatrix(con.pos, con.rot, con.scale, child->GetParent()->transform);
 }
