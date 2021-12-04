@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Camera3D.h"
 #include "Editor.h"
+#include "DTEngine.h"
 
 
 using namespace std;
@@ -98,6 +99,12 @@ bool Application::Init()
 void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
+
+	DTEngine::realTimeDeltaTime = dt;
+	DTEngine::realTimeSinceStartup += DTEngine::realTimeDeltaTime;
+	DTEngine::PreUpdate();
+
+
 	ms_timer.Start();
 }
 
