@@ -100,7 +100,7 @@ void ModelImporter::LoadMaterials(const aiScene* scene, const char* fullPath, st
 					tex->LoadToMemory();
 
 					testTextures.push_back(tex);
-					testTextures.at(k)->SetAssetsPath(localPath.c_str());
+
 					RELEASE_ARRAY(buffer)
 				}
 

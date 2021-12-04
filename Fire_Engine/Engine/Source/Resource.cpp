@@ -19,12 +19,14 @@ Resource::~Resource()
 
 void Resource::SetAssetsPath(const char* _aPath)
 {
-	assetsFile = _aPath;
+	assetsFile = ASSETS_FOLDER;
+	assetsFile += _aPath;
 }
 
 void Resource::SetLibraryPath(const char* _lPath)
 {
-	libraryFile = _lPath;
+	libraryFile = LIBRARY_FOLDER;
+	libraryFile += _lPath;
 }
 
 const char* Resource::GetFormatExt()

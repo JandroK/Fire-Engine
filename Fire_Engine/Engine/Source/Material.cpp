@@ -35,7 +35,7 @@ void Material::OnEditor()
 			IMGUI_PRINT("Texture Width: ", "%i", texture->texWidth);
 			IMGUI_PRINT("Texture Height: ", "%i", texture->texHeight);
 			ImGui::Image((ImTextureID)texture->textureID, ImVec2(128, 128));
-			ImGui::Text("%s", texture->GetAssetPath());
+			ImGui::TextWrapped("%s", texture->GetLibraryPath());
 		}
 		ImGui::Checkbox("View with checkers", &viewWithCheckers);
 	}

@@ -51,14 +51,17 @@ bool ResourceManager::Start()
 	defaultTexture = new Texture("Materials/default_texture.dds", "defaultTexture");
 	defaultTexture->LoadToMemory();
 	defaultTexture->defaultT = true;
+	defaultTexture->SetLibraryPath("Materials/default_texture.dds");
 
 	whiteTexture = new Texture("Materials/white_texture.dds", "whiteTexture");
 	whiteTexture->LoadToMemory();
 	whiteTexture->defaultT = true;
+	whiteTexture->SetLibraryPath("Materials/white_texture.dds");
 
 	greenTexture = new Texture("Materials/green_texture.dds", "greenTexture");
 	greenTexture->LoadToMemory();
 	greenTexture->defaultT = true;
+	greenTexture->SetLibraryPath("Materials/green_texture.dds");
 
 	currentFolderPath = app->editor->GetCurrentFolder();
 
