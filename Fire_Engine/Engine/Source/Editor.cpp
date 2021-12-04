@@ -525,6 +525,20 @@ update_status Editor::ImGuiMenuBar()
 					style = i;
 				}
 			}
+			ImGui::Separator();
+
+			float auxAlpha = alphaStyle;
+			ImGui::Text("PopUp Alpha:");
+			ImGui::PushItemWidth(100);
+			if (ImGui::InputFloat("##Alpha", &alphaStyle, 0.1f))
+			{
+				if (alphaStyle < auxAlpha)
+					Style::SetAlpha(0.9);
+				else Style::SetAlpha(1.1);
+				alphaStyle = auxAlpha;
+			}
+			ImGui::PopItemWidth();
+
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();

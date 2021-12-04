@@ -85,5 +85,7 @@ private:
 	std::string* currentFolder;
 	
 	int style = 5;
+	float alphaStyle = 0.1;
+	float incrementAlphaValue = 0.1f;
 	std::vector<std::string> stylesList;
 };

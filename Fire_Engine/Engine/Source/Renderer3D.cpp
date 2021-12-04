@@ -117,7 +117,7 @@ bool Renderer3D::Init()
 		glClearDepth(1.0f);
 		
 		//Initialize clear color
-		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClearColor(0.10f, 0.10f, 0.10f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//Check for error
@@ -261,7 +261,7 @@ update_status Renderer3D::PostUpdate(float dt)
 
 
 	glDisable(GL_DEPTH_TEST);
-	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClearColor(0.10f, 0.10f, 0.10f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Draw all tabs

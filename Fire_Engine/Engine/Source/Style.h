@@ -18,7 +18,7 @@ namespace Style
 			colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
 			colors[ImGuiCol_WindowBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
 			colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-			colors[ImGuiCol_PopupBg] = ImVec4(0.19f, 0.19f, 0.19f, 0.92f);
+			colors[ImGuiCol_PopupBg] = ImVec4(0.19f, 0.19f, 0.19f, 1.00f);
 			colors[ImGuiCol_Border] = ImVec4(0.19f, 0.19f, 0.19f, 0.29f);
 			colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.24f);
 			colors[ImGuiCol_FrameBg] = ImVec4(0.05f, 0.05f, 0.05f, 0.54f);
@@ -101,7 +101,7 @@ namespace Style
 			colors[ImGuiCol_TextDisabled] = ImVec4(0.35f, 0.35f, 0.35f, 1.00f);
 			colors[ImGuiCol_WindowBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.94f);
 			colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-			colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
+			colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);
 			colors[ImGuiCol_Border] = ImVec4(0.00f, 0.00f, 0.00f, 0.50f);
 			colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 			colors[ImGuiCol_FrameBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.54f);
@@ -160,7 +160,7 @@ namespace Style
 			colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
 			colors[ImGuiCol_WindowBg] = ImVec4(0.06f, 0.06f, 0.06f, 0.94f);
 			colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-			colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
+			colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);
 			colors[ImGuiCol_Border] = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
 			colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 			colors[ImGuiCol_FrameBg] = ImVec4(0.44f, 0.44f, 0.44f, 0.60f);
@@ -349,7 +349,7 @@ namespace Style
 			colors[ImGuiCol_TextDisabled] = ImVec4(0.44f, 0.44f, 0.44f, 1.00f);
 			colors[ImGuiCol_WindowBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
 			colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-			colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
+			colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);
 			colors[ImGuiCol_Border] = ImVec4(0.51f, 0.36f, 0.15f, 1.00f);
 			colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 			colors[ImGuiCol_FrameBg] = ImVec4(0.11f, 0.11f, 0.11f, 1.00f);
@@ -394,21 +394,28 @@ namespace Style
 			colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
 			colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 
-			style.FramePadding = ImVec2(4, 2);
-			style.ItemSpacing = ImVec2(10, 2);
-			style.IndentSpacing = 12;
-			style.ScrollbarSize = 10;
-
-			style.WindowRounding = 4;
-			style.FrameRounding = 4;
+			style.WindowPadding = ImVec2(8.00f, 8.00f);
+			style.FramePadding = ImVec2(5.00f, 2.00f);
+			style.CellPadding = ImVec2(6.00f, 6.00f);
+			style.ItemSpacing = ImVec2(6.00f, 6.00f);
+			style.ItemInnerSpacing = ImVec2(6.00f, 6.00f);
+			style.TouchExtraPadding = ImVec2(0.00f, 0.00f);
+			style.IndentSpacing = 25;
+			style.ScrollbarSize = 15;
+			style.GrabMinSize = 10;
+			style.WindowBorderSize = 1;
+			style.ChildBorderSize = 1;
+			style.PopupBorderSize = 1;
+			style.FrameBorderSize = 1;
+			style.TabBorderSize = 1;
+			style.WindowRounding = 7;
+			style.ChildRounding = 4;
+			style.FrameRounding = 3;
 			style.PopupRounding = 4;
-			style.ScrollbarRounding = 6;
-			style.GrabRounding = 4;
+			style.ScrollbarRounding = 9;
+			style.GrabRounding = 3;
+			style.LogSliderDeadzone = 4;
 			style.TabRounding = 4;
-
-			style.WindowTitleAlign = ImVec2(1.0f, 0.5f);
-			style.WindowMenuButtonPosition = ImGuiDir_Right;
-			style.DisplaySafeAreaPadding = ImVec2(4, 4);
 		}
 		else if (numStyle == 6)
 		{
@@ -421,7 +428,7 @@ namespace Style
 			colors[ImGuiCol_TextDisabled] = ImVec4(0.36f, 0.42f, 0.47f, 1.00f);
 			colors[ImGuiCol_WindowBg] = ImVec4(0.11f, 0.15f, 0.17f, 1.00f);
 			colors[ImGuiCol_ChildBg] = ImVec4(0.15f, 0.18f, 0.22f, 1.00f);
-			colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
+			colors[ImGuiCol_PopupBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);
 			colors[ImGuiCol_Border] = ImVec4(0.08f, 0.10f, 0.12f, 1.00f);
 			colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 			colors[ImGuiCol_FrameBg] = ImVec4(0.20f, 0.25f, 0.29f, 1.00f);
@@ -466,5 +473,26 @@ namespace Style
 			colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
 			colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 		}
+	}
+	void SetAlpha(float alpha)
+	{
+		ImGuiStyle& style = ImGui::GetStyle();
+		for (int i = 0; i <= ImGuiCol_COUNT; i++)
+		{
+			ImGuiCol_ ei = (ImGuiCol_)i;
+			ImVec4& col = style.Colors[i];
+			if ((ImGuiCol_ModalWindowDimBg != ei) &&
+				(ImGuiCol_NavWindowingDimBg != ei) &&
+				(col.w < 1.00f || (ImGuiCol_FrameBg == ei)
+					|| (ImGuiCol_WindowBg == ei)
+					|| (ImGuiCol_ChildBg == ei)))
+			{
+				col.w *= alpha;
+				if (col.w < 0) col.w = 0;
+				if (col.w > 1) col.w = 1;
+			}
+		}
+
+		style.Alpha = 1.0f;
 	}
 }
