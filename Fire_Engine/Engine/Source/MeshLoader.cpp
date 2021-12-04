@@ -52,7 +52,6 @@ Mesh* MeshLoader::LoadMesh(aiMesh* importedMesh)
 		LOG(LogType::L_NORMAL, "%d normals", mesh->numNormals);
 		LOG(LogType::L_NORMAL, "%d texture coords", mesh->numTexCoords);
 	}
-
 	else
 	{
 

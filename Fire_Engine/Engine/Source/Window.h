@@ -67,6 +67,6 @@ private:
 
 	bool fullScreen = false;
 	bool borderless = false;
-	bool isResizable = false;
+	bool isResizable = true;
 	bool fullScreenDesktop = false;
 };

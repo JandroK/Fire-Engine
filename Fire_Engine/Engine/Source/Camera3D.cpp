@@ -39,7 +39,7 @@ void Camera3D::ReStartCamera()
 	up    =	float3(0.0f, 1.0f, 0.0f);
 	front = float3(0.0f, 0.0f, 1.0f);
 
-	position = float3(5.0f, 4.0f, 5.0f);
+	position = float3(-50.0f, 44.0f, 80.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
 
 	CalculateViewMatrix();
@@ -177,8 +177,8 @@ ImVec2 Camera3D::NormalizeOnWindow(float x, float y, float w, float h, ImVec2 po
 {
 	ImVec2 normalizedPoint;
 
-	normalizedPoint.x = (point.x - x) / ((x + w) - x);
-	normalizedPoint.y = (point.y - y) / ((y + h) - y);
+	normalizedPoint.x = (point.x - x) / w;
+	normalizedPoint.y = (point.y - y) / h;
 
 	return normalizedPoint;
 }

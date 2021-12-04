@@ -114,7 +114,8 @@ void ModelImporter::NodeToGameObject(aiMesh** meshArray, std::vector<Texture*>& 
 	ConversionF con;
 
 	CalculateAcumulativeTransformation(node, con);
-	FillGameObject(node, sceneMeshes, objParent, meshArray, sceneTextures, con);
+	if(node->mNumMeshes > 0)
+		FillGameObject(node, sceneMeshes, objParent, meshArray, sceneTextures, con);
 
 	if (node->mNumChildren > 0)
 	{
@@ -175,28 +176,26 @@ void ModelImporter::CalculateAcumulativeTransformation(aiNode*& node, Conversion
 
 void ModelImporter::FillGameObject(aiNode* node, std::vector<Mesh*>& sceneMeshes, GameObject* objParent, aiMesh** meshArray, std::vector<Texture*>& sceneTextures, ConversionF con)
 {
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	// Create new GameObject, will fill it and set his parent and add him as son 
+	GameObject* gmEmpty = new GameObject(node->mName.C_Str());
+	gmEmpty->SetParent(objParent);
+
+	// Add mesh component to GameObject and fill it
+	MeshRenderer* gmMeshRenderer = static_cast<MeshRenderer*>(gmEmpty->AddComponent(ComponentType::MESHRENDERER));
+	gmMeshRenderer->SetMesh(sceneMeshes[node->mMeshes[0]]);
+
+	// Fill each mesh with its respective texture 
+	aiMesh* importedMesh = meshArray[node->mMeshes[0]];
+	if (importedMesh->mMaterialIndex < sceneTextures.size())
 	{
-		// Create new GameObject, will fill it and set his parent and add him as son 
-		GameObject* gmEmpty = new GameObject(node->mName.C_Str());
-		gmEmpty->SetParent(objParent);
-
-		// Add mesh component to GameObject and fill it
-		MeshRenderer* gmMeshRenderer = static_cast<MeshRenderer*>(gmEmpty->AddComponent(ComponentType::MESHRENDERER));
-		gmMeshRenderer->SetMesh(sceneMeshes[node->mMeshes[i]]);
-
-		// Fill each mesh with its respective texture 
-		aiMesh* importedMesh = meshArray[node->mMeshes[i]];
-		if (importedMesh->mMaterialIndex < sceneTextures.size())
-		{
-			Material* material = static_cast<Material*>(gmEmpty->AddComponent(ComponentType::MATERIAL));
-			material->texture = sceneTextures[importedMesh->mMaterialIndex];
-		}
-		// Loading transformation
-		PopulateTransform(gmEmpty, con);
-		objParent->AddChildren(gmEmpty);
-		gmMeshRenderer->SetBoundingBoxes(sceneMeshes[node->mMeshes[i]]);
+		Material* material = static_cast<Material*>(gmEmpty->AddComponent(ComponentType::MATERIAL));
+		material->texture = sceneTextures[importedMesh->mMaterialIndex];
 	}
+	// Loading transformation
+	PopulateTransform(gmEmpty, con);
+	objParent->AddChildren(gmEmpty);
+	gmMeshRenderer->SetBoundingBoxes(sceneMeshes[node->mMeshes[0]]);
+
 }
 
 void ModelImporter::PopulateTransform(GameObject* child, ConversionF con)

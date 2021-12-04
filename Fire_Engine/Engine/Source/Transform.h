@@ -21,8 +21,8 @@ public:
 	void CheckStateOperation();
 
 	float3 GetPosition() { return position; };
-	void SetPosition(float3 pos) { position = pos; localTransform.SetCol3(3, pos); };
-	void SetEulerRotaion(float3 rot) { eulerRotation = rot; };
+	void SetPosition(float3 pos) { localTransform.SetCol3(3, pos); };
+	void SetEulerRotaion(float3 rot) { localTransform.SetRotatePart(Quat::FromEulerXYZ(rot.x * DEGTORAD, rot.y * DEGTORAD, rot.z * DEGTORAD)); };
 	void SetUpdateTransform(bool ret) { updateTransform = ret; };
 
 	void SetTransformMatrix(float3 position, Quat rotation, float3 localScale, Transform* parent);

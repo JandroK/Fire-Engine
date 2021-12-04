@@ -49,22 +49,7 @@ bool Scene::Init()
 bool Scene::Start()
 {
 	// Import BakerHouse by default
-	app->resourceManager->ImportFile("Resources/BakerHouse.fbx");
-
-	// Edit his tramsformation because his original transforms are breken (scale = (100,100,100) and rotate 90�)
-	Transform* transformChimney = root->GetChildrens()[1]->GetChildrens()[0]->transform;
-	Transform* transformBakerhouse = root->GetChildrens()[1]->GetChildrens()[1]->transform;
-	Transform* parentTransform = root->GetChildrens()[1]->transform;
-
-	float3 size(1, 1, 1);
-	Quat rotationQuat(0, 0, 0, 1);
-
-	transformChimney->SetTransformMatrix(transformChimney->GetPosition(), rotationQuat, size, parentTransform);
-	transformBakerhouse->SetTransformMatrix(transformBakerhouse->GetPosition(), rotationQuat, size, parentTransform);
-
-	transformChimney->SetUpdateTransform(true);
-	transformBakerhouse->SetUpdateTransform(true);
-	parentTransform->SetUpdateTransform(true);
+	app->resourceManager->ImportFile("Resources/street/street2.fbx");
 
 	// We extract the camera from the list of root children for a moment and we return it to put 
 	// so that it appears first in the hierarchy 
@@ -72,7 +57,8 @@ bool Scene::Start()
 	root->EraseChildren(root->FindChildren(root->GetChildrens()[0]));
 	root->AttachChild(mainCamera->GetOwner());
 	Transform* transformCamera = static_cast<Transform*>(mainCamera->GetOwner()->GetComponent(ComponentType::TRANSFORM));
-	transformCamera->SetPosition(float3(0,1,-12));
+	transformCamera->SetPosition(float3(-50.0f, 44.0f, 80.0f));
+	transformCamera->SetEulerRotaion(float3(145.0f, 30.0f, -160.0f));
 	transformCamera->SetTransformMFromM(transformCamera->GetLocalTransform());
 
 	return true;

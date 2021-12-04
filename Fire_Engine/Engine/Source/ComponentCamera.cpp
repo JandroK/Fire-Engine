@@ -30,8 +30,8 @@ ComponentCamera::ComponentCamera() : Component(nullptr)
 ComponentCamera::ComponentCamera(GameObject* obj) : Component(obj)
 {
 	frustrum.type = FrustumType::PerspectiveFrustum;
-	frustrum.nearPlaneDistance = 1;
-	frustrum.farPlaneDistance = 100.f;
+	frustrum.nearPlaneDistance = 0.1;
+	frustrum.farPlaneDistance = 200.f;
 	frustrum.front = obj->transform->GetForward();
 	frustrum.up = obj->transform->GetUp();
 

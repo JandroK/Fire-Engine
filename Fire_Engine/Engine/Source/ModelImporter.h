@@ -10,9 +10,8 @@ class Texture;
 class GameObject;
 class Mesh;
 
-class ConversionF
+struct ConversionF
 {
-public:
 	float3 pos;
 	float3 scale;
 	Quat rot;
