@@ -27,9 +27,11 @@ public:
 	std::string OpenFileName(char* filter = "All Files (*.*)\0*.*\0""Textues (*.png, .dds, .jpg, .tga*)\0*.PNG*;*.DDS*;*.JPG*;*.TGA*\0""3D models (*.fbx*)\0*.fbx*\0", HWND owner = NULL);
 
 	Texture* logo;
-	Texture* defaultTexture;
 	Texture* backButton;
 	Texture* addButton;
+	Texture* defaultTexture;
+	Texture* whiteTexture;
+	Texture* greenTexture;
 
 	bool dragDropped = false;
 

@@ -51,6 +51,11 @@ bool Scene::Start()
 	// Import BakerHouse by default
 	app->resourceManager->ImportFile("Resources/street/street2.fbx");
 
+	GameObject* plane = root->GetChildrens()[1]->FindChildren("Plane001");
+	static_cast<Material*>(plane->GetComponent(ComponentType::MATERIAL))->texture = app->resourceManager->greenTexture;
+	GameObject* object010 = root->GetChildrens()[1]->FindChildren("Object010");
+	static_cast<Material*>(object010->GetComponent(ComponentType::MATERIAL))->texture = app->resourceManager->whiteTexture;
+
 	// We extract the camera from the list of root children for a moment and we return it to put 
 	// so that it appears first in the hierarchy 
 	// it would be easier to create after the "bakehouse" but we need to create it in the Init to define your framebuffer 

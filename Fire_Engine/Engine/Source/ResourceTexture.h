@@ -17,6 +17,7 @@ public:
 public:
 	int texWidth = 0;
 	int texHeight = 0;
+	bool defaultT = false;
 
 	GLuint textureID = -1;
 

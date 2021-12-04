@@ -41,14 +41,24 @@ bool ResourceManager::Start()
 	logo = new Texture("Resources/logo.png", "logo");
 	logo->LoadToMemory();
 
-	defaultTexture = new Texture("default_texture.png", "defaultTexture");
-	defaultTexture->LoadToMemory();
 
 	backButton = new Texture("Resources/icon_back.png", "backButton");
 	backButton->LoadToMemory();
 
 	addButton = new Texture("Resources/icon_add.png", "addButton");
 	addButton->LoadToMemory();
+
+	defaultTexture = new Texture("Materials/default_texture.dds", "defaultTexture");
+	defaultTexture->LoadToMemory();
+	defaultTexture->defaultT = true;
+
+	whiteTexture = new Texture("Materials/white_texture.dds", "whiteTexture");
+	whiteTexture->LoadToMemory();
+	whiteTexture->defaultT = true;
+
+	greenTexture = new Texture("Materials/green_texture.dds", "greenTexture");
+	greenTexture->LoadToMemory();
+	greenTexture->defaultT = true;
 
 	currentFolderPath = app->editor->GetCurrentFolder();
 
@@ -58,9 +68,11 @@ bool ResourceManager::Start()
 bool ResourceManager::CleanUp()
 {
 	RELEASE(logo);
-	RELEASE(defaultTexture);
 	RELEASE(backButton);
 	RELEASE(addButton);
+	RELEASE(defaultTexture);
+	RELEASE(whiteTexture);
+	RELEASE(greenTexture);
 
 	FileSystem::FSDeInit();
 	return true;

@@ -30,7 +30,10 @@ public:
 
 	std::vector<GameObject*>::iterator GetBeginChildren() { return childrens.begin(); };
 	std::vector<GameObject*>::iterator GetEndChildren() { return childrens.end(); };
+
 	std::vector<GameObject*>::const_iterator FindChildren(GameObject* child) { return std::find(childrens.begin(), childrens.end(), child);};
+	GameObject* FindChildren(std::string name);
+
 	void SetIndex(std::vector<GameObject*>::iterator i) { indexList = i; };
 	void EraseChildren(std::vector<GameObject*>::const_iterator i) { childrens.erase(i); };
 

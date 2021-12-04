@@ -49,6 +49,16 @@ void GameObject::AttachChild(GameObject* child)
 	child->transform->UpdateTransform();
 }
 
+GameObject* GameObject::FindChildren(std::string name)
+{
+	for (int i = 0; i < childrens.size(); i++)
+	{
+		if (childrens.at(i)->name == name)
+			return childrens.at(i);
+	}
+	return nullptr;
+}
+
 void GameObject::Update()
 {
 	// Call all components Updates

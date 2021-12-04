@@ -3,7 +3,6 @@
 
 Resource::Resource(ResourceType type) : assetsFile(""), libraryFile(""), type(type), referenceCount(0)
 {
-
 }
 
 Resource::~Resource()

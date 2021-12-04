@@ -17,7 +17,7 @@ Material::Material(GameObject* obj) : Component(obj)
 Material::~Material()
 {
 	// Only delete texture if nobody is using it  
-	if (!CompareTextureId(app->scene->root, this->GetOwner(), texture->textureID) && texture != app->resourceManager->defaultTexture)
+	if (!CompareTextureId(app->scene->root, this->GetOwner(), texture->textureID) && texture->defaultT == false)
 		delete texture;
 	texture = nullptr;
 }
@@ -35,6 +35,7 @@ void Material::OnEditor()
 			IMGUI_PRINT("Texture Width: ", "%i", texture->texWidth);
 			IMGUI_PRINT("Texture Height: ", "%i", texture->texHeight);
 			ImGui::Image((ImTextureID)texture->textureID, ImVec2(128, 128));
+			ImGui::Text("%s", texture->GetAssetPath());
 		}
 		ImGui::Checkbox("View with checkers", &viewWithCheckers);
 	}

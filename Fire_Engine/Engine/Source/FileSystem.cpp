@@ -41,6 +41,12 @@ void FileSystem::FSInit()
 	assetPath += ASSETS_FOLDER;
 	FileSystem::AddPath(assetPath.c_str());
 
+	// Adding ProjectFolder (working directory + LibraryFolder)
+	assetPath = GetBasePath();
+	assetPath = NormalizePath(assetPath.c_str());
+	assetPath += LIBRARY_FOLDER;
+	FileSystem::AddPath(assetPath.c_str());
+
 	// Adding Output folder (for library folder searches (maybe it's better to add Library path))
 	assetPath = GetBasePath();
 	assetPath = NormalizePath(assetPath.c_str());

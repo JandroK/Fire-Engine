@@ -18,6 +18,7 @@
 #include "Resource.h"
 #include "ResourceTexture.h"
 #include "ResourceMesh.h"
+#include "ResourceManager.h"
 
 #include "Assimp/include/cimport.h"
 #include "Assimp/include/scene.h"
@@ -99,12 +100,14 @@ void ModelImporter::LoadMaterials(const aiScene* scene, const char* fullPath, st
 					tex->LoadToMemory();
 
 					testTextures.push_back(tex);
-
+					testTextures.at(k)->SetAssetsPath(localPath.c_str());
 					RELEASE_ARRAY(buffer)
 				}
 
 				path.Clear();
 			}
+			else
+				testTextures.push_back(app->resourceManager->defaultTexture);
 		}
 	}
 }
