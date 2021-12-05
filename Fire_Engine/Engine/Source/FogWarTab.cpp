@@ -76,10 +76,11 @@ void FogWarTab::Draw()
 
 			if (fogLinear)
 			{
-				if (ImGui::SliderFloat("Start", &fogStart, 10.0f, 39.0f));
+				if (ImGui::SliderFloat("Start", &fogStart, 10.0f, 100.0f))
+					if (fogEnd < fogStart) fogEnd = fogStart + 1;
 				glFogf(GL_FOG_START, fogStart);
 
-				if (ImGui::SliderFloat("End", &fogEnd, 40.0f, 80.0f));
+				if (ImGui::SliderFloat("End", &fogEnd, fogStart+1, 1000.0f));
 				glFogf(GL_FOG_END, fogEnd);
 			}
 
