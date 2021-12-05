@@ -678,6 +678,10 @@
     <ClInclude Include="Source\Style.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\DTEngine.h" />
+    <ClInclude Include="Source\IconsFontAwesome5.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -941,6 +945,7 @@
     <ClCompile Include="Source\AssetsTab.cpp">
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
+    <ClCompile Include="Source\DTEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\External\Assimp\include\color4.inl">
