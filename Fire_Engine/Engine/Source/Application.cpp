@@ -76,8 +76,6 @@ bool Application::Init()
 		maxFPS = application.JsonValToNumber("FPS");
 	}
 
-
-
 	// Call Init() in all modules
 	for (unsigned int i = 0; i < listModules.size() && ret == true; i++)
 	{
@@ -92,6 +90,9 @@ bool Application::Init()
 		ret = listModules[i]->Start();
 	}
 
+	ms_timer.Start();
+	DTEngine::realStartTime = ms_timer.GetStartTime();
+
 	return ret;
 }
 
@@ -103,7 +104,6 @@ void Application::PrepareUpdate()
 	DTEngine::realTimeDeltaTime = dt;
 	DTEngine::realTimeSinceStartup += DTEngine::realTimeDeltaTime;
 	DTEngine::PreUpdate();
-
 
 	ms_timer.Start();
 }

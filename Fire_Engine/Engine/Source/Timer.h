@@ -10,6 +10,7 @@ public:
 
 	void Start();
 	void Stop();
+	Uint32 GetStartTime();
 
 	Uint32 Read();
 
