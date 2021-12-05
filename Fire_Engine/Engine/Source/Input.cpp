@@ -9,7 +9,6 @@
 #include "Globals.h"
 
 #include "FileSystem.h"
-#include "Renderer3D.h"
 #include "ResourceManager.h"
 
 #define MAX_KEYS 300
@@ -119,9 +118,9 @@ update_status Input::PreUpdate(float dt)
 			break;
 
 			case (SDL_DROPFILE):
-			app->resourceManager->dragDropped = true;
-			if(!app->resourceManager->GetOverwritting()) app->resourceManager->ImportFile(FileSystem::ExtractLocalDiskForward(e.drop.file).c_str());
-			SDL_free(e.drop.file);  
+				app->resourceManager->dragDropped = true;
+				if(!app->resourceManager->GetOverwritting()) app->resourceManager->ImportFile(FileSystem::ExtractLocalDiskForward(e.drop.file).c_str());
+				SDL_free(e.drop.file);  
 			break;
 			
 			case SDL_QUIT:
@@ -129,24 +128,14 @@ update_status Input::PreUpdate(float dt)
 			break;
 
 			case SDL_WINDOWEVENT:
-				if (e.window.event == SDL_WINDOWEVENT_RESIZED)
-				{
-					app->renderer3D->OnResize(e.window.data1, e.window.data2);
-				}
-
-				if (e.window.event == SDL_WINDOWEVENT_CLOSE && e.window.windowID == SDL_GetWindowID(app->window->window))
-				{
-					quit = true;
-				}			break;
-				
+				App->window->ManageEvent(&e);
+				if (e.window.event == SDL_WINDOWEVENT_CLOSE && e.window.windowID == SDL_GetWindowID(app->window->window))quit = true;
+			break;
 		}
 	}
 
 	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
 		SDL_SetRelativeMouseMode(SDL_FALSE);
-
-	if (quit == true)
-		return UPDATE_STOP;
 
 	return ret;
 }

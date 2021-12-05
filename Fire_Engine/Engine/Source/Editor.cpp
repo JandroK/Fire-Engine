@@ -240,10 +240,9 @@ update_status Editor::Draw()
 	}
 
 	StartFrame();
-	ret = ImGuiMenuBar();
-
-	//Play pasue
 	ImGui::PushStyleVar(ImGuiStyleVar_::ImGuiStyleVar_WindowBorderSize, 0.0);
+	ret = ImGuiMenuBar();
+	//Play pasue
 	TopBar();
 	ImGui::PopStyleVar();
 

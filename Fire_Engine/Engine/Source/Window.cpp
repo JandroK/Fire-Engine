@@ -226,6 +226,7 @@ update_status Window::ManageEvent(SDL_Event* e)
 		height = e->window.data2;
 		App->renderer3D->OnResize(width, height);
 	}
+
 	return UPDATE_CONTINUE;
 }
 
