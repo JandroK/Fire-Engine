@@ -271,8 +271,9 @@ update_status Editor::Draw()
 
 bool Editor::DrawWarningTab(std::string text)
 {
+	ImGui::OpenPopup("Warning");
 	bool ret = false;
-	if (ImGui::Begin("Warning"))
+	if (ImGui::BeginPopupModal("Warning"))
 	{
 		float offset = ImGui::GetWindowContentRegionMax().x/2 - ImGui::CalcTextSize(text.c_str()).x/2;
 		ImGui::SetCursorPosX(offset);
@@ -299,7 +300,7 @@ bool Editor::DrawWarningTab(std::string text)
 			app->input->SetQuit(false);
 		}
 	}
-	ImGui::End();
+	ImGui::EndPopup();
 	return ret;
 }
 
