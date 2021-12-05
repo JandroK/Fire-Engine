@@ -26,7 +26,10 @@
 #include "Transform.h"
 #include "Material.h"
 #include "MeshRenderer.h"
+#include "DTEngine.h"
 #include "ResourceTexture.h"
+
+#include "imgui/imgui.h"
 
 #include "Style.h"
 #include <string>
@@ -125,9 +128,11 @@ void Editor::CreateDockSpace()
 	ImGuiViewport* viewport = ImGui::GetMainViewport();
 
 	ImVec2 dockPos(viewport->WorkPos);
+	dockPos.y += viewportCorSize;
 	ImGui::SetNextWindowPos(dockPos);
 
 	ImVec2 dockSize(viewport->WorkSize);
+	dockSize.y -= viewportCorSize;
 	ImGui::SetNextWindowSize(dockSize);
 
 	DockSpaceOverViewportCustom(viewport, ImGuiDockNodeFlags_PassthruCentralNode, dockPos, dockSize, nullptr);
@@ -236,6 +241,12 @@ update_status Editor::Draw()
 
 	StartFrame();
 	ret = ImGuiMenuBar();
+
+	//Play pasue
+	ImGui::PushStyleVar(ImGuiStyleVar_::ImGuiStyleVar_WindowBorderSize, 0.0);
+	TopBar();
+	ImGui::PopStyleVar();
+
 	CreateDockSpace();
 
 	// Rendering the tabs
@@ -301,6 +312,74 @@ bool Editor::DrawWarningTab(std::string text)
 	}
 	ImGui::End();
 	return ret;
+}
+
+void Editor::TopBar()
+{
+	//Main menu bar 2
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+	ImGui::SetNextWindowPos(viewport->WorkPos);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGuiContext& g = *GImGui;
+
+	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(g.Style.DisplaySafeAreaPadding.x, ImMax(g.Style.DisplaySafeAreaPadding.y - g.Style.FramePadding.y, 0.0f));
+
+	ImGui::SetNextWindowSize(ImVec2(g.IO.DisplaySize.x, (g.NextWindowData.MenuBarOffsetMinVal.y + g.FontBaseSize + g.Style.FramePadding.y) * 2.5f));
+
+	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(0.f, 0.f);
+
+	ImGui::SameLine((ImGui::GetContentRegionMax().x / 2.f) - 95);
+	if (ImGui::Begin("Play Pause", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDocking))
+	{
+		viewportCorSize = ImGui::GetWindowSize().y;
+		
+		ImGui::SameLine((ImGui::GetContentRegionMax().x / 2.f) - 95);
+		if (ImGui::BeginChild("##playBTS", ImVec2(200, ImGui::GetWindowContentRegionMax().y - ImGui::GetStyle().FramePadding.y), false, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoDecoration))
+		{
+
+			//Play game maybe if its clicked while game is playing, stop game?
+			if (ImGui::ImageButton((ImTextureID)app->resourceManager->playButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), (DTEngine::state == DTGState::PLAY) ? playingTint : ImVec4(0, 0, 0, 1)))
+			{
+				if (DTEngine::state == DTGState::STOP)
+				{
+					App->scene->SaveSceneRequest();
+					DTEngine::PlayGame();
+					SDL_SetRelativeMouseMode(SDL_FALSE);
+				}
+				else
+				{
+					DTEngine::PauseGame();
+					App->scene->LoadSceneRequest();
+				}
+			}
+			ImGui::SameLine();
+
+
+			//Stop game if playing
+			if (ImGui::ImageButton((ImTextureID)app->resourceManager->stopButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			{
+				if (DTEngine::state == DTGState::PLAY || DTEngine::state == DTGState::PAUSE)
+				{
+					DTEngine::StopGame();
+					App->scene->LoadSceneRequest();
+				}
+			}
+			ImGui::SameLine();
+
+			//Step one frame forward
+			if (ImGui::ImageButton((ImTextureID)app->resourceManager->pauseButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+				DTEngine::PauseGame();
+
+			ImGui::SameLine();
+			//Step one frame forward
+			if (ImGui::ImageButton((ImTextureID)app->resourceManager->stepButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+				DTEngine::StepGame();
+		}
+		ImGui::EndChild();
+	}
+	ImGui::End();
+
 }
 
 update_status Editor::ImGuiMenuBar()
@@ -543,6 +622,7 @@ update_status Editor::ImGuiMenuBar()
 		}
 		ImGui::EndMainMenuBar();
 	}
+
 	return ret;
 }
 

@@ -48,6 +48,18 @@ bool ResourceManager::Start()
 	addButton = new Texture("Resources/icon_add.png", "addButton");
 	addButton->LoadToMemory();
 
+	playButton = new Texture("Resources/icon_play.png", "addButton");
+	playButton->LoadToMemory();
+
+	pauseButton = new Texture("Resources/icon_pause.png", "addButton");
+	pauseButton->LoadToMemory();
+
+	stepButton = new Texture("Resources/icon_step.png", "addButton");
+	stepButton->LoadToMemory();
+
+	stopButton = new Texture("Resources/icon_stop.png", "addButton");
+	stopButton->LoadToMemory();
+
 	defaultTexture = new Texture("Materials/default_texture.dds", "defaultTexture");
 	defaultTexture->LoadToMemory();
 	defaultTexture->defaultT = true;

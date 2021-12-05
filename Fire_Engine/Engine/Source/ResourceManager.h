@@ -27,8 +27,14 @@ public:
 	std::string OpenFileName(char* filter = "All Files (*.*)\0*.*\0""Textues (*.png, .dds, .jpg, .tga*)\0*.PNG*;*.DDS*;*.JPG*;*.TGA*\0""3D models (*.fbx*)\0*.fbx*\0", HWND owner = NULL);
 
 	Texture* logo;
+
 	Texture* backButton;
 	Texture* addButton;
+	Texture* pauseButton;
+	Texture* playButton;
+	Texture* stopButton;
+	Texture* stepButton;
+
 	Texture* defaultTexture;
 	Texture* whiteTexture;
 	Texture* greenTexture;

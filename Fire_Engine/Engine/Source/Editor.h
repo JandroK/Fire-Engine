@@ -7,6 +7,9 @@
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+#define MAX_STY_INPUT 15
+
+
 class Tab;
 class GameObject;
 class Asset;
@@ -26,6 +29,13 @@ enum class TabType
 
 	MAX
 };
+enum class Icons {
+	I_Play, I_Stop, I_Pause, I_Step,
+	I_Warning, I_Error, I_Info, I_Folder,
+	I_Models,
+
+	I_Max
+};
 
 class Editor : public Module
 {
@@ -41,6 +51,7 @@ public:
 	void CheckShortCuts();
 	update_status Draw();
 	bool DrawWarningTab(std::string text);
+	void TopBar();
 
 	update_status ImGuiMenuBar();
 	void NewScene();
@@ -88,4 +99,9 @@ private:
 	float alphaStyle = 0.1;
 	float incrementAlphaValue = 0.1f;
 	std::vector<std::string> stylesList;
+
+	ImVec4 playingTint;
+	float viewportCorSize;
+
+
 };
