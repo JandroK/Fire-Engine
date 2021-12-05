@@ -214,7 +214,8 @@ void ResourceManager::Overwrite()
 
 void ResourceManager::DrawOverwriteTab()
 {
-	if (ImGui::Begin("Warning"))
+	ImGui::OpenPopup("Warning");
+	if (ImGui::BeginPopupModal("Warning"))
 	{
 		float offset = ImGui::GetWindowContentRegionMax().x / 2 - ImGui::CalcTextSize("Override file").x / 2;
 		ImGui::SetCursorPosX(offset);
@@ -248,7 +249,7 @@ void ResourceManager::DrawOverwriteTab()
 			overwritting = false;
 		}
 	}
-	ImGui::End();
+	ImGui::EndPopup();
 }
 
 void ResourceManager::NewCounterFile()
