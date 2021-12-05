@@ -259,6 +259,7 @@
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\GameTab.h" />
     <ClInclude Include="Source\Hierarchy.h" />
+    <ClInclude Include="Source\IconsFontAwesome5.h" />
     <ClInclude Include="Source\Inspector.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\MeshLoader.h" />
