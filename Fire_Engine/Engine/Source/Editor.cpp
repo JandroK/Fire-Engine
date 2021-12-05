@@ -324,9 +324,7 @@ void Editor::TopBar()
 	ImGuiContext& g = *GImGui;
 
 	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(g.Style.DisplaySafeAreaPadding.x, ImMax(g.Style.DisplaySafeAreaPadding.y - g.Style.FramePadding.y, 0.0f));
-
-	ImGui::SetNextWindowSize(ImVec2(g.IO.DisplaySize.x, (g.NextWindowData.MenuBarOffsetMinVal.y + g.FontBaseSize + g.Style.FramePadding.y) * 2.5f));
-
+	ImGui::SetNextWindowSize(ImVec2(g.IO.DisplaySize.x, (g.NextWindowData.MenuBarOffsetMinVal.y + g.FontBaseSize + g.Style.FramePadding.y) * 2.f));
 	g.NextWindowData.MenuBarOffsetMinVal = ImVec2(0.f, 0.f);
 
 	ImGui::SameLine((ImGui::GetContentRegionMax().x / 2.f) - 95);
@@ -354,7 +352,6 @@ void Editor::TopBar()
 				}
 			}
 			ImGui::SameLine();
-
 
 			//Stop game if playing
 			if (ImGui::ImageButton((ImTextureID)app->resourceManager->stopButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
@@ -718,7 +715,7 @@ void Editor::DockSpaceOverViewportCustom(ImGuiViewport* viewport, ImGuiDockNodeF
 {
 	ImGuiWindowFlags host_window_flags = 0;
 	host_window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking;
-	host_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;// | ImGuiWindowFlags_MenuBar;
+	host_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus ;//| ImGuiWindowFlags_MenuBar;
 
 	if (dockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)
 		host_window_flags |= ImGuiWindowFlags_NoBackground;

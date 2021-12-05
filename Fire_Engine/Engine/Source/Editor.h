@@ -93,5 +93,6 @@ private:
 	ImVec4 playingTint;
 	float viewportCorSize;
 
+	ImGuiID dockspace_id;
 
 };
