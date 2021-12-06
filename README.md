@@ -43,7 +43,7 @@ To move the camera we will use MOUSE_RIGHT button +:
 + "Alt" Orbit 
 + "Scroll mouse" Zoom in and Zoom out
 
- ![Image](Fire_Engine/Output/Assets/Screenshoots/game_object.jpg)
+ ![Image](Fire_Engine/Output/Assets/Screenshoots/EngineCapture.PNG)
  
 You can use the mouse wheel to zoom both backwards and forwards.
 
@@ -117,7 +117,7 @@ In the configuration section, the user will be able to modify the engine paramet
 - Align View With Selected
 - Toggle Active State
 
- ![Image](Fire_Engine/Output/Assets/Screenshoots/primitives.jpg)
+ ![Image](Fire_Engine/Output/Assets/Screenshoots/GameObjectCapture.PNG)
  
 #### Help: 
 - In help you can find a small options section where you can activate the demo version of imGui.
