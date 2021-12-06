@@ -13,10 +13,10 @@ Texture::Texture(std::string path, std::string name) : Resource(ResourceType::TE
 	if (path.find("/") != std::string::npos)
 	{
 		int pos = path.find_last_of("/");
-		libraryPath = "Textures" + path.substr(pos, path.find_last_of(".") - pos) + ".dds";
+		libraryPath = TEXTURES_FOLDER + path.substr(pos, path.find_last_of(".") - pos) + ".dds";
 	}
 	else
-		libraryPath = "Textures/" + path.substr(0, path.find_last_of(".")) + ".dds";
+		libraryPath = TEXTURES_FOLDER + path.substr(0, path.find_last_of(".")) + ".dds";
 	SetLibraryPath(libraryPath.c_str());
 }
 
