@@ -10,6 +10,7 @@
 //#define FILE_CONFIG	"Settings/config.json"
 
 #define SCENE_CONFIG	"../Output/Settings/scene.json"
+//#define SCENE_CONFIG	"Settings/scene.json"
 
 #include "Algorithm/Random/LCG.h"
 
