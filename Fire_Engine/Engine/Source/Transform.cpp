@@ -54,7 +54,7 @@ void Transform::OnEditor()
 
 		ImGui::NewLine();
 		// Reset Transform
-		if (ImGui::Button(ICON_FA_CIRCLE_NOTCH" Reset"))
+		if (ImGui::Button(ICON_FA_REDO" Reset"))
 			ResetTransform();
 
 		// If some transfomr has been modify update them

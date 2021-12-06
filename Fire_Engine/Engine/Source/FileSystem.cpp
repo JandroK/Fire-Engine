@@ -125,6 +125,7 @@ void FileSystem::CreateLibraryDirectories()
 	CreateDir(MESHES_FOLDER);
 	CreateDir(TEXTURES_FOLDER);
 	CreateDir(MATERIALS_FOLDER);
+	CreateDir(MODELS_FOLDER);
 }
 bool FileSystem::CreateDir(const char* dir)
 {

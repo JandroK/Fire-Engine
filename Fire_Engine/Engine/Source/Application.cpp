@@ -101,8 +101,8 @@ void Application::PrepareUpdate()
 {
 	dt = (float)ms_timer.Read() / 1000.0f;
 
-	DTEngine::realTimeDeltaTime = dt;
-	DTEngine::realTimeSinceStartup += DTEngine::realTimeDeltaTime;
+	DTEngine::realTimeDT = dt;
+	DTEngine::realTimeFromStartUp += DTEngine::realTimeDT;
 	DTEngine::PreUpdate();
 
 	ms_timer.Start();
