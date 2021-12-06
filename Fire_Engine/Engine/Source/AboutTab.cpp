@@ -29,13 +29,17 @@ void AboutTab::Draw()
 		// GitHub of developers
 		ImGui::NewLine();
 		ImGui::Text("Developed by: ");
-		if (ImGui::MenuItem("Ismael Tejada"))
+		if (ImGui::MenuItem("Ismael Tejada Coca"))
 		{
 			ShellExecute(0, 0, "https://github.com/IsmaUPC", 0, 0, SW_SHOW);
 		}
-		if (ImGui::MenuItem("Alejandro Moreno"))
+		if (ImGui::MenuItem("Alejandro Moreno Sanchez"))
 		{
 			ShellExecute(0, 0, "https://github.com/JandroK", 0, 0, SW_SHOW);
+		}
+		if (ImGui::MenuItem("Denis Deconinck Soriano"))
+		{
+			ShellExecute(0, 0, "https://github.com/Denisdrk6", 0, 0, SW_SHOW);
 		}
 
 		ImGui::NewLine();
