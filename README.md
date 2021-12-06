@@ -131,18 +131,18 @@ In the configuration section, the user will be able to modify the engine paramet
 - You can up/down alpha of PopUp Tabs
  
 ## Tool Bar:<a name="id.ToolBar">
- ####File:
+ #### File:
    - Quit
    - New scene
    - Save scene
    - Load scene
    - Import asset: opens file dialogue
- ####Edit:
+ #### Edit:
    - Duplicate: duplicates selected game object
    - Snap options for translation, ritation and scaling
- ####View
+ #### View
  - activate/deactivate tabs
- ####Game Objects:
+ #### Game Objects:
    - Create Empty
    - Create Child
    - Create Parent
@@ -152,12 +152,12 @@ In the configuration section, the user will be able to modify the engine paramet
    - Align with view: aligns selected game object to view
    - Align view to selected
    - Toggle active state
- ####Help:
+ #### Help:
    - Documentation
    - Download latest
    - Report a bug
    - About
- ####Set Style:
+ #### Set Style:
    - 7 different styles for the UI
    - PopUp alpha: increase or decrease popUp windows alpha
   
