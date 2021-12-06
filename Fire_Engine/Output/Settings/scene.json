@@ -62,7 +62,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/Building_V02_C.dds",
+                            "Material": "Resources\/street\/Building_V02_C.png",
                             "LibraryPath": "Library\/Textures\/\/Building_V02_C.dds"
                         }
                     }
@@ -93,7 +93,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
+                            "Material": "Resources\/street\/Building_V01_C.png",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         }
                     }
@@ -124,7 +124,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
+                            "Material": "Resources\/street\/Building_V01_C.png",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         }
                     }
@@ -155,7 +155,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building05 _c.dds",
+                            "Material": "Resources\/street\/building05 _c.tga",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         }
                     }
@@ -174,7 +174,7 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-100.000000,-0.000063,0.000000,-2031.769409,-0.000000,0.000036,99.999985,0.000000,-0.000063,99.999985,-0.000036,1616.360840,0.000000,0.000000,0.000000,1.000000,",
+                            "LocalTransform": "-100.000000,-0.000063,0.000000,-2031.769409,-0.000000,0.000036,99.999992,0.000000,-0.000063,99.999992,-0.000036,1616.360840,0.000000,0.000000,0.000000,1.000000,",
                             "GlobalTransform": "-1.000000,-0.000001,0.000000,-20.317694,-0.000000,0.000000,1.000000,0.000000,-0.000001,1.000000,-0.000000,16.163609,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
@@ -186,7 +186,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building05 _c.dds",
+                            "Material": "Resources\/street\/building05 _c.tga",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         }
                     }
@@ -217,7 +217,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building 06_ c.dds",
+                            "Material": "Resources\/street\/building 06_ c.tga",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         }
                     }
@@ -248,7 +248,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
+                            "Material": "Resources\/street\/Building_V01_C.png",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         }
                     }
@@ -279,7 +279,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building05 _c.dds",
+                            "Material": "Resources\/street\/building05 _c.tga",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         }
                     }
@@ -310,7 +310,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building 06_ c.dds",
+                            "Material": "Resources\/street\/building 06_ c.tga",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         }
                     }
@@ -341,7 +341,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building03_c.dds",
+                            "Material": "Resources\/street\/building03_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         }
                     }
@@ -372,7 +372,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
+                            "Material": "Resources\/street\/Building_V01_C.png",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         }
                     }
@@ -403,7 +403,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
+                            "Material": "Resources\/street\/Building_V01_C.png",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         }
                     }
@@ -465,7 +465,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
+                            "Material": "Resources\/street\/Building_V01_C.png",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         }
                     }
@@ -496,7 +496,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building05 _c.dds",
+                            "Material": "Resources\/street\/building05 _c.tga",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         }
                     }
@@ -527,7 +527,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building_025_c.dds",
+                            "Material": "Resources\/street\/building_025_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building_025_c.dds"
                         }
                     }
@@ -558,7 +558,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building_016_c.dds",
+                            "Material": "Resources\/street\/building_016_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         }
                     }
@@ -589,7 +589,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building05 _c.dds",
+                            "Material": "Resources\/street\/building05 _c.tga",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         }
                     }
@@ -620,7 +620,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building 01_c.dds",
+                            "Material": "Resources\/street\/building 01_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         }
                     }
@@ -651,7 +651,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building 01_c.dds",
+                            "Material": "Resources\/street\/building 01_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         }
                     }
@@ -682,7 +682,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building03_c.dds",
+                            "Material": "Resources\/street\/building03_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         }
                     }
@@ -713,7 +713,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building 06_ c.dds",
+                            "Material": "Resources\/street\/building 06_ c.tga",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         }
                     }
@@ -744,7 +744,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building_016_c.dds",
+                            "Material": "Resources\/street\/building_016_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         }
                     }
@@ -775,7 +775,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building 01_c.dds",
+                            "Material": "Resources\/street\/building 01_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         }
                     }
@@ -868,7 +868,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building_025_c.dds",
+                            "Material": "Resources\/street\/building_025_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building_025_c.dds"
                         }
                     }
@@ -899,7 +899,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building_016_c.dds",
+                            "Material": "Resources\/street\/building_016_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         }
                     }
@@ -930,7 +930,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/Building_V02_C.dds",
+                            "Material": "Resources\/street\/Building_V02_C.png",
                             "LibraryPath": "Library\/Textures\/\/Building_V02_C.dds"
                         }
                     }
@@ -961,7 +961,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Library\/Textures\/\/building03_c.dds",
+                            "Material": "Resources\/street\/building03_c.tga",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         }
                     }

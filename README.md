@@ -16,10 +16,10 @@ The creation of this engine will be to provide in a direct way, a tool for the d
  + 2.1. [Controls:](#id.Controls)
  + 2.2. [Components:](#id.Components)
  + 2.3. [Short Cuts:](#id.Shorts)
- + 2.4. [Configuration:](id.Conf)
- + 2.5. [ToolBar:](id.ToolBar)
- 3. [Features](id.Features)
- 4. [About Us](id.AboutUs)
+ + 2.4. [Configuration:](#id.Conf)
+ + 2.5. [ToolBar:](#id.ToolBar)
+ 3. [Features](#id.Features)
+ 4. [About Us](#id.AboutUs)
 
 ## User guide:<a name="id.Guide">
 
@@ -129,12 +129,62 @@ In the configuration section, the user will be able to modify the engine paramet
  #### Set Style:
 - You can choose your favourite style to work comfortably
 - You can up/down alpha of PopUp Tabs
+ 
+## Tool Bar:<a name="id.ToolBar">
+ ####File:
+   - Quit
+   - New scene
+   - Save scene
+   - Load scene
+   - Import asset: opens file dialogue
+ ####Edit:
+   - Duplicate: duplicates selected game object
+   - Snap options for translation, ritation and scaling
+ ####View
+ - activate/deactivate tabs
+ ####Game Objects:
+   - Create Empty
+   - Create Child
+   - Create Parent
+   - 3D Object (Cube, Sphere, Cylinder, Pyramid)
+   - Camera
+   - Reset view rotation: resets camera rotation
+   - Align with view: aligns selected game object to view
+   - Align view to selected
+   - Toggle active state
+ ####Help:
+   - Documentation
+   - Download latest
+   - Report a bug
+   - About
+ ####Set Style:
+   - 7 different styles for the UI
+   - PopUp alpha: increase or decrease popUp windows alpha
   
-### Features:<a name="id.Features">
+## Features:<a name="id.Features">
 #### Console tab:
-- Toolbar Bar: Logs  type numerados
+- Toolbar Bar: Logs type numerated
    - Clear Button
 - Stacks repeated logs
+ 
+#### Assets tab:
+- Bar with current folder path
+- Navigation through project's assets
+- Asset deletion from inside motor
+- Reload assets on the tab
+
+#### Fog War:
+- Enable and disable fog of war
+- Linear or exponential fog
+- Set fog color
+- Set fog start and end
+ 
+#### Quad Tree:
+- Render QuadTree option
+- Use Mouse Picking Option
+- View quad tree data
+- Set max divisions and max objects per division
+- Generate quad tree
 
 #### Inspector:
 - Enable and disable components
