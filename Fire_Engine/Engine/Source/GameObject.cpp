@@ -93,6 +93,7 @@ Component* GameObject::AddComponent(ComponentType type)
 
 	return newComponent;
 }
+
 // Get component by Type, because an object can only have 1 component of 1 type
 Component* GameObject::GetComponent(ComponentType type)
 {

@@ -986,7 +986,9 @@
                     },
                     "Component 1": {
                         "Type": 3,
-                        "active": true
+                        "active": true,
+                        "isMainCamera": true,
+                        "showFrustrum": false
                     }
                 }
             }

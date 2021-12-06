@@ -22,6 +22,7 @@
 
 #include "Texture.h"
 #include "QuadTreeBase.h"
+#include "Window.h"
 
 #include"MathGeoLib/include/Math/Quat.h"
 
@@ -133,13 +134,14 @@ GameObject* Scene::CreateGameObjectParent(const char* name, GameObject* child)
 	return obj;
 }
 
-void Scene::CreateCamera()
+GameObject* Scene::CreateCamera()
 {
 	GameObject* camera = CreateGameObjectEmpty("Camera");
 	camera->AddComponent(ComponentType::CAMERA);
 	Transform* transformCamera = static_cast<Transform*>(camera->GetComponent(ComponentType::TRANSFORM));
 	transformCamera->SetPosition(float3(0, 3.5f, -12));
 	transformCamera->SetEulerRotaion(float3(6, 0, 0));
+	return camera;
 }
 
 GameObject* Scene::CreatePrimitive(const char* name, Mesh* mesh)
@@ -213,6 +215,7 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 
 	MeshRenderer* mesh;
 	Material* material;
+	ComponentCamera* camera;
 
 	node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
 	node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
@@ -273,7 +276,12 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LibraryPath", material->texture->GetLibraryPath());
 				break;
 
-			default:
+			case ComponentType::CAMERA:
+				camera = static_cast<ComponentCamera*>(parentGO->GetComponent(ComponentType::CAMERA));
+
+				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "isMainCamera", camera->GetIsMainCamera());
+				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "showFrustrum", camera->GetShowFrustrum());
+
 				break;
 
 		}
@@ -343,9 +351,10 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 
 	Transform* transform;
 	MeshRenderer* meshRender;
-	Mesh* mesh = new Mesh();
-	bool usingMesh = false;
+	Mesh* mesh;
 	Material* material;
+	ComponentCamera* camera;
+
 	LOG(LogType::L_NORMAL, "Loading Components \n");
 
 	JsonParser components = parent.GetChild(parent.GetRootValue(), "components");
@@ -362,8 +371,6 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 			switch ((ComponentType)(int)tmp.JsonValToNumber("Type"))
 			{
 			case ComponentType::TRANSFORM:
-				//gamObj->AddComponent(ComponentType::TRANSFORM);
-				//transform = gamObj->transform;
 				gamObj->transform->SetGlobalTransform(strMatrixToF4x4(tmp.JsonValToString("GlobalTransform")));
 				if (!gamObj->IsRoot()) gamObj->transform->SetTransformMFromM(gamObj->transform->GetGlobalTransform());
 				gamObj->transform->SetLocalTransform(strMatrixToF4x4(tmp.JsonValToString("LocalTransform")));
@@ -376,20 +383,13 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 				meshRender = static_cast<MeshRenderer*>(gamObj->GetComponent(ComponentType::MESHRENDERER));
 				if (meshRender != NULL)
 				{
-					//meshRender->GetOwner();
+					mesh = new Mesh();
 					mesh->SetLibraryPath(tmp.JsonValToString("LibraryPath"));
 					mesh->SetAssetsPath(tmp.JsonValToString("Mesh"));
 					mesh->LoadFromFME(tmp.JsonValToString("LibraryPath"));
 					meshRender->SetMesh(mesh);
-
 					meshRender->SetOwner(gamObj);
-
-					//meshRender->GetMesh()->LoadFromFME(tmp.JsonValToString("LibraryPath"));
-
-					usingMesh = true;
 				}
-				//meshRender->SetMesh(Mesh(tmp.JsonValToString("Mesh")));
-
 				break;
 			case ComponentType::MATERIAL:
 				gamObj->AddComponent(ComponentType::MATERIAL);
@@ -404,7 +404,16 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 
 
 				break;
-			default:
+			case ComponentType::CAMERA:
+				
+				gamObj->AddComponent(ComponentType::CAMERA);
+				camera = static_cast<ComponentCamera*>(gamObj->GetComponent(ComponentType::CAMERA));
+				mainCamera = camera;
+				camera->ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
+				//camera->SetOwner(gamObj);
+				camera->SetIsMainCamera(tmp.JsonValToBool("isMainCamera"));
+				camera->SetShowFrustrum(tmp.JsonValToBool("showFrustrum"));
+
 				break;
 			}
 
@@ -414,7 +423,6 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 		else break;
 	}
 
-	if (!usingMesh) RELEASE(mesh);
 }
 
 float4x4 Scene::strMatrixToF4x4(const char* convert)
