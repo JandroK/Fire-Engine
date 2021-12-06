@@ -94,5 +94,5 @@ private:
 	float viewportCorSize;
 
 	ImGuiID dockspace_id;
-
+	ImVec4 colorStyle;
 };
