@@ -270,7 +270,7 @@ update_status Editor::Draw()
 		if (DrawWarningTab("New Scene")) NewScene();
 	if (app->input->GetQuit())
 		if (DrawWarningTab("Exit Engine")) ret = UPDATE_STOP;
-	if (app->resourceManager->GetOverwritting()) app->resourceManager->DrawOverwriteTab();
+	//if (app->resourceManager->GetOverwritting()) app->resourceManager->DrawOverwriteTab();
 
 	ImGui::EndFrame();
 	ImGui::Render();
