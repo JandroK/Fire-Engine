@@ -12,6 +12,7 @@
 #include "MathGeoLib/include/Math/TransformOps.h"
 
 #include "Camera3D.h"
+#include "IconsFontAwesome5.h"
 
 Transform::Transform(GameObject* obj) : Component(obj)
 {
@@ -41,7 +42,7 @@ void Transform::OnEditor()
 	// which is very expensive to calculate because (float4x4 * float4x4 * float4x4) are a lot of GPU cycles,  
 	// We only modify the parameter that has been modified, only position or only rotation or only scale.
 	// There is more code but it is more efficient
-	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader(ICON_FA_ARROWS_ALT" Transform", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		CheckStateOperation();
 
@@ -53,7 +54,7 @@ void Transform::OnEditor()
 
 		ImGui::NewLine();
 		// Reset Transform
-		if (ImGui::Button("Reset Transform"))
+		if (ImGui::Button(ICON_FA_CIRCLE_NOTCH" Reset"))
 			ResetTransform();
 
 		// If some transfomr has been modify update them

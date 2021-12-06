@@ -10,6 +10,7 @@
 #include "Scene.h"
 
 #include "ImGui/imgui.h"
+#include "IconsFontAwesome5.h"
 
 MeshRenderer::MeshRenderer(GameObject* obj) : Component(obj)
 {
@@ -30,7 +31,7 @@ void MeshRenderer::Update()
 
 void MeshRenderer::OnEditor()
 {
-	if (ImGui::CollapsingHeader("Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader(ICON_FA_DRAW_POLYGON" Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Checkbox("Active", &active);
 		// Print mesh information

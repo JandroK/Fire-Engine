@@ -23,6 +23,8 @@
 //Components
 #include "Material.h"
 
+#include "IconsFontAwesome5.h"
+
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	name = "ResourceManager";	
@@ -40,25 +42,6 @@ bool ResourceManager::Start()
 	// Import Icons
 	logo = new Texture("Resources/logo.png", "logo");
 	logo->LoadToMemory();
-
-
-	backButton = new Texture("Resources/icon_back.png", "backButton");
-	backButton->LoadToMemory();
-
-	addButton = new Texture("Resources/icon_add.png", "addButton");
-	addButton->LoadToMemory();
-
-	playButton = new Texture("Resources/icon_play.png", "playButton");
-	playButton->LoadToMemory();
-
-	pauseButton = new Texture("Resources/icon_pause.png", "pauseButton");
-	pauseButton->LoadToMemory();
-
-	stepButton = new Texture("Resources/icon_step.png", "stepButton");
-	stepButton->LoadToMemory();
-
-	stopButton = new Texture("Resources/icon_stop.png", "stopButton");
-	stopButton->LoadToMemory();
 
 	defaultTexture = new Texture("Materials/default_texture.dds", "defaultTexture");
 	defaultTexture->LoadToMemory();
@@ -83,12 +66,6 @@ bool ResourceManager::Start()
 bool ResourceManager::CleanUp()
 {
 	RELEASE(logo);
-	RELEASE(backButton);
-	RELEASE(addButton);
-	RELEASE(pauseButton);
-	RELEASE(playButton);
-	RELEASE(stopButton);
-	RELEASE(stepButton);
 	RELEASE(defaultTexture);
 	RELEASE(whiteTexture);
 	RELEASE(greenTexture);
@@ -223,6 +200,7 @@ void ResourceManager::DrawOverwriteTab()
 	{
 		float offset = ImGui::GetWindowContentRegionMax().x / 2 - ImGui::CalcTextSize("Override file").x / 2;
 		ImGui::SetCursorPosX(offset);
+		ImGui::Text(ICON_FA_EXCLAMATION_TRIANGLE); ImGui::SameLine();
 		ImGui::Text("Override file");
 
 		ImGui::NewLine();

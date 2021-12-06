@@ -118,7 +118,7 @@ bool Editor::Start()
 	// merge in icons from Font Awesome
 	static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
 	ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
-	io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 16.0f, &icons_config, icons_ranges);
+	io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 12.0f, &icons_config, icons_ranges);
 	// use FONT_ICON_FILE_NAME_FAR if you want regular instead of solid
 
 	Style::SetStyle(style);
@@ -297,6 +297,7 @@ bool Editor::DrawWarningTab(std::string text)
 	{
 		float offset = ImGui::GetWindowContentRegionMax().x/2 - ImGui::CalcTextSize(text.c_str()).x/2;
 		ImGui::SetCursorPosX(offset);
+		ImGui::Text(ICON_FA_EXCLAMATION_TRIANGLE); ImGui::SameLine();
 		ImGui::Text(text.c_str());
 
 		ImGui::NewLine();
@@ -347,7 +348,7 @@ void Editor::TopBar()
 		{
 
 			//Play game maybe if its clicked while game is playing, stop game?
-			if (ImGui::ImageButton((ImTextureID)app->resourceManager->playButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), (DTEngine::state == DTGState::PLAY) ? playingTint : ImVec4(0, 0, 0, 1)))
+			if (ImGui::Button(ICON_FA_PLAY))
 			{
 				if (DTEngine::state == DTGState::STOP)
 				{
@@ -364,7 +365,7 @@ void Editor::TopBar()
 			ImGui::SameLine();
 
 			//Stop game if playing
-			if (ImGui::ImageButton((ImTextureID)app->resourceManager->stopButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::Button(ICON_FA_STOP))
 			{
 				if (DTEngine::state == DTGState::PLAY || DTEngine::state == DTGState::PAUSE)
 				{
@@ -375,12 +376,12 @@ void Editor::TopBar()
 			ImGui::SameLine();
 
 			//Step one frame forward
-			if (ImGui::ImageButton((ImTextureID)app->resourceManager->pauseButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::Button(ICON_FA_PAUSE))
 				DTEngine::PauseGame();
 
 			ImGui::SameLine();
 			//Step one frame forward
-			if (ImGui::ImageButton((ImTextureID)app->resourceManager->stepButton->textureID, ImVec2(17, 17), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0, 0, 0, 0), ImVec4(0, 0, 0, 1)))
+			if (ImGui::Button(ICON_FA_STEP_FORWARD))
 				DTEngine::StepGame();
 		}
 		ImGui::EndChild();
@@ -398,22 +399,22 @@ update_status Editor::ImGuiMenuBar()
 	{
 		bool isSelected = true;
 		if (GetGameObjectSelected() == nullptr) isSelected = false;
-		if (ImGui::BeginMenu("File"))
+		if (ImGui::BeginMenu(ICON_FA_FILE" File"))
 		{
-			if (ImGui::MenuItem("Quit", "ESC"))
+			if (ImGui::MenuItem(ICON_FA_WINDOW_CLOSE" Quit", "ESC"))
 				ret = UPDATE_STOP;
 
-			if (ImGui::MenuItem("New Scene","Ctrl+N"))
+			if (ImGui::MenuItem(ICON_FA_FILE_UPLOAD" New Scene","Ctrl+N"))
 				warningTab = true;
 
-			if (ImGui::MenuItem("Save Scene", "Ctrl+S"))
+			if (ImGui::MenuItem(ICON_FA_SAVE" Save Scene", "Ctrl+S"))
 				app->scene->SaveSceneRequest();
 
-			if (ImGui::MenuItem("Load Scene"))
+			if (ImGui::MenuItem(ICON_FA_FOLDER_OPEN" Load Scene"))
 				app->scene->LoadSceneRequest();
 
 			ImGui::Separator();
-			if (ImGui::MenuItem("Import Asset"))
+			if (ImGui::MenuItem(ICON_FA_FILE_IMPORT" Import Asset"))
 			{
 				std::string path = app->resourceManager->OpenFileName();
 				if (!path.empty())
@@ -425,14 +426,14 @@ update_status Editor::ImGuiMenuBar()
 
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Edit"))
+		if (ImGui::BeginMenu(ICON_FA_EDIT" Edit"))
 		{
 			if (!isSelected)
 			{
 				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(128, 128, 128, 255));
 				ImGui::PushStyleColor(ImGuiCol_HeaderHovered, IM_COL32(128, 128, 128, 100));
 			}
-			if (ImGui::MenuItem("Duplicate", "Ctrl+D"))
+			if (ImGui::MenuItem(ICON_FA_COPY" Duplicate", "Ctrl+D"))
 				if (isSelected) Duplicate(GetGameObjectSelected(), GetGameObjectSelected()->GetParent());
 
 			if (!isSelected)
@@ -517,7 +518,7 @@ update_status Editor::ImGuiMenuBar()
 			ImGui::EndMenu();
 		}
 
-		if (ImGui::BeginMenu("View"))
+		if (ImGui::BeginMenu(ICON_FA_EYE" View"))
 		{
 			for (int i = 0; i < tabs.size(); i++)
 			{
@@ -528,26 +529,26 @@ update_status Editor::ImGuiMenuBar()
 			ImGui::EndMenu();
 		}
 		// Menu of game objects
-		if (ImGui::BeginMenu("Game Objects"))
+		if (ImGui::BeginMenu(ICON_FA_CUBE" Game Objects"))
 		{
-			if (ImGui::MenuItem("Create Empty", "Ctrl+Shift+N"))
+			if (ImGui::MenuItem(ICON_FA_LAYER_GROUP" Create Empty", "Ctrl+Shift+N"))
 			{
 				app->scene->CreateGameObjectEmpty("GameObject");
 			}
-			if (ImGui::MenuItem("Create Child", "Alt+Shift+N"))
+			if (ImGui::MenuItem(ICON_FA_OBJECT_UNGROUP" Create Child", "Alt+Shift+N"))
 			{
 				app->scene->CreateGameObjectChild("GameObjectChild", GetGameObjectSelected());
 			}
-			if (ImGui::MenuItem("Create Parent", "Ctrl+Shift+G"))
+			if (ImGui::MenuItem(ICON_FA_OBJECT_GROUP" Create Parent", "Ctrl+Shift+G"))
 			{
 				app->scene->CreateGameObjectParent("GameObjectParent", GetGameObjectSelected());
 			}
-			if (ImGui::BeginMenu("3D Object"))
+			if (ImGui::BeginMenu(ICON_FA_CUBES" 3D Object"))
 			{
 				PrimitiveMenuItem();
 				ImGui::EndMenu();
 			}
-			if (ImGui::MenuItem("Camera"))
+			if (ImGui::MenuItem(ICON_FA_CAMERA" Camera"))
 			{
 				app->scene->CreateCamera();
 			}
@@ -581,27 +582,27 @@ update_status Editor::ImGuiMenuBar()
 
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Help"))
+		if (ImGui::BeginMenu(ICON_FA_INFO_CIRCLE" Help"))
 		{
-			if (ImGui::MenuItem("Documentation"))
+			if (ImGui::MenuItem(ICON_FA_ADDRESS_BOOK" Documentation"))
 			{
 				ShellExecute(0, 0, "https://github.com/JandroK/Fire-Engine/wiki", 0, 0, SW_SHOW);
 			}
-			if (ImGui::MenuItem("Download latest"))
+			if (ImGui::MenuItem(ICON_FA_DOWNLOAD" Download latest"))
 			{
 				ShellExecute(0, 0, "https://github.com/JandroK/Fire-Engine/releases", 0, 0, SW_SHOW);
 			}
-			if (ImGui::MenuItem("Report a bug"))
+			if (ImGui::MenuItem(ICON_FA_BUG" Report a bug"))
 			{
 				ShellExecute(0, 0, "https://github.com/JandroK/Fire-Engine/issues", 0, 0, SW_SHOW);
 			}
-			if (ImGui::MenuItem("About"))
+			if (ImGui::MenuItem(ICON_FA_USER" About"))
 			{
 				tabs[0]->active = !tabs[0]->active;
 			}			
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Set Style"))
+		if (ImGui::BeginMenu(ICON_FA_BORDER_STYLE" Set Style"))
 		{
 			for (int i = 0; i < stylesList.size(); i++)
 			{
@@ -614,7 +615,7 @@ update_status Editor::ImGuiMenuBar()
 			ImGui::Separator();
 
 			float auxAlpha = alphaStyle;
-			ImGui::Text("PopUp Alpha:");
+			ImGui::Text(ICON_FA_SORT_ALPHA_DOWN_ALT" PopUp Alpha:");
 			ImGui::PushItemWidth(100);
 			if (ImGui::InputFloat("##Alpha", &alphaStyle, 0.1f))
 			{

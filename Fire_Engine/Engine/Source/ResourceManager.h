@@ -28,13 +28,6 @@ public:
 
 	Texture* logo;
 
-	Texture* backButton;
-	Texture* addButton;
-	Texture* pauseButton;
-	Texture* playButton;
-	Texture* stopButton;
-	Texture* stepButton;
-
 	Texture* defaultTexture;
 	Texture* whiteTexture;
 	Texture* greenTexture;

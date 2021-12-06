@@ -1,6 +1,8 @@
 #include "AssetsTab.h"
 #include "FileSystem.h"
+
 #include <algorithm>
+#include "IconsFontAwesome5.h"
 
 AssetsTab::AssetsTab() : Tab()
 {
@@ -92,14 +94,14 @@ void AssetsTab::DrawFolder(Folder* folder)
 	font->Scale = 1.0f;
 	ImGui::PopFont();
 
-	if (ImGui::Button("Reload"))
+	if (ImGui::Button(ICON_FA_CIRCLE_NOTCH" Reload"))
 		Reload();
 
 	ImGui::Separator();
 
 	if (folder->name != ASSETS_FOLDER)
 	{
-		if (ImGui::Button("BACK"))
+		if (ImGui::Button(ICON_FA_ARROW_LEFT))
 		{
 			currentFolder = folder->parent;
 			currentFolderPath = currentFolder->fullPath;

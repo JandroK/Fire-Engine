@@ -9,6 +9,7 @@
 #include "ResourceManager.h"
 
 #include "ImGui/imgui.h"
+#include "IconsFontAwesome5.h"
 
 Material::Material(GameObject* obj) : Component(obj)
 {
@@ -24,7 +25,7 @@ Material::~Material()
 
 void Material::OnEditor()
 {
-	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader(ICON_FA_IMAGE" Material", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		// This can't call "Active" because there is already another checkbox with that name
 		// that's why it's called "Active " 
@@ -35,7 +36,7 @@ void Material::OnEditor()
 			IMGUI_PRINT("Texture Width: ", "%i", texture->texWidth);
 			IMGUI_PRINT("Texture Height: ", "%i", texture->texHeight);
 			ImGui::Image((ImTextureID)texture->textureID, ImVec2(128, 128));
-			ImGui::TextWrapped("%s", texture->GetLibraryPath());
+			ImGui::TextWrapped(ICON_FA_FILE_IMAGE" %s", texture->GetLibraryPath());
 		}
 		ImGui::Checkbox("View with checkers", &viewWithCheckers);
 	}

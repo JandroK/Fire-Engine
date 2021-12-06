@@ -9,6 +9,8 @@
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_internal.h"
+#include "IconsFontAwesome5.h"
+
 
 // Components
 #include "Component.h"
@@ -66,7 +68,7 @@ void Inspector::DrawDefaultInspector()
 	DrawList("Layer", &layers, gameObjectSelected->layer, maxWidthLayers);
 
 	// Destroy object selected, pendingToDelete = true
-	if (ImGui::Button("Delete")) {
+	if (ImGui::Button(ICON_FA_TRASH" Delete")) {
 		gameObjectSelected->Destroy();
 	}
 	ImGui::Separator();
@@ -135,7 +137,7 @@ void Inspector::DrawAddComponet()
 
 void Inspector::DrawEditLists()
 {
-	if (ImGui::ImageButton((ImTextureID)app->resourceManager->backButton->textureID, ImVec2(16, 16)))
+	if (ImGui::Button(ICON_FA_ARROW_LEFT" Back"))
 		item = ItemType::NONE;
 
 	// System to determine which node starts open 
@@ -173,7 +175,7 @@ void Inspector::DrawListTagLayer(const char* label, std::vector<std::string> lis
 
 	ImGui::SameLine();
 	ImGui::PushID(label);
-	if (ImGui::ImageButton((ImTextureID)app->resourceManager->addButton->textureID, ImVec2(12, 12)))
+	if (ImGui::Button(ICON_FA_PLUS))
 	{
 		if (label == "Tag")
 		{
