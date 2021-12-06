@@ -213,6 +213,8 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 	Transform* transform;
 	float4x4 localTransform,globalTransform;
 
+	LOG(LogType::L_NORMAL, (std::string("Save ") + parentGO->name).c_str());
+
 	MeshRenderer* mesh;
 	Material* material;
 	ComponentCamera* camera;
@@ -243,7 +245,10 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 
 		tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "Type", (int)parentGO->GetCompoments().at(i)->GetType());
 		tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "active", parentGO->GetCompoments().at(i)->active);
-		
+
+		LOG(LogType::L_NORMAL, (std::string("Save ") + num +" of "+ parentGO->name).c_str());
+
+
 		switch ((ComponentType)parentGO->GetCompoments().at(i)->GetType())
 		{
 			case ComponentType::TRANSFORM:
