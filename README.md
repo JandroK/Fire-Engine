@@ -13,10 +13,11 @@ The creation of this engine will be to provide in a direct way, a tool for the d
 ## Index
  1. [User guide:](#id.Guide)
  2. [Inside Fire-Engine:](#id.Inside)
- + 2.1. [Cntrols:](#id.Controls)
- + 2.2. [Short Cuts:](#id.Shorts)
- + 2.3. [Configuration:](id.Conf)
- + 2.4. [ToolBar:](id.ToolBar)
+ + 2.1. [Controls:](#id.Controls)
+ + 2.2. [Components:](#id.Components)
+ + 2.3. [Short Cuts:](#id.Shorts)
+ + 2.4. [Configuration:](id.Conf)
+ + 2.5. [ToolBar:](id.ToolBar)
  3. [Features](id.Features)
  4. [About Us](id.AboutUs)
 
@@ -31,13 +32,15 @@ Inside the release you will find the executable file with .exe extension.
 
 #### Controls:<a name="id.Controls">
 
-To move the camera we will use:
+To move the camera we will use MOUSE_RIGHT button +:
 + "W" Scroll forward.
 + "S" Backward displacement.
 + "A" Left lateral displacement.
 + "D" Right lateral displacement.
++ "Q" Down vertical displacement.
++ "E" Up vertical displacement.
 + "F" Front view of the selected object.
-+ "Alt+(R/Mosue)" Orbit 
++ "Alt" Orbit 
 + "Scroll mouse" Zoom in and Zoom out
 
  ![Image](Fire_Engine/Output/Assets/Screenshoots/game_object.jpg)
@@ -47,19 +50,41 @@ You can use the mouse wheel to zoom both backwards and forwards.
 To orbit you can use the right mouse button, holding and dragging the mouse button. 
 Rotation with respect to an object is possible by holding ALT when an object is selected. 
 
-You can use the inspector to make modifications to the internal objects in the engine. Select one and look at the Sliders, each one will be titled with the variable you will modify. 
-
-You can see that there is the possibility to assign tags to the object and activate the vertex and face normals if you navigate through the inspector. There you will also be able to find the button to delete the object.
+#### Components:<a name="id.Components"> 
+Components Info:
++ Transform 
+  + Modified objects
+  + Set axis Local/Global
+  + Delete objects
++ Mesh Renderer
+  + Enable/Disable mesh 
+  + Mesh info
+  + Draw bounding box and normals
++ Material
+  + Texture dimension
+  + Preview texture
+  + Texture path
+  + Active view with checkers
++ Camera
+  + Set as main camera
+  + Draw his frustrum boxes
+  + Modified his frustrum variables
 
 #### Short Cuts:<a name="id.Shorts">
-+ "1" Information about us
-+ "2" Console 
-+ "3" Configuration 
-+ "4" Inspector
-+ "5" Scene
-+ "6" Hierarchy
++ The numbers 1-9 open and close the tabs
 + "Ctrl+N" New Scene
++ "Ctrl+S" Save Scene
++ "Ctrl+D" Duplicate Object
 + "Ctrl+Shift+N" New GameObject Empty
++ "Ctrl+Shift+G" New GameObject Parent
++ "Alt+Shift+N" New GameObject Child
++ "Ctrl+Shift+F" Align with view
++ "Ctrl+Alt+W" Use TranslateSnap
++ "Ctrl+Alt+E" Use RotateSnap
++ "Ctrl+Alt+R" Use ScaleSnap
++ "Alt+Shift+F" Align with selected
++ "Alt+Shift+A" Toggle active state
++ "Alt+F" ResetViewRotation
 
 #### Configuration:<a name="id.Conf">
 
@@ -68,27 +93,42 @@ In the configuration section, the user will be able to modify the engine paramet
 ### ToolBar:<a name="id.ToolBar">
 
 #### File: 
-- Option to close the engine.
-
+- Close the engine
+- New Scene
+- Save Scene
+- Load Scene
+- Import Assets
+ 
+#### Edit: 
+- Duplicate Object Selected
+- Snap options
+ 
 #### View:
 - In view you can configure the view of the menus that you want to be active or not, according to convenience. 
 
 #### Game Objects:
-A quick builder of basic Game Objects with simple primitive shapes.
-- Cube
-- Sphere
-- Cylinder
-- Pyramid
+- Create Empty
+- Create Child
+- Create Parent
+- 3D Objects (Cube, Sphere, Cylinder, Pyramid)
+- Camera
+- Reset View rotation
+- Align With View
+- Align View With Selected
+- Toggle Active State
 
  ![Image](Fire_Engine/Output/Assets/Screenshoots/primitives.jpg)
  
 #### Help: 
-In help you can find a small options section where you can activate the demo version of imGui.
-You will be able to access the documentation.
-Download the latest version.
-Report any bug found.
-You will also find a section with information about the engine developers. 
-
+- In help you can find a small options section where you can activate the demo version of imGui.
+- You will be able to access the documentation.
+- Download the latest version.
+- Report any bug found.
+- You will also find a section with information about the engine developers. 
+ 
+ #### Set Style:
+- You can choose your favourite style to work comfortably
+- You can up/down alpha of PopUp Tabs
   
 ### Features:<a name="id.Features">
 #### Console tab:
@@ -99,7 +139,8 @@ You will also find a section with information about the engine developers.
 #### Inspector:
 - Enable and disable components
 - Buttons Add Tags and Layers
-- Show texture preview in material component 
+- Show all components
+- Button "Add Component" 
 
 #### Hierarchy:
 - Double click to name game object or click in arrow to open game object tree 
@@ -115,6 +156,10 @@ Ismael Tejada Coca:
 - @IsmaUPC  | 
   - https://github.com/IsmaUPC 
   - https://www.linkedin.com/in/ismatc/
+ 
+ Denis Deconinck Soriano:
+- @Denisdrk6  | 
+  - https://github.com/Denisdrk6
 
 ## License
 
