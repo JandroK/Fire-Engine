@@ -425,6 +425,7 @@ update_status Editor::ImGuiMenuBar()
 				if (!path.empty())
 				{
 					path = path.substr(3); // Path has "C:\\" which makes FileSystem think it's a dangerous file and won't load it.
+					app->resourceManager->fromDialogue = true;
 					app->resourceManager->ImportFile(path.c_str());
 				}
 			}

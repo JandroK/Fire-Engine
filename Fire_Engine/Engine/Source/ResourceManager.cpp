@@ -82,7 +82,7 @@ void ResourceManager::ImportFile(const char* assetsFile)
 	bool exists = false;
 	exists = FileSystem::Exists(assetsFile);
 	// If file was grad and dropped from somewhere else than current folder, copy it to current folder
-	if (dragDropped)
+	if (dragDropped || fromDialogue)
 	{
 		std::string temp;
 		FileSystem::GetFileName(normalizedPath.c_str(), temp, true);
@@ -97,6 +97,7 @@ void ResourceManager::ImportFile(const char* assetsFile)
 			RELEASE_ARRAY(buffer);
 		}
 		dragDropped = false;
+		fromDialogue = false;
 	}
 
 	std::string output = "";
