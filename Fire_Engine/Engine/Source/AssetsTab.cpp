@@ -101,7 +101,7 @@ void AssetsTab::DrawFolder(Folder* folder)
 	font->Scale = 1.0f;
 	ImGui::PopFont();
 
-	if (ImGui::Button(ICON_FA_CIRCLE_NOTCH" Reload"))
+	if (ImGui::Button(ICON_FA_REDO" Reload"))
 		Reload();
 
 	ImGui::Separator();
