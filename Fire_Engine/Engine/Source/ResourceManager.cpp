@@ -43,17 +43,17 @@ bool ResourceManager::Start()
 	logo = new Texture("Resources/logo.png", "logo");
 	logo->LoadToMemory();
 
-	defaultTexture = new Texture("Materials/default_texture.dds", "defaultTexture");
+	defaultTexture = new Texture("Resources/Materials/default_texture.dds", "defaultTexture");
 	defaultTexture->LoadToMemory();
 	defaultTexture->defaultT = true;
 	defaultTexture->SetLibraryPath("Materials/default_texture.dds");
 
-	whiteTexture = new Texture("Materials/white_texture.dds", "whiteTexture");
+	whiteTexture = new Texture("Resources/Materials/white_texture.dds", "whiteTexture");
 	whiteTexture->LoadToMemory();
 	whiteTexture->defaultT = true;
 	whiteTexture->SetLibraryPath("Materials/white_texture.dds");
 
-	greenTexture = new Texture("Materials/green_texture.dds", "greenTexture");
+	greenTexture = new Texture("Resources/Materials/green_texture.dds", "greenTexture");
 	greenTexture->LoadToMemory();
 	greenTexture->defaultT = true;
 	greenTexture->SetLibraryPath("Materials/green_texture.dds");

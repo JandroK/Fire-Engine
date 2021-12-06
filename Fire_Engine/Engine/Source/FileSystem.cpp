@@ -175,15 +175,15 @@ bool FileSystem::RemovePath(const char* path)
 // Return all existing paths
 const char* FileSystem::GetReadPaths()
 {
-	static char paths[512];
+	static char paths[1024];
 
 	paths[0] = '\0';
 
 	char** path;
 	for (path = PHYSFS_getSearchPath(); *path != nullptr; path++)
 	{
-		strcat_s(paths, 512, *path);
-		strcat_s(paths, 512, "\n");
+		strcat_s(paths, 1024, *path);
+		strcat_s(paths, 1024, "\n");
 	}
 
 	return paths;
