@@ -12,6 +12,7 @@
 #include "Editor.h"
 #include "ResourceManager.h"
 #include "Camera3D.h"
+#include "Renderer3D.h"
 
 #include "GameObject.h"
 #include "Inspector.h"
@@ -263,11 +264,13 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 			case ComponentType::MESHRENDERER:
 				mesh = static_cast<MeshRenderer*>(parentGO->GetComponent(ComponentType::MESHRENDERER));
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", mesh->GetMesh()->GetAssetPath());
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LibraryPath", mesh->GetMesh()->GetLibraryPath());
 				break;
 
 			case ComponentType::MATERIAL:
 				material = static_cast<Material*>(parentGO->GetComponent(ComponentType::MATERIAL));
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "Material", material->texture->path.c_str());
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LibraryPath", material->texture->GetLibraryPath());
 				break;
 
 			default:
@@ -330,17 +333,20 @@ GameObject* Scene::LoadGameObject(JsonParser parent, GameObject* father)
 		++count;
 		num = "Child "+ std::to_string(count);
 	}
+	app->renderer3D->renderQueue.clear();
 
 	return gamObj;
 }
 
 void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj)
-{	
-	
+{
+
 	Transform* transform;
 	MeshRenderer* meshRender;
-	Material* material;	
-	LOG(LogType::L_NORMAL,"Loading Components \n");
+	Mesh* mesh = new Mesh();
+	bool usingMesh = false;
+	Material* material;
+	LOG(LogType::L_NORMAL, "Loading Components \n");
 
 	JsonParser components = parent.GetChild(parent.GetRootValue(), "components");
 	JsonParser tmp = components;
@@ -366,19 +372,36 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 
 				break;
 			case ComponentType::MESHRENDERER:
-				//gamObj->AddComponent(ComponentType::MESHRENDERER);
+				gamObj->AddComponent(ComponentType::MESHRENDERER);
 				meshRender = static_cast<MeshRenderer*>(gamObj->GetComponent(ComponentType::MESHRENDERER));
-				// meshRender->SetMesh(Mesh(tmp.JsonValToString("Mesh")));
+				if (meshRender != NULL)
+				{
+					//meshRender->GetOwner();
+					mesh->SetLibraryPath(tmp.JsonValToString("LibraryPath"));
+					mesh->SetAssetsPath(tmp.JsonValToString("Mesh"));
+					mesh->LoadFromFME(tmp.JsonValToString("LibraryPath"));
+					meshRender->SetMesh(mesh);
+
+					meshRender->SetOwner(gamObj);
+
+					//meshRender->GetMesh()->LoadFromFME(tmp.JsonValToString("LibraryPath"));
+
+					usingMesh = true;
+				}
+				//meshRender->SetMesh(Mesh(tmp.JsonValToString("Mesh")));
 
 				break;
 			case ComponentType::MATERIAL:
 				gamObj->AddComponent(ComponentType::MATERIAL);
 				material = static_cast<Material*>(gamObj->GetComponent(ComponentType::MATERIAL));
 				material->active = tmp.JsonValToBool("active");
-				material->texture=new Texture(tmp.JsonValToString("Material"), gamObj->name);
+				material->texture = new Texture(tmp.JsonValToString("Material"), gamObj->name);
+				material->texture->SetLibraryPath(tmp.JsonValToString("LibraryPath"));
+				material->texture->path = material->texture->GetLibraryPath();
 				//material->texture->SetAssetsPath();
 				material->SetOwner(gamObj);
-				
+				material->texture->LoadToMemory();
+
 
 				break;
 			default:
@@ -390,6 +413,8 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 		}
 		else break;
 	}
+
+	if (!usingMesh) RELEASE(mesh);
 }
 
 float4x4 Scene::strMatrixToF4x4(const char* convert)
