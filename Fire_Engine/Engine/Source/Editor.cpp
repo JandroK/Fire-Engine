@@ -270,7 +270,7 @@ update_status Editor::Draw()
 		if (DrawWarningTab("New Scene")) NewScene();
 	if (app->input->GetQuit())
 		if (DrawWarningTab("Exit Engine")) ret = UPDATE_STOP;
-	if (app->resourceManager->GetOverwritting()) app->resourceManager->DrawOverwriteTab();
+	//if (app->resourceManager->GetOverwritting()) app->resourceManager->DrawOverwriteTab();
 
 	ImGui::EndFrame();
 	ImGui::Render();
@@ -355,6 +355,9 @@ void Editor::TopBar()
 					App->scene->SaveSceneRequest();
 					DTEngine::PlayGame();
 					SDL_SetRelativeMouseMode(SDL_FALSE);
+					ImVec4* colors = ImGui::GetStyle().Colors;
+					colorStyle = colors[ImGuiCol_WindowBg];
+					colors[ImGuiCol_WindowBg] = ImVec4(0.2f, 0.2f, 0.2f, 1.00f);
 				}
 				else
 				{
@@ -371,6 +374,8 @@ void Editor::TopBar()
 				{
 					DTEngine::StopGame();
 					App->scene->LoadSceneRequest();
+					ImVec4* colors = ImGui::GetStyle().Colors;
+					colors[ImGuiCol_WindowBg] = colorStyle;
 				}
 			}
 			ImGui::SameLine();

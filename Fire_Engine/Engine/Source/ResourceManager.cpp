@@ -123,15 +123,15 @@ void ResourceManager::ImportFile(const char* assetsFile)
 		{
 			Texture* material = new Texture(normalizedPath.c_str());
 
-			if (FileSystem::Exists(material->GetLibraryPath()))
+			/*if (FileSystem::Exists(material->GetLibraryPath()))
 			{
 				overwritting = true;
 				ovResource = material;
 				ovBuffer = buffer;
 				ovPath = material->GetLibraryPath();
-			}
-			else
-			{
+			}*/
+			//else
+			//{
 				if(!exists) app->editor->UpdateAssets();
 				material->Import(buffer, size, material->GetLibraryPath());
 				material->LoadToMemory();
@@ -147,16 +147,16 @@ void ResourceManager::ImportFile(const char* assetsFile)
 					}
 				}
 				break;
-			}
+			//}
 		}
 		default:
 			break;
 		}
-		if (!overwritting) RELEASE_ARRAY(buffer); // Having this inside an if may caouse memory leaks;
+		//if (!overwritting) RELEASE_ARRAY(buffer); // Having this inside an if may caouse memory leaks;
 		}
 }
 
-void ResourceManager::Overwrite()
+/*void ResourceManager::Overwrite()
 {
 	app->editor->UpdateAssets();
 	switch (ovResource->GetType())
@@ -255,7 +255,7 @@ void ResourceManager::NewCounterFile()
 	}
 
 	Overwrite();
-}
+}*/
 
 // Returns an empty string if dialog is canceled
 std::string ResourceManager::OpenFileName(char* filter, HWND owner) {

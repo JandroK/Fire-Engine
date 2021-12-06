@@ -19,10 +19,10 @@ public:
 	bool CleanUp()override;
 
 	void ImportFile(const char* assetsFile);
-	bool GetOverwritting() { return overwritting; };
-	void Overwrite();
-	void DrawOverwriteTab();
-	void NewCounterFile();
+	//bool GetOverwritting() { return overwritting; };
+	//void Overwrite();
+	//void DrawOverwriteTab();
+	//void NewCounterFile();
 
 	std::string LibraryFromAssets(const char* assetsPath);
 	ResourceType GetTypeFromExt(std::string ext);
@@ -43,10 +43,10 @@ public:
 
 private:
 	// Overriding file variables
-	Resource* ovResource;
+	/*Resource* ovResource;
 	bool overwritting = false;
 	const char* ovPath;
 	char* ovBuffer;
-	uint ovSize;
+	uint ovSize;*/
 	std::string* currentFolderPath;
 };
