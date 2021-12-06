@@ -6,8 +6,8 @@ float DTEngine::time;
 float DTEngine::timeScale = 1.f;
 float DTEngine::deltaTime;
 float DTEngine::realStartTime;
-float DTEngine::realTimeDeltaTime;
-float DTEngine::realTimeSinceStartup;
+float DTEngine::realTimeDT;
+float DTEngine::realTimeFromStartUp;
 
 Timer DTEngine::gameTimer;
 DTGState DTEngine::state = DTGState::STOP;
@@ -36,8 +36,8 @@ void DTEngine::PreUpdate()
 
 	if (state == DTGState::PLAY || state == DTGState::STEP) {
 		frameCount++;
-		time += realTimeDeltaTime;
-		deltaTime = realTimeDeltaTime * timeScale;
+		time += realTimeDT;
+		deltaTime = realTimeDT * timeScale;
 	}
 
 	switch (state)
@@ -52,8 +52,8 @@ void DTEngine::PreUpdate()
 		state = DTGState::STEP;
 		break;
 	case DTGState::STEP:
-		time += realTimeDeltaTime;
-		deltaTime = realTimeDeltaTime * timeScale;
+		time += realTimeDT;
+		deltaTime = realTimeDT * timeScale;
 		state = DTGState::PAUSE;
 		break;
 	}

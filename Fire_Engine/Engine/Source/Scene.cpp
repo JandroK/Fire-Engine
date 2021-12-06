@@ -402,7 +402,6 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 				material->SetOwner(gamObj);
 				material->texture->LoadToMemory();
 
-
 				break;
 			case ComponentType::CAMERA:
 				

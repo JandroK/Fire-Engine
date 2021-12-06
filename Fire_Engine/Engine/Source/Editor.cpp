@@ -355,6 +355,9 @@ void Editor::TopBar()
 					App->scene->SaveSceneRequest();
 					DTEngine::PlayGame();
 					SDL_SetRelativeMouseMode(SDL_FALSE);
+					ImVec4* colors = ImGui::GetStyle().Colors;
+					colorStyle = colors[ImGuiCol_WindowBg];
+					colors[ImGuiCol_WindowBg] = ImVec4(0.2f, 0.2f, 0.2f, 1.00f);
 				}
 				else
 				{
@@ -371,6 +374,8 @@ void Editor::TopBar()
 				{
 					DTEngine::StopGame();
 					App->scene->LoadSceneRequest();
+					ImVec4* colors = ImGui::GetStyle().Colors;
+					colors[ImGuiCol_WindowBg] = colorStyle;
 				}
 			}
 			ImGui::SameLine();

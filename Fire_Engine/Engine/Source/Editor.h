@@ -75,7 +75,7 @@ public:
 private:
 	std::vector<Tab*> tabs;
 
-	bool show_demo_window = false;
+	bool showDemoWindow = false;
 	bool warningTab = false;
 
 	std::vector<float> fpsLog;
@@ -90,9 +90,8 @@ private:
 	float incrementAlphaValue = 0.1f;
 	std::vector<std::string> stylesList;
 
-	ImVec4 playingTint;
 	float viewportCorSize;
 
 	ImGuiID dockspace_id;
-
+	ImVec4 colorStyle;
 };
