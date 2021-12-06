@@ -45,6 +45,7 @@ namespace FileSystem
 
 	bool Remove(const char* file);
 	void GetFileName(const char* file, std::string& fileName, bool extension);
+	std::string GetExtFromPath(const char* path);
 
 	inline const char* GetBasePath() { return PHYSFS_getBaseDir(); }
 	inline const char* GetWritePath() { return PHYSFS_getWriteDir(); }

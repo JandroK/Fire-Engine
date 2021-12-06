@@ -1,5 +1,7 @@
 #include "AssetsTab.h"
 #include "FileSystem.h"
+#include "Application.h"
+#include "ResourceManager.h"
 #include <algorithm>
 
 AssetsTab::AssetsTab() : Tab()
@@ -54,7 +56,11 @@ void AssetsTab::LoadAssets(Folder* parentFolder)
 			assetPath += folder->fullPath;
 			FileSystem::AddPath(assetPath.c_str());
 		}
-		else if(asset.type != AssetType::OTHER) parentFolder->assets.push_back(asset);
+		else if (asset.type != AssetType::OTHER)
+		{
+			asset.libraryPath = app->resourceManager->LibraryFromAssets(asset.fullPath.c_str());
+			parentFolder->assets.push_back(asset);
+		}
 	}
 
 }
@@ -149,11 +155,16 @@ void AssetsTab::Reload()
 	parentFolder->childFolders.clear();
 	parentFolder->assets.clear();
 	LoadAssets(currentFolder);
-	for (int i = 0; i < currentFolder->childFolders.size(); i++)
+	ReloadRecursiveFolder(currentFolder, temp.c_str());
+}
+void AssetsTab::ReloadRecursiveFolder(Folder* folder, const char* goal)
+{
+	for (int i = 0; i < folder->childFolders.size(); i++)
 	{
-		if (currentFolder->childFolders.at(i)->fullPath == temp)
+		if (!folder->childFolders.at(i)->childFolders.empty()) ReloadRecursiveFolder(folder->childFolders.at(i), goal);
+		if (folder->childFolders.at(i)->fullPath == goal)
 		{
-			currentFolder = currentFolder->childFolders.at(i);
+			currentFolder = folder->childFolders.at(i);
 			break;
 		}
 	}
@@ -181,6 +192,13 @@ Asset* AssetsTab::GetSelectedAsset()
 void Asset::Destroy()
 {
 	FileSystem::Remove(this->fullPath.c_str());
+	
+	if(app->resourceManager->CheckModel(this->fullPath.c_str()))
+	{
+		app->resourceManager->DestroyModel(this->libraryPath.c_str());
+	}
+	
+	FileSystem::Remove(this->libraryPath.c_str());
 
 	//TODO: remove library file with GUID on .meta file
 	/*std::string libraryPath;

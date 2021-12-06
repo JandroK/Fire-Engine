@@ -24,6 +24,13 @@ public:
 	void DrawOverwriteTab();
 	void NewCounterFile();
 
+	std::string LibraryFromAssets(const char* assetsPath);
+	ResourceType GetTypeFromExt(std::string ext);
+
+	// Custom model format
+	bool CheckModel(const char* assetsPath);
+	void DestroyModel(const char* libraryPath);
+
 	std::string OpenFileName(char* filter = "All Files (*.*)\0*.*\0""Textues (*.png, .dds, .jpg, .tga*)\0*.PNG*;*.DDS*;*.JPG*;*.TGA*\0""3D models (*.fbx*)\0*.fbx*\0", HWND owner = NULL);
 
 	Texture* logo;
