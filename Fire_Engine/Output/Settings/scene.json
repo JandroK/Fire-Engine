@@ -56,12 +56,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_041.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V02_C.png"
+                            "Material": "Resources\/street\/Building_V02_C.png",
+                            "LibraryPath": "Textures\/Building_V02_C.dds"
                         }
                     }
                 },
@@ -85,12 +87,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_040.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png"
+                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "LibraryPath": "Textures\/Building_V01_C.dds"
                         }
                     }
                 },
@@ -114,12 +118,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_039.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png"
+                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "LibraryPath": "Textures\/Building_V01_C.dds"
                         }
                     }
                 },
@@ -143,12 +149,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_038.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga"
+                            "Material": "Resources\/street\/building05 _c.tga",
+                            "LibraryPath": "Textures\/building05 _c.dds"
                         }
                     }
                 },
@@ -172,12 +180,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_037.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga"
+                            "Material": "Resources\/street\/building05 _c.tga",
+                            "LibraryPath": "Textures\/building05 _c.dds"
                         }
                     }
                 },
@@ -201,12 +211,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_036.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga"
+                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "LibraryPath": "Textures\/building 06_ c.dds"
                         }
                     }
                 },
@@ -230,12 +242,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_039.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png"
+                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "LibraryPath": "Textures\/Building_V01_C.dds"
                         }
                     }
                 },
@@ -259,12 +273,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_034.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga"
+                            "Material": "Resources\/street\/building05 _c.tga",
+                            "LibraryPath": "Textures\/building05 _c.dds"
                         }
                     }
                 },
@@ -288,12 +304,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_033.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga"
+                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "LibraryPath": "Textures\/building 06_ c.dds"
                         }
                     }
                 },
@@ -317,12 +335,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_032.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga"
+                            "Material": "Resources\/street\/building03_c.tga",
+                            "LibraryPath": "Textures\/building03_c.dds"
                         }
                     }
                 },
@@ -346,12 +366,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_031.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png"
+                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "LibraryPath": "Textures\/Building_V01_C.dds"
                         }
                     }
                 },
@@ -375,12 +397,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_030.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png"
+                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "LibraryPath": "Textures\/Building_V01_C.dds"
                         }
                     }
                 },
@@ -404,12 +428,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/Object010.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Materials\/white_texture.dds"
+                            "Material": "Materials\/white_texture.dds",
+                            "LibraryPath": "Materials\/white_texture.dds"
                         }
                     }
                 },
@@ -433,12 +459,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_039.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png"
+                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "LibraryPath": "Textures\/Building_V01_C.dds"
                         }
                     }
                 },
@@ -462,12 +490,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_026.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga"
+                            "Material": "Resources\/street\/building05 _c.tga",
+                            "LibraryPath": "Textures\/building05 _c.dds"
                         }
                     }
                 },
@@ -491,12 +521,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_024.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_025_c.tga"
+                            "Material": "Resources\/street\/building_025_c.tga",
+                            "LibraryPath": "Textures\/building_025_c.dds"
                         }
                     }
                 },
@@ -520,12 +552,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_023.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga"
+                            "Material": "Resources\/street\/building_016_c.tga",
+                            "LibraryPath": "Textures\/building_016_c.dds"
                         }
                     }
                 },
@@ -549,12 +583,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_022.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga"
+                            "Material": "Resources\/street\/building05 _c.tga",
+                            "LibraryPath": "Textures\/building05 _c.dds"
                         }
                     }
                 },
@@ -578,12 +614,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_017.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga"
+                            "Material": "Resources\/street\/building 01_c.tga",
+                            "LibraryPath": "Textures\/building 01_c.dds"
                         }
                     }
                 },
@@ -607,12 +645,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_017.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga"
+                            "Material": "Resources\/street\/building 01_c.tga",
+                            "LibraryPath": "Textures\/building 01_c.dds"
                         }
                     }
                 },
@@ -636,12 +676,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_014.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga"
+                            "Material": "Resources\/street\/building03_c.tga",
+                            "LibraryPath": "Textures\/building03_c.dds"
                         }
                     }
                 },
@@ -665,12 +707,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_036.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga"
+                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "LibraryPath": "Textures\/building 06_ c.dds"
                         }
                     }
                 },
@@ -694,12 +738,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_023.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga"
+                            "Material": "Resources\/street\/building_016_c.tga",
+                            "LibraryPath": "Textures\/building_016_c.dds"
                         }
                     }
                 },
@@ -723,12 +769,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_017.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga"
+                            "Material": "Resources\/street\/building 01_c.tga",
+                            "LibraryPath": "Textures\/building 01_c.dds"
                         }
                     }
                 },
@@ -752,12 +800,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/Plane001.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Materials\/green_texture.dds"
+                            "Material": "Materials\/green_texture.dds",
+                            "LibraryPath": "Materials\/green_texture.dds"
                         }
                     }
                 },
@@ -781,12 +831,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/Line002.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Materials\/default_texture.dds"
+                            "Material": "Materials\/default_texture.dds",
+                            "LibraryPath": "Materials\/default_texture.dds"
                         }
                     }
                 },
@@ -810,12 +862,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_024.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_025_c.tga"
+                            "Material": "Resources\/street\/building_025_c.tga",
+                            "LibraryPath": "Textures\/building_025_c.dds"
                         }
                     }
                 },
@@ -839,12 +893,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_023.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga"
+                            "Material": "Resources\/street\/building_016_c.tga",
+                            "LibraryPath": "Textures\/building_016_c.dds"
                         }
                     }
                 },
@@ -868,12 +924,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_041.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V02_C.png"
+                            "Material": "Resources\/street\/Building_V02_C.png",
+                            "LibraryPath": "Textures\/Building_V02_C.dds"
                         }
                     }
                 },
@@ -897,12 +955,14 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx"
+                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_032.fme"
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga"
+                            "Material": "Resources\/street\/building03_c.tga",
+                            "LibraryPath": "Textures\/building03_c.dds"
                         }
                     }
                 }
@@ -926,7 +986,9 @@
                     },
                     "Component 1": {
                         "Type": 3,
-                        "active": true
+                        "active": true,
+                        "isMainCamera": true,
+                        "showFrustrum": false
                     }
                 }
             }

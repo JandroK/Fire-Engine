@@ -380,3 +380,15 @@ void FileSystem::Copy(const char* src, const char* dst, char* buffer)
 		Save(dst, buffer, size);
 	}
 }
+
+std::string FileSystem::GetExtFromPath(const char* path)
+{
+	std::string ext = path;
+	int pointPos = ext.find_last_of(".");
+	if (pointPos != -1)
+	{
+		ext = ext.substr(pointPos);
+		return ext;
+	}
+	else return "\0";
+}

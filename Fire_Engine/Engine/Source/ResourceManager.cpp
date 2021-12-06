@@ -281,3 +281,42 @@ std::string ResourceManager::OpenFileName(char* filter, HWND owner) {
 
 	return fileNameStr;
 }
+
+std::string ResourceManager::LibraryFromAssets(const char* assetsPath)
+{
+	std::string libraryPath;
+	std::string ext = FileSystem::GetExtFromPath(assetsPath);
+	std::string fileName;
+	FileSystem::GetFileName(assetsPath, fileName, false);
+	switch (GetTypeFromExt(ext))
+	{
+	case ResourceType::TEXTURE:
+		libraryPath = TEXTURES_FOLDER;
+		libraryPath += fileName;
+		libraryPath += ".dds";
+		break;
+	default:
+		libraryPath = "";
+		break;
+	}
+	return libraryPath;
+}
+
+ResourceType ResourceManager::GetTypeFromExt(std::string ext)
+{
+	if (ext == ".fbx" || ext == ".FBX") return ResourceType::MODEL;
+	else if (ext == ".png" || ext == ".PNG" || ext == ".jpg" || ext == ".JPG" || ext == ".dds" || ext == ".DDS" || ext == ".tga" || ext == ".TGA") return ResourceType::TEXTURE;
+	else return ResourceType::UNKNOWN;
+}
+
+bool ResourceManager::CheckModel(const char* assetsPath)
+{
+	return GetTypeFromExt((std::string)FileSystem::GetExtFromPath(assetsPath)) == ResourceType::MODEL;
+}
+
+void ResourceManager::DestroyModel(const char* libraryPath)
+{
+	// Parse file with parson and get meshes and textures used by fbx
+	// Destroy meshes
+	// Destroy textures
+}

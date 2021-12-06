@@ -15,7 +15,7 @@ public:
 	virtual ~Scene() {};
 
 	bool Init() override;
-	void CreateCamera();
+	GameObject* CreateCamera();
 	bool Start() override;
 
 	update_status PreUpdate(float dt) override;

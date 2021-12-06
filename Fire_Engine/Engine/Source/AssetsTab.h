@@ -20,6 +20,7 @@ public:
 	const char* name;
 	const char* folder;
 	std::string fullPath;
+	std::string libraryPath;
 	bool remove = false;
 };
 
@@ -47,6 +48,7 @@ public:
 
 	void UpdateAssets();
 	void Reload();
+	void ReloadRecursiveFolder(Folder* folder, const char* goal);
 
 	void RemoveSearchPaths(Folder* folder);
 

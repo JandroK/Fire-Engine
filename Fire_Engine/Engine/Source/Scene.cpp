@@ -12,6 +12,7 @@
 #include "Editor.h"
 #include "ResourceManager.h"
 #include "Camera3D.h"
+#include "Renderer3D.h"
 
 #include "GameObject.h"
 #include "Inspector.h"
@@ -21,6 +22,7 @@
 
 #include "Texture.h"
 #include "QuadTreeBase.h"
+#include "Window.h"
 
 #include"MathGeoLib/include/Math/Quat.h"
 
@@ -132,13 +134,14 @@ GameObject* Scene::CreateGameObjectParent(const char* name, GameObject* child)
 	return obj;
 }
 
-void Scene::CreateCamera()
+GameObject* Scene::CreateCamera()
 {
 	GameObject* camera = CreateGameObjectEmpty("Camera");
 	camera->AddComponent(ComponentType::CAMERA);
 	Transform* transformCamera = static_cast<Transform*>(camera->GetComponent(ComponentType::TRANSFORM));
 	transformCamera->SetPosition(float3(0, 3.5f, -12));
 	transformCamera->SetEulerRotaion(float3(6, 0, 0));
+	return camera;
 }
 
 GameObject* Scene::CreatePrimitive(const char* name, Mesh* mesh)
@@ -212,6 +215,7 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 
 	MeshRenderer* mesh;
 	Material* material;
+	ComponentCamera* camera;
 
 	node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
 	node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
@@ -263,14 +267,21 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 			case ComponentType::MESHRENDERER:
 				mesh = static_cast<MeshRenderer*>(parentGO->GetComponent(ComponentType::MESHRENDERER));
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", mesh->GetMesh()->GetAssetPath());
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LibraryPath", mesh->GetMesh()->GetLibraryPath());
 				break;
 
 			case ComponentType::MATERIAL:
 				material = static_cast<Material*>(parentGO->GetComponent(ComponentType::MATERIAL));
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "Material", material->texture->path.c_str());
+				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LibraryPath", material->texture->GetLibraryPath());
 				break;
 
-			default:
+			case ComponentType::CAMERA:
+				camera = static_cast<ComponentCamera*>(parentGO->GetComponent(ComponentType::CAMERA));
+
+				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "isMainCamera", camera->GetIsMainCamera());
+				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "showFrustrum", camera->GetShowFrustrum());
+
 				break;
 
 		}
@@ -330,17 +341,21 @@ GameObject* Scene::LoadGameObject(JsonParser parent, GameObject* father)
 		++count;
 		num = "Child "+ std::to_string(count);
 	}
+	app->renderer3D->renderQueue.clear();
 
 	return gamObj;
 }
 
 void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj)
-{	
-	
+{
+
 	Transform* transform;
 	MeshRenderer* meshRender;
-	Material* material;	
-	LOG(LogType::L_NORMAL,"Loading Components \n");
+	Mesh* mesh;
+	Material* material;
+	ComponentCamera* camera;
+
+	LOG(LogType::L_NORMAL, "Loading Components \n");
 
 	JsonParser components = parent.GetChild(parent.GetRootValue(), "components");
 	JsonParser tmp = components;
@@ -356,8 +371,6 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 			switch ((ComponentType)(int)tmp.JsonValToNumber("Type"))
 			{
 			case ComponentType::TRANSFORM:
-				//gamObj->AddComponent(ComponentType::TRANSFORM);
-				//transform = gamObj->transform;
 				gamObj->transform->SetGlobalTransform(strMatrixToF4x4(tmp.JsonValToString("GlobalTransform")));
 				if (!gamObj->IsRoot()) gamObj->transform->SetTransformMFromM(gamObj->transform->GetGlobalTransform());
 				gamObj->transform->SetLocalTransform(strMatrixToF4x4(tmp.JsonValToString("LocalTransform")));
@@ -366,22 +379,41 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 
 				break;
 			case ComponentType::MESHRENDERER:
-				//gamObj->AddComponent(ComponentType::MESHRENDERER);
+				gamObj->AddComponent(ComponentType::MESHRENDERER);
 				meshRender = static_cast<MeshRenderer*>(gamObj->GetComponent(ComponentType::MESHRENDERER));
-				// meshRender->SetMesh(Mesh(tmp.JsonValToString("Mesh")));
-
+				if (meshRender != NULL)
+				{
+					mesh = new Mesh();
+					mesh->SetLibraryPath(tmp.JsonValToString("LibraryPath"));
+					mesh->SetAssetsPath(tmp.JsonValToString("Mesh"));
+					mesh->LoadFromFME(tmp.JsonValToString("LibraryPath"));
+					meshRender->SetMesh(mesh);
+					meshRender->SetOwner(gamObj);
+				}
 				break;
 			case ComponentType::MATERIAL:
 				gamObj->AddComponent(ComponentType::MATERIAL);
 				material = static_cast<Material*>(gamObj->GetComponent(ComponentType::MATERIAL));
 				material->active = tmp.JsonValToBool("active");
-				material->texture=new Texture(tmp.JsonValToString("Material"), gamObj->name);
+				material->texture = new Texture(tmp.JsonValToString("Material"), gamObj->name);
+				material->texture->SetLibraryPath(tmp.JsonValToString("LibraryPath"));
+				material->texture->path = material->texture->GetLibraryPath();
 				//material->texture->SetAssetsPath();
 				material->SetOwner(gamObj);
-				
+				material->texture->LoadToMemory();
+
 
 				break;
-			default:
+			case ComponentType::CAMERA:
+				
+				gamObj->AddComponent(ComponentType::CAMERA);
+				camera = static_cast<ComponentCamera*>(gamObj->GetComponent(ComponentType::CAMERA));
+				mainCamera = camera;
+				camera->ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
+				//camera->SetOwner(gamObj);
+				camera->SetIsMainCamera(tmp.JsonValToBool("isMainCamera"));
+				camera->SetShowFrustrum(tmp.JsonValToBool("showFrustrum"));
+
 				break;
 			}
 
@@ -390,6 +422,7 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 		}
 		else break;
 	}
+
 }
 
 float4x4 Scene::strMatrixToF4x4(const char* convert)
