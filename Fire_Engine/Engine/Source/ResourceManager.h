@@ -40,6 +40,7 @@ public:
 	Texture* greenTexture;
 
 	bool dragDropped = false;
+	bool fromDialogue = false;
 
 private:
 	// Overriding file variables
