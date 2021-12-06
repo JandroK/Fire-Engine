@@ -22,9 +22,7 @@ public:
 	static void PreUpdate();
 	static Timer gameTimer;
 
-
 	static const char* GetStateString();
-
 	
 	//Seconds since game start
 	static float time;
@@ -35,12 +33,12 @@ public:
 	//Last frame completion time
 	static float deltaTime;
 
-	//Frames since game start
+	//Frames since game to start
 	static int frameCount;
 
-	//Real time [DONE kinda]
-	static float realTimeSinceStartup;
-	static float realTimeDeltaTime;
+	//Real time counters
+	static float realTimeFromStartUp;
+	static float realTimeDT;
 	static float realStartTime;
 
 	static DTGState state;
