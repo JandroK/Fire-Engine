@@ -97,12 +97,12 @@ In the configuration section, the user will be able to modify the engine paramet
 - New Scene
 - Save Scene
 - Load Scene
-- Import Assets
+- Import asset: opens file dialogue
  
 #### Edit: 
-- Duplicate Object Selected
-- Snap options
- 
+- Duplicate: duplicates selected game object
+- Snap options for translation, ritation and scaling
+
 #### View:
 - In view you can configure the view of the menus that you want to be active or not, according to convenience. 
 
@@ -120,47 +120,17 @@ In the configuration section, the user will be able to modify the engine paramet
  ![Image](Fire_Engine/Output/Assets/Screenshoots/GameObjectCapture.PNG)
  
 #### Help: 
-- In help you can find a small options section where you can activate the demo version of imGui.
-- You will be able to access the documentation.
-- Download the latest version.
-- Report any bug found.
-- You will also find a section with information about the engine developers. 
+In help you can find a small options section where you can activate the demo version of imGui.
+- Documentation: You will be able to access the documentation.
+- Download: Download the latest version.
+- Report: Report any bug found.
+- About Us: You will also find a section with information about the engine developers. 
  
  #### Set Style:
-- You can choose your favourite style to work comfortably
-- You can up/down alpha of PopUp Tabs
+- You can choose your favourite on 7 different styles for the UI style to work comfortably
+- You can increase or decrease popUp windows alpha
  
-## Tool Bar:<a name="id.ToolBar">
- #### File:
-   - Quit
-   - New scene
-   - Save scene
-   - Load scene
-   - Import asset: opens file dialogue
- #### Edit:
-   - Duplicate: duplicates selected game object
-   - Snap options for translation, ritation and scaling
- #### View
- - activate/deactivate tabs
- #### Game Objects:
-   - Create Empty
-   - Create Child
-   - Create Parent
-   - 3D Object (Cube, Sphere, Cylinder, Pyramid)
-   - Camera
-   - Reset view rotation: resets camera rotation
-   - Align with view: aligns selected game object to view
-   - Align view to selected
-   - Toggle active state
- #### Help:
-   - Documentation
-   - Download latest
-   - Report a bug
-   - About
- #### Set Style:
-   - 7 different styles for the UI
-   - PopUp alpha: increase or decrease popUp windows alpha
-  
+ 
 ## Features:<a name="id.Features">
 #### Console tab:
 - Toolbar Bar: Logs type numerated
