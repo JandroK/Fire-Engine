@@ -53,14 +53,14 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\Assimp\include;;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\include;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\Bullet\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\DevIL\libx86;$(ProjectDir)Source\External\PhysFS\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGDebug;%(AdditionalLibraryDirectories);$(ProjectDir)Source\assimp\lib;$(SolutionDir)\Source\External\Assimp\libx86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\DevIL\libx86;$(ProjectDir)Source\External\PhysFS\libx86;$(ProjectDir)Source\External\Bullet\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGDebug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;MathGeoLib.lib;assimp-vc142-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -73,7 +73,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\PhysFS\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\include;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\include;$(ProjectDir)Source\External\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\External;$(ProjectDir)Source\External\MathGeoLib\include;$(ProjectDir)Source\External\Assimp\include;$(ProjectDir)Source\External\Bullet\include;$(ProjectDir)Source\External\PhysFS\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -82,7 +82,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\DevIL\libx86;$(ProjectDir)Source\External\PhysFS\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGRelease;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\PhysFS\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\assimp\lib;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86;$(SolutionDir)\Source\External\Assimp\libx86;C:\Users\Ismael\Documents\GitHub\Fire-Engine\Fire_Engine\Engine\Source\External\Assimp\libx86</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\Glew\libx86;$(ProjectDir)Source\External\Assimp\libx86;$(ProjectDir)Source\External\DevIL\libx86;$(ProjectDir)Source\External\PhysFS\libx86;$(ProjectDir)Source\External\Bullet\libx86;$(ProjectDir)Source\External\MathGeoLib\libx86\MGRelease;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;glew32s.lib;MathGeoLib.lib;assimp-vc142-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -267,6 +267,7 @@
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\MeshRenderer.h" />
     <ClInclude Include="Source\ModelImporter.h" />
+    <ClInclude Include="Source\Physics3D.h" />
     <ClInclude Include="Source\QuadTreeBase.h" />
     <ClInclude Include="Source\QuadTreeTab.h" />
     <ClInclude Include="Source\ResourceManager.h" />
@@ -358,6 +359,7 @@
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\MeshRenderer.cpp" />
     <ClCompile Include="Source\ModelImporter.cpp" />
+    <ClCompile Include="Source\Physics3D.cpp" />
     <ClCompile Include="Source\QuadTreeBase.cpp" />
     <ClCompile Include="Source\QuadTreeTab.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />

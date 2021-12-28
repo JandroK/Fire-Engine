@@ -22,6 +22,7 @@ class Module;
 class Input;
 class Camera3D;
 class Editor;
+class Physics3D;
 
 class Application
 {
@@ -30,6 +31,7 @@ public:
 	Window* window;
 	Camera3D* camera;
 	Input* input;
+	Physics3D* physics = nullptr;
 	Renderer3D* renderer3D;
 	Scene* scene;
 	Editor* editor;

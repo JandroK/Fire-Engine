@@ -682,6 +682,9 @@
     <ClInclude Include="Source\IconsFontAwesome5.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Physics3D.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -946,6 +949,9 @@
       <Filter>Sources\Modules\Editor\TabsEditor</Filter>
     </ClCompile>
     <ClCompile Include="Source\DTEngine.cpp" />
+    <ClCompile Include="Source\Physics3D.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\External\Assimp\include\color4.inl">

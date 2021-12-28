@@ -9,7 +9,7 @@
 #include "Camera3D.h"
 #include "Editor.h"
 #include "DTEngine.h"
-
+#include "Physics3D.h"
 
 using namespace std;
 
@@ -20,6 +20,7 @@ Application::Application() : maxFPS(60)
 	resourceManager = new ResourceManager(this);
 	window = new Window(this);
 	input = new Input(this);
+	physics = new Physics3D(this);
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
 	scene = new Scene(this);
@@ -34,6 +35,7 @@ Application::Application() : maxFPS(60)
 	AddModule(resourceManager);
 	AddModule(camera);
 	AddModule(input);	
+	AddModule(physics);
 	AddModule(scene);	
 	
 	// Renderer last!
