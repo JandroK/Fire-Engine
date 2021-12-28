@@ -95,6 +95,7 @@
     <ClInclude Include="Source\ComponentCamera.h" />
     <ClInclude Include="Source\Configuration.h" />
     <ClInclude Include="Source\ConsoleTab.h" />
+    <ClInclude Include="Source\C_RigidBody.h" />
     <ClInclude Include="Source\DTEngine.h" />
     <ClInclude Include="Source\External\Assimp\include\aabb.h" />
     <ClInclude Include="Source\External\Assimp\include\ai_assert.h" />
@@ -302,6 +303,7 @@
     <ClCompile Include="Source\ComponentCamera.cpp" />
     <ClCompile Include="Source\Configuration.cpp" />
     <ClCompile Include="Source\ConsoleTab.cpp" />
+    <ClCompile Include="Source\C_RigidBody.cpp" />
     <ClCompile Include="Source\DTEngine.cpp" />
     <ClCompile Include="Source\External\GPUDetected\DeviceId.cpp" />
     <ClCompile Include="Source\External\Guizmo\GraphEditor.cpp" />

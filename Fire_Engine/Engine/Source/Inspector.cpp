@@ -129,6 +129,11 @@ void Inspector::DrawAddComponet()
 			if (ImGui::Selectable("Camera"))
 				gameObjectSelected->AddComponent(ComponentType::CAMERA);
 		}
+		if (gameObjectSelected->GetComponent(ComponentType::RIGIDBODY) == nullptr)
+		{
+			if (ImGui::Selectable("RigidBody"))
+				gameObjectSelected->AddComponent(ComponentType::RIGIDBODY);
+		}
 
 		ImGui::EndCombo();
 	}

@@ -8,6 +8,7 @@
 #include "MeshRenderer.h"
 #include "Material.h"
 #include "ComponentCamera.h"
+#include "C_RigidBody.h"
 
 GameObject::GameObject(const char* name) : name(name), tag("Untagged"), layer("0: Default")
 {
@@ -85,6 +86,9 @@ Component* GameObject::AddComponent(ComponentType type)
 		break;
 	case ComponentType::CAMERA:
 		newComponent = new ComponentCamera(this);
+		break;
+	case ComponentType::RIGIDBODY:
+		newComponent = new C_RigidBody(this);
 		break;
 	}
 

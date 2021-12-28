@@ -8,7 +8,8 @@ enum class ComponentType
 	TRANSFORM = 0,
 	MESHRENDERER = 1,
 	MATERIAL = 2,
-	CAMERA = 3
+	CAMERA = 3,
+	RIGIDBODY = 4,
 };
 
 class Component

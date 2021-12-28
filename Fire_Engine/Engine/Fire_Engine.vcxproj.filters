@@ -694,6 +694,9 @@
     <ClInclude Include="Source\PhysVehicle3D.h">
       <Filter>PhysicsEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Source\C_RigidBody.h">
+      <Filter>PhysicsEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -965,6 +968,9 @@
       <Filter>PhysicsEngine</Filter>
     </ClCompile>
     <ClCompile Include="Source\PhysVehicle3D.cpp">
+      <Filter>PhysicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\C_RigidBody.cpp">
       <Filter>PhysicsEngine</Filter>
     </ClCompile>
   </ItemGroup>

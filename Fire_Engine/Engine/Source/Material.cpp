@@ -29,7 +29,7 @@ void Material::OnEditor()
 	{
 		// This can't call "Active" because there is already another checkbox with that name
 		// that's why it's called "Active " 
-		ImGui::Checkbox("Active ", &active);
+		ImGui::Checkbox("Active  ", &active);
 		if (texture->textureID != -1) 
 		{
 			// Print Texture information, the Image and view model with checkers
