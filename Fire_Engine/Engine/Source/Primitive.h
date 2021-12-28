@@ -52,6 +52,7 @@ class PrimitiveCube : public Primitive
 public :
 	PrimitiveCube();
 	PrimitiveCube(vec3 _size, vec3 pos);
+	PrimitiveCube(float sizeX, float sizeY, float sizeZ);
 	void InnerMesh();
 public:
 	vec3 size = { 0.5f, 0.5f, 0.5f };

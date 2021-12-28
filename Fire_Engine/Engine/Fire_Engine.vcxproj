@@ -267,7 +267,9 @@
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\MeshRenderer.h" />
     <ClInclude Include="Source\ModelImporter.h" />
+    <ClInclude Include="Source\PhysBody3D.h" />
     <ClInclude Include="Source\Physics3D.h" />
+    <ClInclude Include="Source\PhysVehicle3D.h" />
     <ClInclude Include="Source\QuadTreeBase.h" />
     <ClInclude Include="Source\QuadTreeTab.h" />
     <ClInclude Include="Source\ResourceManager.h" />
@@ -359,7 +361,9 @@
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\MeshRenderer.cpp" />
     <ClCompile Include="Source\ModelImporter.cpp" />
+    <ClCompile Include="Source\PhysBody3D.cpp" />
     <ClCompile Include="Source\Physics3D.cpp" />
+    <ClCompile Include="Source\PhysVehicle3D.cpp" />
     <ClCompile Include="Source\QuadTreeBase.cpp" />
     <ClCompile Include="Source\QuadTreeTab.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />

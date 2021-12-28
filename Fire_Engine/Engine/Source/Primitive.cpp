@@ -138,6 +138,11 @@ PrimitiveCube::PrimitiveCube(vec3 size, vec3 pos) : Primitive(), size(size)
 	glTranslatef(pos.x, pos.y, pos.z);
 }
 
+PrimitiveCube::PrimitiveCube(float sizeX, float sizeY, float sizeZ) : size(sizeX, sizeY, sizeZ)
+{
+	type = PrimitiveTypes::Primitive_Cube;
+}
+
 void PrimitiveCube::InnerMesh()
 {	
 	float vertex[] =

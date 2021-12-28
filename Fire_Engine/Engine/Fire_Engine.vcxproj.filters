@@ -73,6 +73,9 @@
     <Filter Include="Sources\3rd Party\Guizmo">
       <UniqueIdentifier>{ef71acce-4b06-47da-b639-cfec6d0f5e3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PhysicsEngine">
+      <UniqueIdentifier>{f6450141-2c13-4712-ba0e-1338d07729ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -683,7 +686,13 @@
       <Filter>Sources\Containers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Physics3D.h">
-      <Filter>Sources\Modules</Filter>
+      <Filter>PhysicsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhysBody3D.h">
+      <Filter>PhysicsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PhysVehicle3D.h">
+      <Filter>PhysicsEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -950,7 +959,13 @@
     </ClCompile>
     <ClCompile Include="Source\DTEngine.cpp" />
     <ClCompile Include="Source\Physics3D.cpp">
-      <Filter>Sources\Modules</Filter>
+      <Filter>PhysicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PhysBody3D.cpp">
+      <Filter>PhysicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PhysVehicle3D.cpp">
+      <Filter>PhysicsEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
