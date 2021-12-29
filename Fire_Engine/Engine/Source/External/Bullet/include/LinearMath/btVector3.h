@@ -84,7 +84,7 @@ ATTRIBUTE_ALIGNED16(class) btVector3
 {
 public:
 
-	BT_DECLARE_ALIGNED_ALLOCATOR();
+	//BT_DECLARE_ALIGNED_ALLOCATOR();
 
 #if defined (__SPU__) && defined (__CELLOS_LV2__)
 		btScalar	m_floats[4];
