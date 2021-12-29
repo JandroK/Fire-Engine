@@ -16,8 +16,9 @@ private:
 	btRigidBody* body = nullptr;
 	float mass = 1.0f;
 
-	float3 linearFactor = float3::one;
-	float3 angularFactor = float3::one;
+	// Block the movement and rotation
+	float3 movementConstraint = float3::one;
+	float3 rotationConstraint = float3::one;
 
 	bool useGravity = true;
 	bool isKinematic = false;

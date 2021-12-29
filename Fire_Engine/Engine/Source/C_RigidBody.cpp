@@ -18,13 +18,18 @@ void C_RigidBody::OnEditor()
 		ImGui::Checkbox("Active ", &active);
 
 		ImGui::DragFloat("Mass", &mass, 0.1f);
-		//if (ImGui::DragFloat3("Linear Factor", &linearFactor.x, 0.05f, 0.f, 1.f) && body)
-			//body->setLinearFactor(linearFactor);
-
-		//if (ImGui::DragFloat3("Angular Factor", &angularFactor.x, 0.05f, 0.f, 1.f) && body)
-			//body->setAngularFactor(angularFactor);
 
 		ImGui::Checkbox("Use Gravity", &useGravity);
 		ImGui::Checkbox("Is Kinematic", &isKinematic);
+
+
+		if (ImGui::CollapsingHeader("Constraints"))
+		{
+			//if (ImGui::DragFloat3("Freeze position", &movementConstraint.x, 0.05f, 0.f, 1.f) && body)
+				//body->setLinearFactor(movementConstraint);
+
+			//if (ImGui::DragFloat3("Freeze rotation", &rotationConstraint.x, 0.05f, 0.f, 1.f) && body)
+				//body->setAngularFactor(rotationConstraint);
+		}
 	}
 }
