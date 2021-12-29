@@ -21,6 +21,9 @@ class btTypedConstraint;
 struct PhysBody3D;
 struct PhysVehicle3D;
 
+class btRigidBody;
+class C_RigidBody;
+
 class Physics3D : public Module
 {
 public:
@@ -33,6 +36,16 @@ public:
 	update_status Update(float dt) override;
 	update_status PostUpdate(float dt) override;
 	bool CleanUp() override;
+
+	btRigidBody* CollisionShape(const OBB& cube, C_RigidBody* component);
+	btRigidBody* CollisionShape(const Sphere& sphere, C_RigidBody* component);
+	btRigidBody* CollisionShape(const Capsule& capsule, C_RigidBody* component);
+	btRigidBody* CollisionShape(const Cylinder& cylinder, C_RigidBody* component);
+	btRigidBody* CollisionShape(const Cone& cone, C_RigidBody* component);
+	btRigidBody* CollisionShape(const Plane& plane, C_RigidBody* component);
+
+	btRigidBody* AddBody(btCollisionShape* colShape, float mass);
+	void DeleteBody(btRigidBody* body);
 
 	void AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB);
 	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);

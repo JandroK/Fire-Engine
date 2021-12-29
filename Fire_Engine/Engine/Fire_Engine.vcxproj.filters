@@ -76,6 +76,9 @@
     <Filter Include="PhysicsEngine">
       <UniqueIdentifier>{f6450141-2c13-4712-ba0e-1338d07729ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\3rd Party\Extras">
+      <UniqueIdentifier>{2662f8d8-07ea-4aba-9f97-9ffeeb06a04f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -682,9 +685,6 @@
       <Filter>Sources\Containers</Filter>
     </ClInclude>
     <ClInclude Include="Source\DTEngine.h" />
-    <ClInclude Include="Source\IconsFontAwesome5.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Physics3D.h">
       <Filter>PhysicsEngine</Filter>
     </ClInclude>
@@ -696,6 +696,12 @@
     </ClInclude>
     <ClInclude Include="Source\C_RigidBody.h">
       <Filter>PhysicsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Extras\debug_draw.hpp">
+      <Filter>Sources\3rd Party\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\External\Extras\IconsFontAwesome5.h">
+      <Filter>Sources\3rd Party\Extras</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

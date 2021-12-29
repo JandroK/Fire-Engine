@@ -3,7 +3,10 @@
 
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
+#include "C_RigidBody.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
+
+#include "Geometry/GeometryAll.h"
 
 #ifdef _DEBUG
 #pragma comment (lib, "BulletDynamics_debug.lib")
@@ -51,7 +54,9 @@ bool Physics3D::Init()
 bool Physics3D::Start()
 {
 	world = new btDiscreteDynamicsWorld(dispatcher, broadPhase, solver, collisionConfiguration);
+	world->setDebugDrawer(debugDraw);
 	world->setGravity(btVector3(0, -10, 0));
+	vehicleRaycaster = new btDefaultVehicleRaycaster(world);
 
 	return true;
 }
@@ -110,6 +115,70 @@ bool Physics3D::CleanUp()
 	RELEASE(world);
 
 	return true;
+}
+
+btRigidBody* Physics3D::CollisionShape(const OBB& cube, C_RigidBody* component)
+{
+	btCollisionShape* colShape = new btBoxShape(cube.r);
+	return AddBody(colShape, component->GetMass());
+}
+
+btRigidBody* Physics3D::CollisionShape(const Sphere& sphere, C_RigidBody* component)
+{
+	btCollisionShape* colShape = new btSphereShape(sphere.r);
+	return AddBody(colShape, component->GetMass());
+}
+
+btRigidBody* Physics3D::CollisionShape(const Capsule& capsule, C_RigidBody* component)
+{
+	btCollisionShape* colShape = new btCapsuleShape(capsule.r, capsule.LineLength());
+	return AddBody(colShape, component->GetMass());
+}
+
+btRigidBody* Physics3D::CollisionShape(const Cylinder& cylinder, C_RigidBody* component)
+{
+	btCollisionShape* colShape = new btCylinderShape(cylinder.Center());
+	return AddBody(colShape, component->GetMass());
+}
+
+btRigidBody* Physics3D::CollisionShape(const Cone& cone, C_RigidBody* component)
+{
+	btCollisionShape* colShape = new btConeShape(cone.r, cone.Height());
+	return AddBody(colShape, component->GetMass());
+}
+
+btRigidBody* Physics3D::CollisionShape(const Plane& plane, C_RigidBody* component)
+{
+	btCollisionShape* colShape = new btStaticPlaneShape(plane.normal, 1);
+	return AddBody(colShape, component->GetMass());
+}
+
+btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, float mass)
+{
+	shapes.push_back(colShape);
+
+	btVector3 localInertia(0, 0, 0);
+	if (mass != 0.f)
+		colShape->calculateLocalInertia(mass, localInertia);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState();
+	motions.push_back(myMotionState);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
+
+	btRigidBody* body = new btRigidBody(rbInfo);
+	PhysBody3D* pbody = new PhysBody3D(body);
+
+	body->setUserPointer(pbody);
+	world->addRigidBody(body);
+	bodies.push_back(pbody);
+
+	return body;
+}
+
+void Physics3D::DeleteBody(btRigidBody* body)
+{
+	if (body != nullptr)
+		world->removeCollisionObject(body);
 }
 
 // =============================================

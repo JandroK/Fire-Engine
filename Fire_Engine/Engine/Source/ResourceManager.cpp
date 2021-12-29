@@ -12,7 +12,6 @@
 #include "MeshLoader.h"
 #include "ModelImporter.h"
 
-
 //Resources
 #include "ResourceTexture.h"
 #include "ResourceMesh.h"
