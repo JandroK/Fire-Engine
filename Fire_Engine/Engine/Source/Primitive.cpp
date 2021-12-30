@@ -127,23 +127,23 @@ void Primitive::SetIndices(int indices[], int size)
 }
 
 // CUBE ============================================
-PrimitiveCube::PrimitiveCube() : Primitive()
+PCube::PCube() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cube;
 }
 
-PrimitiveCube::PrimitiveCube(vec3 size, vec3 pos) : Primitive(), size(size)
+PCube::PCube(vec3 size, vec3 pos) : Primitive(), size(size)
 {
 	type = PrimitiveTypes::Primitive_Cube;
 	glTranslatef(pos.x, pos.y, pos.z);
 }
 
-PrimitiveCube::PrimitiveCube(float sizeX, float sizeY, float sizeZ) : size(sizeX, sizeY, sizeZ)
+PCube::PCube(float sizeX, float sizeY, float sizeZ) : size(sizeX, sizeY, sizeZ)
 {
 	type = PrimitiveTypes::Primitive_Cube;
 }
 
-void PrimitiveCube::InnerMesh()
+void PCube::InnerMesh()
 {	
 	float vertex[] =
 	{
@@ -185,23 +185,23 @@ void PrimitiveCube::InnerMesh()
 }
 
 // SPHERE ============================================
-PrimitiveSphere::PrimitiveSphere() : Primitive()
+PSphere::PSphere() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-PrimitiveSphere::PrimitiveSphere(float radius, int sectors, int stacks) : Primitive(), radius(radius), sectors(sectors), stacks(stacks)
+PSphere::PSphere(float radius, int sectors, int stacks) : Primitive(), radius(radius), sectors(sectors), stacks(stacks)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }
 
-void PrimitiveSphere::InnerMesh()
+void PSphere::InnerMesh()
 {
 	SetVerticesMesh();
 	SetIndicesMesh();	
 }
 
-void PrimitiveSphere::SetVerticesMesh()
+void PSphere::SetVerticesMesh()
 {
 	// clear memory of prev arrays
 	std::vector<float>().swap(mesh->vertex);
@@ -255,7 +255,7 @@ void PrimitiveSphere::SetVerticesMesh()
 	mesh->numTexCoords = mesh->texCoords.size() / 2;
 }
 
-void PrimitiveSphere::SetIndicesMesh()
+void PSphere::SetIndicesMesh()
 {
 	// generate CCW index list of sphere triangles
 	// k1--k1+1
@@ -294,23 +294,23 @@ void PrimitiveSphere::SetIndicesMesh()
 
 
 // CYLINDER ============================================
-PrimitiveCylinder::PrimitiveCylinder() : Primitive()
+PCylinder::PCylinder() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
-PrimitiveCylinder::PrimitiveCylinder(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height), sectorCount(sectorCount)
+PCylinder::PCylinder(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height), sectorCount(sectorCount)
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
-void PrimitiveCylinder::InnerMesh()
+void PCylinder::InnerMesh()
 {
 	SetVerticesMesh();
 	SetIndicesMesh();
 }
 
-std::vector<float> PrimitiveCylinder::GetUnitCircleVertices()
+std::vector<float> PCylinder::GetUnitCircleVertices()
 {
 	float sectorStep = 2 * PI / sectorCount;
 	float sectorAngle;  // radian
@@ -326,7 +326,7 @@ std::vector<float> PrimitiveCylinder::GetUnitCircleVertices()
 	return unitCircleVertices;
 }
 
-void PrimitiveCylinder::SetVerticesMesh()
+void PCylinder::SetVerticesMesh()
 {
 	// clear memory of prev arrays
 	std::vector<float>().swap(mesh->vertex);
@@ -403,7 +403,7 @@ void PrimitiveCylinder::SetVerticesMesh()
 	mesh->numTexCoords = mesh->texCoords.size() / 2;
 }
 
-void PrimitiveCylinder::SetIndicesMesh()
+void PCylinder::SetIndicesMesh()
 {
 	// generate CCW index list of cylinder triangles
 	int k2 = 0;                         // 1st vertex index at base
@@ -465,17 +465,17 @@ void PrimitiveCylinder::SetIndicesMesh()
 
 
 // PYRAMID ============================================
-PrimitivePyramid::PrimitivePyramid() : Primitive()
+PPyramid::PPyramid() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
-PrimitivePyramid::PrimitivePyramid(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height)
+PPyramid::PPyramid(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height)
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 }
 
-void PrimitivePyramid::InnerMesh()
+void PPyramid::InnerMesh()
 {
 	float vertex[] =
 	{
@@ -531,17 +531,17 @@ void PrimitivePyramid::InnerMesh()
 
 
 // LINE ==================================================
-PrimitiveLine::PrimitiveLine() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
+PLine::PLine() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
 {
 	type = PrimitiveTypes::Primitive_Line;
 }
 
-PrimitiveLine::PrimitiveLine(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
+PLine::PLine(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
 {
 	type = PrimitiveTypes::Primitive_Line;
 }
 
-void PrimitiveLine::InnerRender() const
+void PLine::InnerRender() const
 {
 	glLineWidth(2.0f);
 
@@ -556,17 +556,17 @@ void PrimitiveLine::InnerRender() const
 }
 
 // PLANE ==================================================
-PrimitivePlane::PrimitivePlane() : Primitive(), normal(0, 1, 0), constant(1)
+PPlane::PPlane() : Primitive(), normal(0, 1, 0), constant(1)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-PrimitivePlane::PrimitivePlane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
+PPlane::PPlane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
 {
 	type = PrimitiveTypes::Primitive_Plane;
 }
 
-void PrimitivePlane::InnerRender() const
+void PPlane::InnerRender() const
 {
 	glLineWidth(1.0f);
 

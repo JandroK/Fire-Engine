@@ -1,6 +1,8 @@
 #include "C_RigidBody.h"
 #include "Application.h"
 #include "Physics3D.h"
+//#include "Transform.h"
+#include "MeshRenderer.h"
 
 #include "ImGui/imgui.h"
 #include "IconsFontAwesome5.h"
@@ -8,12 +10,47 @@
 
 C_RigidBody::C_RigidBody(GameObject* obj) : Component(obj)
 {
+	//SetBoundingBox(static_cast<MeshRenderer*>(obj->GetComponent(ComponentType::MESHRENDERER))->globalOBB);
+	//CreateBody();
 }
 
 C_RigidBody::~C_RigidBody()
 {
 	if (body != nullptr)
 		app->physics->DeleteBody(body);
+}
+
+void C_RigidBody::SetBoundingBox(OBB& bbox)
+{
+	//mat4x4 transform = GetOwner()->transform->GetGlobalTransform();
+	switch (collisionType)
+	{
+	case CollisionType::BOX:
+		//box
+		break;
+	case CollisionType::SPHERE:
+		//sphere
+		break;
+	//case CollisionType::CAPSULE:
+		//capsule
+		//break;
+	case CollisionType::CYLINDER:
+		//cylinder
+		break;
+	case CollisionType::PYRAMID:
+		//cone
+		break;
+	case CollisionType::STATIC_PLANE:
+		//plane
+		break;
+	default:
+		break;
+	}
+}
+
+void C_RigidBody::Update()
+{
+	if (draw) OnDebugDraw();
 }
 
 void C_RigidBody::OnEditor()
@@ -106,17 +143,38 @@ void C_RigidBody::CreateBody()
 	case CollisionType::SPHERE:
 		body = app->physics->CollisionShape(sphere, this);
 		break;
-	case CollisionType::CAPSULE:
+	/*case CollisionType::CAPSULE:
 		body = app->physics->CollisionShape(capsule, this);
-		break;
+		break;*/
 	case CollisionType::CYLINDER:
 		body = app->physics->CollisionShape(cylinder, this);
 		break;
-	case CollisionType::CONE:
-		body = app->physics->CollisionShape(cone, this);
+	case CollisionType::PYRAMID:
+		body = app->physics->CollisionShape(pyramid, this);
 		break;
 	case CollisionType::STATIC_PLANE:
 		body = app->physics->CollisionShape(plane, this);
+		break;
+	default:
+		break;
+	}
+
+	if (body != nullptr)
+	{
+		body->setFriction(friction);
+		body->setRestitution(restitution);
+		body->setLinearFactor(movementConstraint);
+		body->setAngularFactor(rotationConstraint);
+		body->setDamping(linearDamping, angularDamping);
+	}
+}
+
+void C_RigidBody::OnDebugDraw() const
+{
+	switch (collisionType)
+	{
+	case CollisionType::BOX:
+		//dd::box(box.CenterPoint(), dd::colors::Green, box.Size().x, box.Size().y, box.Size().z);
 		break;
 	default:
 		break;

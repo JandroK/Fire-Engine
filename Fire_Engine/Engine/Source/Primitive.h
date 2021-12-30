@@ -12,7 +12,8 @@ enum PrimitiveTypes
 	Primitive_Plane,
 	Primitive_Cube,
 	Primitive_Sphere,
-	Primitive_Cylinder
+	Primitive_Cylinder,
+	Primitive_Pyramid,
 };
 
 class Primitive
@@ -47,23 +48,23 @@ protected:
 };
 
 // ============================================
-class PrimitiveCube : public Primitive
+class PCube : public Primitive
 {
 public :
-	PrimitiveCube();
-	PrimitiveCube(vec3 _size, vec3 pos);
-	PrimitiveCube(float sizeX, float sizeY, float sizeZ);
+	PCube();
+	PCube(vec3 _size, vec3 pos);
+	PCube(float sizeX, float sizeY, float sizeZ);
 	void InnerMesh();
 public:
 	vec3 size = { 0.5f, 0.5f, 0.5f };
 };
 
 // ============================================
-class PrimitiveSphere : public Primitive
+class PSphere : public Primitive
 {
 public:
-	PrimitiveSphere();
-	PrimitiveSphere(float radius, int sectors, int stacks);
+	PSphere();
+	PSphere(float radius, int sectors, int stacks);
 	void InnerMesh();
 
 private:
@@ -77,11 +78,11 @@ public:
 };
 
 // ============================================
-class PrimitiveCylinder : public Primitive
+class PCylinder : public Primitive
 {
 public:
-	PrimitiveCylinder();
-	PrimitiveCylinder(float radius, float height, int sectorCount);
+	PCylinder();
+	PCylinder(float radius, float height, int sectorCount);
 	void InnerMesh();
 
 private:
@@ -100,11 +101,11 @@ private:
 };
 
 
-class PrimitivePyramid : public Primitive
+class PPyramid : public Primitive
 {
 public:
-	PrimitivePyramid();
-	PrimitivePyramid(float radius, float height, int sectorCount);
+	PPyramid();
+	PPyramid(float radius, float height, int sectorCount);
 	void InnerMesh();
 
 public:
@@ -113,11 +114,11 @@ public:
 };
 
 // ============================================
-class PrimitiveLine : public Primitive
+class PLine : public Primitive
 {
 public:
-	PrimitiveLine();
-	PrimitiveLine(float x, float y, float z);
+	PLine();
+	PLine(float x, float y, float z);
 	void InnerRender() const;
 public:
 	vec3 origin;
@@ -125,11 +126,11 @@ public:
 };
 
 // ============================================
-class PrimitivePlane : public Primitive
+class PPlane : public Primitive
 {
 public:
-	PrimitivePlane();
-	PrimitivePlane(float x, float y, float z, float d);
+	PPlane();
+	PPlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
 	vec3 normal;

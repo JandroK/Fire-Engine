@@ -24,7 +24,7 @@ PhysVehicle3D::~PhysVehicle3D()
 // ----------------------------------------------------------------------------
 void PhysVehicle3D::Render()
 {
-	PrimitiveCylinder wheel;
+	PCylinder wheel;
 
 	for (int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -42,7 +42,7 @@ void PhysVehicle3D::Render()
 		wheel.Render();
 	}
 
-	PrimitiveCube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
+	PCube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);

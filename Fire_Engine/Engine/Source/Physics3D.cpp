@@ -1,5 +1,7 @@
 #include "Physics3D.h"
 #include "Globals.h"
+#include "Application.h"
+#include "Input.h"
 
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
@@ -22,10 +24,10 @@ Physics3D::Physics3D(Application* app, bool start_enabled) : Module(app, start_e
 {
 	// Collision configuration contains default setup for memory, collision setup. Advanced
 	// users can create their own configuration.
-	collisionConfiguration = new btDefaultCollisionConfiguration();
+	collisionConfig = new btDefaultCollisionConfiguration();
 
 	// Use the default collision dispatcher
-	dispatcher = new btCollisionDispatcher(collisionConfiguration);
+	dispatcher = new btCollisionDispatcher(collisionConfig);
 
 	// You can also try out	btAxis3Sweep or btBroadphaseInterface
 	broadPhase = new btDbvtBroadphase();
@@ -43,19 +45,22 @@ Physics3D::~Physics3D()
 	RELEASE(solver);
 	RELEASE(broadPhase);
 	RELEASE(dispatcher);
-	RELEASE(collisionConfiguration);
+	RELEASE(collisionConfig);
 }
 
 bool Physics3D::Init()
 {
+	LOG(LogType::L_NORMAL, "Creating 3D Physics simulation");
 	return true;
 }
 
 bool Physics3D::Start()
 {
-	world = new btDiscreteDynamicsWorld(dispatcher, broadPhase, solver, collisionConfiguration);
+	LOG(LogType::L_NORMAL, "Creating Physics environment");
+
+	world = new btDiscreteDynamicsWorld(dispatcher, broadPhase, solver, collisionConfig);
 	world->setDebugDrawer(debugDraw);
-	world->setGravity(btVector3(0, -10, 0));
+	world->setGravity(GRAVITY);
 	vehicleRaycaster = new btDefaultVehicleRaycaster(world);
 
 	return true;
@@ -68,6 +73,22 @@ update_status Physics3D::PreUpdate(float dt)
 
 update_status Physics3D::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		debug = !debug;
+
+	if (debug == true)
+	{
+		world->debugDrawWorld();
+	}
+
+	/*if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		Sphere s(1);
+		s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+		float force = 30.0f;
+		AddBody(s)->Push(-(App->camera->Z.x * force), -(App->camera->Z.y * force), -(App->camera->Z.z * force));
+	}*/
+
 	return UPDATE_CONTINUE;
 }
 
@@ -117,43 +138,55 @@ bool Physics3D::CleanUp()
 	return true;
 }
 
-btRigidBody* Physics3D::CollisionShape(const OBB& cube, C_RigidBody* component)
+btRigidBody* Physics3D::CollisionShape(const PCube& cube, C_RigidBody* component)
 {
-	btCollisionShape* colShape = new btBoxShape(cube.r);
-	return AddBody(colShape, component->GetMass());
+	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x * 0.5f, cube.size.y * 0.5f, cube.size.z * 0.5f));
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&cube.transform);
+	return AddBody(colShape, startTransform, component->GetMass());
 }
 
-btRigidBody* Physics3D::CollisionShape(const Sphere& sphere, C_RigidBody* component)
+btRigidBody* Physics3D::CollisionShape(const PSphere& sphere, C_RigidBody* component)
 {
-	btCollisionShape* colShape = new btSphereShape(sphere.r);
-	return AddBody(colShape, component->GetMass());
+	btCollisionShape* colShape = new btSphereShape(sphere.radius);
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&sphere.transform);
+	return AddBody(colShape, startTransform, component->GetMass());
 }
 
-btRigidBody* Physics3D::CollisionShape(const Capsule& capsule, C_RigidBody* component)
+//btRigidBody* Physics3D::CollisionShape(const PCapsule& capsule, C_RigidBody* component)
+//{
+//	btCollisionShape* colShape = new btCapsuleShape(capsule.r, capsule.LineLength());
+//	btTransform startTransform;
+//	startTransform.setFromOpenGLMatrix(&capsule.transform);
+//  return AddBody(colShape, startTransform, component->GetMass());
+//}
+
+btRigidBody* Physics3D::CollisionShape(const PCylinder& cylinder, C_RigidBody* component)
 {
-	btCollisionShape* colShape = new btCapsuleShape(capsule.r, capsule.LineLength());
-	return AddBody(colShape, component->GetMass());
+	btCollisionShape* colShape = new btCylinderShape(btVector3(cylinder.radius, cylinder.height * 0.5f, 0.0f));
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&cylinder.transform);
+	return AddBody(colShape, startTransform, component->GetMass());
 }
 
-btRigidBody* Physics3D::CollisionShape(const Cylinder& cylinder, C_RigidBody* component)
+btRigidBody* Physics3D::CollisionShape(const PPyramid& cone, C_RigidBody* component)
 {
-	btCollisionShape* colShape = new btCylinderShape(cylinder.Center());
-	return AddBody(colShape, component->GetMass());
+	btCollisionShape* colShape = new btConeShape(cone.radius, cone.height);
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&cone.transform);
+	return AddBody(colShape, startTransform, component->GetMass());
 }
 
-btRigidBody* Physics3D::CollisionShape(const Cone& cone, C_RigidBody* component)
+btRigidBody* Physics3D::CollisionShape(const PPlane& plane, C_RigidBody* component)
 {
-	btCollisionShape* colShape = new btConeShape(cone.r, cone.Height());
-	return AddBody(colShape, component->GetMass());
+	btCollisionShape* colShape = new btStaticPlaneShape(btVector3(plane.normal.x, plane.normal.y, plane.normal.z), plane.constant);
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&plane.transform);
+	return AddBody(colShape, startTransform, component->GetMass());
 }
 
-btRigidBody* Physics3D::CollisionShape(const Plane& plane, C_RigidBody* component)
-{
-	btCollisionShape* colShape = new btStaticPlaneShape(plane.normal, 1);
-	return AddBody(colShape, component->GetMass());
-}
-
-btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, float mass)
+btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTransform, float mass)
 {
 	shapes.push_back(colShape);
 
@@ -161,7 +194,7 @@ btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, float mass)
 	if (mass != 0.f)
 		colShape->calculateLocalInertia(mass, localInertia);
 
-	btDefaultMotionState* myMotionState = new btDefaultMotionState();
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 	motions.push_back(myMotionState);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
 

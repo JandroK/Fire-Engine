@@ -652,7 +652,7 @@ void Editor::PrimitiveMenuItem()
 {
 	if (ImGui::MenuItem("Cube", nullptr))
 	{
-		PrimitiveCube cubePrim = PrimitiveCube();
+		PCube cubePrim = PCube();
 		cubePrim.InnerMesh();
 		cubePrim.mesh->LoadToMemory();
 		cubePrim.mesh->GenerateBounds();
@@ -661,7 +661,7 @@ void Editor::PrimitiveMenuItem()
 	}
 	if (ImGui::MenuItem("Sphere", nullptr))
 	{
-		PrimitiveSphere spherePrim = PrimitiveSphere();
+		PSphere spherePrim = PSphere();
 		spherePrim.InnerMesh();
 		spherePrim.mesh->LoadToMemory();
 		spherePrim.mesh->GenerateBounds();
@@ -670,7 +670,7 @@ void Editor::PrimitiveMenuItem()
 	}
 	if (ImGui::MenuItem("Cylinder", nullptr))
 	{
-		PrimitiveCylinder cylinderPrim = PrimitiveCylinder();
+		PCylinder cylinderPrim = PCylinder();
 		cylinderPrim.InnerMesh();
 		cylinderPrim.mesh->LoadToMemory();
 		cylinderPrim.mesh->GenerateBounds();
@@ -679,7 +679,7 @@ void Editor::PrimitiveMenuItem()
 	}
 	if (ImGui::MenuItem("Pyramid", nullptr))
 	{
-		PrimitivePyramid pyramidPrim = PrimitivePyramid();
+		PPyramid pyramidPrim = PPyramid();
 		pyramidPrim.InnerMesh();
 		pyramidPrim.mesh->LoadToMemory();
 		pyramidPrim.mesh->GenerateBounds();

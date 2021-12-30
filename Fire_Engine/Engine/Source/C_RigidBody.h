@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "Geometry/GeometryAll.h"
+#include "Primitive.h"
 
 class GameObject;
 class btRigidBody;
@@ -9,9 +9,9 @@ enum class CollisionType
 {
 	BOX,
 	SPHERE,
-	CAPSULE,
+	//CAPSULE,
 	CYLINDER,
-	CONE,
+	PYRAMID,
 	STATIC_PLANE
 };
 
@@ -21,10 +21,14 @@ public:
 	C_RigidBody(GameObject* obj);
 	virtual ~C_RigidBody();
 
+	void SetBoundingBox(OBB& bbox);
+	void Update() override;
 	void OnEditor() override;
 
 	void CreateBody();
 	float GetMass() { return mass; };
+
+	void OnDebugDraw() const;
 
 private:
 	btRigidBody* body = nullptr;
@@ -33,6 +37,7 @@ private:
 	float mass = 1.0f;
 	float friction = 1.0f;
 	float restitution = 1.0f;
+	bool draw = true;
 
 	// Block the movement and rotation
 	float3 movementConstraint = float3::one;
@@ -46,10 +51,10 @@ private:
 	bool isKinematic = false;
 
 	// Figures
-	OBB box;
-	Sphere sphere;
-	Capsule capsule;
-	Cylinder cylinder;
-	Cone cone;
-	Plane plane;
+	PCube box;
+	PSphere sphere;
+	//PCapsule capsule;
+	PCylinder cylinder;
+	PPyramid pyramid;
+	PPlane plane;
 };

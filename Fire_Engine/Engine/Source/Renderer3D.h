@@ -72,7 +72,7 @@ public:
 	std::vector<MeshRenderer*> renderQueue;
 
 private:
-	PrimitivePlane plane;
+	PPlane plane;
 
 	Hardware hardware;
 	bool depthTest = true;

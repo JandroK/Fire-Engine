@@ -37,21 +37,21 @@ public:
 	update_status PostUpdate(float dt) override;
 	bool CleanUp() override;
 
-	btRigidBody* CollisionShape(const OBB& cube, C_RigidBody* component);
-	btRigidBody* CollisionShape(const Sphere& sphere, C_RigidBody* component);
-	btRigidBody* CollisionShape(const Capsule& capsule, C_RigidBody* component);
-	btRigidBody* CollisionShape(const Cylinder& cylinder, C_RigidBody* component);
-	btRigidBody* CollisionShape(const Cone& cone, C_RigidBody* component);
-	btRigidBody* CollisionShape(const Plane& plane, C_RigidBody* component);
+	btRigidBody* CollisionShape(const PCube& cube, C_RigidBody* component);
+	btRigidBody* CollisionShape(const PSphere& sphere, C_RigidBody* component);
+	//btRigidBody* CollisionShape(const PCapsule& capsule, C_RigidBody* component);
+	btRigidBody* CollisionShape(const PCylinder& cylinder, C_RigidBody* component);
+	btRigidBody* CollisionShape(const PPyramid& cone, C_RigidBody* component);
+	btRigidBody* CollisionShape(const PPlane& plane, C_RigidBody* component);
 
-	btRigidBody* AddBody(btCollisionShape* colShape, float mass);
+	btRigidBody* AddBody(btCollisionShape* colShape, btTransform startTransform, float mass);
 	void DeleteBody(btRigidBody* body);
 
 	void AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB);
 	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
 
 private:
-	btDefaultCollisionConfiguration* collisionConfiguration = nullptr;
+	btDefaultCollisionConfiguration* collisionConfig = nullptr;
 	btCollisionDispatcher* dispatcher = nullptr;
 	btBroadphaseInterface* broadPhase = nullptr;
 	btSequentialImpulseConstraintSolver* solver = nullptr;
@@ -84,7 +84,7 @@ public:
 	int	 getDebugMode() const;
 
 	DebugDrawModes mode;
-	PrimitiveLine line;
+	PLine line;
 	Primitive point;
 };
 
