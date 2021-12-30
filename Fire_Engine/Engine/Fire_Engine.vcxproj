@@ -175,7 +175,6 @@
     <ClInclude Include="Source\External\Assimp\include\XMLTools.h" />
     <ClInclude Include="Source\External\Assimp\include\ZipArchiveIOSystem.h" />
     <ClInclude Include="Source\External\DevIL\include\ilut.h" />
-    <ClInclude Include="Source\External\Extras\debug_draw.hpp" />
     <ClInclude Include="Source\External\Extras\IconsFontAwesome5.h" />
     <ClInclude Include="Source\External\GPUDetected\DeviceId.h" />
     <ClInclude Include="Source\External\GPUDetected\dxgi1_4.h" />

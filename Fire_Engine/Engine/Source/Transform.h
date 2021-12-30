@@ -4,6 +4,7 @@
 #include"Math/float4x4.h"
 #include"Math/float3.h"
 #include"Math/Quat.h"
+#include "glmath.h"
 
 class Transform : public Component
 {
@@ -20,7 +21,10 @@ public:
 
 	void CheckStateOperation();
 
-	float3 GetPosition() { return position; };
+	float3 GetLocalPosition() { return position; };
+	float3 GetWorldPosition() { return worldPosition; };
+	float3 GetWorldRotation() { return worldEulerRotation; };
+
 	void SetPosition(float3 pos) { localTransform.SetCol3(3, pos); };
 	void SetEulerRotaion(float3 rot) { localTransform.SetRotatePart(Quat::FromEulerXYZ(rot.x * DEGTORAD, rot.y * DEGTORAD, rot.z * DEGTORAD)); };
 	void SetUpdateTransform(bool ret) { updateTransform = ret; };
@@ -46,6 +50,8 @@ public:
 	float3 GetUp();
 	float3 GetRight();
 	float3 GetNormalizeAxis(int i);
+
+	mat4x4 float4x4ToMat4x4();
 
 	void operator=(Transform*);
 

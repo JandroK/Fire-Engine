@@ -774,7 +774,7 @@ void Editor::AlignViewWithSelected()
 		Transform* transform = static_cast<Transform*>(temp->GetComponent(ComponentType::TRANSFORM));
 		float4x4 matrix = transform->GetGlobalTransform();
 
-		app->camera->position = transform->GetPosition();
+		app->camera->position = transform->GetWorldPosition();
 		float3x3 rot = matrix.RotatePart();
 		app->camera->right = rot.Col3(0);
 		app->camera->front = rot.Col3(1);

@@ -266,7 +266,7 @@ void Camera3D::Focus()
 		}
 		else
 		{
-			float3 pivot = objSelected->transform->GetPosition();
+			float3 pivot = objSelected->transform->GetWorldPosition();
 			LookAt(pivot);
 		}
 	}
@@ -281,7 +281,7 @@ void Camera3D::FrontView()
 		float3 posGO = { 0, 0, 0 };
 		float3 nwPos;
 
-		posGO = gameObject->transform->GetPosition();
+		posGO = gameObject->transform->GetWorldPosition();
 
 		nwPos = posGO;
 		// First param: Right(X), Second param: UP(Y), Third param: From(Z)		

@@ -86,6 +86,11 @@ void Primitive::SetPos(float x, float y, float z)
 	transform.translate(x, y, z);
 }
 
+void Primitive::SetPos(float3 pos)
+{
+	transform.translate(pos.x, pos.y, pos.z);
+}
+
 // ------------------------------------------------------------
 void Primitive::SetRotation(float angle, const vec3 &u)
 {
@@ -93,9 +98,14 @@ void Primitive::SetRotation(float angle, const vec3 &u)
 }
 
 // ------------------------------------------------------------
-void Primitive::Scale(float x, float y, float z)
+void Primitive::SetScale(float x, float y, float z)
 {
 	transform.scale(x, y, z);
+}
+
+void Primitive::SetScale(float3 scale)
+{
+	transform.scale(scale.x, scale.y, scale.z);
 }
 
 // Set vertex, texCoords and index
@@ -132,7 +142,7 @@ PCube::PCube() : Primitive()
 	type = PrimitiveTypes::Primitive_Cube;
 }
 
-PCube::PCube(vec3 size, vec3 pos) : Primitive(), size(size)
+PCube::PCube(float3 size, float3 pos) : Primitive(), size(size)
 {
 	type = PrimitiveTypes::Primitive_Cube;
 	glTranslatef(pos.x, pos.y, pos.z);
@@ -158,9 +168,9 @@ void PCube::InnerMesh()
 	};
 	for (int i = 0; i < 24; i +=3)
 	{
-		vertex[i] *= size.x;
-		vertex[i+1] *= size.y;
-		vertex[i+2] *= size.z;
+		vertex[i] *= size.x * 0.5f;
+		vertex[i+1] *= size.y * 0.5f;
+		vertex[i+2] *= size.z * 0.5f;
 	}
 	int index[] =
 	{
@@ -186,6 +196,11 @@ void PCube::InnerMesh()
 
 // SPHERE ============================================
 PSphere::PSphere() : Primitive()
+{
+	type = PrimitiveTypes::Primitive_Sphere;
+}
+
+PSphere::PSphere(float radius) : Primitive(), radius(radius)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
 }

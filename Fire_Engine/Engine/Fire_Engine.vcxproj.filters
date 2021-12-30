@@ -697,9 +697,6 @@
     <ClInclude Include="Source\C_RigidBody.h">
       <Filter>PhysicsEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\External\Extras\debug_draw.hpp">
-      <Filter>Sources\3rd Party\Extras</Filter>
-    </ClInclude>
     <ClInclude Include="Source\External\Extras\IconsFontAwesome5.h">
       <Filter>Sources\3rd Party\Extras</Filter>
     </ClInclude>

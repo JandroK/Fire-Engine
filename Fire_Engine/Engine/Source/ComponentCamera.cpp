@@ -38,7 +38,7 @@ ComponentCamera::ComponentCamera(GameObject* obj) : Component(obj)
 	frustrum.verticalFov = 60.0f * DEGTORAD;
 	frustrum.horizontalFov = 2.0f * atanf(tanf(frustrum.verticalFov / 2.0f) * (16.f / 9.f));
 
-	frustrum.pos = obj->transform->GetPosition();
+	frustrum.pos = obj->transform->GetWorldPosition();
 }
 
 ComponentCamera::~ComponentCamera()
@@ -162,7 +162,7 @@ void ComponentCamera::CalculateViewMatrix()
 {
 	updateCamera = false;
 
-	frustrum.pos = GetOwner()->transform->GetPosition();
+	frustrum.pos = GetOwner()->transform->GetWorldPosition();
 	frustrum.front = GetOwner()->transform->GetForward();
 	frustrum.up = GetOwner()->transform->GetUp();
 

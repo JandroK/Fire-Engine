@@ -1,8 +1,8 @@
 #include "C_RigidBody.h"
 #include "Application.h"
 #include "Physics3D.h"
-//#include "Transform.h"
-#include "MeshRenderer.h"
+#include "Transform.h"
+//#include "MeshRenderer.h"
 
 #include "ImGui/imgui.h"
 #include "IconsFontAwesome5.h"
@@ -10,8 +10,8 @@
 
 C_RigidBody::C_RigidBody(GameObject* obj) : Component(obj)
 {
-	//SetBoundingBox(static_cast<MeshRenderer*>(obj->GetComponent(ComponentType::MESHRENDERER))->globalOBB);
-	//CreateBody();
+	SetBoundingBox();
+	CreateBody();
 }
 
 C_RigidBody::~C_RigidBody()
@@ -20,28 +20,27 @@ C_RigidBody::~C_RigidBody()
 		app->physics->DeleteBody(body);
 }
 
-void C_RigidBody::SetBoundingBox(OBB& bbox)
+void C_RigidBody::SetBoundingBox()
 {
-	//mat4x4 transform = GetOwner()->transform->GetGlobalTransform();
 	switch (collisionType)
 	{
 	case CollisionType::BOX:
-		//box
+		box.transform = GetOwner()->transform->float4x4ToMat4x4();
 		break;
 	case CollisionType::SPHERE:
-		//sphere
+		sphere.transform = GetOwner()->transform->float4x4ToMat4x4();
 		break;
 	//case CollisionType::CAPSULE:
-		//capsule
+		//capsule.transform = GetOwner()->transform->float4x4ToMat4x4();
 		//break;
 	case CollisionType::CYLINDER:
-		//cylinder
+		cylinder.transform = GetOwner()->transform->float4x4ToMat4x4();
 		break;
 	case CollisionType::PYRAMID:
-		//cone
+		pyramid.transform = GetOwner()->transform->float4x4ToMat4x4();
 		break;
 	case CollisionType::STATIC_PLANE:
-		//plane
+		plane.transform = GetOwner()->transform->float4x4ToMat4x4();
 		break;
 	default:
 		break;
@@ -61,12 +60,16 @@ void C_RigidBody::OnEditor()
 	{
 		ImGui::Checkbox("Active    ", &active);
 		ImGui::SameLine();
-		static const char* collisions[] = { "Box", "Sphere", "Capsule", "Cylinder", "Cone", "Plane" };
+		static const char* collisions[] = { "Box", "Sphere", /*"Capsule",*/ "Cylinder", "Cone", "Plane" };
 		
 		ImGui::PushItemWidth(85);
 		int currentCollision = (int)collisionType;
-		if (ImGui::Combo("Collision Type", &currentCollision, collisions, 6))
+		if (ImGui::Combo("Collision Type", &currentCollision, collisions, 5)) // Change to 6 when add Capsule
+		{
 			collisionType = (CollisionType)currentCollision;
+			SetBoundingBox();
+			CreateBody();
+		}
 		ImGui::PopItemWidth();
 
 		ImVec2 winSize = ImGui::GetWindowSize();
@@ -97,6 +100,12 @@ void C_RigidBody::OnEditor()
 
 		ImGui::PushStyleColor(ImGuiCol_Header, IM_COL32(0, 0, 0, 0));
 		ImGui::PushStyleColor(ImGuiCol_Border, IM_COL32(0, 0, 0, 0));
+		if (ImGui::CollapsingHeader("Collision mesh"))
+		{
+			ImGui::PushStyleColor(ImGuiCol_Border, colors);
+			EditCollisionMesh();
+			ImGui::PopStyleColor();
+		}
 		if (ImGui::CollapsingHeader("Constraints"))
 		{
 			ImGui::PushStyleColor(ImGuiCol_Border, colors);
@@ -127,6 +136,49 @@ void C_RigidBody::OnEditor()
 		}
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
+	}
+}
+
+void C_RigidBody::EditCollisionMesh()
+{
+	switch (collisionType)
+	{
+	case CollisionType::BOX:
+		ImGui::Text("Box Size: ");
+		if (ImGui::DragFloat3("##Box", &box.size.x, 0.1f, true, 0.1f)) editMesh = true;
+		break;
+	case CollisionType::SPHERE:
+		ImGui::Text("Radius: "); ImGui::SameLine();
+		if (ImGui::DragFloat("##Radius", &sphere.radius, 0.1f, 0.1f)) editMesh = true;
+		break;
+	//case CollisionType::CAPSULE:		
+		//break;
+	case CollisionType::CYLINDER:
+		ImGui::Text("Radius: "); ImGui::SameLine();
+		if (ImGui::DragFloat("##Radius", &cylinder.radius, 0.1f, 0.1f)) editMesh = true;
+		ImGui::Text("Height: "); ImGui::SameLine();
+		if (ImGui::DragFloat("##Height", &cylinder.height, 0.1f, 0.1f)) editMesh = true;
+		break;
+	case CollisionType::PYRAMID:
+		ImGui::Text("Radius: "); ImGui::SameLine();
+		if (ImGui::DragFloat("##Radius", &pyramid.radius, 0.1f, 0.1f)) editMesh = true;
+		ImGui::Text("Height: "); ImGui::SameLine();
+		if (ImGui::DragFloat("##Height", &pyramid.height, 0.1f, 0.1f)) editMesh = true;
+		break;
+	case CollisionType::STATIC_PLANE:
+		ImGui::Text("Normal: ");
+		if (ImGui::DragFloat3("##Normal", &plane.normal.x, 0.1f, true)) editMesh = true;
+		ImGui::Text("Constant: "); ImGui::SameLine();
+		if (ImGui::DragFloat("##Constant", &plane.constant, 0.1f)) editMesh = true;
+		break;
+	default:
+		break;
+	}
+
+	if (editMesh)
+	{
+		editMesh = false;
+		//CreateBody();
 	}
 }
 
@@ -174,7 +226,7 @@ void C_RigidBody::OnDebugDraw() const
 	switch (collisionType)
 	{
 	case CollisionType::BOX:
-		//dd::box(box.CenterPoint(), dd::colors::Green, box.Size().x, box.Size().y, box.Size().z);
+		
 		break;
 	default:
 		break;

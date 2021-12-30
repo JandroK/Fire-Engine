@@ -26,8 +26,10 @@ public:
 	virtual void	Render() const;
 	virtual void	InnerRender() const;
 	void			SetPos(float x, float y, float z);
+	void			SetPos(float3 pos);
 	void			SetRotation(float angle, const vec3 &u);
-	void			Scale(float x, float y, float z);
+	void			SetScale(float x, float y, float z);
+	void			SetScale(float3 scale);
 
 	void SetVertices(float vertices[], int size);
 	void SetTexCoords(float texCoords[], int size);
@@ -52,11 +54,11 @@ class PCube : public Primitive
 {
 public :
 	PCube();
-	PCube(vec3 _size, vec3 pos);
+	PCube(float3 _size, float3 pos);
 	PCube(float sizeX, float sizeY, float sizeZ);
 	void InnerMesh();
 public:
-	vec3 size = { 0.5f, 0.5f, 0.5f };
+	float3 size = {1, 1, 1 };
 };
 
 // ============================================
@@ -64,6 +66,7 @@ class PSphere : public Primitive
 {
 public:
 	PSphere();
+	PSphere(float radius);
 	PSphere(float radius, int sectors, int stacks);
 	void InnerMesh();
 
@@ -72,7 +75,7 @@ private:
 	void SetIndicesMesh();
 
 public:
-	float radius = 1;
+	float radius = 0.5f;
 	int sectors = 36;
 	int stacks = 18;
 };
@@ -133,6 +136,6 @@ public:
 	PPlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
-	vec3 normal;
+	float3 normal;
 	float constant;
 };

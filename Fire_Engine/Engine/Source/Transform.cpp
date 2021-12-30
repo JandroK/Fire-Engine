@@ -315,6 +315,22 @@ float3 Transform::GetNormalizeAxis(int i)
 	return globalTransform.RotatePart().Col(i).Normalized();
 }
 
+mat4x4 Transform::float4x4ToMat4x4()
+{
+	mat4x4 newTransform;
+	int k = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			newTransform[k] = globalTransform[j][i];
+			k++;
+		}
+	}
+
+	return newTransform;
+}
+
 void Transform::operator=(Transform* transform)
 {
 	this->eulerRotation = transform->eulerRotation;

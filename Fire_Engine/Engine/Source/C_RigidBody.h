@@ -21,20 +21,24 @@ public:
 	C_RigidBody(GameObject* obj);
 	virtual ~C_RigidBody();
 
-	void SetBoundingBox(OBB& bbox);
+	void SetBoundingBox();
 	void Update() override;
 	void OnEditor() override;
+	void EditCollisionMesh();
 
 	void CreateBody();
 	float GetMass() { return mass; };
 
 	void OnDebugDraw() const;
 
+	bool useGravity = true;
+	bool isKinematic = false;
+
 private:
 	btRigidBody* body = nullptr;
 	CollisionType collisionType = CollisionType::BOX;
 
-	float mass = 1.0f;
+	float mass = 0.0f;
 	float friction = 1.0f;
 	float restitution = 1.0f;
 	bool draw = true;
@@ -47,14 +51,13 @@ private:
 	float linearDamping = 0.0f;
 	float angularDamping = 0.0f;
 
-	bool useGravity = true;
-	bool isKinematic = false;
-
 	// Figures
 	PCube box;
 	PSphere sphere;
-	//PCapsule capsule;
+	//PCapsule capsule;		//Future implementation
 	PCylinder cylinder;
 	PPyramid pyramid;
 	PPlane plane;
+
+	bool editMesh = false;
 };
