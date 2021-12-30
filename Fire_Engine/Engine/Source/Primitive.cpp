@@ -494,10 +494,10 @@ void PPyramid::InnerMesh()
 {
 	float vertex[] =
 	{
-		-0.5, 0, -0.5,
-		0.5f, 0, -0.5,
-		-0.5, 0, 0.5f,
-		0.5f, 0, 0.5f,
+		-1.0f, 0, -1.0f,
+		1.0f, 0, -1.0f,
+		-1.0f, 0, 1.0f,
+		1.0f, 0, 1.0f,
 		0, height / radius, 0,
 	};
 	for (int i = 0; i < 15; i++)

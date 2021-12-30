@@ -94,8 +94,8 @@ private:
 	void SetIndicesMesh();
 
 public:
-	float radius = 1;
-	float height = 3;
+	float radius = 0.5f;
+	float height = 1;
 	int sectorCount = 24;
 
 private:
@@ -112,8 +112,8 @@ public:
 	void InnerMesh();
 
 public:
-	float radius = 2;
-	float height = 2;
+	float radius = 0.5f;
+	float height = 1;
 };
 
 // ============================================

@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "Physics3D.h"
 #include "Transform.h"
-//#include "MeshRenderer.h"
+#include "MeshRenderer.h"
 
 #include "ImGui/imgui.h"
 #include "IconsFontAwesome5.h"
@@ -22,25 +22,36 @@ C_RigidBody::~C_RigidBody()
 
 void C_RigidBody::SetBoundingBox()
 {
+	OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
+	float3 pos = obb.CenterPoint();
+	//float3* rot = obb.axis;
+	float3 size = obb.Size();
+	
 	switch (collisionType)
 	{
 	case CollisionType::BOX:
-		box.transform = GetOwner()->transform->float4x4ToMat4x4();
+		box.SetPos(pos);
+		box.SetScale(size);
 		break;
 	case CollisionType::SPHERE:
-		sphere.transform = GetOwner()->transform->float4x4ToMat4x4();
+		sphere.SetPos(pos);
+		sphere.SetScale(size); // Change to radius
 		break;
 	//case CollisionType::CAPSULE:
-		//capsule.transform = GetOwner()->transform->float4x4ToMat4x4();
+		//capsule.SetPos(pos);
+		//capsule.SetScale(size);
 		//break;
 	case CollisionType::CYLINDER:
-		cylinder.transform = GetOwner()->transform->float4x4ToMat4x4();
+		cylinder.SetPos(pos);
+		cylinder.SetScale(size); // Change to radius and height
 		break;
 	case CollisionType::PYRAMID:
-		pyramid.transform = GetOwner()->transform->float4x4ToMat4x4();
+		pyramid.SetPos(pos);
+		pyramid.SetScale(size); // Change to radius and height
 		break;
 	case CollisionType::STATIC_PLANE:
-		plane.transform = GetOwner()->transform->float4x4ToMat4x4();
+		plane.SetPos(pos);
+		plane.SetScale(size);
 		break;
 	default:
 		break;
