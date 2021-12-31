@@ -25,6 +25,8 @@ public:
 	float3 GetWorldPosition() { return worldPosition; };
 	Quat GetWorldRotation() { return worldRotation; };
 	float3 GetWorldEulerRotation() { return worldEulerRotation; };
+	float3 GetLocalScale() { return scale; };
+	float3 GetWorldScale() { return worldScale; };
 
 	void SetPosition(float3 pos) { localTransform.SetCol3(3, pos); };
 	void SetWorldPosition(float3 pos) { globalTransform.SetCol3(3, pos); };

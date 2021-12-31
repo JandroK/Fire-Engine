@@ -12,9 +12,7 @@ C_RigidBody::C_RigidBody(GameObject* obj) : Component(obj)
 {
 	SetBoundingBox();
 	CreateBody();
-	/*btTransform trans(body->getCenterOfMassTransform());
-	trans.setOrigin(GetOwner()->transform->GetWorldPosition());
-	body->setCenterOfMassTransform(trans);*/
+	ResetLocalValues();
 }
 
 C_RigidBody::~C_RigidBody()
@@ -29,33 +27,41 @@ void C_RigidBody::SetBoundingBox()
 	float3 pos = obb.CenterPoint();
 	float3 radius = obb.r;
 	float3 size = obb.Size();
+
+	
 	
 	switch (collisionType)
 	{
 	case CollisionType::BOX:
-		box.FromRS(GetOwner()->transform->GetWorldRotation(), size);
+		box.FromRS(GetOwner()->transform->GetWorldRotation(), {1,1,1});
 		box.SetPos(pos);
+		box.size = size;
 		break;
 	case CollisionType::SPHERE:
+		sphere.FromRS(GetOwner()->transform->GetWorldRotation(), { 1,1,1 });
 		sphere.SetPos(pos);
 		sphere.radius = radius.MaxElement();
 		break;
 	case CollisionType::CAPSULE:
-		capsule.FromRS(GetOwner()->transform->GetWorldRotation(), { radius.MaxElementXZ(), 1, radius.MaxElementXZ() });
+		capsule.FromRS(GetOwner()->transform->GetWorldRotation(), { 1,1,1 });
 		capsule.SetPos(pos);
+		capsule.radius = radius.MaxElementXZ();
 		capsule.height = size.y;
 		break;
 	case CollisionType::CYLINDER:
-		cylinder.FromRS(GetOwner()->transform->GetWorldRotation(), { radius.MaxElementXZ(), 1, radius.MaxElementXZ() });
+		cylinder.FromRS(GetOwner()->transform->GetWorldRotation(), { 1,1,1 });
 		cylinder.SetPos(pos);
+		cylinder.radius = radius.MaxElementXZ();
 		cylinder.height = size.y;
 		break;
 	case CollisionType::CONE:
-		cone.FromRS(GetOwner()->transform->GetWorldRotation(), { radius.MaxElementXZ(), 1, radius.MaxElementXZ() });
+		cone.FromRS(GetOwner()->transform->GetWorldRotation(), { 1,1,1 });
 		cone.SetPos(pos);
+		cone.radius = radius.MaxElementXZ();
 		cone.height = size.y;
 		break;
 	case CollisionType::STATIC_PLANE:
+		plane.FromRS(GetOwner()->transform->GetWorldRotation(), { 1,1,1 });
 		plane.SetPos(pos);
 		break;
 	default:
@@ -67,10 +73,9 @@ void C_RigidBody::Update()
 {
 	/*GetOwner()->transform->SetWorldPosition(body->getCenterOfMassPosition());
 	GetOwner()->transform->SetWorldEulerRotation(body->getOrientation());*/
-	/*btScalar* matrix = new btScalar[15];
+	btScalar* matrix = new btScalar[15];
 	body->getWorldTransform().getOpenGLMatrix(matrix);
-	GetOwner()->transform->SetTransformMFromM(btScalarTofloat4x4(matrix));*/
-	//if (draw) OnDebugDraw();
+	GetOwner()->transform->SetTransformMFromM(btScalarTofloat4x4(matrix));
 }
 
 void C_RigidBody::OnEditor()
@@ -90,9 +95,7 @@ void C_RigidBody::OnEditor()
 			collisionType = (CollisionType)currentCollision;
 			SetBoundingBox();
 			CreateBody();
-			capsule.height = 2;
-			cylinder.height = 2;
-			cone.height = 2;
+			ResetLocalValues();
 		}
 		ImGui::PopItemWidth();
 
@@ -163,6 +166,17 @@ void C_RigidBody::OnEditor()
 	}
 }
 
+void C_RigidBody::ResetLocalValues()
+{
+	box.size = { 1,1,1 };
+	capsule.radius = 1;
+	capsule.height = 2;
+	cylinder.radius = 1;
+	cylinder.height = 2;
+	cone.radius = 1;
+	cone.height = 2;
+}
+
 void C_RigidBody::EditCollisionMesh()
 {
 	switch (collisionType)
@@ -224,7 +238,7 @@ void C_RigidBody::EditCollisionMesh()
 			static_cast<btCylinderShape*>(body->getCollisionShape())->setLocalScaling(btVector3(cylinder.radius, cylinder.height * 0.5f, 0.0f));
 			break;
 		case CONE_SHAPE_PROXYTYPE:
-			static_cast<btConeShape*>(body->getCollisionShape())->setLocalScaling(btVector3(cone.radius, cone.height * 0.5f, 0.0f));
+			static_cast<btConeShape*>(body->getCollisionShape())->setLocalScaling(btVector3(cone.radius, cone.height * 0.5f, cone.radius));
 			break;
 		case STATIC_PLANE_PROXYTYPE:
 			CreateBody();
@@ -288,17 +302,5 @@ void C_RigidBody::CreateBody()
 		body->setLinearFactor(movementConstraint);
 		body->setAngularFactor(rotationConstraint);
 		body->setDamping(linearDamping, angularDamping);
-	}
-}
-
-void C_RigidBody::OnDebugDraw() const
-{
-	switch (collisionType)
-	{
-	case CollisionType::BOX:
-		
-		break;
-	default:
-		break;
 	}
 }

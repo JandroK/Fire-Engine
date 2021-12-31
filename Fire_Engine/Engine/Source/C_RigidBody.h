@@ -24,14 +24,13 @@ public:
 	void SetBoundingBox();
 	void Update() override;
 	void OnEditor() override;
+	void ResetLocalValues();
 	void EditCollisionMesh();
 
 	float4x4 btScalarTofloat4x4(btScalar* transform);
 
 	void CreateBody();
 	float GetMass() { return mass; };
-
-	void OnDebugDraw() const;
 
 	bool useGravity = true;
 	bool isKinematic = false;
@@ -40,10 +39,9 @@ private:
 	btRigidBody* body = nullptr;
 	CollisionType collisionType = CollisionType::BOX;
 
-	float mass = 0.0f;
+	float mass = 1.0f;
 	float friction = 1.0f;
 	float restitution = 1.0f;
-	bool draw = true;
 
 	// Block the movement and rotation
 	float3 movementConstraint = float3::one;
@@ -56,7 +54,7 @@ private:
 	// Figures
 	PCube box;
 	PSphere sphere;
-	PCapsule capsule;		//Future implementation
+	PCapsule capsule;
 	PCylinder cylinder;
 	PPyramid cone;
 	PPlane plane;

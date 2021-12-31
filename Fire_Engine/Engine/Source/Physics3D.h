@@ -83,7 +83,7 @@ public:
 	void setDebugMode(int debugMode);
 	int	 getDebugMode() const;
 
-	DebugDrawModes mode;
+	DebugDrawModes mode = DBG_DrawWireframe;
 	PLine line;
 	Primitive point;
 };

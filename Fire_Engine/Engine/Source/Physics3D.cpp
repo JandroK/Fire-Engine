@@ -57,7 +57,6 @@ bool Physics3D::Init()
 bool Physics3D::Start()
 {
 	LOG(LogType::L_NORMAL, "Creating Physics environment");
-	debugDraw->setDebugMode(1);
 	world = new btDiscreteDynamicsWorld(dispatcher, broadPhase, solver, collisionConfig);
 	world->setDebugDrawer(debugDraw);
 	world->setGravity(GRAVITY);
