@@ -40,19 +40,20 @@ void C_RigidBody::SetBoundingBox()
 		sphere.SetPos(pos);
 		sphere.radius = radius.MaxElement();
 		break;
-	//case CollisionType::CAPSULE:
-		//capsule.SetPos(pos);
-		//capsule.SetScale(size);
-		//break;
-	case CollisionType::CYLINDER:
-		cylinder.SetPos(pos);
-		cylinder.radius = radius.MaxElementXZ();
-		cylinder.height = obb.Size().y;
+	case CollisionType::CAPSULE:
+		capsule.FromRS(GetOwner()->transform->GetWorldRotation(), { radius.MaxElementXZ(), 1, radius.MaxElementXZ() });
+		capsule.SetPos(pos);
+		capsule.height = size.y;
 		break;
-	case CollisionType::PYRAMID:
-		pyramid.SetPos(pos);
-		pyramid.radius = radius.MaxElementXZ();
-		pyramid.height = obb.Size().y;
+	case CollisionType::CYLINDER:
+		cylinder.FromRS(GetOwner()->transform->GetWorldRotation(), { radius.MaxElementXZ(), 1, radius.MaxElementXZ() });
+		cylinder.SetPos(pos);
+		cylinder.height = size.y;
+		break;
+	case CollisionType::CONE:
+		cone.FromRS(GetOwner()->transform->GetWorldRotation(), { radius.MaxElementXZ(), 1, radius.MaxElementXZ() });
+		cone.SetPos(pos);
+		cone.height = size.y;
 		break;
 	case CollisionType::STATIC_PLANE:
 		plane.SetPos(pos);
@@ -81,15 +82,18 @@ void C_RigidBody::OnEditor()
 	{
 		ImGui::Checkbox("Active    ", &active);
 		ImGui::SameLine();
-		static const char* collisions[] = { "Box", "Sphere", /*"Capsule",*/ "Cylinder", "Cone", "Plane" };
+		static const char* collisions[] = { "Box", "Sphere", "Capsule", "Cylinder", "Cone", "Plane" };
 		
 		ImGui::PushItemWidth(85);
 		int currentCollision = (int)collisionType;
-		if (ImGui::Combo("Collision Type", &currentCollision, collisions, 5)) // Change to 6 when add Capsule
+		if (ImGui::Combo("Collision Type", &currentCollision, collisions, 6))
 		{
 			collisionType = (CollisionType)currentCollision;
 			SetBoundingBox();
 			CreateBody();
+			capsule.height = 2;
+			cylinder.height = 2;
+			cone.height = 2;
 		}
 		ImGui::PopItemWidth();
 
@@ -172,19 +176,23 @@ void C_RigidBody::EditCollisionMesh()
 		ImGui::Text("Radius: "); ImGui::SameLine();
 		if (ImGui::DragFloat("##Radius", &sphere.radius, 0.1f, 0.1f)) editMesh = true;
 		break;
-	//case CollisionType::CAPSULE:		
-		//break;
+	case CollisionType::CAPSULE:
+		ImGui::Text("Radius: "); ImGui::SameLine();
+		if (ImGui::DragFloat("##Radius", &capsule.radius, 0.1f, 0.1f)) editMesh = true;
+		ImGui::Text("Height: "); ImGui::SameLine();
+		if (ImGui::DragFloat("##Height", &capsule.height, 0.1f, 0.1f)) editMesh = true;
+		break;
 	case CollisionType::CYLINDER:
 		ImGui::Text("Radius: "); ImGui::SameLine();
 		if (ImGui::DragFloat("##Radius", &cylinder.radius, 0.1f, 0.1f)) editMesh = true;
 		ImGui::Text("Height: "); ImGui::SameLine();
 		if (ImGui::DragFloat("##Height", &cylinder.height, 0.1f, 0.1f)) editMesh = true;
 		break;
-	case CollisionType::PYRAMID:
+	case CollisionType::CONE:
 		ImGui::Text("Radius: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Radius", &pyramid.radius, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Radius", &cone.radius, 0.1f, 0.1f)) editMesh = true;
 		ImGui::Text("Height: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Height", &pyramid.height, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Height", &cone.height, 0.1f, 0.1f)) editMesh = true;
 		break;
 	case CollisionType::STATIC_PLANE:
 		ImGui::Text("Normal: ");
@@ -198,8 +206,30 @@ void C_RigidBody::EditCollisionMesh()
 
 	if (editMesh)
 	{
+		switch (body->getCollisionShape()->getShapeType())
+		{
+		case BOX_SHAPE_PROXYTYPE:
+			static_cast<btBoxShape*>(body->getCollisionShape())->setLocalScaling(box.size);
+			break;
+		case SPHERE_SHAPE_PROXYTYPE:
+			static_cast<btSphereShape*>(body->getCollisionShape())->setUnscaledRadius(sphere.radius);
+			break;
+		case CAPSULE_SHAPE_PROXYTYPE:
+			static_cast<btCapsuleShape*>(body->getCollisionShape())->setLocalScaling(btVector3(capsule.radius, capsule.height * 0.5f, 0.0f));
+			break;
+		case CYLINDER_SHAPE_PROXYTYPE:
+			static_cast<btCylinderShape*>(body->getCollisionShape())->setLocalScaling(btVector3(cylinder.radius, cylinder.height * 0.5f, 0.0f));
+			break;
+		case CONE_SHAPE_PROXYTYPE:
+			static_cast<btConeShape*>(body->getCollisionShape())->setLocalScaling(btVector3(cone.radius, cone.height * 0.5f, 0.0f));
+			break;
+		case STATIC_PLANE_PROXYTYPE:
+			CreateBody();
+			break;
+		default:
+			break;
+		}
 		editMesh = false;
-		//CreateBody();
 	}
 }
 
@@ -232,14 +262,14 @@ void C_RigidBody::CreateBody()
 	case CollisionType::SPHERE:
 		body = app->physics->CollisionShape(sphere, this);
 		break;
-	/*case CollisionType::CAPSULE:
+	case CollisionType::CAPSULE:
 		body = app->physics->CollisionShape(capsule, this);
-		break;*/
+		break;
 	case CollisionType::CYLINDER:
 		body = app->physics->CollisionShape(cylinder, this);
 		break;
-	case CollisionType::PYRAMID:
-		body = app->physics->CollisionShape(pyramid, this);
+	case CollisionType::CONE:
+		body = app->physics->CollisionShape(cone, this);
 		break;
 	case CollisionType::STATIC_PLANE:
 		body = app->physics->CollisionShape(plane, this);

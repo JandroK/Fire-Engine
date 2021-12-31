@@ -39,7 +39,7 @@ public:
 
 	btRigidBody* CollisionShape(const PCube& cube, C_RigidBody* component);
 	btRigidBody* CollisionShape(const PSphere& sphere, C_RigidBody* component);
-	//btRigidBody* CollisionShape(const PCapsule& capsule, C_RigidBody* component);
+	btRigidBody* CollisionShape(const PCapsule& capsule, C_RigidBody* component);
 	btRigidBody* CollisionShape(const PCylinder& cylinder, C_RigidBody* component);
 	btRigidBody* CollisionShape(const PPyramid& cone, C_RigidBody* component);
 	btRigidBody* CollisionShape(const PPlane& plane, C_RigidBody* component);

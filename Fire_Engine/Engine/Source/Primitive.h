@@ -13,6 +13,7 @@ enum PrimitiveTypes
 	Primitive_Cube,
 	Primitive_Sphere,
 	Primitive_Cylinder,
+	Primitive_Capsule,
 	Primitive_Pyramid,
 };
 
@@ -95,7 +96,7 @@ private:
 	void SetIndicesMesh();
 
 public:
-	float radius = 0.5f;
+	float radius = 1;
 	float height = 1;
 	int sectorCount = 24;
 
@@ -104,6 +105,17 @@ private:
 	int topCenterIndex;
 };
 
+class PCapsule : public Primitive
+{
+public:
+	PCapsule();
+	PCapsule(float radius, float height);
+	//void InnerMesh();
+
+public:
+	float radius = 1;
+	float height = 1;
+};
 
 class PPyramid : public Primitive
 {
@@ -113,7 +125,7 @@ public:
 	void InnerMesh();
 
 public:
-	float radius = 0.5f;
+	float radius = 1;
 	float height = 1;
 };
 

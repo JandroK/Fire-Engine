@@ -493,7 +493,15 @@ void PCylinder::SetIndicesMesh()
 	mesh->numIndexs = mesh->indexs.size();
 }
 
+PCapsule::PCapsule()
+{
+	type = PrimitiveTypes::Primitive_Capsule;
+}
 
+PCapsule::PCapsule(float radius, float height) : Primitive(), radius(radius), height(height)
+{
+	type = PrimitiveTypes::Primitive_Capsule;
+}
 
 // PYRAMID ============================================
 PPyramid::PPyramid() : Primitive()

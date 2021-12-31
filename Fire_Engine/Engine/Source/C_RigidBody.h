@@ -9,9 +9,9 @@ enum class CollisionType
 {
 	BOX,
 	SPHERE,
-	//CAPSULE,
+	CAPSULE,
 	CYLINDER,
-	PYRAMID,
+	CONE,
 	STATIC_PLANE
 };
 
@@ -56,9 +56,9 @@ private:
 	// Figures
 	PCube box;
 	PSphere sphere;
-	//PCapsule capsule;		//Future implementation
+	PCapsule capsule;		//Future implementation
 	PCylinder cylinder;
-	PPyramid pyramid;
+	PPyramid cone;
 	PPlane plane;
 
 	bool editMesh = false;

@@ -155,13 +155,13 @@ btRigidBody* Physics3D::CollisionShape(const PSphere& sphere, C_RigidBody* compo
 	return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic) ? component->GetMass() : 0.0f);
 }
 
-//btRigidBody* Physics3D::CollisionShape(const PCapsule& capsule, C_RigidBody* component)
-//{
-//	btCollisionShape* colShape = new btCapsuleShape(capsule.r, capsule.LineLength());
-//	btTransform startTransform;
-//	startTransform.setFromOpenGLMatrix(&capsule.transform);
-//  return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic)?component->GetMass() : 0.0f);
-//}
+btRigidBody* Physics3D::CollisionShape(const PCapsule& capsule, C_RigidBody* component)
+{
+	btCollisionShape* colShape = new btCapsuleShape(capsule.radius, capsule.height);
+	btTransform startTransform;
+	startTransform.setFromOpenGLMatrix(&capsule.transform);
+	return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic)?component->GetMass() : 0.0f);
+}
 
 btRigidBody* Physics3D::CollisionShape(const PCylinder& cylinder, C_RigidBody* component)
 {
