@@ -30,6 +30,7 @@ public:
 	void			SetRotation(float angle, const vec3 &u);
 	void			SetScale(float x, float y, float z);
 	void			SetScale(float3 scale);
+	void			FromRS(const Quat& rotate, const float3& scale);
 
 	void SetVertices(float vertices[], int size);
 	void SetTexCoords(float texCoords[], int size);

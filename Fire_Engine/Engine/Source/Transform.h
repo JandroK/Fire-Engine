@@ -23,10 +23,13 @@ public:
 
 	float3 GetLocalPosition() { return position; };
 	float3 GetWorldPosition() { return worldPosition; };
-	float3 GetWorldRotation() { return worldEulerRotation; };
+	Quat GetWorldRotation() { return worldRotation; };
+	float3 GetWorldEulerRotation() { return worldEulerRotation; };
 
 	void SetPosition(float3 pos) { localTransform.SetCol3(3, pos); };
-	void SetEulerRotaion(float3 rot) { localTransform.SetRotatePart(Quat::FromEulerXYZ(rot.x * DEGTORAD, rot.y * DEGTORAD, rot.z * DEGTORAD)); };
+	void SetWorldPosition(float3 pos) { globalTransform.SetCol3(3, pos); };
+	void SetEulerRotation(float3 rot) { localTransform.SetRotatePart(Quat::FromEulerXYZ(rot.x * DEGTORAD, rot.y * DEGTORAD, rot.z * DEGTORAD)); };
+	void SetWorldEulerRotation(Quat rot) { globalTransform.SetRotatePart(rot); };
 	void SetUpdateTransform(bool ret) { updateTransform = ret; };
 
 	void SetTransformMatrix(float3 position, Quat rotation, float3 localScale, Transform* parent);

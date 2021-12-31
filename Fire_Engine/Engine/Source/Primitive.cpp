@@ -3,6 +3,8 @@
 #include <gl/GLU.h>
 #include "Primitive.h"
 #include <cmath>
+#include "Math/float3x3.h"
+#include "Math/TransformOps.h"
 
 // ------------------------------------------------------------
 Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
@@ -106,6 +108,20 @@ void Primitive::SetScale(float x, float y, float z)
 void Primitive::SetScale(float3 scale)
 {
 	transform.scale(scale.x, scale.y, scale.z);
+}
+
+void Primitive::FromRS(const Quat& rotate, const float3& scale)
+{
+	int k = 0;
+	float3x3 RS = float3x3(rotate) * float3x3::Scale(scale);
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			transform.M[k++] = RS[j][i];
+		}
+		k++;
+	}
 }
 
 // Set vertex, texCoords and index

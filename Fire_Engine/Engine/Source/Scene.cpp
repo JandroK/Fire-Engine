@@ -65,7 +65,7 @@ bool Scene::Start()
 	root->AttachChild(mainCamera->GetOwner());
 	Transform* transformCamera = static_cast<Transform*>(mainCamera->GetOwner()->GetComponent(ComponentType::TRANSFORM));
 	transformCamera->SetPosition(float3(-50.0f, 44.0f, 80.0f));
-	transformCamera->SetEulerRotaion(float3(145.0f, 30.0f, -160.0f));
+	transformCamera->SetEulerRotation(float3(145.0f, 30.0f, -160.0f));
 	transformCamera->SetTransformMFromM(transformCamera->GetLocalTransform());
 
 	return true;
@@ -140,7 +140,7 @@ GameObject* Scene::CreateCamera()
 	camera->AddComponent(ComponentType::CAMERA);
 	Transform* transformCamera = static_cast<Transform*>(camera->GetComponent(ComponentType::TRANSFORM));
 	transformCamera->SetPosition(float3(0, 3.5f, -12));
-	transformCamera->SetEulerRotaion(float3(6, 0, 0));
+	transformCamera->SetEulerRotation(float3(6, 0, 0));
 	return camera;
 }
 

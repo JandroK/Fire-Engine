@@ -26,6 +26,8 @@ public:
 	void OnEditor() override;
 	void EditCollisionMesh();
 
+	float4x4 btScalarTofloat4x4(btScalar* transform);
+
 	void CreateBody();
 	float GetMass() { return mass; };
 

@@ -12,6 +12,9 @@ C_RigidBody::C_RigidBody(GameObject* obj) : Component(obj)
 {
 	SetBoundingBox();
 	CreateBody();
+	/*btTransform trans(body->getCenterOfMassTransform());
+	trans.setOrigin(GetOwner()->transform->GetWorldPosition());
+	body->setCenterOfMassTransform(trans);*/
 }
 
 C_RigidBody::~C_RigidBody()
@@ -24,18 +27,18 @@ void C_RigidBody::SetBoundingBox()
 {
 	OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
 	float3 pos = obb.CenterPoint();
-	//float3* rot = obb.axis;
+	float3 radius = obb.r;
 	float3 size = obb.Size();
 	
 	switch (collisionType)
 	{
 	case CollisionType::BOX:
+		box.FromRS(GetOwner()->transform->GetWorldRotation(), size);
 		box.SetPos(pos);
-		box.SetScale(size);
 		break;
 	case CollisionType::SPHERE:
 		sphere.SetPos(pos);
-		sphere.SetScale(size); // Change to radius
+		sphere.radius = radius.MaxElement();
 		break;
 	//case CollisionType::CAPSULE:
 		//capsule.SetPos(pos);
@@ -43,15 +46,17 @@ void C_RigidBody::SetBoundingBox()
 		//break;
 	case CollisionType::CYLINDER:
 		cylinder.SetPos(pos);
-		cylinder.SetScale(size); // Change to radius and height
+		cylinder.radius = radius.MaxElementXZ();
+		cylinder.height = obb.Size().y;
 		break;
 	case CollisionType::PYRAMID:
 		pyramid.SetPos(pos);
-		pyramid.SetScale(size); // Change to radius and height
+		pyramid.radius = radius.MaxElementXZ();
+		pyramid.height = obb.Size().y;
 		break;
 	case CollisionType::STATIC_PLANE:
 		plane.SetPos(pos);
-		plane.SetScale(size);
+		//plane.SetScale(size);
 		break;
 	default:
 		break;
@@ -60,7 +65,12 @@ void C_RigidBody::SetBoundingBox()
 
 void C_RigidBody::Update()
 {
-	if (draw) OnDebugDraw();
+	/*GetOwner()->transform->SetWorldPosition(body->getCenterOfMassPosition());
+	GetOwner()->transform->SetWorldEulerRotation(body->getOrientation());*/
+	/*btScalar* matrix = new btScalar[15];
+	body->getWorldTransform().getOpenGLMatrix(matrix);
+	GetOwner()->transform->SetTransformMFromM(btScalarTofloat4x4(matrix));*/
+	//if (draw) OnDebugDraw();
 }
 
 void C_RigidBody::OnEditor()
@@ -191,6 +201,22 @@ void C_RigidBody::EditCollisionMesh()
 		editMesh = false;
 		//CreateBody();
 	}
+}
+
+float4x4 C_RigidBody::btScalarTofloat4x4(btScalar* transform)
+{
+	float4x4 newTransform;
+	int k = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			newTransform[j][i] = transform[k];
+			k++;
+		}
+	}
+
+	return newTransform;
 }
 
 void C_RigidBody::CreateBody()
