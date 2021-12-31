@@ -149,6 +149,6 @@ public:
 	PPlane(float x, float y, float z, float d);
 	void InnerRender() const;
 public:
-	float3 normal;
-	float constant;
+	float3 normal = { 0,1,0 };
+	float constant = 0;
 };

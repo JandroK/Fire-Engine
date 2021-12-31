@@ -57,7 +57,6 @@ void C_RigidBody::SetBoundingBox()
 		break;
 	case CollisionType::STATIC_PLANE:
 		plane.SetPos(pos);
-		//plane.SetScale(size);
 		break;
 	default:
 		break;
@@ -170,33 +169,37 @@ void C_RigidBody::EditCollisionMesh()
 	{
 	case CollisionType::BOX:
 		ImGui::Text("Box Size: ");
-		if (ImGui::DragFloat3("##Box", &box.size.x, 0.1f, true, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat3("##Box", &box.size.x, 0.1f, true, 0.1f, INFINITE)) editMesh = true;
 		break;
 	case CollisionType::SPHERE:
 		ImGui::Text("Radius: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Radius", &sphere.radius, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Radius", &sphere.radius, 0.1f, 0.1f, INFINITE)) editMesh = true;
 		break;
 	case CollisionType::CAPSULE:
 		ImGui::Text("Radius: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Radius", &capsule.radius, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Radius", &capsule.radius, 0.1f, 0.1f, INFINITE)) editMesh = true;
 		ImGui::Text("Height: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Height", &capsule.height, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Height", &capsule.height, 0.1f, 0.1f, INFINITE)) editMesh = true;
 		break;
 	case CollisionType::CYLINDER:
 		ImGui::Text("Radius: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Radius", &cylinder.radius, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Radius", &cylinder.radius, 0.1f, 0.1f, INFINITE)) editMesh = true;
 		ImGui::Text("Height: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Height", &cylinder.height, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Height", &cylinder.height, 0.1f, 0.1f, INFINITE)) editMesh = true;
 		break;
 	case CollisionType::CONE:
 		ImGui::Text("Radius: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Radius", &cone.radius, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Radius", &cone.radius, 0.1f, 0.1f, INFINITE)) editMesh = true;
 		ImGui::Text("Height: "); ImGui::SameLine();
-		if (ImGui::DragFloat("##Height", &cone.height, 0.1f, 0.1f)) editMesh = true;
+		if (ImGui::DragFloat("##Height", &cone.height, 0.1f, 0.1f, INFINITE)) editMesh = true;
 		break;
 	case CollisionType::STATIC_PLANE:
 		ImGui::Text("Normal: ");
-		if (ImGui::DragFloat3("##Normal", &plane.normal.x, 0.1f, true)) editMesh = true;
+		if (ImGui::DragFloat3("##Normal", &plane.normal.x, 0.1f, true, 0.0f, 1))
+		{
+			if (plane.normal.x == 0.0f && plane.normal.y == 0.0f && plane.normal.z == 0.0f) plane.normal.y = 0.1f;
+			editMesh = true;
+		}
 		ImGui::Text("Constant: "); ImGui::SameLine();
 		if (ImGui::DragFloat("##Constant", &plane.constant, 0.1f)) editMesh = true;
 		break;
