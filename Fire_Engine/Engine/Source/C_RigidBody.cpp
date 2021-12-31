@@ -13,6 +13,12 @@ C_RigidBody::C_RigidBody(GameObject* obj) : Component(obj)
 	SetBoundingBox();
 	CreateBody();
 	ResetLocalValues();
+
+	// Calculate offset CM
+	OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
+	float3 posOBB = obb.CenterPoint();
+	float3 posObj = GetOwner()->transform->GetWorldPosition();
+	offset = posOBB - posObj;
 }
 
 C_RigidBody::~C_RigidBody()
@@ -26,9 +32,7 @@ void C_RigidBody::SetBoundingBox()
 	OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
 	float3 pos = obb.CenterPoint();
 	float3 radius = obb.r;
-	float3 size = obb.Size();
-
-	
+	float3 size = obb.Size();	
 	
 	switch (collisionType)
 	{
@@ -71,11 +75,11 @@ void C_RigidBody::SetBoundingBox()
 
 void C_RigidBody::Update()
 {
-	/*GetOwner()->transform->SetWorldPosition(body->getCenterOfMassPosition());
-	GetOwner()->transform->SetWorldEulerRotation(body->getOrientation());*/
 	btScalar* matrix = new btScalar[15];
 	body->getWorldTransform().getOpenGLMatrix(matrix);
-	GetOwner()->transform->SetTransformMFromM(btScalarTofloat4x4(matrix));
+	float4x4 CM = btScalarTofloat4x4(matrix);
+	CM.SetCol3(3, CM.Col3(3) - offset);
+	GetOwner()->transform->SetTransformMFromM(CM);
 }
 
 void C_RigidBody::OnEditor()

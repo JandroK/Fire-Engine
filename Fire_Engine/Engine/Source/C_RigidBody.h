@@ -39,9 +39,10 @@ private:
 	btRigidBody* body = nullptr;
 	CollisionType collisionType = CollisionType::BOX;
 
-	float mass = 1.0f;
+	float mass = 0.0f;
 	float friction = 1.0f;
 	float restitution = 1.0f;
+	float3 offset = { 0,0,0 };
 
 	// Block the movement and rotation
 	float3 movementConstraint = float3::one;
