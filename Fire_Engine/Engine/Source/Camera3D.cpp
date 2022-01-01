@@ -14,6 +14,7 @@
 // Components
 #include "Transform.h"
 #include "MeshRenderer.h"
+#include "C_RigidBody.h"
 
 #include <map>
 #include "Geometry/Triangle.h"
@@ -31,6 +32,7 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 	oldRotation = { right, front, up };
 
 	quadTree = new QuadTreeBase;
+	//body = new C_RigidBody(nullptr, CollisionType::SPHERE);
 }
 
 void Camera3D::ReStartCamera()
@@ -51,6 +53,10 @@ bool Camera3D::Start()
 	bool ret = true;
 
 	LookAt(float3::zero);
+
+
+	//mainCamera->GetOwner()->AddComponent(ComponentType::RIGIDBODY);
+	//static_cast<C_RigidBody*>(mainCamera->GetOwner()->GetComponent(ComponentType::RIGIDBODY))->SetCollisionType(CollisionType::SPHERE);
 
 	return ret;
 }

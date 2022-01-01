@@ -8,6 +8,7 @@
 #include "Guizmo/ImGuizmo.h"
 
 class QuadTreeBase;
+class C_RigidBody;
 
 class Camera3D : public Module
 {
@@ -39,6 +40,11 @@ public:
 	void CalculateViewMatrix();
 
 	float* GetFarPlane() { return &cameraScene.frustrum.farPlaneDistance; }; // Used to change far plane when fog is active
+	float3 GetPosition() { return position; };
+	float3 GetRight() { return right; };
+	float3 GetUp() { return up; };
+	float3 GetFront() { return front; };
+
 
 private:
 	void Focus();
@@ -57,6 +63,7 @@ public:
 	bool projectionIsDirty = false;
 
 	ComponentCamera cameraScene;
+	//C_RigidBody* body;
 	LineSegment ray;
 
 	ImGuizmo::OPERATION operation;

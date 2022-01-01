@@ -8,17 +8,18 @@
 #include "IconsFontAwesome5.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
-C_RigidBody::C_RigidBody(GameObject* obj) : Component(obj)
+C_RigidBody::C_RigidBody(GameObject* obj, CollisionType type) : Component(obj), collisionType(type)
 {
-	SetBoundingBox();
-	CreateBody();
-	ResetLocalValues();
+	SetCollisionType(type);
 
 	// Calculate offset CM
-	OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
-	float3 posOBB = obb.CenterPoint();
-	float3 posObj = GetOwner()->transform->GetWorldPosition();
-	offset = posOBB - posObj;
+	if (static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER)))
+	{
+		OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
+		float3 posOBB = obb.CenterPoint();
+		float3 posObj = GetOwner()->transform->GetWorldPosition();
+		offset = posOBB - posObj;
+	}	
 }
 
 C_RigidBody::~C_RigidBody()
@@ -29,10 +30,23 @@ C_RigidBody::~C_RigidBody()
 
 void C_RigidBody::SetBoundingBox()
 {
-	OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
-	float3 pos = obb.CenterPoint();
-	float3 radius = obb.r;
-	float3 size = obb.Size();	
+	float3 pos, radius, size;
+
+	MeshRenderer* mesh = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER));
+	if (mesh != nullptr)
+	{
+		OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
+		pos = obb.CenterPoint();
+		radius = obb.r;
+		size = obb.Size();
+	}
+	else	// Empty objects
+	{
+		pos = GetOwner()->transform->GetWorldPosition();
+		radius = { 1,1,1 };
+		size = { 1,1,1 };
+	}
+		
 	
 	switch (collisionType)
 	{
@@ -97,9 +111,7 @@ void C_RigidBody::OnEditor()
 		if (ImGui::Combo("Collision Type", &currentCollision, collisions, 6))
 		{
 			collisionType = (CollisionType)currentCollision;
-			SetBoundingBox();
-			CreateBody();
-			ResetLocalValues();
+			SetCollisionType(collisionType);
 		}
 		ImGui::PopItemWidth();
 
@@ -168,6 +180,14 @@ void C_RigidBody::OnEditor()
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
 	}
+}
+
+void C_RigidBody::SetCollisionType(CollisionType type)
+{
+	collisionType = type;
+	SetBoundingBox();
+	CreateBody();
+	ResetLocalValues();
 }
 
 void C_RigidBody::ResetLocalValues()

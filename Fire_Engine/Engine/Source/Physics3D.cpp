@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "Input.h"
+#include "Camera3D.h"
 
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
@@ -81,13 +82,14 @@ update_status Physics3D::Update(float dt)
 		world->debugDrawWorld();
 	}
 
-	/*if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		Sphere s(1);
-		s.SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+		PSphere s(1);
+		s.SetPos(app->camera->GetPosition().x, app->camera->GetPosition().y, app->camera->GetPosition().z);
 		float force = 30.0f;
-		AddBody(s)->Push(-(App->camera->Z.x * force), -(App->camera->Z.y * force), -(App->camera->Z.z * force));
-	}*/
+		//CollisionShape(s, RB)->applyCentralImpulse()
+		//AddBody(s)->Push(-(app->camera->GetFront().x * force), -(app->camera->GetFront().y * force), -(app->camera->GetFront().z * force));
+	}
 
 	return UPDATE_CONTINUE;
 }

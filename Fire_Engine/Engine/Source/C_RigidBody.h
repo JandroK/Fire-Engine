@@ -18,12 +18,14 @@ enum class CollisionType
 class C_RigidBody : public Component
 {
 public:
-	C_RigidBody(GameObject* obj);
+	C_RigidBody(GameObject* obj, CollisionType type = CollisionType::BOX);
 	virtual ~C_RigidBody();
 
 	void SetBoundingBox();
 	void Update() override;
 	void OnEditor() override;
+
+	void SetCollisionType(CollisionType type);
 	void ResetLocalValues();
 	void EditCollisionMesh();
 
