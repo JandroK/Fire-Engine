@@ -38,6 +38,8 @@ public:
 	float GetMass() { return mass; };
 	btRigidBody* GetBody() { return body; };
 
+	void SetAsStatic();
+
 	bool useGravity = true;
 	bool isKinematic = false;
 
@@ -47,7 +49,7 @@ private:
 
 	float mass = 1.0f;
 	float friction = 1.0f;
-	float restitution = 1.0f;
+	float restitution = 0.2f;
 	float3 offset = { 0,0,0 };
 
 	// Block the movement and rotation

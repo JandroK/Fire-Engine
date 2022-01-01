@@ -241,6 +241,15 @@ void Transform::SetTransformMatrix(float3 position, Quat rotation, float3 localS
 	if (parent != nullptr) {
 		globalTransform = parent->globalTransform * localTransform;
 		globalTransformTransposed = (parent->globalTransform * localTransform).Transposed();
+		globalTransform.Decompose(worldPosition, worldRotation, worldScale);
+		worldEulerRotation = worldRotation.ToEulerXYZ() * RADTODEG;
+	}
+	else
+	{
+		globalTransform = localTransform;
+		globalTransformTransposed = globalTransform.Transposed();
+		globalTransform.Decompose(worldPosition, worldRotation, worldScale);
+		worldEulerRotation = worldRotation.ToEulerXYZ() * RADTODEG;
 	}
 }
 

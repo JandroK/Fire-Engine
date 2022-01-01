@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "MeshRenderer.h"
 #include "ComponentCamera.h"
+#include "C_RigidBody.h"
 
 //Modules
 #include "Input.h"
@@ -57,6 +58,16 @@ bool Scene::Start()
 	static_cast<Material*>(plane->GetComponent(ComponentType::MATERIAL))->texture = app->resourceManager->greenTexture;
 	GameObject* object010 = root->GetChildrens()[1]->FindChildren("Object010");
 	static_cast<Material*>(object010->GetComponent(ComponentType::MATERIAL))->texture = app->resourceManager->whiteTexture;
+
+	std::vector<GameObject*> street = root->GetChildrens()[1]->GetChildrens();
+	for (int i = 0; i < street.size(); i++)
+	{
+		street.at(i)->AddComponent(ComponentType::RIGIDBODY);
+	}
+	GameObject* line = root->GetChildrens()[1]->FindChildren("Line002");
+	static_cast<C_RigidBody*>(plane->GetComponent(ComponentType::RIGIDBODY))->SetAsStatic();
+	static_cast<C_RigidBody*>(line->GetComponent(ComponentType::RIGIDBODY))->SetAsStatic();
+	static_cast<C_RigidBody*>(object010->GetComponent(ComponentType::RIGIDBODY))->SetAsStatic();
 
 	// We extract the camera from the list of root children for a moment and we return it to put 
 	// so that it appears first in the hierarchy 
@@ -353,7 +364,6 @@ GameObject* Scene::LoadGameObject(JsonParser parent, GameObject* father)
 
 void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj)
 {
-
 	Transform* transform;
 	MeshRenderer* meshRender;
 	Mesh* mesh;

@@ -350,3 +350,11 @@ void C_RigidBody::CreateBody()
 		body->setDamping(linearDamping, angularDamping);
 	}
 }
+
+void C_RigidBody::SetAsStatic()
+{
+	useGravity = false;
+	isKinematic = false;
+	mass = 0.0f;
+	SetCollisionType(collisionType);
+}
