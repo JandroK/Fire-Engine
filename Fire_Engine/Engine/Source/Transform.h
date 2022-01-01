@@ -28,8 +28,8 @@ public:
 	float3 GetLocalScale() { return scale; };
 	float3 GetWorldScale() { return worldScale; };
 
-	void SetPosition(float3 pos) { localTransform.SetCol3(3, pos); };
-	void SetWorldPosition(float3 pos) { globalTransform.SetCol3(3, pos); };
+	void SetPosition(float3 pos) { localTransform.SetCol3(3, pos); position = pos; };
+	void SetWorldPosition(float3 pos) { globalTransform.SetCol3(3, pos); worldPosition = pos; };
 	void SetEulerRotation(float3 rot) { localTransform.SetRotatePart(Quat::FromEulerXYZ(rot.x * DEGTORAD, rot.y * DEGTORAD, rot.z * DEGTORAD)); };
 	void SetWorldEulerRotation(Quat rot) { globalTransform.SetRotatePart(rot); };
 	void SetUpdateTransform(bool ret) { updateTransform = ret; };

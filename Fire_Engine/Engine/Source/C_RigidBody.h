@@ -20,7 +20,7 @@ enum class CollisionType
 class C_RigidBody : public Component
 {
 public:
-	C_RigidBody(GameObject* obj, float mass = 0.0f, CollisionType type = CollisionType::BOX);
+	C_RigidBody(GameObject* obj, float mass = 1.0f, CollisionType type = CollisionType::BOX);
 	C_RigidBody();
 	virtual ~C_RigidBody();
 
@@ -36,6 +36,7 @@ public:
 
 	void CreateBody();
 	float GetMass() { return mass; };
+	btRigidBody* GetBody() { return body; };
 
 	bool useGravity = true;
 	bool isKinematic = false;
@@ -44,7 +45,7 @@ private:
 	btRigidBody* body = nullptr;
 	CollisionType collisionType = CollisionType::BOX;
 
-	float mass = 0.0f;
+	float mass = 1.0f;
 	float friction = 1.0f;
 	float restitution = 1.0f;
 	float3 offset = { 0,0,0 };

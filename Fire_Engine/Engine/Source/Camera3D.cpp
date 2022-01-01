@@ -54,7 +54,7 @@ bool Camera3D::Start()
 
 	LookAt(float3::zero);
 
-	body = new C_RigidBody(nullptr, 0, CollisionType::CAMERA);
+	rigidBody = new C_RigidBody(nullptr, 0, CollisionType::CAMERA);
 
 	return ret;
 }
@@ -64,14 +64,14 @@ bool Camera3D::CleanUp()
 	LOG(LogType::L_NO_PRINTABLE, "Cleaning camera");
 
 	RELEASE(quadTree);
-	RELEASE(body);
+	RELEASE(rigidBody);
 
 	return true;
 }
 
 update_status Camera3D::Update(float dt)
 {
-	body->Update();
+	rigidBody->Update();
 	return UPDATE_CONTINUE;
 }
 
@@ -154,11 +154,14 @@ void Camera3D::CheckInputsKeyBoard()
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos -= right * speed;
 	}	
 
-	position += newPos;
-	reference += newPos;
-
 	// Recalculate matrix -------------
-	if (!newPos.Equals(float3::zero)) CalculateViewMatrix();
+	if (!newPos.Equals(float3::zero) && !collision)
+	{
+		position += newPos;
+		reference += newPos;
+		CalculateViewMatrix();
+	}
+	collision = false;
 }
 
 void Camera3D::CheckInputsMouse()
@@ -466,8 +469,8 @@ bool Camera3D::LoadConfig(JsonParser& node)
 	LookAt(reference);
 	cameraScene.RecalculateProjection(cameraScene.aspectRatio);
 
-	if (body != nullptr) RELEASE(body);
-	body = new C_RigidBody(nullptr, 0, CollisionType::CAMERA);
+	if (rigidBody != nullptr) RELEASE(rigidBody);
+	rigidBody = new C_RigidBody(nullptr, 0, CollisionType::CAMERA);
 
 	return true;
 }

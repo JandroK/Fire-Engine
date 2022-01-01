@@ -61,9 +61,10 @@ public:
 	float3x3 oldRotation; // Used to reset view rotation
 
 	bool projectionIsDirty = false;
+	bool collision = false;
 
 	ComponentCamera cameraScene;
-	C_RigidBody* body;
+	C_RigidBody* rigidBody;
 	LineSegment ray;
 
 	ImGuizmo::OPERATION operation;

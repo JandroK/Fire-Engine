@@ -42,8 +42,6 @@ void C_RigidBody::SetBoundingBox()
 	if (collisionType == CollisionType::CAMERA)
 	{
 		pos = app->camera->GetPosition();
-		radius = { 1,1,1 };
-		size = { 1,1,1 };
 	}
 	else if (static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER)) == nullptr)
 	{
@@ -68,7 +66,7 @@ void C_RigidBody::SetBoundingBox()
 		break;
 	case CollisionType::CAMERA:
 		sphere.SetPos(pos);
-		sphere.radius = radius.MaxElement();
+		sphere.radius = 0.5f;
 		break;
 	case CollisionType::SPHERE:
 		sphere.FromRS(GetOwner()->transform->GetWorldRotation(), { 1,1,1 });
@@ -110,7 +108,7 @@ void C_RigidBody::Update()
 		body->setWorldTransform(body->getWorldTransform());
 	}
 	else
-	{
+	{			
 		btScalar* matrix = new btScalar[15];
 		body->getWorldTransform().getOpenGLMatrix(matrix);
 		float4x4 CM = btScalarTofloat4x4(matrix);

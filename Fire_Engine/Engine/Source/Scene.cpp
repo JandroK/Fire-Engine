@@ -156,7 +156,7 @@ GameObject* Scene::CreatePrimitive(const char* name, Mesh* mesh)
 
 	root->AddChildren(primitive);
 
-	return nullptr;
+	return primitive;
 }
 
 void Scene::Destroy(GameObject* obj)

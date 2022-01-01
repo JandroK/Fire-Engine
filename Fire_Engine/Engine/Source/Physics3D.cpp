@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Input.h"
 #include "Camera3D.h"
+#include "Scene.h"
 
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
@@ -69,6 +70,21 @@ bool Physics3D::Start()
 update_status Physics3D::PreUpdate(float dt)
 {
 	world->stepSimulation(dt, 15);
+
+	int numManifolds = world->getDispatcher()->getNumManifolds();
+	for (int i = 0; i < numManifolds; i++)
+	{
+		btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
+		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
+		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+
+		int numContacts = contactManifold->getNumContacts();
+
+		if (numContacts > 0 && (obA == app->camera->rigidBody->GetBody() || obB == app->camera->rigidBody->GetBody()))
+		{
+			app->camera->collision = true;
+		}
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -84,10 +100,21 @@ update_status Physics3D::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		/*PSphere s(2);
-		s.SetPos(app->camera->GetPosition().x, app->camera->GetPosition().y, app->camera->GetPosition().z);
+		PSphere spherePrim = PSphere(1);
+		spherePrim.SetPos(app->camera->GetPosition().x, app->camera->GetPosition().y, app->camera->GetPosition().z);
+		spherePrim.InnerMesh();
+		spherePrim.mesh->LoadToMemory();
+		spherePrim.mesh->GenerateBounds();
+
 		float force = 30.0f;
-		CollisionShape(s, app->camera->body)->applyCentralImpulse({ (app->camera->GetFront().x * force), (app->camera->GetFront().y * force), (app->camera->GetFront().z * force) });*/
+		GameObject* s = app->scene->CreatePrimitive("Sphere", spherePrim.mesh);
+		s->transform->SetWorldPosition(app->camera->GetPosition());
+		s->transform->UpdateTransform();
+		C_RigidBody* rigidBody;
+		rigidBody = static_cast<C_RigidBody*>(s->AddComponent(ComponentType::RIGIDBODY));
+		rigidBody->SetCollisionType(CollisionType::SPHERE);
+		rigidBody->GetBody()->setIgnoreCollisionCheck(app->camera->rigidBody->GetBody(), true);
+		rigidBody->GetBody()->applyCentralImpulse(app->camera->GetFront().Normalized() * force);
 	}
 
 	return UPDATE_CONTINUE;
