@@ -27,14 +27,14 @@ class Physics3D;
 class Application
 {
 public:
-	ResourceManager* resourceManager;
-	Window* window;
-	Camera3D* camera;
-	Input* input;
+	ResourceManager* resourceManager = nullptr;
+	Window* window = nullptr;
 	Physics3D* physics = nullptr;
-	Renderer3D* renderer3D;
-	Scene* scene;
-	Editor* editor;
+	Camera3D* camera = nullptr;
+	Input* input = nullptr;
+	Renderer3D* renderer3D = nullptr;
+	Scene* scene = nullptr;
+	Editor* editor = nullptr;
 
 	std::vector<Module*> listModules;
 private:

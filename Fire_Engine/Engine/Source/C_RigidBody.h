@@ -12,13 +12,16 @@ enum class CollisionType
 	CAPSULE,
 	CYLINDER,
 	CONE,
-	STATIC_PLANE
+	STATIC_PLANE,
+
+	CAMERA
 };
 
 class C_RigidBody : public Component
 {
 public:
-	C_RigidBody(GameObject* obj, CollisionType type = CollisionType::BOX);
+	C_RigidBody(GameObject* obj, float mass = 0.0f, CollisionType type = CollisionType::BOX);
+	C_RigidBody();
 	virtual ~C_RigidBody();
 
 	void SetBoundingBox();

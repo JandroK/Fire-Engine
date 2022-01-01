@@ -1,25 +1,31 @@
 #include "C_RigidBody.h"
 #include "Application.h"
+
 #include "Physics3D.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
+#include "Camera3D.h"
 
 #include "ImGui/imgui.h"
 #include "IconsFontAwesome5.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
-C_RigidBody::C_RigidBody(GameObject* obj, CollisionType type) : Component(obj), collisionType(type)
+C_RigidBody::C_RigidBody(GameObject* obj, float mass, CollisionType type) : Component(obj), mass(mass), collisionType(type)
 {
 	SetCollisionType(type);
 
 	// Calculate offset CM
-	if (static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER)))
+	if (collisionType != CollisionType::CAMERA && static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER)))
 	{
 		OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
 		float3 posOBB = obb.CenterPoint();
 		float3 posObj = GetOwner()->transform->GetWorldPosition();
 		offset = posOBB - posObj;
 	}	
+}
+
+C_RigidBody::C_RigidBody() : Component(nullptr)
+{
 }
 
 C_RigidBody::~C_RigidBody()
@@ -32,21 +38,26 @@ void C_RigidBody::SetBoundingBox()
 {
 	float3 pos, radius, size;
 
-	MeshRenderer* mesh = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER));
-	if (mesh != nullptr)
+	// To collision type Camera or Empty Objects
+	if (collisionType == CollisionType::CAMERA)
 	{
-		OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
-		pos = obb.CenterPoint();
-		radius = obb.r;
-		size = obb.Size();
+		pos = app->camera->GetPosition();
+		radius = { 1,1,1 };
+		size = { 1,1,1 };
 	}
-	else	// Empty objects
+	else if (static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER)) == nullptr)
 	{
 		pos = GetOwner()->transform->GetWorldPosition();
 		radius = { 1,1,1 };
 		size = { 1,1,1 };
 	}
-		
+	else
+	{
+		OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
+		pos = obb.CenterPoint();
+		radius = obb.r;
+		size = obb.Size();
+	}		
 	
 	switch (collisionType)
 	{
@@ -54,6 +65,10 @@ void C_RigidBody::SetBoundingBox()
 		box.FromRS(GetOwner()->transform->GetWorldRotation(), {1,1,1});
 		box.SetPos(pos);
 		box.size = size;
+		break;
+	case CollisionType::CAMERA:
+		sphere.SetPos(pos);
+		sphere.radius = radius.MaxElement();
 		break;
 	case CollisionType::SPHERE:
 		sphere.FromRS(GetOwner()->transform->GetWorldRotation(), { 1,1,1 });
@@ -89,11 +104,19 @@ void C_RigidBody::SetBoundingBox()
 
 void C_RigidBody::Update()
 {
-	btScalar* matrix = new btScalar[15];
-	body->getWorldTransform().getOpenGLMatrix(matrix);
-	float4x4 CM = btScalarTofloat4x4(matrix);
-	CM.SetCol3(3, CM.Col3(3) - offset);
-	GetOwner()->transform->SetTransformMFromM(CM);
+	if (collisionType == CollisionType::CAMERA)
+	{
+		body->getWorldTransform().setOrigin(app->camera->GetPosition());
+		body->setWorldTransform(body->getWorldTransform());
+	}
+	else
+	{
+		btScalar* matrix = new btScalar[15];
+		body->getWorldTransform().getOpenGLMatrix(matrix);
+		float4x4 CM = btScalarTofloat4x4(matrix);
+		CM.SetCol3(3, CM.Col3(3) - offset);
+		GetOwner()->transform->SetTransformMFromM(CM);
+	}
 }
 
 void C_RigidBody::OnEditor()
@@ -300,6 +323,7 @@ void C_RigidBody::CreateBody()
 	case CollisionType::BOX:
 		body = app->physics->CollisionShape(box, this);
 		break;
+	case CollisionType::CAMERA:
 	case CollisionType::SPHERE:
 		body = app->physics->CollisionShape(sphere, this);
 		break;

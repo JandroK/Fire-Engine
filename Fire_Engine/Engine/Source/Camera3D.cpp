@@ -32,7 +32,7 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 	oldRotation = { right, front, up };
 
 	quadTree = new QuadTreeBase;
-	//body = new C_RigidBody(nullptr, CollisionType::SPHERE);
+	position = float3(-50.0f, 44.0f, 80.0f);
 }
 
 void Camera3D::ReStartCamera()
@@ -54,9 +54,7 @@ bool Camera3D::Start()
 
 	LookAt(float3::zero);
 
-
-	//mainCamera->GetOwner()->AddComponent(ComponentType::RIGIDBODY);
-	//static_cast<C_RigidBody*>(mainCamera->GetOwner()->GetComponent(ComponentType::RIGIDBODY))->SetCollisionType(CollisionType::SPHERE);
+	body = new C_RigidBody(nullptr, 0, CollisionType::CAMERA);
 
 	return ret;
 }
@@ -64,13 +62,16 @@ bool Camera3D::Start()
 bool Camera3D::CleanUp()
 {
 	LOG(LogType::L_NO_PRINTABLE, "Cleaning camera");
-	delete quadTree;
+
+	RELEASE(quadTree);
+	RELEASE(body);
 
 	return true;
 }
 
 update_status Camera3D::Update(float dt)
 {
+	body->Update();
 	return UPDATE_CONTINUE;
 }
 
@@ -464,6 +465,9 @@ bool Camera3D::LoadConfig(JsonParser& node)
 
 	LookAt(reference);
 	cameraScene.RecalculateProjection(cameraScene.aspectRatio);
+
+	if (body != nullptr) RELEASE(body);
+	body = new C_RigidBody(nullptr, 0, CollisionType::CAMERA);
 
 	return true;
 }

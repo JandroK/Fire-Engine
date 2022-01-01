@@ -84,11 +84,10 @@ update_status Physics3D::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		PSphere s(1);
+		/*PSphere s(2);
 		s.SetPos(app->camera->GetPosition().x, app->camera->GetPosition().y, app->camera->GetPosition().z);
 		float force = 30.0f;
-		//CollisionShape(s, RB)->applyCentralImpulse()
-		//AddBody(s)->Push(-(app->camera->GetFront().x * force), -(app->camera->GetFront().y * force), -(app->camera->GetFront().z * force));
+		CollisionShape(s, app->camera->body)->applyCentralImpulse({ (app->camera->GetFront().x * force), (app->camera->GetFront().y * force), (app->camera->GetFront().z * force) });*/
 	}
 
 	return UPDATE_CONTINUE;

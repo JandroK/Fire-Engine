@@ -63,7 +63,7 @@ public:
 	bool projectionIsDirty = false;
 
 	ComponentCamera cameraScene;
-	//C_RigidBody* body;
+	C_RigidBody* body;
 	LineSegment ray;
 
 	ImGuizmo::OPERATION operation;

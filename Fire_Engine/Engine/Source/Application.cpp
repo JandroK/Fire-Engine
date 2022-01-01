@@ -33,9 +33,9 @@ Application::Application() : maxFPS(60)
 	// Main Modules
 	AddModule(window);
 	AddModule(resourceManager);
+	AddModule(physics);
 	AddModule(camera);
 	AddModule(input);	
-	AddModule(physics);
 	AddModule(scene);	
 	
 	// Renderer last!
