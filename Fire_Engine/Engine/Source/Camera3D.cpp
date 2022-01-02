@@ -54,7 +54,7 @@ bool Camera3D::Start()
 
 	LookAt(float3::zero);
 
-	rigidBody = new C_RigidBody(nullptr, 0, CollisionType::CAMERA);
+	rigidBody = new C_RigidBody(nullptr, 0, CollisionType::CAMERA, true);
 
 	return ret;
 }
@@ -470,7 +470,7 @@ bool Camera3D::LoadConfig(JsonParser& node)
 	cameraScene.RecalculateProjection(cameraScene.aspectRatio);
 
 	if (rigidBody != nullptr) RELEASE(rigidBody);
-	rigidBody = new C_RigidBody(nullptr, 0, CollisionType::CAMERA);
+	rigidBody = new C_RigidBody(nullptr, 0, CollisionType::CAMERA, true);
 
 	return true;
 }

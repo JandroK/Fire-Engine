@@ -10,7 +10,7 @@
 #include "IconsFontAwesome5.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
-C_RigidBody::C_RigidBody(GameObject* obj, float mass, CollisionType type) : Component(obj), mass(mass), collisionType(type)
+C_RigidBody::C_RigidBody(GameObject* obj, float mass, CollisionType type, bool isKinematic) : Component(obj), mass(mass), collisionType(type), isKinematic(isKinematic)
 {
 	SetCollisionType(type);
 
@@ -104,8 +104,10 @@ void C_RigidBody::Update()
 {
 	if (collisionType == CollisionType::CAMERA)
 	{
-		body->getWorldTransform().setOrigin(app->camera->GetPosition());
-		body->setWorldTransform(body->getWorldTransform());
+		btTransform trans;
+		body->getMotionState()->getWorldTransform(trans);
+		trans.setOrigin(app->camera->GetPosition());
+		body->getMotionState()->setWorldTransform(trans);
 	}
 	else
 	{			

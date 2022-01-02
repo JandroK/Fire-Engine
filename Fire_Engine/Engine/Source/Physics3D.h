@@ -44,7 +44,7 @@ public:
 	btRigidBody* CollisionShape(const PPyramid& cone, C_RigidBody* component);
 	btRigidBody* CollisionShape(const PPlane& plane, C_RigidBody* component);
 
-	btRigidBody* AddBody(btCollisionShape* colShape, btTransform startTransform, float mass);
+	btRigidBody* AddBody(btCollisionShape* colShape, btTransform startTransform, float mass, bool isKinematic = false);
 	void DeleteBody(btRigidBody* body);
 
 	void AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB);
