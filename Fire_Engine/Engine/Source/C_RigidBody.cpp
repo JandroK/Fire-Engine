@@ -125,7 +125,11 @@ void C_RigidBody::OnEditor()
 	// Because OnStop the body don't exist but OnPlay can modify her parameters
 	if (ImGui::CollapsingHeader(ICON_FA_ATOM" Rigid Body", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Checkbox("Active    ", &active);
+		if (ImGui::Checkbox("Active    ", &active))
+		{
+			if (!active) app->physics->DesactivateCollision(body);
+			else app->physics->ActivateCollision(body);
+		}
 		ImGui::SameLine();
 		static const char* collisions[] = { "Box", "Sphere", "Capsule", "Cylinder", "Cone", "Plane" };
 		

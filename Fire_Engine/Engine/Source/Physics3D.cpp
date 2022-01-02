@@ -248,12 +248,20 @@ void Physics3D::DeleteBody(btRigidBody* body)
 		world->removeRigidBody(body);
 }
 
+void Physics3D::DesactivateCollision(btRigidBody* body)
+{
+	world->removeCollisionObject(body);
+}
+void Physics3D::ActivateCollision(btRigidBody* body)
+{
+	world->addCollisionObject(body);
+}
+
 // =============================================
-void Physics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB)
+void Physics3D::AddConstraintP2P(btRigidBody& bodyA, btRigidBody& bodyB, const vec3& anchorA, const vec3& anchorB)
 {
 	btTypedConstraint* p2p = new btPoint2PointConstraint(
-		*(bodyA.body),
-		*(bodyB.body),
+		bodyA, bodyB,
 		btVector3(anchorA.x, anchorA.y, anchorA.z),
 		btVector3(anchorB.x, anchorB.y, anchorB.z));
 	world->addConstraint(p2p);
@@ -261,11 +269,10 @@ void Physics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec
 	p2p->setDbgDrawSize(2.0f);
 }
 
-void Physics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisA, const vec3& axisB, bool disable_collision)
+void Physics3D::AddConstraintHinge(btRigidBody& bodyA, btRigidBody& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisA, const vec3& axisB, bool disable_collision)
 {
 	btHingeConstraint* hinge = new btHingeConstraint(
-		*(bodyA.body),
-		*(bodyB.body),
+		bodyA, bodyB,
 		btVector3(anchorA.x, anchorA.y, anchorA.z),
 		btVector3(anchorB.x, anchorB.y, anchorB.z),
 		btVector3(axisA.x, axisA.y, axisA.z),
