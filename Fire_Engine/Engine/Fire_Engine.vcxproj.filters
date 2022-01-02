@@ -700,6 +700,9 @@
     <ClInclude Include="Source\External\Extras\IconsFontAwesome5.h">
       <Filter>Sources\3rd Party\Extras</Filter>
     </ClInclude>
+    <ClInclude Include="Source\External\Imgui\imgui_stdlib.h">
+      <Filter>Sources\3rd Party\Imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -975,6 +978,9 @@
     </ClCompile>
     <ClCompile Include="Source\C_RigidBody.cpp">
       <Filter>PhysicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\External\Imgui\imgui_stdlib.cpp">
+      <Filter>Sources\3rd Party\Imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

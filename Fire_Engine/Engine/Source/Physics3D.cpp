@@ -152,9 +152,10 @@ bool Physics3D::CleanUp()
 		RELEASE(*it);
 	shapes.clear();
 
-	for (std::list<PhysBody3D*>::iterator it = bodies.begin(); it != bodies.end(); ++it)
-		RELEASE(*it);
+	/*for (std::vector<C_RigidBody*>::iterator it = bodies.begin(); it != bodies.end(); ++it)
+		RELEASE(*it);*/
 	bodies.clear();
+	bodiesNames.clear();
 
 	for (std::list<PhysVehicle3D*>::iterator it = vehicles.begin(); it != vehicles.end(); ++it)
 		RELEASE(*it);
@@ -171,7 +172,7 @@ btRigidBody* Physics3D::CollisionShape(const PCube& cube, C_RigidBody* component
 	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x * 0.5f, cube.size.y * 0.5f, cube.size.z * 0.5f));
 	btTransform startTransform;
 	startTransform.setFromOpenGLMatrix(&cube.transform);
-	return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic) ? component->GetMass() : 0.0f, component->isKinematic);
+	return AddBody(colShape, startTransform, component);
 }
 
 btRigidBody* Physics3D::CollisionShape(const PSphere& sphere, C_RigidBody* component)
@@ -179,7 +180,7 @@ btRigidBody* Physics3D::CollisionShape(const PSphere& sphere, C_RigidBody* compo
 	btCollisionShape* colShape = new btSphereShape(sphere.radius);
 	btTransform startTransform;
 	startTransform.setFromOpenGLMatrix(&sphere.transform);
-	return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic) ? component->GetMass() : 0.0f, component->isKinematic);
+	return AddBody(colShape, startTransform, component);
 }
 
 btRigidBody* Physics3D::CollisionShape(const PCapsule& capsule, C_RigidBody* component)
@@ -187,7 +188,7 @@ btRigidBody* Physics3D::CollisionShape(const PCapsule& capsule, C_RigidBody* com
 	btCollisionShape* colShape = new btCapsuleShape(capsule.radius, capsule.height);
 	btTransform startTransform;
 	startTransform.setFromOpenGLMatrix(&capsule.transform);
-	return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic)?component->GetMass() : 0.0f, component->isKinematic);
+	return AddBody(colShape, startTransform, component);
 }
 
 btRigidBody* Physics3D::CollisionShape(const PCylinder& cylinder, C_RigidBody* component)
@@ -195,7 +196,7 @@ btRigidBody* Physics3D::CollisionShape(const PCylinder& cylinder, C_RigidBody* c
 	btCollisionShape* colShape = new btCylinderShape(btVector3(cylinder.radius, cylinder.height * 0.5f, 0.0f));
 	btTransform startTransform;
 	startTransform.setFromOpenGLMatrix(&cylinder.transform);
-	return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic) ? component->GetMass() : 0.0f, component->isKinematic);
+	return AddBody(colShape, startTransform, component);
 }
 
 btRigidBody* Physics3D::CollisionShape(const PPyramid& cone, C_RigidBody* component)
@@ -203,7 +204,7 @@ btRigidBody* Physics3D::CollisionShape(const PPyramid& cone, C_RigidBody* compon
 	btCollisionShape* colShape = new btConeShape(cone.radius, cone.height);
 	btTransform startTransform;
 	startTransform.setFromOpenGLMatrix(&cone.transform);
-	return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic) ? component->GetMass() : 0.0f, component->isKinematic);
+	return AddBody(colShape, startTransform, component);
 }
 
 btRigidBody* Physics3D::CollisionShape(const PPlane& plane, C_RigidBody* component)
@@ -211,11 +212,12 @@ btRigidBody* Physics3D::CollisionShape(const PPlane& plane, C_RigidBody* compone
 	btCollisionShape* colShape = new btStaticPlaneShape(btVector3(plane.normal.x, plane.normal.y, plane.normal.z), plane.constant);
 	btTransform startTransform;
 	startTransform.setFromOpenGLMatrix(&plane.transform);
-	return AddBody(colShape, startTransform, (component->useGravity && !component->isKinematic) ? component->GetMass() : 0.0f, component->isKinematic);
+	return AddBody(colShape, startTransform, component);
 }
 
-btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTransform, float mass, bool isKinematic)
+btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTransform, C_RigidBody* component)
 {
+	float mass = (component->useGravity && !component->isKinematic) ? component->GetMass() : 0.0f;
 	shapes.push_back(colShape);
 
 	btVector3 localInertia(0, 0, 0);
@@ -227,25 +229,46 @@ btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTra
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
 
 	btRigidBody* body = new btRigidBody(rbInfo);
-	PhysBody3D* pbody = new PhysBody3D(body);
+	//PhysBody3D* pbody = new PhysBody3D(body);
 
-	if (isKinematic)
+	if (component->isKinematic)
 	{
 		body->setCollisionFlags(body->getFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
 		body->setActivationState(DISABLE_DEACTIVATION);
 	}		
 
-	body->setUserPointer(pbody);
+	//body->setUserPointer(pbody);
 	world->addRigidBody(body);
-	bodies.push_back(pbody);
+	bodies.push_back(component);
+	if(component->GetCollisionType() != CollisionType::CAMERA)
+		bodiesNames.push_back(component->GetOwner()->name);
+	else bodiesNames.push_back("Camera");
 
 	return body;
 }
 
-void Physics3D::DeleteBody(btRigidBody* body)
+void Physics3D::DeleteBody(C_RigidBody* body, std::string name)
 {
 	if (body != nullptr)
-		world->removeRigidBody(body);
+	{
+		world->removeRigidBody(body->GetBody());
+		for (std::vector<C_RigidBody*>::iterator i = bodies.begin(); i != bodies.end(); ++i)
+		{
+			if (*i._Ptr == body)
+			{
+				bodies.erase(i);
+				break;
+			}
+		}
+		for (std::vector<std::string>::iterator i = bodiesNames.begin(); i != bodiesNames.end(); ++i)
+		{
+			if (*i._Ptr == name)
+			{
+				bodiesNames.erase(i);
+				break;
+			}
+		}
+	}
 }
 
 void Physics3D::DesactivateCollision(btRigidBody* body)

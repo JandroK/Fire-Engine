@@ -44,14 +44,18 @@ public:
 	btRigidBody* CollisionShape(const PPyramid& cone, C_RigidBody* component);
 	btRigidBody* CollisionShape(const PPlane& plane, C_RigidBody* component);
 
-	btRigidBody* AddBody(btCollisionShape* colShape, btTransform startTransform, float mass, bool isKinematic = false);
-	void DeleteBody(btRigidBody* body);
+	btRigidBody* AddBody(btCollisionShape* colShape, btTransform startTransform, C_RigidBody* component);
+	void DeleteBody(C_RigidBody* body, std::string name);
 	void DesactivateCollision(btRigidBody* body);
 	void ActivateCollision(btRigidBody* body);
 
 	void AddConstraintP2P(btRigidBody& bodyA, btRigidBody& bodyB, const vec3& anchorA, const vec3& anchorB);
 	void AddConstraintHinge(btRigidBody& bodyA, btRigidBody& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
 
+	std::vector<C_RigidBody*> GetBodies() { return bodies; };
+	std::vector<std::string> GetBodiesNames() { return bodiesNames; };
+
+	std::vector<std::string> bodiesNames;
 private:
 	btDefaultCollisionConfiguration* collisionConfig = nullptr;
 	btCollisionDispatcher* dispatcher = nullptr;
@@ -63,7 +67,7 @@ private:
 	DebugDrawer* debugDraw = nullptr;
 
 	std::list<btCollisionShape*> shapes;
-	std::list<PhysBody3D*> bodies;
+	std::vector<C_RigidBody*> bodies;
 	std::list<btDefaultMotionState*> motions;
 	std::list<btTypedConstraint*> constraints;
 	std::list<PhysVehicle3D*> vehicles;

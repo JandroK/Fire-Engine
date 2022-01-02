@@ -79,10 +79,14 @@ void Inspector::DrawDefaultInspector()
 		gameObjectSelected->GetCompoments()[i]->OnEditor();
 		ImGui::Separator();
 	}
-	ImGui::NewLine();
-
 	// Draw Add Component button
+	ImGui::NewLine();
+	ImGui::NewLine();
+	ImGui::NewLine();
 	DrawAddComponet();
+	ImGui::NewLine();
+	ImGui::NewLine();
+	ImGui::NewLine();
 }
 
 void Inspector::RecursiveSetStaticObjects(GameObject* obj, bool ret)

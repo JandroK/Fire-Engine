@@ -28,6 +28,8 @@ public:
 	void Update() override;
 	void OnEditor() override;
 
+	void Combos();
+
 	void SetCollisionType(CollisionType type);
 	void ResetLocalValues();
 	void EditCollisionMesh();
@@ -37,6 +39,7 @@ public:
 	void CreateBody();
 	float GetMass() { return mass; };
 	btRigidBody* GetBody() { return body; };
+	CollisionType GetCollisionType() { return collisionType; };
 
 	void SetAsStatic();
 
@@ -69,4 +72,7 @@ private:
 	PPlane plane;
 
 	bool editMesh = false;
+	btScalar* matrix = nullptr;
+
+	std::vector<C_RigidBody*> constraintBodies;
 };
