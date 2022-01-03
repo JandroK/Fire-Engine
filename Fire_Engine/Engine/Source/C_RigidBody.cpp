@@ -19,10 +19,9 @@ C_RigidBody::C_RigidBody(GameObject* obj, float mass, CollisionType type, bool i
 	// Calculate offset CM
 	if (collisionType != CollisionType::CAMERA && static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER)))
 	{
-		OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
-		float3 posOBB = obb.CenterPoint();
+		float3 posBody = body->getCenterOfMassPosition();
 		float3 posObj = GetOwner()->transform->GetWorldPosition();
-		offset = posOBB - posObj;
+		offset = posBody - posObj;
 	}	
 }
 
@@ -124,11 +123,14 @@ void C_RigidBody::Update()
 	}
 	else
 	{			
-		
-		body->getWorldTransform().getOpenGLMatrix(matrix);
-		float4x4 CM = btScalarTofloat4x4(matrix);
-		CM.SetCol3(3, CM.Col3(3) - offset);
-		GetOwner()->transform->SetTransformMFromM(CM);
+		if (body->getActivationState() == 1)
+		{
+			body->getWorldTransform().getOpenGLMatrix(matrix);
+			float4x4 CM = btScalarTofloat4x4(matrix); 
+			//float3 f = quatRotate(body->getOrientation(), offset);
+			CM.SetCol3(3, CM.Col3(3) - offset);
+			GetOwner()->transform->SetTransformMFromM(CM);
+		}
 	}
 }
 
