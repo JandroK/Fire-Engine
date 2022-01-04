@@ -3,6 +3,7 @@
 #include "PhysBody3D.h"
 #include "glmath.h"
 #include "Color.h"
+#include "Primitive.h"
 
 class btRaycastVehicle;
 struct PhysBody3D;
@@ -17,9 +18,9 @@ enum State
 
 struct Wheel
 {
-	vec3 connection; // origin of the ray. Must come from within the chassis
-	vec3 direction;
-	vec3 axis;
+	float3 connection; // origin of the ray. Must come from within the chassis
+	float3 direction;
+	float3 axis;
 	float suspensionRestLength; // max length for suspension in meters
 	float radius;
 	float width;
@@ -35,8 +36,8 @@ struct VehicleInfo
 	~VehicleInfo();
 	void SetColorWheels(int index, Color color) { wheels[index].color = color;	}
 
-	vec3 chassis_size;
-	vec3 chassis_offset;
+	float3 chassis_size;
+	float3 chassis_offset;
 
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
@@ -66,10 +67,14 @@ public:
 	Color GetColor() { return color; };
 	void SetColor(Color pColor) { color = pColor; };
 
-public:
-	VehicleInfo info;
 	btRaycastVehicle* vehicle = nullptr;
+	State state = State::IDLE;
+
+private:
+	VehicleInfo info;
+
+	PCube chassis;
+	PCylinder wheel;
 
 	Color color = Green;
-	State state = State::IDLE;
 };

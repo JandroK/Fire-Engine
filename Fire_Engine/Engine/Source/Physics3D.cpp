@@ -247,6 +247,58 @@ btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTra
 	return body;
 }
 
+PhysVehicle3D* Physics3D::AddVehicle(const VehicleInfo& info)
+{
+	btCompoundShape* comShape = new btCompoundShape();
+	shapes.push_back(comShape);
+
+	btCollisionShape* chassis = new btBoxShape(btVector3(info.chassis_size.x * 0.5f, info.chassis_size.y * 0.5f, info.chassis_size.z * 0.5f));
+	shapes.push_back(chassis);
+
+	btTransform trans;
+	trans.setIdentity();
+	trans.setOrigin(btVector3(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z));
+
+	comShape->addChildShape(trans, chassis);
+
+	btVector3 localInertia(0, 0, 0);
+	comShape->calculateLocalInertia(info.mass, localInertia);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(btTransform::getIdentity());
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(info.mass, myMotionState, comShape, localInertia);
+
+	btRigidBody* body = new btRigidBody(rbInfo);
+	body->setContactProcessingThreshold(BT_LARGE_FLOAT);
+	body->setActivationState(DISABLE_DEACTIVATION);
+
+	world->addRigidBody(body);
+
+	btRaycastVehicle::btVehicleTuning tuning;
+	tuning.m_frictionSlip = info.frictionSlip;
+	tuning.m_maxSuspensionForce = info.maxSuspensionForce;
+	tuning.m_maxSuspensionTravelCm = info.maxSuspensionTravelCm;
+	tuning.m_suspensionCompression = info.suspensionCompression;
+	tuning.m_suspensionDamping = info.suspensionDamping;
+	tuning.m_suspensionStiffness = info.suspensionStiffness;
+
+	btRaycastVehicle* vehicle = new btRaycastVehicle(tuning, body, vehicleRaycaster);
+
+	for (int i = 0; i < info.num_wheels; ++i)
+	{
+		btVector3 conn(info.wheels[i].connection.x, info.wheels[i].connection.y, info.wheels[i].connection.z);
+		btVector3 dir(info.wheels[i].direction.x, info.wheels[i].direction.y, info.wheels[i].direction.z);
+		btVector3 axis(info.wheels[i].axis.x, info.wheels[i].axis.y, info.wheels[i].axis.z);
+
+		vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
+	}
+
+	PhysVehicle3D* pvehicle = new PhysVehicle3D(body, vehicle, info);
+	world->addVehicle(vehicle);
+	vehicles.push_back(pvehicle);
+
+	return pvehicle;
+}
+
 void Physics3D::DeleteBody(C_RigidBody* body, std::string name)
 {
 	if (body != nullptr)
@@ -281,26 +333,17 @@ void Physics3D::ActivateCollision(btRigidBody* body)
 }
 
 // =============================================
-void Physics3D::AddConstraintP2P(btRigidBody& bodyA, btRigidBody& bodyB, const vec3& anchorA, const vec3& anchorB)
+void Physics3D::AddConstraintP2P(btRigidBody& bodyA, btRigidBody& bodyB, const float3& anchorA, const float3& anchorB)
 {
-	btTypedConstraint* p2p = new btPoint2PointConstraint(
-		bodyA, bodyB,
-		btVector3(anchorA.x, anchorA.y, anchorA.z),
-		btVector3(anchorB.x, anchorB.y, anchorB.z));
+	btTypedConstraint* p2p = new btPoint2PointConstraint(bodyA, bodyB, anchorA, anchorB);
 	world->addConstraint(p2p);
 	constraints.push_back(p2p);
 	p2p->setDbgDrawSize(2.0f);
 }
 
-void Physics3D::AddConstraintHinge(btRigidBody& bodyA, btRigidBody& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisA, const vec3& axisB, bool disable_collision)
+void Physics3D::AddConstraintHinge(btRigidBody& bodyA, btRigidBody& bodyB, const float3& anchorA, const float3& anchorB, const float3& axisA, const float3& axisB, bool disable_collision)
 {
-	btHingeConstraint* hinge = new btHingeConstraint(
-		bodyA, bodyB,
-		btVector3(anchorA.x, anchorA.y, anchorA.z),
-		btVector3(anchorB.x, anchorB.y, anchorB.z),
-		btVector3(axisA.x, axisA.y, axisA.z),
-		btVector3(axisB.x, axisB.y, axisB.z));
-
+	btHingeConstraint* hinge = new btHingeConstraint(bodyA, bodyB, anchorA, anchorB, axisA, axisB);
 	world->addConstraint(hinge, disable_collision);
 	constraints.push_back(hinge);
 	hinge->setDbgDrawSize(2.0f);

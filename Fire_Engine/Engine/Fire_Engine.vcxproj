@@ -269,6 +269,7 @@
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\MeshRenderer.h" />
     <ClInclude Include="Source\ModelImporter.h" />
+    <ClInclude Include="Source\ModuleCar.h" />
     <ClInclude Include="Source\PhysBody3D.h" />
     <ClInclude Include="Source\Physics3D.h" />
     <ClInclude Include="Source\PhysVehicle3D.h" />
@@ -365,6 +366,7 @@
     <ClCompile Include="Source\glmath.cpp" />
     <ClCompile Include="Source\MeshRenderer.cpp" />
     <ClCompile Include="Source\ModelImporter.cpp" />
+    <ClCompile Include="Source\ModuleCar.cpp" />
     <ClCompile Include="Source\PhysBody3D.cpp" />
     <ClCompile Include="Source\Physics3D.cpp" />
     <ClCompile Include="Source\PhysVehicle3D.cpp" />

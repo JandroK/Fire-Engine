@@ -20,6 +20,7 @@ class btDefaultMotionState;
 class btTypedConstraint;
 struct PhysBody3D;
 struct PhysVehicle3D;
+struct VehicleInfo;
 
 class btRigidBody;
 class C_RigidBody;
@@ -45,12 +46,13 @@ public:
 	btRigidBody* CollisionShape(const PPlane& plane, C_RigidBody* component);
 
 	btRigidBody* AddBody(btCollisionShape* colShape, btTransform startTransform, C_RigidBody* component);
+	PhysVehicle3D* AddVehicle(const VehicleInfo& info);
 	void DeleteBody(C_RigidBody* body, std::string name);
 	void DesactivateCollision(btRigidBody* body);
 	void ActivateCollision(btRigidBody* body);
 
-	void AddConstraintP2P(btRigidBody& bodyA, btRigidBody& bodyB, const vec3& anchorA, const vec3& anchorB);
-	void AddConstraintHinge(btRigidBody& bodyA, btRigidBody& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
+	void AddConstraintP2P(btRigidBody& bodyA, btRigidBody& bodyB, const float3& anchorA, const float3& anchorB);
+	void AddConstraintHinge(btRigidBody& bodyA, btRigidBody& bodyB, const float3& anchorA, const float3& anchorB, const float3& axisS, const float3& axisB, bool disable_collision = false);
 
 	std::vector<C_RigidBody*> GetBodies() { return bodies; };
 	std::vector<std::string> GetBodiesNames() { return bodiesNames; };

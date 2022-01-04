@@ -228,7 +228,7 @@ void C_RigidBody::Combos()
 						float r1, r2;
 						body->getCollisionShape()->getBoundingSphere(center, r1);
 						body2->getCollisionShape()->getBoundingSphere(center, r2);
-						app->physics->AddConstraintP2P(*body, *body2, (r1, r1, r1), (r2, r2, r2));
+						app->physics->AddConstraintP2P(*body, *body2, float3(r1, r1, r1), float3(r2, r2, r2));
 					}
 				}				
 			}

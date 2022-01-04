@@ -59,6 +59,7 @@ public :
 	PCube(float3 _size, float3 pos);
 	PCube(float sizeX, float sizeY, float sizeZ);
 	void InnerMesh();
+	void InnerRender() const;
 public:
 	float3 size = {1, 1, 1 };
 };
@@ -89,6 +90,7 @@ public:
 	PCylinder();
 	PCylinder(float radius, float height, int sectorCount);
 	void InnerMesh();
+	void InnerRender() const;
 
 private:
 	std::vector<float> GetUnitCircleVertices();

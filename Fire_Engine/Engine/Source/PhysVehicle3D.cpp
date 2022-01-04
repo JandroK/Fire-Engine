@@ -1,7 +1,7 @@
 #include "PhysVehicle3D.h"
-#include "Globals.h"
-#include "Primitive.h"
+#include "Application.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
+#include "Scene.h"
 
 // ----------------------------------------------------------------------------
 VehicleInfo::~VehicleInfo()
@@ -13,6 +13,13 @@ VehicleInfo::~VehicleInfo()
 // ----------------------------------------------------------------------------
 PhysVehicle3D::PhysVehicle3D(btRigidBody* body, btRaycastVehicle* vehicle, const VehicleInfo& info) : PhysBody3D(body), vehicle(vehicle), info(info)
 {
+	/*wheel.InnerMesh();
+	wheel.mesh->LoadToMemory();
+	wheel.mesh->GenerateBounds();
+
+	chassis.InnerMesh();
+	chassis.mesh->LoadToMemory();
+	chassis.mesh->GenerateBounds();*/
 }
 
 // ----------------------------------------------------------------------------
@@ -24,12 +31,10 @@ PhysVehicle3D::~PhysVehicle3D()
 // ----------------------------------------------------------------------------
 void PhysVehicle3D::Render()
 {
-	PCylinder wheel;
-
 	for (int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
-		wheel.radius = info.wheels[0].radius;
-		wheel.height = info.wheels[0].width;
+		wheel.radius = info.wheels[i].radius;
+		wheel.height = info.wheels[i].width;
 
 		vehicle->updateWheelTransform(i);
 		vehicle->getWheelInfo(i).m_worldTransform.getOpenGLMatrix(&wheel.transform);
@@ -42,7 +47,7 @@ void PhysVehicle3D::Render()
 		wheel.Render();
 	}
 
-	PCube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
+	chassis.size = float3(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
@@ -51,7 +56,7 @@ void PhysVehicle3D::Render()
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
 	chassis.transform.M[14] += offset.getZ();
-
+	chassis.color.Set(3.872222, 0.579737, 0.157043);
 
 	chassis.Render();
 }

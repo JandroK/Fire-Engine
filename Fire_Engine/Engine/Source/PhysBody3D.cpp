@@ -9,8 +9,8 @@ PhysBody3D::PhysBody3D(btRigidBody* body) : body(body)
 // ---------------------------------------------------------
 PhysBody3D::~PhysBody3D()
 {
-	delete body;
-	body = nullptr;
+	//delete body;
+	//body = nullptr;
 }
 
 // ---------------------------------------------------------
