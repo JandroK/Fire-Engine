@@ -7,6 +7,7 @@
 class GameObject;
 class Mesh;
 class ComponentCamera;
+class CarControls;
 
 class Scene : public Module
 {
@@ -31,6 +32,7 @@ public:
 	void LoadSceneRequest() { loadSceneRequest = true; }
 	GameObject* root;
 	ComponentCamera* mainCamera = nullptr;
+	CarControls* mainCar;
 
 	std::vector<GameObject*> destroyList;
 

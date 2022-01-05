@@ -1,5 +1,4 @@
 #pragma once
-#include "Module.h"
 #include "LinearMath/btVector3.h"
 struct PhysVehicle3D;
 
@@ -7,22 +6,18 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 17.0f * DEGTORAD
 #define BRAKE_POWER 50.0f
 
-class Car : public Module
+class CarControls
 {
 public:
-	Car(Application* app, bool start_enabled = true);
-	virtual ~Car();
+	CarControls();
+	~CarControls();
 
-	bool Start() override;
-	update_status Update(float dt) override;
-	update_status PostUpdate(float dt) override;
-	bool CleanUp() override;
-
+	update_status Update();
 	void PlayerControls();
 	void AssistDirection(float hardness);
 
-private:
 	PhysVehicle3D* vehicle = nullptr;
+private:
 	float acceleration = 0.0f;
 	float vel = 0.0f;
 	float turn = 0.0f;

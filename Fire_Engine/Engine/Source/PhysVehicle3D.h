@@ -67,6 +67,7 @@ public:
 
 	btRaycastVehicle* vehicle = nullptr;
 	State state = State::IDLE;
+	bool mainV = false;
 
 private:
 	VehicleInfo info;

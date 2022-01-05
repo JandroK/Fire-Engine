@@ -6,6 +6,8 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Camera3D.h"
+#include "Scene.h"
+#include "CarControls.h"
 
 #include "ImGui/imgui.h"
 #include "Imgui/imgui_stdlib.h"
@@ -183,7 +185,22 @@ void C_RigidBody::OnEditor()
 		}
 		else
 		{
-			ImGui::Text("You are a car");
+			if (ImGui::CollapsingHeader("Vehicle Tuning"))
+			{
+				if (ImGui::Checkbox("Main Vehicle", &vehicle->mainV))
+				{
+					if (app->scene->mainCar->vehicle != nullptr)
+						app->scene->mainCar->vehicle->mainV = false;
+					if (vehicle->mainV)
+					{
+						app->scene->mainCar->vehicle = vehicle;
+					}
+					else
+						app->scene->mainCar->vehicle = nullptr;
+				}
+				ImGui::Separator();
+			}
+			
 		}
 	}
 }

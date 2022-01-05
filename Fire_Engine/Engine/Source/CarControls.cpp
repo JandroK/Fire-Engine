@@ -1,36 +1,22 @@
 #include "Application.h"
-#include "ModuleCar.h"
+#include "CarControls.h"
 #include "Input.h"
 
 #include "PhysVehicle3D.h"
 #include "Physics3D.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
-Car::Car(Application* app, bool start_enabled) : Module(app, start_enabled)
+CarControls::CarControls()
 {
 }
 
-Car::~Car()
+CarControls::~CarControls()
 {
 }
 
-bool Car::Start()
-{	
-	//VehicleInfo car;
-	//vehicle = app->physics->AddVehicle(car);
-
-	/*vehicle->body->setFriction(1);
-	vehicle->collision_listeners.push_back(this);
-	vehicle->body->setUserPointer(vehicle);
-	vehicle->body->setWorldTransform(btTransform::getIdentity());
-	vehicle->SetPos(0, 5, 0);*/
-
-	return true;
-}
-
-update_status Car::Update(float dt)
+update_status CarControls::Update()
 {
-	/*brake = 2.5f;
+	brake = 2.5f;
 	turn = acceleration = 0.0f;
 	AssistDirection(90.0f);
 	forwardVector = vehicle->vehicle->getForwardVector().normalize();
@@ -40,27 +26,16 @@ update_status Car::Update(float dt)
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
-	vehicle->Brake(brake);*/
+	vehicle->Brake(brake);
 
 	return update_status::UPDATE_CONTINUE;
 }
 
-update_status Car::PostUpdate(float dt)
+void CarControls::PlayerControls()
 {
-	//vehicle->Render();
-	return update_status::UPDATE_CONTINUE;
-}
-
-bool Car::CleanUp()
-{
-	return true;
-}
-
-void Car::PlayerControls()
-{
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT &&
+	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT &&
 		(vehicle->state != State::IN_AIR || vehicle->state == State::TURBO) &&
-		App->input->GetKey(SDL_SCANCODE_S) != KEY_REPEAT)
+		app->input->GetKey(SDL_SCANCODE_S) != KEY_REPEAT)
 	{
 		vel = MAX_ACCELERATION * 2;
 		vehicle->state = TURBO;
@@ -128,7 +103,7 @@ void Car::PlayerControls()
 	}*/
 }
 
-void Car::AssistDirection(float hardness)
+void CarControls::AssistDirection(float hardness)
 {
 	// FUYM which reduces the amount of spin the wheel can exert relative to the amount of speed 
 	float turnDegrees = (TURN_DEGREES / DEGTORAD);

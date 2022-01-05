@@ -700,7 +700,7 @@
     <ClInclude Include="Source\External\Imgui\imgui_stdlib.h">
       <Filter>Sources\3rd Party\Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleCar.h" />
+    <ClInclude Include="Source\CarControls.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -977,7 +977,7 @@
     <ClCompile Include="Source\External\Imgui\imgui_stdlib.cpp">
       <Filter>Sources\3rd Party\Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleCar.cpp" />
+    <ClCompile Include="Source\CarControls.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\External\Assimp\include\color4.inl">

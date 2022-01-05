@@ -10,7 +10,6 @@
 #include "Editor.h"
 #include "DTEngine.h"
 #include "Physics3D.h"
-#include "ModuleCar.h"
 
 using namespace std;
 
@@ -25,7 +24,6 @@ Application::Application() : maxFPS(60)
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
 	scene = new Scene(this);
-	car = new Car(this);
 	editor = new Editor(this);
 
 	// The order of calls is very important!
@@ -36,7 +34,6 @@ Application::Application() : maxFPS(60)
 	AddModule(window);
 	AddModule(resourceManager);
 	AddModule(physics);
-	AddModule(car);	
 	AddModule(camera);
 	AddModule(input);	
 	AddModule(scene);	

@@ -23,7 +23,6 @@ class Input;
 class Camera3D;
 class Editor;
 class Physics3D;
-class Car;
 
 class Application
 {
@@ -35,7 +34,6 @@ public:
 	Input* input = nullptr;
 	Renderer3D* renderer3D = nullptr;
 	Scene* scene = nullptr;
-	Car* car = nullptr;
 	Editor* editor = nullptr;
 
 	std::vector<Module*> listModules;

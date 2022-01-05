@@ -24,6 +24,7 @@
 #include "Texture.h"
 #include "QuadTreeBase.h"
 #include "Window.h"
+#include "CarControls.h"
 
 #include"MathGeoLib/include/Math/Quat.h"
 
@@ -79,6 +80,8 @@ bool Scene::Start()
 	transformCamera->SetEulerRotation(float3(145.0f, 30.0f, -160.0f));
 	transformCamera->SetTransformMFromM(transformCamera->GetLocalTransform());
 
+	mainCar = new CarControls();
+
 	return true;
 }
 
@@ -103,6 +106,7 @@ update_status Scene::Update(float dt)
 		app->editor->DestroySelectedAsset();
 
 	UpdateGameObjects();
+	if(mainCar->vehicle != nullptr) mainCar->Update();
 
 	return update_status::UPDATE_CONTINUE;
 }
