@@ -2,10 +2,6 @@
 #include "LinearMath/btVector3.h"
 struct PhysVehicle3D;
 
-#define MAX_ACCELERATION 400.0f
-#define TURN_DEGREES 17.0f * DEGTORAD
-#define BRAKE_POWER 50.0f
-
 class CarControls
 {
 public:
@@ -16,7 +12,10 @@ public:
 	void PlayerControls();
 	void AssistDirection(float hardness);
 
+	void OnEditor();
+
 	PhysVehicle3D* vehicle = nullptr;
+
 private:
 	float acceleration = 0.0f;
 	float vel = 0.0f;
@@ -27,5 +26,10 @@ private:
 
 	btVector3 forwardVector;
 	btVector3 perpendicularVector;
+
+	float maxAcceleration = 400.0f;
+	float maxTurnDegrees = 17.0f;
+	float breakPower = 30.0f;
+	float hardnessPS = 90.0f;
 };
 

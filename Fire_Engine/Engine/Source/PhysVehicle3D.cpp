@@ -26,7 +26,7 @@ VehicleInfo::VehicleInfo(float3 size, float mass)
 	float half_width = chassis_size.x * 0.5f;
 	float half_length = chassis_size.z * 0.25f;
 	float3 direction(0, -1, 0);
-	float3 axis(1, 0, 0);
+	float3 axis(-1, 0, 0);
 
 	num_wheels = 4;
 	wheels = new Wheel[4];
@@ -90,13 +90,6 @@ VehicleInfo::~VehicleInfo()
 // ----------------------------------------------------------------------------
 PhysVehicle3D::PhysVehicle3D(btRaycastVehicle* vehicle, const VehicleInfo& info) : vehicle(vehicle), info(info)
 {
-	/*wheel.InnerMesh();
-	wheel.mesh->LoadToMemory();
-	wheel.mesh->GenerateBounds();
-
-	chassis.InnerMesh();
-	chassis.mesh->LoadToMemory();
-	chassis.mesh->GenerateBounds();*/
 }
 
 // ----------------------------------------------------------------------------

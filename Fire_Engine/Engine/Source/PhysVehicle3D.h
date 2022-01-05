@@ -68,9 +68,9 @@ public:
 	btRaycastVehicle* vehicle = nullptr;
 	State state = State::IDLE;
 	bool mainV = false;
+	VehicleInfo info;
 
 private:
-	VehicleInfo info;
 
 	PCube chassis;
 	PCylinder wheel;

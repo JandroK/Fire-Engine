@@ -198,7 +198,35 @@ void C_RigidBody::OnEditor()
 					else
 						app->scene->mainCar->vehicle = nullptr;
 				}
-				ImGui::Separator();
+				app->scene->mainCar->OnEditor();
+
+				char nums[] = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'};
+				float size = ImGui::GetWindowSize().x - ImGui::CalcTextSize("Point Connection:").x - 35;
+
+				for (int i = 0; i < vehicle->info.num_wheels; i++)
+				{
+					std::string titleWheel = "Wheel ";
+					titleWheel += nums[i];
+					if (ImGui::CollapsingHeader(titleWheel.c_str()))
+					{
+						titleWheel += "m_chassisConnectionPointCS";
+						ImGui::Text("Point Connection:"); ImGui::SameLine();
+						ImGui::PushItemWidth(size);
+						ImGui::DragFloat3(titleWheel.c_str(), vehicle->vehicle->getWheelInfo(i).m_chassisConnectionPointCS);
+						ImGui::PopItemWidth();
+
+						titleWheel += "m_wheelsRadius";
+						ImGui::Text("Wheel Radius:    "); ImGui::SameLine();
+						ImGui::PushItemWidth(size);
+						if (ImGui::DragFloat(titleWheel.c_str(), &vehicle->vehicle->getWheelInfo(i).m_wheelsRadius, 0.1f, 0, INFINITE))
+							vehicle->info.wheels[i].radius = vehicle->vehicle->getWheelInfo(i).m_wheelsRadius;
+						ImGui::PopItemWidth();
+
+						ImGui::Checkbox("Drive", &vehicle->info.wheels[i].drive); ImGui::SameLine();
+						ImGui::Checkbox("Break", &vehicle->info.wheels[i].brake); ImGui::SameLine();
+						ImGui::Checkbox("Steering", &vehicle->info.wheels[i].steering);
+					}					
+				}				
 			}
 			
 		}
