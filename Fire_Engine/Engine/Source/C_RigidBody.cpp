@@ -2,20 +2,19 @@
 #include "Application.h"
 
 #include "Physics3D.h"
+#include "PhysVehicle3D.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Camera3D.h"
 
 #include "ImGui/imgui.h"
+#include "Imgui/imgui_stdlib.h"
 #include "IconsFontAwesome5.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
-
-#include "Imgui/imgui_stdlib.h"
 
 C_RigidBody::C_RigidBody(GameObject* obj, float mass, CollisionType type, bool isKinematic) : Component(obj), mass(mass), collisionType(type), isKinematic(isKinematic)
 {
 	SetCollisionType(type);
-	matrix = new btScalar[15];
 	// Calculate offset CM
 	if (collisionType != CollisionType::CAMERA && static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER)))
 	{
@@ -37,13 +36,7 @@ C_RigidBody::~C_RigidBody()
 			app->physics->DeleteBody(this, "Camera");
 		else app->physics->DeleteBody(this, GetOwner()->name);
 
-	}
-	// Why explode?
-	/*
-		if (matrix != nullptr) delete[] matrix;
-		matrix = nullptr;
-	*/
-	
+	}	
 }
 
 void C_RigidBody::SetBoundingBox()
@@ -121,16 +114,10 @@ void C_RigidBody::Update()
 		trans.setOrigin(app->camera->GetPosition());
 		body->getMotionState()->setWorldTransform(trans);
 	}
-	else
-	{			
-		if (body->getActivationState() == 1)
-		{
-			body->getWorldTransform().getOpenGLMatrix(matrix);
-			float4x4 CM = btScalarTofloat4x4(matrix); 
-			//float3 f = quatRotate(body->getOrientation(), offset);
-			CM.SetCol3(3, CM.Col3(3) - offset);
-			GetOwner()->transform->SetTransformMFromM(CM);
-		}
+	else if (body->getActivationState() == 1 || vehicle != nullptr)
+	{
+		float4x4 CM2 = float4x4::FromTRS(body->getCenterOfMassPosition() - offset, body->getWorldTransform().getRotation(), GetOwner()->transform->GetWorldScale());
+		GetOwner()->transform->SetTransformMFromM(CM2);
 	}
 }
 
@@ -181,6 +168,23 @@ void C_RigidBody::OnEditor()
 		ImGui::Checkbox("Is Kinematic", &isKinematic);
 
 		Combos();
+
+		if (vehicle == nullptr)
+		{			
+			float offset = (ImGui::GetWindowContentRegionMax().x - ImGui::CalcTextSize("Convert to Vehicle").x) / 2;
+			ImGui::SetCursorPosX(offset);
+
+			if (ImGui::Button("Convert to Vehicle"))
+			{
+				if (mass <= 0) mass = 1;
+				VehicleInfo car(static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB.Size(), mass);
+				vehicle = app->physics->AddVehicle(car, body);
+			}
+		}
+		else
+		{
+			ImGui::Text("You are a car");
+		}
 	}
 }
 

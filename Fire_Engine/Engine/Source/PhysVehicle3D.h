@@ -1,12 +1,10 @@
 #pragma once
 
-#include "PhysBody3D.h"
 #include "glmath.h"
 #include "Color.h"
 #include "Primitive.h"
 
 class btRaycastVehicle;
-struct PhysBody3D;
 
 enum State
 {
@@ -33,12 +31,11 @@ struct Wheel
 
 struct VehicleInfo
 {
+	VehicleInfo(float3 size, float mass);
 	~VehicleInfo();
 	void SetColorWheels(int index, Color color) { wheels[index].color = color;	}
 
 	float3 chassis_size;
-	float3 chassis_offset;
-
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
 	float suspensionCompression; // default to 0.83
@@ -52,13 +49,14 @@ struct VehicleInfo
 };
 
 
-struct PhysVehicle3D : public PhysBody3D
+struct PhysVehicle3D
 {
 public:
-	PhysVehicle3D(btRigidBody* body, btRaycastVehicle* vehicle, const VehicleInfo& info);
+	PhysVehicle3D(btRaycastVehicle* vehicle, const VehicleInfo& info);
 	~PhysVehicle3D();
 
 	void Render();
+
 	void ApplyEngineForce(float force);
 	void Brake(float force);
 	void Turn(float degrees);

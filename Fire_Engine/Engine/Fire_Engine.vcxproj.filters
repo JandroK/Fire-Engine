@@ -688,9 +688,6 @@
     <ClInclude Include="Source\Physics3D.h">
       <Filter>PhysicsEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PhysBody3D.h">
-      <Filter>PhysicsEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PhysVehicle3D.h">
       <Filter>PhysicsEngine</Filter>
     </ClInclude>
@@ -969,9 +966,6 @@
     </ClCompile>
     <ClCompile Include="Source\DTEngine.cpp" />
     <ClCompile Include="Source\Physics3D.cpp">
-      <Filter>PhysicsEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PhysBody3D.cpp">
       <Filter>PhysicsEngine</Filter>
     </ClCompile>
     <ClCompile Include="Source\PhysVehicle3D.cpp">

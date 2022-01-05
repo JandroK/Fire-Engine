@@ -5,7 +5,6 @@
 #include "Camera3D.h"
 #include "Scene.h"
 
-#include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
 #include "C_RigidBody.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
@@ -122,6 +121,11 @@ update_status Physics3D::Update(float dt)
 
 update_status Physics3D::PostUpdate(float dt)
 {
+	for (int i = 0; i < vehicles.size(); i++)
+	{
+		vehicles.at(i)->Render();
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -157,7 +161,7 @@ bool Physics3D::CleanUp()
 	bodies.clear();
 	bodiesNames.clear();
 
-	for (std::list<PhysVehicle3D*>::iterator it = vehicles.begin(); it != vehicles.end(); ++it)
+	for (std::vector<PhysVehicle3D*>::iterator it = vehicles.begin(); it != vehicles.end(); ++it)
 		RELEASE(*it);
 	vehicles.clear();
 
@@ -247,31 +251,10 @@ btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTra
 	return body;
 }
 
-PhysVehicle3D* Physics3D::AddVehicle(const VehicleInfo& info)
+PhysVehicle3D* Physics3D::AddVehicle(const VehicleInfo& info, btRigidBody* body)
 {
-	btCompoundShape* comShape = new btCompoundShape();
-	shapes.push_back(comShape);
-
-	btCollisionShape* chassis = new btBoxShape(btVector3(info.chassis_size.x * 0.5f, info.chassis_size.y * 0.5f, info.chassis_size.z * 0.5f));
-	shapes.push_back(chassis);
-
-	btTransform trans;
-	trans.setIdentity();
-	trans.setOrigin(btVector3(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z));
-
-	comShape->addChildShape(trans, chassis);
-
-	btVector3 localInertia(0, 0, 0);
-	comShape->calculateLocalInertia(info.mass, localInertia);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(btTransform::getIdentity());
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(info.mass, myMotionState, comShape, localInertia);
-
-	btRigidBody* body = new btRigidBody(rbInfo);
 	body->setContactProcessingThreshold(BT_LARGE_FLOAT);
 	body->setActivationState(DISABLE_DEACTIVATION);
-
-	world->addRigidBody(body);
 
 	btRaycastVehicle::btVehicleTuning tuning;
 	tuning.m_frictionSlip = info.frictionSlip;
@@ -292,7 +275,7 @@ PhysVehicle3D* Physics3D::AddVehicle(const VehicleInfo& info)
 		vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
 	}
 
-	PhysVehicle3D* pvehicle = new PhysVehicle3D(body, vehicle, info);
+	PhysVehicle3D* pvehicle = new PhysVehicle3D(vehicle, info);
 	world->addVehicle(vehicle);
 	vehicles.push_back(pvehicle);
 
@@ -304,6 +287,18 @@ void Physics3D::DeleteBody(C_RigidBody* body, std::string name)
 	if (body != nullptr)
 	{
 		world->removeRigidBody(body->GetBody());
+		if (body->GetVehicle() != nullptr)
+		{
+			world->removeVehicle(body->GetVehicle()->vehicle);
+			for (std::vector<PhysVehicle3D*>::iterator i = vehicles.begin(); i != vehicles.end(); ++i)
+			{
+				if (*i._Ptr == body->GetVehicle())
+				{
+					vehicles.erase(i);
+					break;
+				}
+			}
+		}
 		for (std::vector<C_RigidBody*>::iterator i = bodies.begin(); i != bodies.end(); ++i)
 		{
 			if (*i._Ptr == body)

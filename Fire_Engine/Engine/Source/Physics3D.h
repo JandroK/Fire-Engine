@@ -18,7 +18,6 @@ class DebugDrawer;
 class btCollisionShape;
 class btDefaultMotionState;
 class btTypedConstraint;
-struct PhysBody3D;
 struct PhysVehicle3D;
 struct VehicleInfo;
 
@@ -46,7 +45,7 @@ public:
 	btRigidBody* CollisionShape(const PPlane& plane, C_RigidBody* component);
 
 	btRigidBody* AddBody(btCollisionShape* colShape, btTransform startTransform, C_RigidBody* component);
-	PhysVehicle3D* AddVehicle(const VehicleInfo& info);
+	PhysVehicle3D* AddVehicle(const VehicleInfo& info, btRigidBody* body);
 	void DeleteBody(C_RigidBody* body, std::string name);
 	void DesactivateCollision(btRigidBody* body);
 	void ActivateCollision(btRigidBody* body);
@@ -72,7 +71,7 @@ private:
 	std::vector<C_RigidBody*> bodies;
 	std::list<btDefaultMotionState*> motions;
 	std::list<btTypedConstraint*> constraints;
-	std::list<PhysVehicle3D*> vehicles;
+	std::vector<PhysVehicle3D*> vehicles;
 
 	bool debug = true;
 };

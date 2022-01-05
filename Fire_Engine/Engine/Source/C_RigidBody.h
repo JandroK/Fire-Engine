@@ -4,6 +4,7 @@
 
 class GameObject;
 class btRigidBody;
+struct PhysVehicle3D;
 
 enum class CollisionType
 {
@@ -39,6 +40,7 @@ public:
 	void CreateBody();
 	float GetMass() { return mass; };
 	btRigidBody* GetBody() { return body; };
+	PhysVehicle3D* GetVehicle() { return vehicle; };
 	CollisionType GetCollisionType() { return collisionType; };
 
 	void SetAsStatic();
@@ -70,9 +72,9 @@ private:
 	PCylinder cylinder;
 	PPyramid cone;
 	PPlane plane;
+	PhysVehicle3D* vehicle = nullptr;
 
 	bool editMesh = false;
-	btScalar* matrix = nullptr;
 
 	std::vector<C_RigidBody*> constraintBodies;
 };

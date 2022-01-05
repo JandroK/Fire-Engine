@@ -32,6 +32,7 @@ public:
 	void			SetScale(float x, float y, float z);
 	void			SetScale(float3 scale);
 	void			FromRS(const Quat& rotate, const float3& scale);
+	float4x4		mat4x4ToFloat4x4();
 
 	void SetVertices(float vertices[], int size);
 	void SetTexCoords(float texCoords[], int size);

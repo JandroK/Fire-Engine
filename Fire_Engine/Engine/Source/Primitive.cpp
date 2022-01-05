@@ -124,6 +124,20 @@ void Primitive::FromRS(const Quat& rotate, const float3& scale)
 	}
 }
 
+float4x4 Primitive::mat4x4ToFloat4x4()
+{
+	float4x4 trans;
+	int k = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			trans[j][i] = transform[k++];
+		}
+	}
+	return trans;
+}
+
 // Set vertex, texCoords and index
 void Primitive::SetVertices(float vertices[], int size)
 {
