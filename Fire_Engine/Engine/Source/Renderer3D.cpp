@@ -7,6 +7,7 @@
 #include "Camera3D.h"
 #include "Editor.h"
 #include "Scene.h"
+#include "Physics3D.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -242,6 +243,8 @@ update_status Renderer3D::PostUpdate(float dt)
 
 		for (uint i = 0; i < MAX_LIGHTS; ++i)
 			lights[i].Render();
+
+		app->physics->PostUpdate(dt);
 
 		plane.Render();
 
