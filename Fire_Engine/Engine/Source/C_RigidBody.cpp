@@ -14,6 +14,8 @@
 #include "IconsFontAwesome5.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
+#include "DTEngine.h"
+
 C_RigidBody::C_RigidBody(GameObject* obj, float mass, CollisionType type, bool isKinematic) : Component(obj), mass(mass), collisionType(type), isKinematic(isKinematic)
 {
 	SetCollisionType(type);
@@ -109,18 +111,21 @@ void C_RigidBody::SetBoundingBox()
 
 void C_RigidBody::Update()
 {
-	if (collisionType == CollisionType::CAMERA)
+	if (DTEngine::state == DTGState::PLAY)
 	{
-		btTransform trans;
-		body->getMotionState()->getWorldTransform(trans);
-		trans.setOrigin(app->camera->GetPosition());
-		body->getMotionState()->setWorldTransform(trans);
-	}
-	else if (body->getActivationState() == 1 || vehicle != nullptr)
-	{
-		float3 f = quatRotate(body->getOrientation(), offset);
-		float4x4 CM2 = float4x4::FromTRS(body->getCenterOfMassPosition() - f, body->getWorldTransform().getRotation(), GetOwner()->transform->GetWorldScale());
-		GetOwner()->transform->SetTransformMFromM(CM2);
+		if (collisionType == CollisionType::CAMERA)
+		{
+			btTransform trans;
+			body->getMotionState()->getWorldTransform(trans);
+			trans.setOrigin(app->camera->GetPosition());
+			body->getMotionState()->setWorldTransform(trans);
+		}
+		else if (body->getActivationState() == 1 || vehicle != nullptr)
+		{
+			float3 f = quatRotate(body->getOrientation(), offset);
+			float4x4 CM2 = float4x4::FromTRS(body->getCenterOfMassPosition() - f, body->getWorldTransform().getRotation(), GetOwner()->transform->GetWorldScale());
+			GetOwner()->transform->SetTransformMFromM(CM2);
+		}
 	}
 }
 

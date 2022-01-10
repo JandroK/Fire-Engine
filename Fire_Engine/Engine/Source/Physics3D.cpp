@@ -9,7 +9,7 @@
 #include "C_RigidBody.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
-#include "Geometry/GeometryAll.h"
+#include "DTEngine.h"
 
 #ifdef _DEBUG
 #pragma comment (lib, "BulletDynamics_debug.lib")
@@ -68,22 +68,26 @@ bool Physics3D::Start()
 
 update_status Physics3D::PreUpdate(float dt)
 {
-	world->stepSimulation(dt, 15);
-
-	int numManifolds = world->getDispatcher()->getNumManifolds();
-	for (int i = 0; i < numManifolds; i++)
+	if (DTEngine::state == DTGState::PLAY)
 	{
-		btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
-		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
-		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+		world->stepSimulation(dt, 15);
 
-		int numContacts = contactManifold->getNumContacts();
-
-		if (numContacts > 0 && (obA == app->camera->rigidBody->GetBody() || obB == app->camera->rigidBody->GetBody()))
+		int numManifolds = world->getDispatcher()->getNumManifolds();
+		for (int i = 0; i < numManifolds; i++)
 		{
-			app->camera->collision = true;
+			btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
+			btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
+			btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+
+			int numContacts = contactManifold->getNumContacts();
+
+			if (numContacts > 0 && (obA == app->camera->rigidBody->GetBody() || obB == app->camera->rigidBody->GetBody()))
+			{
+				app->camera->collision = true;
+			}
 		}
 	}
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -97,7 +101,7 @@ update_status Physics3D::Update(float dt)
 		world->debugDrawWorld();
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && DTEngine::state == DTGState::PLAY)
 	{
 		PSphere spherePrim = PSphere(1);
 		spherePrim.SetPos(app->camera->GetPosition().x, app->camera->GetPosition().y, app->camera->GetPosition().z);
