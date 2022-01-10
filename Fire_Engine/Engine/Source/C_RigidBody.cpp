@@ -23,6 +23,7 @@ C_RigidBody::C_RigidBody(GameObject* obj, float mass, CollisionType type, bool i
 		float3 posBody = body->getCenterOfMassPosition();
 		float3 posObj = GetOwner()->transform->GetWorldPosition();
 		offset = posBody - posObj;
+		offset = quatRotate(body->getOrientation().inverse(), offset);
 	}	
 }
 
@@ -37,7 +38,6 @@ C_RigidBody::~C_RigidBody()
 		if(collisionType == CollisionType::CAMERA)
 			app->physics->DeleteBody(this, "Camera");
 		else app->physics->DeleteBody(this, GetOwner()->name);
-
 	}	
 }
 
@@ -118,7 +118,8 @@ void C_RigidBody::Update()
 	}
 	else if (body->getActivationState() == 1 || vehicle != nullptr)
 	{
-		float4x4 CM2 = float4x4::FromTRS(body->getCenterOfMassPosition() - offset, body->getWorldTransform().getRotation(), GetOwner()->transform->GetWorldScale());
+		float3 f = quatRotate(body->getOrientation(), offset);
+		float4x4 CM2 = float4x4::FromTRS(body->getCenterOfMassPosition() - f, body->getWorldTransform().getRotation(), GetOwner()->transform->GetWorldScale());
 		GetOwner()->transform->SetTransformMFromM(CM2);
 	}
 }

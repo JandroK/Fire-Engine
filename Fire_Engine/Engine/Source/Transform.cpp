@@ -79,14 +79,24 @@ void Transform::EditTransform(float4x4& trans, float3& pos, Quat& rot, float3& e
 	}
 
 	ImGui::Text("Rotation %s: ", reference.c_str());
-	if (ImGui::DragFloat3("##Rotation", &euler[0], 0.1f, true))
+	float3 newRotationEuler = float3::zero;
+	newRotationEuler.x = euler.x;
+	newRotationEuler.y = euler.y;
+	newRotationEuler.z = euler.z;
+	if (ImGui::DragFloat3("##Rotation", &(newRotationEuler[0]), 0.1f, true))
 	{
 		// We need to do this because otherwise in the inspector the rotation "?" and "?" are "-0" instead of "0" 
 		if (euler[0] == 0) euler[0] = 0;
 		if (euler[2] == 0) euler[2] = 0;
 
 		// Calculate quaternion
-		rot = Quat::FromEulerXYZ(euler.x * DEGTORAD, euler.y * DEGTORAD, euler.z * DEGTORAD);
+		newRotationEuler.x = newRotationEuler.x;
+		newRotationEuler.y = newRotationEuler.y;
+		newRotationEuler.z = newRotationEuler.z;
+
+		Quat rotationDelta = Quat::FromEulerXYZ(newRotationEuler.x - euler.x, newRotationEuler.y - euler.y, newRotationEuler.z - euler.z);
+		rot = rot * rotationDelta;
+		euler = newRotationEuler;
 
 		// If the scale has not been modified (sum of the diagonal of matrix = 0) then only overwrite rotate
 		// But if the scale yes has been modified then float3x3(rotate) * float3x3::Scale(scale)
