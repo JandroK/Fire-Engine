@@ -233,6 +233,7 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 	MeshRenderer* mesh;
 	Material* material;
 	ComponentCamera* camera;
+	C_RigidBody* body;
 
 	node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
 	node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
@@ -298,12 +299,17 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 
 			case ComponentType::CAMERA:
 				camera = static_cast<ComponentCamera*>(parentGO->GetComponent(ComponentType::CAMERA));
-
 				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "isMainCamera", camera->GetIsMainCamera());
 				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "showFrustrum", camera->GetShowFrustrum());
-
 				break;
 
+			case ComponentType::RIGIDBODY:
+				body = static_cast<C_RigidBody*>(parentGO->GetComponent(ComponentType::RIGIDBODY));
+				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "mass", body->GetMass());
+				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "collision", (int)body->GetCollisionType());
+				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "isKinematic", body->isKinematic);
+				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "vehicle", (body->GetVehicle() != nullptr)? true : false);
+				break;
 		}
 		parentGO->GetCompoments().at(i)->GetType();
 	}
@@ -373,9 +379,10 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 	Mesh* mesh;
 	Material* material;
 	ComponentCamera* camera;
+	C_RigidBody* body;
 
 	LOG(LogType::L_NORMAL, "Loading Components \n");
-
+	std::string debugPath;
 	JsonParser components = parent.GetChild(parent.GetRootValue(), "components");
 	JsonParser tmp = components;
 
@@ -400,12 +407,17 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 			case ComponentType::MESHRENDERER:
 				gamObj->AddComponent(ComponentType::MESHRENDERER);
 				meshRender = static_cast<MeshRenderer*>(gamObj->GetComponent(ComponentType::MESHRENDERER));
+				
 				if (meshRender != NULL)
 				{
 					mesh = new Mesh();
-					mesh->SetLibraryPath(tmp.JsonValToString("LibraryPath"));
-					mesh->SetAssetsPath(tmp.JsonValToString("Mesh"));
-					mesh->LoadFromFME(tmp.JsonValToString("LibraryPath"));
+					debugPath = tmp.JsonValToString("LibraryPath");
+					if (debugPath != "")
+					{
+						mesh->SetLibraryPath(debugPath.c_str());
+						mesh->SetAssetsPath(tmp.JsonValToString("Mesh"));
+						mesh->LoadFromFME(debugPath.c_str());
+					}					
 					meshRender->SetMesh(mesh);
 					meshRender->SetOwner(gamObj);
 				}
@@ -431,7 +443,17 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 				//camera->SetOwner(gamObj);
 				camera->SetIsMainCamera(tmp.JsonValToBool("isMainCamera"));
 				camera->SetShowFrustrum(tmp.JsonValToBool("showFrustrum"));
+				break;
 
+			case ComponentType::RIGIDBODY:
+				gamObj->AddComponent(ComponentType::RIGIDBODY);
+				body = static_cast<C_RigidBody*>(gamObj->GetComponent(ComponentType::RIGIDBODY));
+				body->SetMass(tmp.JsonValToNumber("mass"));
+				body->SetCollisionType((CollisionType)tmp.JsonValToNumber("collision"));
+				body->isKinematic = tmp.JsonValToBool("isKinematic");
+				if (tmp.JsonValToBool("vehicle") == true)
+					body->SetAsVehicle();
+				
 				break;
 			}
 

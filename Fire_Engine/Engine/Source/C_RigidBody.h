@@ -8,14 +8,14 @@ struct PhysVehicle3D;
 
 enum class CollisionType
 {
-	BOX,
-	SPHERE,
-	CAPSULE,
-	CYLINDER,
-	CONE,
-	STATIC_PLANE,
+	BOX = 0,
+	SPHERE = 1,
+	CAPSULE = 2,
+	CYLINDER = 3,
+	CONE = 4,
+	STATIC_PLANE = 5,
 
-	CAMERA
+	CAMERA = 6
 };
 
 class C_RigidBody : public Component
@@ -39,11 +39,13 @@ public:
 
 	void CreateBody();
 	float GetMass() { return mass; };
+	void SetMass(float mass) { this->mass = mass; };
 	btRigidBody* GetBody() { return body; };
 	PhysVehicle3D* GetVehicle() { return vehicle; };
 	CollisionType GetCollisionType() { return collisionType; };
 
 	void SetAsStatic();
+	void SetAsVehicle();
 
 	bool useGravity = true;
 	bool isKinematic = false;

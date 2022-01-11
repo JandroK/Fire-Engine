@@ -183,11 +183,7 @@ void C_RigidBody::OnEditor()
 			ImGui::SetCursorPosX(offset);
 
 			if (ImGui::Button("Convert to Vehicle"))
-			{
-				if (mass <= 0) mass = 1;
-				VehicleInfo car(static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB.Size(), mass);
-				vehicle = app->physics->AddVehicle(car, body);
-			}
+				SetAsVehicle();
 		}
 		else
 		{
@@ -473,4 +469,11 @@ void C_RigidBody::SetAsStatic()
 	isKinematic = false;
 	mass = 0.0f;
 	SetCollisionType(collisionType);
+}
+
+void C_RigidBody::SetAsVehicle()
+{
+	if (mass <= 0) mass = 1;
+	VehicleInfo car(static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB.Size(), mass);
+	vehicle = app->physics->AddVehicle(car, body);
 }
