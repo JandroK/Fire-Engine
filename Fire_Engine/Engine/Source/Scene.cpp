@@ -412,12 +412,11 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 				{
 					mesh = new Mesh();
 					debugPath = tmp.JsonValToString("LibraryPath");
+					mesh->SetAssetsPath(tmp.JsonValToString("Mesh"));
+					mesh->SetLibraryPath(debugPath.c_str());
 					if (debugPath != "")
-					{
-						mesh->SetLibraryPath(debugPath.c_str());
-						mesh->SetAssetsPath(tmp.JsonValToString("Mesh"));
-						mesh->LoadFromFME(debugPath.c_str());
-					}					
+						mesh->LoadFromFME(debugPath.c_str());	
+
 					meshRender->SetMesh(mesh);
 					meshRender->SetOwner(gamObj);
 				}
