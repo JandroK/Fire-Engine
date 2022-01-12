@@ -16,7 +16,7 @@
 
 #include "DTEngine.h"
 
-C_RigidBody::C_RigidBody(GameObject* obj, float mass, CollisionType type, bool isKinematic) : Component(obj), mass(mass), collisionType(type), isKinematic(isKinematic)
+C_RigidBody::C_RigidBody(GameObject* obj, CollisionType type, float mass, bool isKinematic) : Component(obj), collisionType(type), mass(mass), isKinematic(isKinematic)
 {
 	SetCollisionType(type);
 	// Calculate offset CM
@@ -126,6 +126,14 @@ void C_RigidBody::Update()
 			float4x4 CM2 = float4x4::FromTRS(body->getCenterOfMassPosition() - f, body->getWorldTransform().getRotation(), GetOwner()->transform->GetWorldScale());
 			GetOwner()->transform->SetTransformMFromM(CM2);
 		}
+	}
+	else if (collisionType != CollisionType::CAMERA)
+	{
+		float3 f = quatRotate(GetOwner()->transform->GetWorldRotation(), offset);
+		btTransform t;
+		t.setBasis(GetOwner()->transform->GetGlobalTransform().Float3x3Part());
+		t.setOrigin(GetOwner()->transform->GetGlobalTransform().Col3(3) + f);
+		body->setWorldTransform(t);
 	}
 }
 

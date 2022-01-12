@@ -14,6 +14,7 @@
 #include "ResourceManager.h"
 #include "Camera3D.h"
 #include "Renderer3D.h"
+#include "Physics3D.h"
 
 #include "GameObject.h"
 #include "Inspector.h"
@@ -27,6 +28,8 @@
 #include "CarControls.h"
 
 #include"MathGeoLib/include/Math/Quat.h"
+#include "Bullet/include/BulletDynamics/Dynamics/btRigidBody.h"
+#include "Bullet/include/BulletCollision/CollisionShapes/btCollisionShape.h"
 
 Scene::Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
 {
@@ -81,6 +84,37 @@ bool Scene::Start()
 	transformCamera->SetTransformMFromM(transformCamera->GetLocalTransform());
 
 	mainCar = new CarControls();
+
+	PSphere spherePrim1 = PSphere();
+	spherePrim1.InnerMesh();
+	spherePrim1.mesh->LoadToMemory();
+	spherePrim1.mesh->GenerateBounds();
+
+	GameObject* sphere1 = CreatePrimitive("Sphere1_P2P", spherePrim1.mesh);
+	sphere1->transform->SetWorldPosition(float3(-2,2,0));
+	sphere1->transform->UpdateTransform();
+	sphere1->AddComponent(ComponentType::RIGIDBODY, 1);
+
+	PSphere spherePrim2 = PSphere();
+	spherePrim2.InnerMesh();
+	spherePrim2.mesh->LoadToMemory();
+	spherePrim2.mesh->GenerateBounds();
+
+	GameObject* sphere2 = CreatePrimitive("Sphere2_P2P", spherePrim2.mesh);
+	sphere2->transform->SetWorldPosition(float3(2, 2, 0));
+	sphere2->transform->UpdateTransform();
+	sphere2->AddComponent(ComponentType::RIGIDBODY, 1);
+
+	C_RigidBody* body1 = static_cast<C_RigidBody*>(sphere1->GetComponent(ComponentType::RIGIDBODY));
+	C_RigidBody* body2 = static_cast<C_RigidBody*>(sphere2->GetComponent(ComponentType::RIGIDBODY));
+
+	body1->constraintBodies.push_back(body2);
+	body2->constraintBodies.push_back(body1);
+	btVector3 center;
+	float r1, r2;
+	body1->GetBody()->getCollisionShape()->getBoundingSphere(center,r1);
+	body2->GetBody()->getCollisionShape()->getBoundingSphere(center, r2);
+	app->physics->AddConstraintP2P(*body1->GetBody(), *body2->GetBody(), float3(r1, r1, r1), float3(r2, r2, r2));
 
 	return true;
 }

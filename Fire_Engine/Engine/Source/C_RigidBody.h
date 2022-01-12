@@ -21,7 +21,7 @@ enum class CollisionType
 class C_RigidBody : public Component
 {
 public:
-	C_RigidBody(GameObject* obj, float mass = 1.0f, CollisionType type = CollisionType::BOX, bool isKinematic = false);
+	C_RigidBody(GameObject* obj, CollisionType type = CollisionType::BOX, float mass = 1.0f,  bool isKinematic = false);
 	C_RigidBody();
 	virtual ~C_RigidBody();
 
@@ -49,6 +49,7 @@ public:
 
 	bool useGravity = true;
 	bool isKinematic = false;
+	std::vector<C_RigidBody*> constraintBodies;
 
 private:
 	btRigidBody* body = nullptr;
@@ -78,5 +79,4 @@ private:
 
 	bool editMesh = false;
 
-	std::vector<C_RigidBody*> constraintBodies;
 };

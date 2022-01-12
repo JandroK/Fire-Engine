@@ -15,7 +15,7 @@ public:
 
 	void Update();
 
-	Component* AddComponent(ComponentType type);
+	Component* AddComponent(ComponentType type, int collisionType = 0);
 	Component* GetComponent(ComponentType type);
 
 	void Enable();

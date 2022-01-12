@@ -69,7 +69,7 @@ void GameObject::Update()
 	}
 }
 // Add component by Type
-Component* GameObject::AddComponent(ComponentType type)
+Component* GameObject::AddComponent(ComponentType type, int collisionType)
 {
 	Component* newComponent = nullptr;
 
@@ -88,7 +88,7 @@ Component* GameObject::AddComponent(ComponentType type)
 		newComponent = new ComponentCamera(this);
 		break;
 	case ComponentType::RIGIDBODY:
-		newComponent = new C_RigidBody(this);
+		newComponent = new C_RigidBody(this,(CollisionType)collisionType);
 		break;
 	}
 
