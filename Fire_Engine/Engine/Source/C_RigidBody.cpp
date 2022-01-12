@@ -133,7 +133,7 @@ void C_RigidBody::UpdateCollision()
 {
 	if (collisionType != CollisionType::CAMERA)
 	{
-		float3 size = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB.Size();
+		OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
 
 		float3 f = quatRotate(GetOwner()->transform->GetWorldRotation(), offset);
 		btTransform t;
@@ -141,35 +141,6 @@ void C_RigidBody::UpdateCollision()
 		t.setOrigin(GetOwner()->transform->GetGlobalTransform().Col3(3) + f);
 		
 		body->setWorldTransform(t);
-
-		UpdateScale(GetOwner()->transform->GetWorldScale(), static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB.Size().y, static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->GetSphereRadius());
-	}
-}
-
-void C_RigidBody::UpdateScale(float3 size, float height, float radius)
-{
-	switch (body->getCollisionShape()->getShapeType())
-	{
-	case BOX_SHAPE_PROXYTYPE:
-		static_cast<btBoxShape*>(body->getCollisionShape())->setLocalScaling(size);
-		break;
-	case SPHERE_SHAPE_PROXYTYPE:
-		static_cast<btSphereShape*>(body->getCollisionShape())->setUnscaledRadius(radius);
-		break;
-	case CAPSULE_SHAPE_PROXYTYPE:
-		static_cast<btCapsuleShape*>(body->getCollisionShape())->setLocalScaling(btVector3(radius, height * 0.5f, 0.0f));
-		break;
-	case CYLINDER_SHAPE_PROXYTYPE:
-		static_cast<btCylinderShape*>(body->getCollisionShape())->setLocalScaling(btVector3(radius, height * 0.5f, 0.0f));
-		break;
-	case CONE_SHAPE_PROXYTYPE:
-		static_cast<btConeShape*>(body->getCollisionShape())->setLocalScaling(btVector3(radius, height * 0.5f, radius));
-		break;
-	case STATIC_PLANE_PROXYTYPE:
-		CreateBody();
-		break;
-	default:
-		break;
 	}
 }
 

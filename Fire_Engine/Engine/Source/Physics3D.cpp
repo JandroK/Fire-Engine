@@ -237,7 +237,6 @@ btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTra
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
 
 	btRigidBody* body = new btRigidBody(rbInfo);
-	//PhysBody3D* pbody = new PhysBody3D(body);
 
 	if (component->isKinematic)
 	{
