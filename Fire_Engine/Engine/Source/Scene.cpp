@@ -340,6 +340,8 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 				mesh = static_cast<MeshRenderer*>(parentGO->GetComponent(ComponentType::MESHRENDERER));
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", mesh->GetMesh()->GetAssetPath());
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LibraryPath", mesh->GetMesh()->GetLibraryPath());
+				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "PrimType", mesh->GetMesh()->primType);
+
 				break;
 
 			case ComponentType::MATERIAL:
@@ -458,19 +460,22 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 			case ComponentType::MESHRENDERER:
 				gamObj->AddComponent(ComponentType::MESHRENDERER);
 				meshRender = static_cast<MeshRenderer*>(gamObj->GetComponent(ComponentType::MESHRENDERER));
-				
-				if (meshRender != NULL)
+
+				if (meshRender != NULL && tmp.JsonValToNumber("PrimType") == -1)
 				{
 					mesh = new Mesh();
 					debugPath = tmp.JsonValToString("LibraryPath");
 					mesh->SetAssetsPath(tmp.JsonValToString("Mesh"));
 					mesh->SetLibraryPath(debugPath.c_str());
-					if (debugPath != "")
-						mesh->LoadFromFME(debugPath.c_str());	
+					mesh->LoadFromFME(debugPath.c_str());
 
 					meshRender->SetMesh(mesh);
-					meshRender->SetOwner(gamObj);
 				}
+				else
+					meshRender->SetMesh(app->editor->LoadPrimitive(tmp.JsonValToNumber("PrimType")));
+
+				meshRender->SetOwner(gamObj);
+
 				break;
 			case ComponentType::MATERIAL:
 				gamObj->AddComponent(ComponentType::MATERIAL);

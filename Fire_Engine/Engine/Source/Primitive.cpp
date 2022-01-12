@@ -170,17 +170,20 @@ void Primitive::SetIndices(int indices[], int size)
 PCube::PCube() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cube;
+	mesh->primType = 0;
 }
 
 PCube::PCube(float3 size, float3 pos) : Primitive(), size(size)
 {
 	type = PrimitiveTypes::Primitive_Cube;
 	glTranslatef(pos.x, pos.y, pos.z);
+	mesh->primType = 0;
 }
 
 PCube::PCube(float sizeX, float sizeY, float sizeZ) : size(sizeX, sizeY, sizeZ)
 {
 	type = PrimitiveTypes::Primitive_Cube;
+	mesh->primType = 0;
 }
 
 void PCube::InnerMesh()
@@ -275,16 +278,19 @@ void PCube::InnerRender() const
 PSphere::PSphere() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Sphere;
+	mesh->primType = 1;
 }
 
 PSphere::PSphere(float radius) : Primitive(), radius(radius)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
+	mesh->primType = 1;
 }
 
 PSphere::PSphere(float radius, int sectors, int stacks) : Primitive(), radius(radius), sectors(sectors), stacks(stacks)
 {
 	type = PrimitiveTypes::Primitive_Sphere;
+		mesh->primType = 1;
 }
 
 void PSphere::InnerMesh()
@@ -389,11 +395,13 @@ void PSphere::SetIndicesMesh()
 PCylinder::PCylinder() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
+	mesh->primType = 2;
 }
 
 PCylinder::PCylinder(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height), sectorCount(sectorCount)
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
+	mesh->primType = 2;
 }
 
 void PCylinder::InnerMesh()
@@ -593,22 +601,26 @@ void PCylinder::SetIndicesMesh()
 PCapsule::PCapsule()
 {
 	type = PrimitiveTypes::Primitive_Capsule;
+	mesh->primType = 3;
 }
 
 PCapsule::PCapsule(float radius, float height) : Primitive(), radius(radius), height(height)
 {
 	type = PrimitiveTypes::Primitive_Capsule;
+	mesh->primType = 3;
 }
 
 // PYRAMID ============================================
 PPyramid::PPyramid() : Primitive()
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
+	mesh->primType = 4;
 }
 
 PPyramid::PPyramid(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height)
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
+	mesh->primType = 4;
 }
 
 void PPyramid::InnerMesh()
@@ -670,11 +682,13 @@ void PPyramid::InnerMesh()
 PLine::PLine() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
 {
 	type = PrimitiveTypes::Primitive_Line;
+	mesh->primType = 5;
 }
 
 PLine::PLine(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
 {
 	type = PrimitiveTypes::Primitive_Line;
+	mesh->primType = 5;
 }
 
 void PLine::InnerRender() const
@@ -695,11 +709,13 @@ void PLine::InnerRender() const
 PPlane::PPlane() : Primitive(), normal(0, 1, 0), constant(1)
 {
 	type = PrimitiveTypes::Primitive_Plane;
+	mesh->primType = 6;
 }
 
 PPlane::PPlane(float x, float y, float z, float d) : Primitive(), normal(x, y, z), constant(d)
 {
 	type = PrimitiveTypes::Primitive_Plane;
+	mesh->primType = 6;
 }
 
 void PPlane::InnerRender() const

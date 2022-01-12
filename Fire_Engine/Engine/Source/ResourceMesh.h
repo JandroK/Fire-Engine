@@ -75,4 +75,6 @@ public:
 
 	//Local coords AABB
 	AABB localAABB;
+
+	int primType = -1;
 };

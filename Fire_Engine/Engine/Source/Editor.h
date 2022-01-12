@@ -10,6 +10,7 @@
 class Tab;
 class GameObject;
 class Asset;
+class Mesh;
 
 enum class TabType 
 {
@@ -46,6 +47,7 @@ public:
 	update_status ImGuiMenuBar();
 	void NewScene();
 	void PrimitiveMenuItem();
+	Mesh* LoadPrimitive(int type);
 
 	Tab* GetTab(TabType type);
 	int GetStyle() {return style;};

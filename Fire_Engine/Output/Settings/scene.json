@@ -50,19 +50,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000024,-100.000000,-0.000024,3069.527832,0.000000,-0.000024,100.000000,5.500555,-100.000000,-0.000024,0.000000,-2161.264648,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,-1.000000,-0.000000,30.695278,0.000000,-0.000000,1.000000,0.055006,-1.000000,-0.000000,0.000000,-21.612646,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,-100.000000,0.000000,3069.527832,0.000000,0.000000,100.000000,5.775600,-100.000000,0.000000,0.000000,-2161.264648,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,-1.000000,0.000000,30.695278,0.000000,0.000000,1.000000,0.057756,-1.000000,0.000000,0.000000,-21.612646,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_041.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_041.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V02_C.png",
+                            "Material": "Library\/Textures\/\/Building_V02_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V02_C.dds"
                         },
                         "Component 3": {
@@ -89,19 +90,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.005591,100.000000,-0.000006,-3455.770996,0.000030,0.000000,100.000000,145.621109,100.000000,-0.005597,-0.000036,3064.389160,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000056,1.000000,-0.000000,-34.557709,0.000000,0.000000,1.000000,1.456211,1.000000,-0.000056,-0.000000,30.643890,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.029100,100.000000,0.000000,-3454.718750,0.000000,0.000000,100.000000,174.746796,100.000000,-0.029100,0.000000,3064.388916,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000291,1.000000,0.000000,-34.547188,0.000000,0.000000,1.000000,1.747468,1.000000,-0.000291,0.000000,30.643888,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_040.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_040.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -128,19 +130,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.005579,99.999977,-0.000739,-4292.896973,0.000048,0.000763,99.999977,5.813217,99.999977,-0.005555,-0.000024,3064.389160,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000056,1.000000,-0.000007,-42.928970,0.000000,0.000008,1.000000,0.058132,1.000000,-0.000056,-0.000000,30.643890,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-0.038700,100.000000,-0.000600,-4293.946289,0.000000,0.000600,100.000000,6.098400,100.000000,0.038700,0.000000,3064.389160,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-0.000387,1.000000,-0.000006,-42.939461,0.000000,0.000006,1.000000,0.060984,1.000000,0.000387,0.000000,30.643890,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_039.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_039.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -167,19 +170,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000024,100.000000,0.000024,-4164.900391,0.000000,-0.000024,100.000000,6.951952,100.000000,-0.000024,0.000000,1649.539429,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,0.000000,-41.649002,0.000000,-0.000000,1.000000,0.069520,1.000000,-0.000000,0.000000,16.495394,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,100.000000,0.000000,-4164.900391,0.000000,0.000000,100.000000,7.299600,100.000000,0.000000,0.000000,1649.539429,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,1.000000,0.000000,-41.649002,0.000000,0.000000,1.000000,0.072996,1.000000,0.000000,0.000000,16.495394,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_038.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_038.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -206,19 +210,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000063,-0.000007,-2031.769409,-0.000007,0.000072,99.999977,8.216238,-0.000063,99.999977,-0.000048,1616.360840,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000001,-0.000000,-20.317694,-0.000000,0.000001,1.000000,0.082162,-0.000001,1.000000,-0.000000,16.163609,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,-0.000100,-0.000100,-2031.769409,-0.000100,0.000100,100.000000,8.627100,-0.000100,100.000000,-0.000100,1616.360840,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,-0.000001,-0.000001,-20.317694,-0.000001,0.000001,1.000000,0.086271,-0.000001,1.000000,-0.000001,16.163609,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_037.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_037.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -245,19 +250,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.102508,99.999969,0.000024,-3121.618652,0.000024,-0.000048,100.000023,5.473399,99.999969,-0.102526,-0.000048,-3310.768555,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.001025,1.000000,0.000000,-31.216187,0.000000,-0.000000,1.000000,0.054734,1.000000,-0.001025,-0.000000,-33.107685,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.117600,99.999901,0.000000,-3121.613037,0.013100,0.000000,100.000000,5.748900,99.999901,-0.117600,-0.013100,-3307.473389,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.001176,0.999999,0.000000,-31.216129,0.000131,0.000000,1.000000,0.057489,0.999999,-0.001176,-0.000131,-33.074734,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_036.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_036.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "Material": "Library\/Textures\/\/building 06_ c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         },
                         "Component 3": {
@@ -284,19 +290,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,-0.000002,-0.000012,1338.798950,0.000012,0.000006,99.999977,5.791330,-0.000002,-99.999977,0.000006,4080.251709,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,-0.000000,-0.000000,13.387989,0.000000,0.000000,1.000000,0.057913,-0.000000,-1.000000,0.000000,40.802517,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,1338.798828,0.000000,0.000000,100.000000,6.080800,0.000000,-100.000000,0.000000,4080.251709,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,13.387988,0.000000,0.000000,1.000000,0.060808,0.000000,-1.000000,0.000000,40.802517,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_039.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_039.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -323,19 +330,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000060,100.000000,-0.001061,1604.956055,-0.006127,0.001061,100.000000,8.196688,100.000000,-0.000060,0.006127,1669.663086,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000001,1.000000,-0.000011,16.049561,-0.000061,0.000011,1.000000,0.081967,1.000000,-0.000001,0.000061,16.696630,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000200,100.000000,-0.001000,1604.956055,-0.032400,0.001000,100.000000,8.661201,100.000000,-0.000200,0.032400,1669.554565,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000002,1.000000,-0.000010,16.049561,-0.000324,0.000010,1.000000,0.086612,1.000000,-0.000002,0.000324,16.695545,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_034.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_034.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -362,19 +370,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "99.999947,-0.101714,-0.000000,-3236.117676,0.000000,0.000030,99.999977,5.473518,-0.101714,-99.999931,0.000030,-4247.124512,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.999999,-0.001017,-0.000000,-32.361176,0.000000,0.000000,1.000000,0.054735,-0.001017,-0.999999,0.000000,-42.471245,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "99.999901,-0.145700,0.000100,-3236.137695,0.000000,0.018500,100.000000,5.741800,-0.145700,-99.999901,0.018500,-4250.628906,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.999999,-0.001457,0.000001,-32.361378,0.000000,0.000185,1.000000,0.057418,-0.001457,-0.999999,0.000185,-42.506287,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_033.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_033.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "Material": "Library\/Textures\/\/building 06_ c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         },
                         "Component 3": {
@@ -401,19 +410,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000017,0.000002,-2947.840332,-0.000002,0.000006,99.999977,5.796838,0.000017,-99.999977,0.000006,-2101.409912,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,-29.478403,-0.000000,0.000000,1.000000,0.057968,0.000000,-1.000000,0.000000,-21.014099,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,-2947.840332,0.000000,0.000000,100.000000,6.086700,0.000000,-100.000000,0.000000,-2101.409912,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,-29.478403,0.000000,0.000000,1.000000,0.060867,0.000000,-1.000000,0.000000,-21.014099,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_032.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_032.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga",
+                            "Material": "Library\/Textures\/\/building03_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         },
                         "Component 3": {
@@ -440,19 +450,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000048,99.999985,-0.000030,-3467.947754,-0.000006,0.000048,99.999985,5.792236,99.999985,-0.000030,0.000024,4183.556152,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,-0.000000,-34.679478,-0.000000,0.000000,1.000000,0.057922,1.000000,-0.000000,0.000000,41.835560,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,100.000000,-0.000100,-3467.947754,0.000000,0.000100,100.000000,6.081700,100.000000,0.000000,0.000000,4183.556152,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,1.000000,-0.000001,-34.679478,0.000000,0.000001,1.000000,0.060817,1.000000,0.000000,0.000000,41.835560,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_031.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_031.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -479,19 +490,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000000,100.000000,-0.000030,-4280.724121,0.000018,0.000024,100.000000,5.792236,100.000000,-0.000006,-0.000024,4183.556152,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,-0.000000,-42.807240,0.000000,0.000000,1.000000,0.057922,1.000000,-0.000000,-0.000000,41.835560,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,100.000000,-0.000100,-4280.724121,0.000000,0.000100,100.000000,6.082000,100.000000,0.000000,0.000000,4183.556152,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,1.000000,-0.000001,-42.807240,0.000000,0.000001,1.000000,0.060820,1.000000,0.000000,0.000000,41.835560,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_030.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_030.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -518,19 +530,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000017,0.000000,-250.335098,0.000000,-0.000012,99.999992,-0.000051,0.000017,-99.999992,-0.000012,-1580.084229,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,-2.503351,0.000000,-0.000000,1.000000,-0.000001,0.000000,-1.000000,-0.000000,-15.800842,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,-250.335098,0.000000,0.000000,100.000000,-0.000100,0.000000,-100.000000,0.000000,-1580.084229,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,-2.503351,0.000000,0.000000,1.000000,-0.000001,0.000000,-1.000000,0.000000,-15.800842,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/Object010.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/Object010.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/Materials\/white_texture.dds",
+                            "Material": "Materials\/white_texture.dds",
                             "LibraryPath": "Materials\/white_texture.dds"
                         },
                         "Component 3": {
@@ -557,19 +570,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,-0.000002,-0.000012,1338.798950,0.000012,0.000006,99.999977,5.791330,-0.000002,-99.999977,0.000006,3375.503906,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,-0.000000,-0.000000,13.387989,0.000000,0.000000,1.000000,0.057913,-0.000000,-1.000000,0.000000,33.755039,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,1338.798828,0.000000,0.000000,100.000000,6.080800,0.000000,-100.000000,0.000000,3375.503906,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,13.387988,0.000000,0.000000,1.000000,0.060808,0.000000,-1.000000,0.000000,33.755039,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_039.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_039.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -596,19 +610,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000039,0.000002,3151.188965,0.000002,0.000072,99.999977,6.950426,-0.000039,99.999977,-0.000048,1644.601685,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000000,0.000000,31.511890,0.000000,0.000001,1.000000,0.069504,-0.000000,1.000000,-0.000000,16.446016,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,0.000000,0.000000,3151.188965,0.000000,0.000100,100.000000,7.297900,0.000000,100.000000,0.000000,1644.601685,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,0.000000,0.000000,31.511889,0.000000,0.000001,1.000000,0.072979,0.000000,1.000000,0.000000,16.446016,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_026.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_026.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -635,19 +650,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000039,0.000002,-2057.277100,0.000002,0.000072,99.999977,5.046880,-0.000039,99.999977,-0.000048,-4306.083008,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000000,0.000000,-20.572771,0.000000,0.000001,1.000000,0.050469,-0.000000,1.000000,-0.000000,-43.060829,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,0.000000,0.000000,-2057.277100,0.000000,0.000100,100.000000,5.645200,0.000000,100.000000,0.000000,-4306.083008,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,0.000000,0.000000,-20.572771,0.000000,0.000001,1.000000,0.056452,0.000000,1.000000,0.000000,-43.060829,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_024.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_024.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_025_c.tga",
+                            "Material": "Library\/Textures\/\/building_025_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_025_c.dds"
                         },
                         "Component 3": {
@@ -674,19 +690,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000005,0.000002,4213.063965,-0.000002,0.000006,99.999977,5.693507,0.000005,-99.999977,0.000006,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,42.130638,-0.000000,0.000000,1.000000,0.056935,0.000000,-1.000000,0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,4213.063965,0.000000,0.000000,100.000000,5.978200,0.000000,-100.000000,0.000000,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,42.130638,0.000000,0.000000,1.000000,0.059782,0.000000,-1.000000,0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_023.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_023.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga",
+                            "Material": "Library\/Textures\/\/building_016_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         },
                         "Component 3": {
@@ -713,19 +730,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000063,0.000002,-2083.132324,0.000002,0.000072,99.999977,6.951380,-0.000063,99.999977,-0.000048,2742.649170,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000001,0.000000,-20.831324,0.000000,0.000001,1.000000,0.069514,-0.000001,1.000000,-0.000000,27.426491,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,-0.000100,0.000000,-2083.132324,0.000000,0.000100,100.000000,7.298900,-0.000100,100.000000,0.000000,2742.648926,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,-0.000001,0.000000,-20.831324,0.000000,0.000001,1.000000,0.072989,-0.000001,1.000000,0.000000,27.426489,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_022.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_022.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -752,19 +770,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000024,-100.000000,-0.000024,4426.008301,0.000000,-0.000024,100.000000,5.572706,-100.000000,-0.000024,0.000000,3915.372070,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,-1.000000,-0.000000,44.260082,0.000000,-0.000000,1.000000,0.055727,-1.000000,-0.000000,0.000000,39.153721,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,-100.000000,0.000000,4426.008301,0.000000,0.000000,100.000000,5.851300,-100.000000,0.000000,0.000000,3915.372070,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,-1.000000,0.000000,44.260082,0.000000,0.000000,1.000000,0.058513,-1.000000,0.000000,0.000000,39.153721,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_017.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_017.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga",
+                            "Material": "Library\/Textures\/\/building 01_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         },
                         "Component 3": {
@@ -791,19 +810,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000039,0.000002,3427.042480,0.000002,0.000072,99.999977,5.572668,-0.000039,99.999977,-0.000048,4197.274902,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000000,0.000000,34.270424,0.000000,0.000001,1.000000,0.055727,-0.000000,1.000000,-0.000000,41.972748,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,0.000000,0.000000,3427.042480,0.000000,0.000100,100.000000,5.851300,0.000000,100.000000,-0.000100,4197.274902,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,0.000000,0.000000,34.270424,0.000000,0.000001,1.000000,0.058513,0.000000,1.000000,-0.000001,41.972748,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_017.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_017.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga",
+                            "Material": "Library\/Textures\/\/building 01_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         },
                         "Component 3": {
@@ -830,19 +850,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000039,0.000351,-1943.971680,0.000351,0.007725,99.999977,6.785679,-0.000039,99.999977,-0.007701,-3206.150146,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000000,0.000004,-19.439716,0.000004,0.000077,1.000000,0.067857,-0.000000,1.000000,-0.000077,-32.061501,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,0.000000,0.000300,-1943.971680,0.000300,0.024800,100.000000,7.032100,0.000000,100.000000,-0.024800,-3206.099609,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,0.000000,0.000003,-19.439716,0.000003,0.000248,1.000000,0.070321,0.000000,1.000000,-0.000248,-32.060997,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_014.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_014.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga",
+                            "Material": "Library\/Textures\/\/building03_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         },
                         "Component 3": {
@@ -869,19 +890,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000048,-100.000000,-0.000048,-4228.806152,0.000000,-0.000048,100.000000,5.473709,-100.000000,-0.000048,0.000000,-3319.881104,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,-1.000000,-0.000000,-42.288059,0.000000,-0.000000,1.000000,0.054737,-1.000000,-0.000000,0.000000,-33.198811,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,-100.000000,0.000000,-4228.777344,0.000000,0.000000,100.000000,5.747400,-100.000000,0.000000,0.000000,-3319.881104,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,-1.000000,0.000000,-42.287773,0.000000,0.000000,1.000000,0.057474,-1.000000,0.000000,0.000000,-33.198811,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_036.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_036.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "Material": "Library\/Textures\/\/building 06_ c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         },
                         "Component 3": {
@@ -908,19 +930,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000005,0.000002,3013.454102,-0.000002,0.000006,99.999977,5.693746,0.000005,-99.999977,0.000006,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,30.134541,-0.000000,0.000000,1.000000,0.056937,0.000000,-1.000000,0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,3013.454102,0.000000,0.000000,100.000000,5.978400,0.000000,-100.000000,0.000000,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,30.134541,0.000000,0.000000,1.000000,0.059784,0.000000,-1.000000,0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_023.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_023.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga",
+                            "Material": "Library\/Textures\/\/building_016_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         },
                         "Component 3": {
@@ -947,19 +970,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000024,-100.000000,-0.000024,2515.401123,0.000000,-0.000024,100.000000,5.573070,-100.000000,-0.000024,0.000000,3915.372070,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,-1.000000,-0.000000,25.154011,0.000000,-0.000000,1.000000,0.055731,-1.000000,-0.000000,0.000000,39.153721,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,-100.000000,0.000000,2515.401123,0.000000,0.000000,100.000000,5.851700,-100.000000,0.000000,0.000000,3915.372070,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,-1.000000,0.000000,25.154011,0.000000,0.000000,1.000000,0.058517,-1.000000,0.000000,0.000000,39.153721,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_017.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_017.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga",
+                            "Material": "Library\/Textures\/\/building 01_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         },
                         "Component 3": {
@@ -986,19 +1010,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "99.663528,-0.000000,0.000000,-2.860260,0.000000,-0.000012,99.663521,0.000000,-0.000000,-97.061638,-0.000012,-2.603209,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.996635,0.000000,0.000000,-0.028603,0.000000,-0.000000,0.996635,0.000000,0.000000,-0.970616,-0.000000,-0.026032,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "99.663506,0.000000,0.000000,-2.860300,0.000000,0.000000,99.663506,0.000000,0.000000,-97.061600,0.000000,-2.603200,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.996635,0.000000,0.000000,-0.028603,0.000000,0.000000,0.996635,0.000000,0.000000,-0.970616,0.000000,-0.026032,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/Plane001.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/Plane001.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/Materials\/green_texture.dds",
+                            "Material": "Materials\/green_texture.dds",
                             "LibraryPath": "Materials\/green_texture.dds"
                         },
                         "Component 3": {
@@ -1025,19 +1050,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000018,100.000000,0.000021,-215.977188,0.000000,-0.000024,100.000000,0.000000,100.000000,-0.000021,0.000000,-185.383820,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,0.000000,-2.159772,0.000000,-0.000000,1.000000,0.000000,1.000000,-0.000000,0.000000,-1.853838,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,100.000000,0.000000,-215.977188,0.000000,0.000000,100.000000,0.000000,100.000000,0.000000,0.000000,-185.383789,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,1.000000,0.000000,-2.159772,0.000000,0.000000,1.000000,0.000000,1.000000,0.000000,0.000000,-1.853838,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/Line002.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/Line002.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/Materials\/default_texture.dds",
+                            "Material": "Materials\/default_texture.dds",
                             "LibraryPath": "Materials\/default_texture.dds"
                         },
                         "Component 3": {
@@ -1064,19 +1090,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000036,-99.999992,-0.000018,4097.999512,-0.000006,-0.000012,99.999992,6.429601,-99.999992,-0.000030,0.000000,-1827.082397,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,-1.000000,-0.000000,40.979996,-0.000000,-0.000000,1.000000,0.064296,-1.000000,-0.000000,0.000000,-18.270824,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000100,-100.000000,0.000000,4097.999512,0.000000,0.000000,100.000000,6.751100,-100.000000,0.000000,0.000000,-1827.082397,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000001,-1.000000,0.000000,40.979996,0.000000,0.000000,1.000000,0.067511,-1.000000,0.000000,0.000000,-18.270824,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_024.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_024.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_025_c.tga",
+                            "Material": "Library\/Textures\/\/building_025_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_025_c.dds"
                         },
                         "Component 3": {
@@ -1103,19 +1130,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000005,0.000002,1601.049194,-0.000002,0.000006,99.999977,5.694008,0.000005,-99.999977,0.000006,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,16.010492,-0.000000,0.000000,1.000000,0.056940,0.000000,-1.000000,0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,1601.049194,0.000000,0.000000,100.000000,5.978700,0.000000,-100.000000,0.000000,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,16.010492,0.000000,0.000000,1.000000,0.059787,0.000000,-1.000000,0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_023.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_023.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga",
+                            "Material": "Library\/Textures\/\/building_016_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         },
                         "Component 3": {
@@ -1142,19 +1170,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000017,0.000000,1770.716431,-0.000000,0.000006,99.999977,6.765938,0.000017,-99.999977,0.000006,-2005.327637,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,17.707165,-0.000000,0.000000,1.000000,0.067659,0.000000,-1.000000,0.000000,-20.053276,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,1770.716431,0.000000,0.000000,100.000000,7.104200,0.000000,-100.000000,0.000000,-2005.327637,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,17.707165,0.000000,0.000000,1.000000,0.071042,0.000000,-1.000000,0.000000,-20.053276,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_041.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_041.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V02_C.png",
+                            "Material": "Library\/Textures\/\/Building_V02_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V02_C.dds"
                         },
                         "Component 3": {
@@ -1181,19 +1210,20 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000017,0.000002,-4147.588867,-0.000002,0.000006,99.999977,5.797052,0.000017,-99.999977,0.000006,-2101.409912,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,-41.475887,-0.000000,0.000000,1.000000,0.057971,0.000000,-1.000000,0.000000,-21.014099,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,-4147.588867,0.000000,0.000000,100.000000,6.086900,0.000000,-100.000000,0.000000,-2101.409912,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,-41.475887,0.000000,0.000000,1.000000,0.060869,0.000000,-1.000000,0.000000,-21.014099,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
-                            "LibraryPath": "Library\/Meshes\/City_building_032.fme"
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "LibraryPath": "Library\/Meshes\/City_building_032.fme",
+                            "PrimType": -1
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga",
+                            "Material": "Library\/Textures\/\/building03_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         },
                         "Component 3": {
@@ -1246,14 +1276,15 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "0.983861,0.133707,0.118915,-1.893208,-0.132122,0.991008,-0.021147,2.088583,-0.120673,0.005095,0.992679,0.092884,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "0.983861,0.133707,0.118915,-1.893208,-0.132122,0.991008,-0.021147,2.088583,-0.120673,0.005095,0.992679,0.092884,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "0.951411,0.221974,0.213413,-1.777967,-0.219945,0.974936,-0.033515,2.184173,-0.215503,-0.015053,0.976387,0.193826,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "0.951411,0.221974,0.213413,-1.777967,-0.219945,0.974936,-0.033515,2.184173,-0.215503,-0.015053,0.976387,0.193826,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
                         "active": true,
                         "Mesh": "",
-                        "LibraryPath": ""
+                        "LibraryPath": "",
+                        "PrimType": 1
                     },
                     "Component 2": {
                         "Type": 4,
@@ -1279,14 +1310,15 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "0.983861,-0.132122,-0.120673,1.893208,0.133707,0.991008,0.005095,1.905861,0.118915,-0.021147,0.992679,-0.092884,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "0.983861,-0.132122,-0.120673,1.893208,0.133707,0.991008,0.005095,1.905861,0.118915,-0.021147,0.992679,-0.092884,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "0.923186,-0.277780,-0.265644,1.777967,0.281384,0.959264,-0.025200,-0.014576,0.261823,-0.051484,0.963742,-0.193826,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "0.923186,-0.277780,-0.265644,1.777967,0.281384,0.959264,-0.025200,-0.014576,0.261823,-0.051484,0.963742,-0.193826,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
                         "active": true,
                         "Mesh": "",
-                        "LibraryPath": ""
+                        "LibraryPath": "",
+                        "PrimType": 1
                     },
                     "Component 2": {
                         "Type": 4,
@@ -1312,14 +1344,15 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
                         "active": true,
                         "Mesh": "",
-                        "LibraryPath": ""
+                        "LibraryPath": "",
+                        "PrimType": 0
                     },
                     "Component 2": {
                         "Type": 4,

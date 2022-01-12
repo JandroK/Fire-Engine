@@ -688,6 +688,43 @@ void Editor::PrimitiveMenuItem()
 	}
 }
 
+Mesh* Editor::LoadPrimitive(int type)
+{
+	if (type == 0)
+	{
+		PCube cubePrim = PCube();
+		cubePrim.InnerMesh();
+		cubePrim.mesh->LoadToMemory();
+		cubePrim.mesh->GenerateBounds();
+		return cubePrim.mesh;
+	}
+	else if (type == 1)
+	{
+		PSphere spherePrim = PSphere();
+		spherePrim.InnerMesh();
+		spherePrim.mesh->LoadToMemory();
+		spherePrim.mesh->GenerateBounds();
+		return spherePrim.mesh;
+	}
+	else if (type == 2)
+	{
+		PCylinder cylinderPrim = PCylinder();
+		cylinderPrim.InnerMesh();
+		cylinderPrim.mesh->LoadToMemory();
+		cylinderPrim.mesh->GenerateBounds();
+		return cylinderPrim.mesh;
+	}
+	else if (type == 3)
+	{
+		PPyramid pyramidPrim = PPyramid();
+		pyramidPrim.InnerMesh();
+		pyramidPrim.mesh->LoadToMemory();
+		pyramidPrim.mesh->GenerateBounds();
+		return pyramidPrim.mesh;
+	}
+	return nullptr;
+}
+
 bool Editor::CleanUp()
 {
 	bool ret= true;
