@@ -127,13 +127,49 @@ void C_RigidBody::Update()
 			GetOwner()->transform->SetTransformMFromM(CM2);
 		}
 	}
-	else if (collisionType != CollisionType::CAMERA)
+}
+
+void C_RigidBody::UpdateCollision()
+{
+	if (collisionType != CollisionType::CAMERA)
 	{
+		float3 size = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB.Size();
+
 		float3 f = quatRotate(GetOwner()->transform->GetWorldRotation(), offset);
 		btTransform t;
-		t.setBasis(GetOwner()->transform->GetGlobalTransform().Float3x3Part());
+		t.setBasis(float3x3::FromQuat(GetOwner()->transform->GetWorldRotation()));
 		t.setOrigin(GetOwner()->transform->GetGlobalTransform().Col3(3) + f);
+		
 		body->setWorldTransform(t);
+
+		UpdateScale(GetOwner()->transform->GetWorldScale(), static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB.Size().y, static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->GetSphereRadius());
+	}
+}
+
+void C_RigidBody::UpdateScale(float3 size, float height, float radius)
+{
+	switch (body->getCollisionShape()->getShapeType())
+	{
+	case BOX_SHAPE_PROXYTYPE:
+		static_cast<btBoxShape*>(body->getCollisionShape())->setLocalScaling(size);
+		break;
+	case SPHERE_SHAPE_PROXYTYPE:
+		static_cast<btSphereShape*>(body->getCollisionShape())->setUnscaledRadius(radius);
+		break;
+	case CAPSULE_SHAPE_PROXYTYPE:
+		static_cast<btCapsuleShape*>(body->getCollisionShape())->setLocalScaling(btVector3(radius, height * 0.5f, 0.0f));
+		break;
+	case CYLINDER_SHAPE_PROXYTYPE:
+		static_cast<btCylinderShape*>(body->getCollisionShape())->setLocalScaling(btVector3(radius, height * 0.5f, 0.0f));
+		break;
+	case CONE_SHAPE_PROXYTYPE:
+		static_cast<btConeShape*>(body->getCollisionShape())->setLocalScaling(btVector3(radius, height * 0.5f, radius));
+		break;
+	case STATIC_PLANE_PROXYTYPE:
+		CreateBody();
+		break;
+	default:
+		break;
 	}
 }
 
@@ -333,6 +369,7 @@ void C_RigidBody::SetCollisionType(CollisionType type)
 
 void C_RigidBody::ResetLocalValues()
 {
+	LOG(LogType::L_NORMAL, "%f, %f, %f",box.size[0], box.size[1], box.size[2]);
 	box.size = { 1,1,1 };
 	capsule.radius = 1;
 	capsule.height = 2;
@@ -475,7 +512,7 @@ void C_RigidBody::SetMass(float mass)
 {
 	btVector3 localInertia(0, 0, 0);
 	if (mass != 0.f)
-		//body->getCollisionShape()->calculateLocalInertia(mass, localInertia);
+		body->getCollisionShape()->calculateLocalInertia(mass, localInertia);
 	body->setMassProps(mass, localInertia);
 	this->mass = mass;
 }

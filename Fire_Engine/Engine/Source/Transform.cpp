@@ -7,6 +7,7 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "ComponentCamera.h"
+#include "C_RigidBody.h"
 
 #include "ImGui/imgui.h"
 #include "MathGeoLib/include/Math/TransformOps.h"
@@ -109,7 +110,7 @@ void Transform::EditTransform(float4x4& trans, float3& pos, Quat& rot, float3& e
 	}
 
 	ImGui::Text("Scale %s: ", reference.c_str());
-	if (ImGui::DragFloat3("##Scale", &scale[0], 0.1f, true))
+	if (ImGui::DragFloat3("##Scale", &scale[0], 0.1f, true, 0.1f, INFINITE))
 	{
 		// If the rotation has not been modified (quaternion = identity) then only overwrite scale
 		// But if the rotation yes has been modified then float3x3(rotate) * float3x3::Scale(scale)
@@ -208,6 +209,7 @@ void Transform::UpdateTransform()
 				ComponentCamera* camera = static_cast<ComponentCamera*>(GetOwner()->GetComponent(ComponentType::CAMERA));
 				if (camera != nullptr) 
 					camera->updateCamera = true;
+				if(static_cast<C_RigidBody*>(GetOwner()->GetComponent(ComponentType::RIGIDBODY)) != nullptr) static_cast<C_RigidBody*>(GetOwner()->GetComponent(ComponentType::RIGIDBODY))->UpdateCollision();
 			}
 		}
 	}

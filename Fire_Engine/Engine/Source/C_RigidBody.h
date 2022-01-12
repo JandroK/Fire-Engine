@@ -27,6 +27,8 @@ public:
 
 	void SetBoundingBox();
 	void Update() override;
+	void UpdateCollision();
+	void UpdateScale(float3 size = float3::zero, float height = 0, float radius = 0);
 	void OnEditor() override;
 
 	void Combos();
