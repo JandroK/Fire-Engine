@@ -30,6 +30,7 @@
 #include"MathGeoLib/include/Math/Quat.h"
 #include "Bullet/include/BulletDynamics/Dynamics/btRigidBody.h"
 #include "Bullet/include/BulletCollision/CollisionShapes/btCollisionShape.h"
+#include "PhysVehicle3D.h"
 
 Scene::Scene(Application* app, bool start_enabled) : Module(app, start_enabled), root(nullptr)
 {
@@ -83,8 +84,6 @@ bool Scene::Start()
 	transformCamera->SetEulerRotation(float3(145.0f, 30.0f, -160.0f));
 	transformCamera->SetTransformMFromM(transformCamera->GetLocalTransform());
 
-	mainCar = new CarControls();
-
 	PSphere spherePrim1 = PSphere();
 	spherePrim1.InnerMesh();
 	spherePrim1.mesh->LoadToMemory();
@@ -116,15 +115,23 @@ bool Scene::Start()
 	body2->GetBody()->getCollisionShape()->getBoundingSphere(center, r2);
 	app->physics->AddConstraintP2P(*body1->GetBody(), *body2->GetBody(), float3(r1, r1, r1), float3(r2, r2, r2));
 
+	mainCar = new CarControls();
+
 	PCube cubePrim = PCube(float3(1.f, 0.5f, 2.f), float3(0.f, 1.5f, 3.f));
 	cubePrim.InnerMesh();
 	cubePrim.mesh->LoadToMemory();
 	cubePrim.mesh->GenerateBounds();
+
 	GameObject* car = CreatePrimitive("Car", cubePrim.mesh);
 	car->transform->SetWorldPosition(float3(0.f, 1.5f, 3.f));
 	car->transform->UpdateTransform();
 	car->AddComponent(ComponentType::RIGIDBODY);
-	static_cast<C_RigidBody*>(car->GetComponent(ComponentType::RIGIDBODY))->SetAsVehicle();
+
+	C_RigidBody* bodyCar = static_cast<C_RigidBody*>(car->GetComponent(ComponentType::RIGIDBODY));
+	bodyCar->SetMass(130);
+	bodyCar->SetAsVehicle();
+	bodyCar->GetVehicle()->mainV = true;
+	mainCar->vehicle = bodyCar->GetVehicle();
 
 	return true;
 }

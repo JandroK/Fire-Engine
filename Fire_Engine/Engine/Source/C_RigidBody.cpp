@@ -471,6 +471,15 @@ void C_RigidBody::CreateBody()
 	}
 }
 
+void C_RigidBody::SetMass(float mass)
+{
+	btVector3 localInertia(0, 0, 0);
+	if (mass != 0.f)
+		body->getCollisionShape()->calculateLocalInertia(mass, localInertia);
+	body->setMassProps(mass, localInertia);
+	this->mass = mass;
+}
+
 void C_RigidBody::SetAsStatic()
 {
 	useGravity = false;

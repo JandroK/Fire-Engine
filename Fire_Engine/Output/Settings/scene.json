@@ -1324,7 +1324,7 @@
                     "Component 2": {
                         "Type": 4,
                         "active": true,
-                        "mass": 1,
+                        "mass": 130,
                         "collision": 0,
                         "isKinematic": false,
                         "vehicle": true

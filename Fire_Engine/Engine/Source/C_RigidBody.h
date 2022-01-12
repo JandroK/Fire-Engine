@@ -39,7 +39,7 @@ public:
 
 	void CreateBody();
 	float GetMass() { return mass; };
-	void SetMass(float mass) { this->mass = mass; };
+	void SetMass(float mass);
 	btRigidBody* GetBody() { return body; };
 	PhysVehicle3D* GetVehicle() { return vehicle; };
 	CollisionType GetCollisionType() { return collisionType; };
