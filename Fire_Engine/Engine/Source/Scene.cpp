@@ -116,6 +116,16 @@ bool Scene::Start()
 	body2->GetBody()->getCollisionShape()->getBoundingSphere(center, r2);
 	app->physics->AddConstraintP2P(*body1->GetBody(), *body2->GetBody(), float3(r1, r1, r1), float3(r2, r2, r2));
 
+	PCube cubePrim = PCube(float3(1.f, 0.5f, 2.f), float3(0.f, 1.5f, 3.f));
+	cubePrim.InnerMesh();
+	cubePrim.mesh->LoadToMemory();
+	cubePrim.mesh->GenerateBounds();
+	GameObject* car = CreatePrimitive("Car", cubePrim.mesh);
+	car->transform->SetWorldPosition(float3(0.f, 1.5f, 3.f));
+	car->transform->UpdateTransform();
+	car->AddComponent(ComponentType::RIGIDBODY);
+	static_cast<C_RigidBody*>(car->GetComponent(ComponentType::RIGIDBODY))->SetAsVehicle();
+
 	return true;
 }
 
