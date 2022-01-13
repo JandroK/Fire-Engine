@@ -21,7 +21,7 @@ VehicleInfo::VehicleInfo(float3 size, float mass)
 	// Wheel properties ---------------------------------------
 	float wheel_radius = 0.6f;
 	float wheel_width = 0.75f;
-	float connection_height = -chassis_size.y * 0.5f + wheel_radius * 1.25f;
+	float connection_height = -chassis_size.y * 0.5f + wheel_radius * 2;
 	float suspensionRestLength = 1.25f;
 	float half_width = chassis_size.x * 0.5f;
 	float half_length = chassis_size.z * 0.25f;

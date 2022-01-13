@@ -40,6 +40,9 @@ C_RigidBody::~C_RigidBody()
 		if(collisionType == CollisionType::CAMERA)
 			app->physics->DeleteBody(this, "Camera");
 		else app->physics->DeleteBody(this, GetOwner()->name);
+
+		constraintBodies.clear();
+		if(vehicle != nullptr) RELEASE(vehicle);
 	}	
 }
 

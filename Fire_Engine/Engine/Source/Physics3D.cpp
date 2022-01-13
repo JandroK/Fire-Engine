@@ -147,18 +147,6 @@ bool Physics3D::CleanUp()
 		RELEASE(obj);
 	}
 
-	for (std::list<btTypedConstraint*>::iterator it = constraints.begin(); it != constraints.end(); ++it)
-		RELEASE(*it);
-	constraints.clear();
-
-	for (std::list<btDefaultMotionState*>::iterator it = motions.begin(); it != motions.end(); ++it)
-		RELEASE(*it);
-	motions.clear();
-
-	for (std::list<btCollisionShape*>::iterator it = shapes.begin(); it != shapes.end(); ++it)
-		RELEASE(*it);
-	shapes.clear();
-
 	/*for (std::vector<C_RigidBody*>::iterator it = bodies.begin(); it != bodies.end(); ++it)
 		RELEASE(*it);*/
 	bodies.clear();
@@ -225,14 +213,12 @@ btRigidBody* Physics3D::CollisionShape(const PPlane& plane, C_RigidBody* compone
 btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTransform, C_RigidBody* component)
 {
 	float mass = (component->useGravity && !component->isKinematic) ? component->GetMass() : 0.0f;
-	shapes.push_back(colShape);
 
 	btVector3 localInertia(0, 0, 0);
 	if (mass != 0.f)
 		colShape->calculateLocalInertia(mass, localInertia);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-	motions.push_back(myMotionState);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
 
 	btRigidBody* body = new btRigidBody(rbInfo);
@@ -272,11 +258,7 @@ PhysVehicle3D* Physics3D::AddVehicle(const VehicleInfo& info, btRigidBody* body)
 
 	for (int i = 0; i < info.num_wheels; ++i)
 	{
-		btVector3 conn(info.wheels[i].connection.x, info.wheels[i].connection.y, info.wheels[i].connection.z);
-		btVector3 dir(info.wheels[i].direction.x, info.wheels[i].direction.y, info.wheels[i].direction.z);
-		btVector3 axis(info.wheels[i].axis.x, info.wheels[i].axis.y, info.wheels[i].axis.z);
-
-		vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
+		vehicle->addWheel(info.wheels[i].connection, info.wheels[i].direction, info.wheels[i].axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
 	}
 
 	PhysVehicle3D* pvehicle = new PhysVehicle3D(vehicle, info);
@@ -300,6 +282,36 @@ void Physics3D::DeleteBody(C_RigidBody* body, std::string name)
 				{
 					vehicles.erase(i);
 					break;
+				}
+			}
+		}
+		if (body->constraintBodies.empty() == false)
+		{
+			std::vector<C_RigidBody*>::const_iterator k;
+			bool clean = false;
+			int size = body->GetBody()->getNumConstraintRefs();
+			for (size_t i = 0; i < size; i++)
+			{
+				world->removeConstraint(body->GetBody()->getConstraintRef(0)); // index must be 0
+			}
+			for (int i = 0; i < bodies.size(); i++)
+			{
+				if (bodies.at(i)->GetBody() != body->GetBody() && bodies.at(i)->constraintBodies.empty() == false)
+				{
+					while (clean == false)
+					{
+						for (k = bodies.at(i)->constraintBodies.begin(); k != bodies.at(i)->constraintBodies.end(); ++k)
+						{
+							if (*k._Ptr == body)
+							{
+								bodies.at(i)->constraintBodies.erase(k);
+								clean = false;
+								break;
+							}
+							else clean = true;
+						}
+						if (bodies.at(i)->constraintBodies.empty()) clean = true;
+					}
 				}
 			}
 		}
@@ -336,7 +348,8 @@ void Physics3D::AddConstraintP2P(btRigidBody& bodyA, btRigidBody& bodyB, const f
 {
 	btTypedConstraint* p2p = new btPoint2PointConstraint(bodyA, bodyB, anchorA, anchorB);
 	world->addConstraint(p2p);
-	constraints.push_back(p2p);
+	bodyA.addConstraintRef(p2p);
+	bodyB.addConstraintRef(p2p);
 	p2p->setDbgDrawSize(2.0f);
 }
 
@@ -344,7 +357,8 @@ void Physics3D::AddConstraintHinge(btRigidBody& bodyA, btRigidBody& bodyB, const
 {
 	btHingeConstraint* hinge = new btHingeConstraint(bodyA, bodyB, anchorA, anchorB, axisA, axisB);
 	world->addConstraint(hinge, disable_collision);
-	constraints.push_back(hinge);
+	bodyA.addConstraintRef(hinge);
+	bodyB.addConstraintRef(hinge);
 	hinge->setDbgDrawSize(2.0f);
 }
 void Physics3D::SleepAllBodies()

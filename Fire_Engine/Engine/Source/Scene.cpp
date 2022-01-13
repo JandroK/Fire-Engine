@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Scene.h"
 #include "Globals.h"
+#include "DTEngine.h"
 
 //Components
 #include "Component.h"
@@ -117,7 +118,7 @@ bool Scene::Start()
 
 	mainCar = new CarControls();
 
-	PCube cubePrim = PCube(float3(1.f, 0.5f, 2.f), float3(0.f, 1.5f, 3.f));
+	PCube cubePrim = PCube(float3(2, 1, 3), float3(0.f, 1.5f, 3.f));
 	cubePrim.InnerMesh();
 	cubePrim.mesh->LoadToMemory();
 	cubePrim.mesh->GenerateBounds();
@@ -157,7 +158,7 @@ update_status Scene::Update(float dt)
 		app->editor->DestroySelectedAsset();
 
 	UpdateGameObjects();
-	if(mainCar->vehicle != nullptr) mainCar->Update();
+	if(mainCar->vehicle != nullptr && DTEngine::state == DTGState::PLAY) mainCar->Update();
 
 	return update_status::UPDATE_CONTINUE;
 }

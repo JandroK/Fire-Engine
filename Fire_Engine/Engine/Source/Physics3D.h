@@ -70,10 +70,7 @@ private:
 	btDefaultVehicleRaycaster* vehicleRaycaster = nullptr;
 	DebugDrawer* debugDraw = nullptr;
 
-	std::list<btCollisionShape*> shapes;
 	std::vector<C_RigidBody*> bodies;
-	std::list<btDefaultMotionState*> motions;
-	std::list<btTypedConstraint*> constraints;
 	std::vector<PhysVehicle3D*> vehicles;
 
 	bool debug = true;

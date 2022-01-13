@@ -42,7 +42,7 @@ void CarControls::PlayerControls()
 		vel = maxAcceleration * 2;
 		vehicle->state = TURBO;
 		// FUYM car tilt
-		vehicle->vehicle->getRigidBody()->applyCentralForce({ 0,-99,0 });
+		//vehicle->vehicle->getRigidBody()->applyCentralForce({ 0,-99,0 });
 	}
 	else
 	{
