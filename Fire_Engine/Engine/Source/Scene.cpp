@@ -483,11 +483,14 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 					mesh->LoadFromFME(debugPath.c_str());
 
 					meshRender->SetMesh(mesh);
+					meshRender->SetBoundingBoxes(mesh);
 				}
 				else
 				{
 					size = float3(tmp.JsonValToNumber("SizeX"), tmp.JsonValToNumber("SizeY"), tmp.JsonValToNumber("SizeZ"));
-					meshRender->SetMesh(app->editor->LoadPrimitive(tmp.JsonValToNumber("PrimType"), size, tmp.JsonValToNumber("Radius"), size.y));
+					mesh = app->editor->LoadPrimitive(tmp.JsonValToNumber("PrimType"), size, tmp.JsonValToNumber("Radius"), size.y);
+					meshRender->SetMesh(mesh);
+					meshRender->SetBoundingBoxes(mesh);
 				}
 				
 				meshRender->SetOwner(gamObj);
