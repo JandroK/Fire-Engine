@@ -117,7 +117,7 @@ bool Scene::Start()
 	app->physics->AddConstraintP2P(*body1->GetBody(), *body2->GetBody(), float3(r1, r1, r1), float3(r2, r2, r2));
 
 	mainCar = new CarControls();
-
+	std::string carName = "Car";
 	for (int i = 0; i < 6; i++)
 	{
 		PCube cubePrim = PCube(float3(2 + i * 0.5f, 1 + i * 0.5f, 3 + i * 0.5f), float3(-18.f + i*6, 1.5f, 3.f));
@@ -125,7 +125,8 @@ bool Scene::Start()
 		cubePrim.mesh->LoadToMemory();
 		cubePrim.mesh->GenerateBounds();
 
-		GameObject* car = CreatePrimitive("Car", cubePrim.mesh);
+		carName = "Car" + std::to_string(i + 1);
+		GameObject* car = CreatePrimitive(carName.c_str(), cubePrim.mesh);
 		car->transform->SetWorldPosition(float3(-18.f + i * 6, 1.5f, 3.f));
 		car->transform->UpdateTransform();
 		car->AddComponent(ComponentType::RIGIDBODY);
