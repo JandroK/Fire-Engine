@@ -30,6 +30,8 @@ public:
 	void UpdateCollision();
 	void OnEditor() override;
 
+	void SetAsMainV(bool _main);
+
 	void Combos();
 
 	void SetCollisionType(CollisionType type);

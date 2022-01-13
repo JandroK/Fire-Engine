@@ -43,6 +43,7 @@ C_RigidBody::~C_RigidBody()
 
 		constraintBodies.clear();
 		if(vehicle != nullptr) RELEASE(vehicle);
+		//body = nullptr;
 	}	
 }
 
@@ -123,7 +124,7 @@ void C_RigidBody::Update()
 			trans.setOrigin(app->camera->GetPosition());
 			body->getMotionState()->setWorldTransform(trans);
 		}
-		else if (body->getActivationState() == 1 || vehicle != nullptr)
+		else if (body->getActivationState() == 1 || body->getActivationState() == 3 || vehicle != nullptr)
 		{
 			float3 f = quatRotate(body->getOrientation(), offset);
 			float4x4 CM2 = float4x4::FromTRS(body->getCenterOfMassPosition() - f, body->getWorldTransform().getRotation(), GetOwner()->transform->GetWorldScale());
@@ -209,14 +210,7 @@ void C_RigidBody::OnEditor()
 			{
 				if (ImGui::Checkbox("Main Vehicle", &vehicle->mainV))
 				{
-					if (app->scene->mainCar->vehicle != nullptr)
-						app->scene->mainCar->vehicle->mainV = false;
-					if (vehicle->mainV)
-					{
-						app->scene->mainCar->vehicle = vehicle;
-					}
-					else
-						app->scene->mainCar->vehicle = nullptr;
+					SetAsMainV(vehicle->mainV);
 				}
 				app->scene->mainCar->OnEditor();
 
@@ -251,6 +245,18 @@ void C_RigidBody::OnEditor()
 			
 		}
 	}
+}
+
+void C_RigidBody::SetAsMainV(bool _main)
+{
+	if (app->scene->mainCar->vehicle != nullptr)
+		app->scene->mainCar->vehicle->mainV = false;
+	if (_main)
+	{
+		app->scene->mainCar->vehicle = vehicle;
+	}
+	else
+		app->scene->mainCar->vehicle = nullptr;
 }
 
 void C_RigidBody::Combos()

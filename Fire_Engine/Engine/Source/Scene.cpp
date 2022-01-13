@@ -366,7 +366,13 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "mass", body->GetMass());
 				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "collision", (int)body->GetCollisionType());
 				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "isKinematic", body->isKinematic);
-				tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "vehicle", (body->GetVehicle() != nullptr)? true : false);
+				if (body->GetVehicle() != nullptr)
+				{
+					tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "vehicle", true);
+					tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "mainV", body->GetVehicle()->mainV);
+				}
+				else
+					tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "vehicle", false);
 				break;
 		}
 		parentGO->GetCompoments().at(i)->GetType();
@@ -387,6 +393,7 @@ bool Scene::LoadScene()
 	Destroy(root);
 
 	rootFile = jsonFile.GetRootValue();
+	mainCar->vehicle = nullptr;
 
 	rootGO = jsonFile.GetChild(rootFile, "GameObjects");
 	root=LoadGameObject(rootGO.GetChild(rootGO.GetRootValue(), "Root"));
@@ -510,13 +517,16 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 				break;
 
 			case ComponentType::RIGIDBODY:
-				gamObj->AddComponent(ComponentType::RIGIDBODY);
+				gamObj->AddComponent(ComponentType::RIGIDBODY, tmp.JsonValToNumber("collision"));
 				body = static_cast<C_RigidBody*>(gamObj->GetComponent(ComponentType::RIGIDBODY));
 				body->SetMass(tmp.JsonValToNumber("mass"));
-				body->SetCollisionType((CollisionType)tmp.JsonValToNumber("collision"));
 				body->isKinematic = tmp.JsonValToBool("isKinematic");
 				if (tmp.JsonValToBool("vehicle") == true)
+				{
 					body->SetAsVehicle();
+					if (tmp.JsonValToBool("mainV") == true)
+						body->SetAsMainV(true);
+				}
 				
 				break;
 			}

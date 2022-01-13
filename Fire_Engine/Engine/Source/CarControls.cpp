@@ -22,7 +22,7 @@ update_status CarControls::Update()
 	turn = acceleration = 0.0f;
 	AssistDirection(hardnessPS);
 	forwardVector = vehicle->vehicle->getForwardVector().normalize();
-	perpendicularVector = btVector3(-forwardVector.getZ(), forwardVector.getY(), forwardVector.getX());
+	perpendicularVector = float3(-forwardVector.z, forwardVector.y, forwardVector.x);
 
 	PlayerControls();
 
@@ -59,8 +59,8 @@ void CarControls::PlayerControls()
 		if (-vehicle->GetKmh() < -2.5)
 		{
 			brake = breakPower;
-			LOG(LogType::L_NORMAL, "Accelerando");
-			//vehicle->vehicle->getRigidBody()->applyCentralForce({ 0,-0.1,0 });
+			//vehicle->vehicle->getRigidBody()->applyCentralForce({ 0,-200,0 });
+			//vehicle->vehicle->getRigidBody()->applyForce({ 0, -130,0 }, forwardVector * vehicle->info.chassis_size.z*2 );
 		}
 		acceleration = vel;
 	}
@@ -73,8 +73,8 @@ void CarControls::PlayerControls()
 		if (-vehicle->GetKmh() < -2.5)
 		{
 			brake = breakPower;
-			LOG(LogType::L_NORMAL, "Frenando");
-			//vehicle->vehicle->getRigidBody()->applyCentralForce({ 0,-0.1,0 });
+			//vehicle->vehicle->getRigidBody()->applyCentralForce({0,-200,0});
+			//vehicle->vehicle->getRigidBody()->applyForce({ 0, -130,0 }, -forwardVector * vehicle->info.chassis_size.z*2 );
 		}
 		acceleration = -vel;
 	}
@@ -83,24 +83,14 @@ void CarControls::PlayerControls()
 	{
 		if (turn < maxTurnDegrees * DEGTORAD)
 			turn += (maxTurnDegrees * DEGTORAD)-assistDirection;
-		brake = 10;
-
-		if (vehicle->state == State::IN_AIR)
-			vehicle->vehicle->getRigidBody()->applyTorque(forwardVector * 45);
-		else
-			vehicle->vehicle->getRigidBody()->applyTorque(forwardVector * 200);
+		brake = 6;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		if (turn > -maxTurnDegrees * DEGTORAD)
 			turn -= (maxTurnDegrees * DEGTORAD)-assistDirection;
-		brake = 10;
-
-		if (vehicle->state == State::IN_AIR)
-			vehicle->vehicle->getRigidBody()->applyTorque(forwardVector * -45);
-		else
-			vehicle->vehicle->getRigidBody()->applyTorque(forwardVector * -200);
+		brake = 6;
 	}
 }
 

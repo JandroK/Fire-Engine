@@ -1,5 +1,5 @@
 #pragma once
-#include "LinearMath/btVector3.h"
+#include "Math/float3.h"
 struct PhysVehicle3D;
 
 class CarControls
@@ -24,8 +24,8 @@ private:
 	float assistDirection = 0.0f;
 	float calculate = 0.0f;
 
-	btVector3 forwardVector;
-	btVector3 perpendicularVector;
+	float3 forwardVector;
+	float3 perpendicularVector;
 
 	float maxAcceleration = 400.0f;
 	float maxTurnDegrees = 17.0f;
