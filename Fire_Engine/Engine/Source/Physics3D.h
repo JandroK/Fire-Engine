@@ -56,6 +56,9 @@ public:
 	std::vector<C_RigidBody*> GetBodies() { return bodies; };
 	std::vector<std::string> GetBodiesNames() { return bodiesNames; };
 
+	void SleepAllBodies();
+	void ActiveAllBodies();
+
 	std::vector<std::string> bodiesNames;
 private:
 	btDefaultCollisionConfiguration* collisionConfig = nullptr;

@@ -56,7 +56,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_041.fme",
                             "PrimType": -1,
                             "SizeX": 13.836939811706543,
@@ -100,7 +100,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_040.fme",
                             "PrimType": -1,
                             "SizeX": 11.313478469848633,
@@ -144,7 +144,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_039.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
@@ -188,7 +188,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_038.fme",
                             "PrimType": -1,
                             "SizeX": 13.04541015625,
@@ -232,7 +232,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_037.fme",
                             "PrimType": -1,
                             "SizeX": 12.302089691162109,
@@ -276,7 +276,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_036.fme",
                             "PrimType": -1,
                             "SizeX": 11.020986557006836,
@@ -320,7 +320,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_039.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
@@ -364,7 +364,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_034.fme",
                             "PrimType": -1,
                             "SizeX": 19.779281616210938,
@@ -408,7 +408,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_033.fme",
                             "PrimType": -1,
                             "SizeX": 19.518222808837891,
@@ -452,7 +452,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_032.fme",
                             "PrimType": -1,
                             "SizeX": 11.836522102355957,
@@ -496,7 +496,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_031.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
@@ -540,7 +540,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_030.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
@@ -578,13 +578,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000000,0.000000,-250.335098,0.000000,0.000000,100.000000,-0.000100,0.000000,-100.000000,0.000000,-1580.084229,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,-2.503351,0.000000,0.000000,1.000000,-0.000001,0.000000,-1.000000,0.000000,-15.800842,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,-4056481920730334084789450257203200.000000,0.000000,-0.000036,100.000000,4056481920730334084789450257203200.000000,0.000000,-100.000000,-0.000036,-12169445762191002254368350771609600.000000,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,-40564819207303340847894502572032.000000,-0.000000,-0.000000,1.000000,40564819207303340847894502572032.000000,0.000000,-1.000000,-0.000000,-121694457621910022543683507716096.000000,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/Object010.fme",
                             "PrimType": -1,
                             "SizeX": 40.050388336181641,
@@ -628,7 +628,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_039.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
@@ -672,7 +672,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_026.fme",
                             "PrimType": -1,
                             "SizeX": 22.611854553222656,
@@ -716,7 +716,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_024.fme",
                             "PrimType": -1,
                             "SizeX": 7.0603928565979004,
@@ -760,7 +760,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_023.fme",
                             "PrimType": -1,
                             "SizeX": 10.117923736572266,
@@ -804,7 +804,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_022.fme",
                             "PrimType": -1,
                             "SizeX": 13.04541015625,
@@ -848,7 +848,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_017.fme",
                             "PrimType": -1,
                             "SizeX": 12.292150497436523,
@@ -892,7 +892,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_017.fme",
                             "PrimType": -1,
                             "SizeX": 12.292150497436523,
@@ -936,7 +936,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_014.fme",
                             "PrimType": -1,
                             "SizeX": 9.9147052764892578,
@@ -980,7 +980,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_036.fme",
                             "PrimType": -1,
                             "SizeX": 11.020986557006836,
@@ -1024,7 +1024,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_023.fme",
                             "PrimType": -1,
                             "SizeX": 10.117923736572266,
@@ -1068,7 +1068,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_017.fme",
                             "PrimType": -1,
                             "SizeX": 12.292150497436523,
@@ -1106,13 +1106,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "99.663506,0.000000,0.000000,-2.860300,0.000000,0.000000,99.663506,0.000000,0.000000,-97.061600,0.000000,-2.603200,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.996635,0.000000,0.000000,-0.028603,0.000000,0.000000,0.996635,0.000000,0.000000,-0.970616,0.000000,-0.026032,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "99.663506,0.000000,0.000000,-4056481920730334084789450257203200.000000,0.000000,-0.000035,99.663506,4056481920730334084789450257203200.000000,0.000000,-97.061600,-0.000036,-12169445762191002254368350771609600.000000,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.996635,-0.000000,0.000000,-40564819207303340847894502572032.000000,0.000000,-0.000000,0.996635,40564819207303340847894502572032.000000,-0.000000,-0.970616,-0.000000,-121694457621910022543683507716096.000000,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/Plane001.fme",
                             "PrimType": -1,
                             "SizeX": 96.717292785644531,
@@ -1143,20 +1143,20 @@
                     "layer": "0: Default",
                     "active": true,
                     "isStatic": false,
-                    "isSelected": true,
+                    "isSelected": false,
                     "showChildrens": false,
                     "pendingToDelete": false,
                     "components": {
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000000,100.000000,0.000000,-215.977188,0.000000,0.000000,100.000000,0.000000,100.000000,0.000000,0.000000,-185.383789,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,0.000000,-2.159772,0.000000,0.000000,1.000000,0.000000,1.000000,0.000000,0.000000,-1.853838,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,100.000000,0.000000,0.000000,0.000000,0.000000,100.000000,0.000000,100.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/Line002.fme",
                             "PrimType": -1,
                             "SizeX": 94.333724975585938,
@@ -1200,7 +1200,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_024.fme",
                             "PrimType": -1,
                             "SizeX": 7.0603928565979004,
@@ -1244,7 +1244,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_023.fme",
                             "PrimType": -1,
                             "SizeX": 10.117923736572266,
@@ -1288,7 +1288,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_041.fme",
                             "PrimType": -1,
                             "SizeX": 13.836939811706543,
@@ -1332,7 +1332,7 @@
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_032.fme",
                             "PrimType": -1,
                             "SizeX": 11.836522102355957,
@@ -1490,6 +1490,44 @@
                         "Type": 4,
                         "active": true,
                         "mass": 130,
+                        "collision": 0,
+                        "isKinematic": false,
+                        "vehicle": true
+                    }
+                }
+            },
+            "Child 5": {
+                "name": "Cube",
+                "IsRoot": false,
+                "tag": "Untagged",
+                "layer": "0: Default",
+                "active": true,
+                "isStatic": false,
+                "isSelected": false,
+                "showChildrens": false,
+                "pendingToDelete": false,
+                "components": {
+                    "Component 0": {
+                        "Type": 0,
+                        "active": true,
+                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,"
+                    },
+                    "Component 1": {
+                        "Type": 1,
+                        "active": true,
+                        "Mesh": "",
+                        "LibraryPath": "",
+                        "PrimType": 0,
+                        "SizeX": 1,
+                        "SizeY": 1,
+                        "SizeZ": 1,
+                        "Radius": 0.5
+                    },
+                    "Component 2": {
+                        "Type": 4,
+                        "active": true,
+                        "mass": 1,
                         "collision": 0,
                         "isKinematic": false,
                         "vehicle": true

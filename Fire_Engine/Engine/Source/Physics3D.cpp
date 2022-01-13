@@ -68,10 +68,9 @@ bool Physics3D::Start()
 
 update_status Physics3D::PreUpdate(float dt)
 {
+	world->stepSimulation(dt, 15);
 	if (DTEngine::state == DTGState::PLAY)
 	{
-		world->stepSimulation(dt, 15);
-
 		int numManifolds = world->getDispatcher()->getNumManifolds();
 		for (int i = 0; i < numManifolds; i++)
 		{
@@ -243,8 +242,9 @@ btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTra
 		body->setCollisionFlags(body->getFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
 		body->setActivationState(DISABLE_DEACTIVATION);
 	}		
+	if (DTEngine::state != DTGState::PLAY)
+		body->setActivationState(ISLAND_SLEEPING);
 
-	//body->setUserPointer(pbody);
 	world->addRigidBody(body);
 	bodies.push_back(component);
 	if(component->GetCollisionType() != CollisionType::CAMERA)
@@ -257,7 +257,8 @@ btRigidBody* Physics3D::AddBody(btCollisionShape* colShape, btTransform startTra
 PhysVehicle3D* Physics3D::AddVehicle(const VehicleInfo& info, btRigidBody* body)
 {
 	body->setContactProcessingThreshold(BT_LARGE_FLOAT);
-	body->setActivationState(DISABLE_DEACTIVATION);
+	if (DTEngine::state == DTGState::PLAY)
+		body->setActivationState(DISABLE_DEACTIVATION);
 
 	btRaycastVehicle::btVehicleTuning tuning;
 	tuning.m_frictionSlip = info.frictionSlip;
@@ -345,6 +346,23 @@ void Physics3D::AddConstraintHinge(btRigidBody& bodyA, btRigidBody& bodyB, const
 	world->addConstraint(hinge, disable_collision);
 	constraints.push_back(hinge);
 	hinge->setDbgDrawSize(2.0f);
+}
+void Physics3D::SleepAllBodies()
+{
+	for (int i = 0; i < bodies.size(); i++)
+	{
+		bodies.at(i)->GetBody()->setActivationState(ISLAND_SLEEPING);
+	}
+}
+void Physics3D::ActiveAllBodies()
+{
+	for (int i = 0; i < bodies.size(); i++)
+	{
+		if(bodies.at(i)->GetVehicle() != nullptr || bodies.at(i)->isKinematic)
+			bodies.at(i)->GetBody()->setActivationState(DISABLE_DEACTIVATION);
+		else
+			bodies.at(i)->GetBody()->setActivationState(ACTIVE_TAG);
+	}
 }
 // =============================================
 void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)

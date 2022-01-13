@@ -1,4 +1,6 @@
 #include "DTEngine.h"
+#include "Application.h"
+#include "Physics3D.h"
 
 int DTEngine::frameCount;
 
@@ -18,6 +20,7 @@ void DTEngine::PlayGame()
 	gameTimer.Start();
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	app->physics->ActiveAllBodies();
 }
 
 void DTEngine::StopGame()
@@ -29,6 +32,7 @@ void DTEngine::StopGame()
 
 	gameTimer.Stop();
 	SDL_SetRelativeMouseMode(SDL_FALSE);
+	app->physics->SleepAllBodies();
 }
 
 void DTEngine::PreUpdate()
@@ -97,6 +101,7 @@ void DTEngine::PauseGame()
 	{
 		state = DTGState::PAUSE;
 		gameTimer.Stop();
+		app->physics->SleepAllBodies();
 	}
 }
 
@@ -112,4 +117,5 @@ void DTEngine::ResumeGame()
 		state = DTGState::PLAY;
 
 	gameTimer.Start();
+	app->physics->ActiveAllBodies();
 }
