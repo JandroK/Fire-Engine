@@ -57,7 +57,7 @@ class PCube : public Primitive
 {
 public :
 	PCube();
-	PCube(float3 _size, float3 pos);
+	PCube(float3 _size, float3 pos = float3::zero);
 	PCube(float sizeX, float sizeY, float sizeZ);
 	void InnerMesh();
 	void InnerRender() const;
@@ -89,7 +89,7 @@ class PCylinder : public Primitive
 {
 public:
 	PCylinder();
-	PCylinder(float radius, float height, int sectorCount);
+	PCylinder(float radius, float height, int sectorCount = 24);
 	void InnerMesh();
 	void InnerRender() const;
 
@@ -104,8 +104,8 @@ public:
 	int sectorCount = 24;
 
 private:
-	int baseCenterIndex;
-	int topCenterIndex;
+	int baseCenterIndex = 0;
+	int topCenterIndex = 0;
 };
 
 class PCapsule : public Primitive
@@ -124,7 +124,7 @@ class PPyramid : public Primitive
 {
 public:
 	PPyramid();
-	PPyramid(float radius, float height, int sectorCount);
+	PPyramid(float radius, float height);
 	void InnerMesh();
 
 public:

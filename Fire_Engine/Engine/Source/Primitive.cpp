@@ -617,7 +617,7 @@ PPyramid::PPyramid() : Primitive()
 	mesh->primType = 4;
 }
 
-PPyramid::PPyramid(float radius, float height, int sectorCount) : Primitive(), radius(radius), height(height)
+PPyramid::PPyramid(float radius, float height) : Primitive(), radius(radius), height(height)
 {
 	type = PrimitiveTypes::Primitive_Cylinder;
 	mesh->primType = 4;

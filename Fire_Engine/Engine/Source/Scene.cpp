@@ -341,7 +341,11 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()),  "Mesh", mesh->GetMesh()->GetAssetPath());
 				tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "LibraryPath", mesh->GetMesh()->GetLibraryPath());
 				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "PrimType", mesh->GetMesh()->primType);
-
+				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "SizeX", mesh->globalOBB.Size().x);
+				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "SizeY", mesh->globalOBB.Size().y);
+				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "SizeZ", mesh->globalOBB.Size().z);
+				tmp.SetJNumber(tmp.ValueToObject(tmp.GetRootValue()), "Radius", mesh->globalOBB.r.MaxElementXZ());
+				
 				break;
 
 			case ComponentType::MATERIAL:
@@ -433,6 +437,7 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 	Material* material;
 	ComponentCamera* camera;
 	C_RigidBody* body;
+	float3 size = float3::one;
 
 	LOG(LogType::L_NORMAL, "Loading Components \n");
 	std::string debugPath;
@@ -472,8 +477,11 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 					meshRender->SetMesh(mesh);
 				}
 				else
-					meshRender->SetMesh(app->editor->LoadPrimitive(tmp.JsonValToNumber("PrimType")));
-
+				{
+					size = float3(tmp.JsonValToNumber("SizeX"), tmp.JsonValToNumber("SizeY"), tmp.JsonValToNumber("SizeZ"));
+					meshRender->SetMesh(app->editor->LoadPrimitive(tmp.JsonValToNumber("PrimType"), size, tmp.JsonValToNumber("Radius"), size.y));
+				}
+				
 				meshRender->SetOwner(gamObj);
 
 				break;

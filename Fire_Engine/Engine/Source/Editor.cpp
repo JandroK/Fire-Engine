@@ -688,11 +688,11 @@ void Editor::PrimitiveMenuItem()
 	}
 }
 
-Mesh* Editor::LoadPrimitive(int type)
+Mesh* Editor::LoadPrimitive(int type, float3 size, float radius, float height)
 {
 	if (type == 0)
 	{
-		PCube cubePrim = PCube();
+		PCube cubePrim = PCube(size);
 		cubePrim.InnerMesh();
 		cubePrim.mesh->LoadToMemory();
 		cubePrim.mesh->GenerateBounds();
@@ -700,7 +700,7 @@ Mesh* Editor::LoadPrimitive(int type)
 	}
 	else if (type == 1)
 	{
-		PSphere spherePrim = PSphere();
+		PSphere spherePrim = PSphere(radius);
 		spherePrim.InnerMesh();
 		spherePrim.mesh->LoadToMemory();
 		spherePrim.mesh->GenerateBounds();
@@ -708,7 +708,7 @@ Mesh* Editor::LoadPrimitive(int type)
 	}
 	else if (type == 2)
 	{
-		PCylinder cylinderPrim = PCylinder();
+		PCylinder cylinderPrim = PCylinder(radius, height);
 		cylinderPrim.InnerMesh();
 		cylinderPrim.mesh->LoadToMemory();
 		cylinderPrim.mesh->GenerateBounds();
@@ -716,7 +716,7 @@ Mesh* Editor::LoadPrimitive(int type)
 	}
 	else if (type == 3)
 	{
-		PPyramid pyramidPrim = PPyramid();
+		PPyramid pyramidPrim = PPyramid(radius, height);
 		pyramidPrim.InnerMesh();
 		pyramidPrim.mesh->LoadToMemory();
 		pyramidPrim.mesh->GenerateBounds();

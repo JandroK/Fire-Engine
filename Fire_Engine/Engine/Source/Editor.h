@@ -7,6 +7,8 @@
 #include "imgui/imgui_impl_sdl.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+#include "Math/float3.h"
+
 class Tab;
 class GameObject;
 class Asset;
@@ -47,7 +49,7 @@ public:
 	update_status ImGuiMenuBar();
 	void NewScene();
 	void PrimitiveMenuItem();
-	Mesh* LoadPrimitive(int type);
+	Mesh* LoadPrimitive(int type, float3 size = float3::one, float radius = 1.0f, float height = 1.0f);
 
 	Tab* GetTab(TabType type);
 	int GetStyle() {return style;};

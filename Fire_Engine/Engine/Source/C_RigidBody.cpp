@@ -131,7 +131,7 @@ void C_RigidBody::Update()
 
 void C_RigidBody::UpdateCollision()
 {
-	if (collisionType != CollisionType::CAMERA)
+	if (collisionType != CollisionType::CAMERA && DTEngine::state != DTGState::PLAY)
 	{
 		OBB obb = static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB;
 
