@@ -91,7 +91,7 @@ bool Scene::Start()
 	spherePrim1.mesh->GenerateBounds();
 
 	GameObject* sphere1 = CreatePrimitive("Sphere1_P2P", spherePrim1.mesh);
-	sphere1->transform->SetWorldPosition(float3(-2,2,0));
+	sphere1->transform->SetWorldPosition(float3(-4,2,-5));
 	sphere1->transform->UpdateTransform();
 	sphere1->AddComponent(ComponentType::RIGIDBODY, 1);
 
@@ -101,7 +101,7 @@ bool Scene::Start()
 	spherePrim2.mesh->GenerateBounds();
 
 	GameObject* sphere2 = CreatePrimitive("Sphere2_P2P", spherePrim2.mesh);
-	sphere2->transform->SetWorldPosition(float3(2, 2, 0));
+	sphere2->transform->SetWorldPosition(float3(0, 2, -5));
 	sphere2->transform->UpdateTransform();
 	sphere2->AddComponent(ComponentType::RIGIDBODY, 1);
 
@@ -118,21 +118,27 @@ bool Scene::Start()
 
 	mainCar = new CarControls();
 
-	PCube cubePrim = PCube(float3(2, 1, 3), float3(0.f, 1.5f, 3.f));
-	cubePrim.InnerMesh();
-	cubePrim.mesh->LoadToMemory();
-	cubePrim.mesh->GenerateBounds();
+	for (int i = 0; i < 6; i++)
+	{
+		PCube cubePrim = PCube(float3(2 + i * 0.5f, 1 + i * 0.5f, 3 + i * 0.5f), float3(-18.f + i*6, 1.5f, 3.f));
+		cubePrim.InnerMesh();
+		cubePrim.mesh->LoadToMemory();
+		cubePrim.mesh->GenerateBounds();
 
-	GameObject* car = CreatePrimitive("Car", cubePrim.mesh);
-	car->transform->SetWorldPosition(float3(0.f, 1.5f, 3.f));
-	car->transform->UpdateTransform();
-	car->AddComponent(ComponentType::RIGIDBODY);
+		GameObject* car = CreatePrimitive("Car", cubePrim.mesh);
+		car->transform->SetWorldPosition(float3(-18.f + i * 6, 1.5f, 3.f));
+		car->transform->UpdateTransform();
+		car->AddComponent(ComponentType::RIGIDBODY);
 
-	C_RigidBody* bodyCar = static_cast<C_RigidBody*>(car->GetComponent(ComponentType::RIGIDBODY));
-	bodyCar->SetMass(130);
-	bodyCar->SetAsVehicle();
-	bodyCar->GetVehicle()->mainV = true;
-	mainCar->vehicle = bodyCar->GetVehicle();
+		C_RigidBody* bodyCar = static_cast<C_RigidBody*>(car->GetComponent(ComponentType::RIGIDBODY));
+		bodyCar->SetMass(130);
+		bodyCar->SetAsVehicle();
+		if (i == 0)
+		{
+			bodyCar->GetVehicle()->mainV = true;
+			mainCar->vehicle = bodyCar->GetVehicle();
+		}		
+	}
 
 	return true;
 }
