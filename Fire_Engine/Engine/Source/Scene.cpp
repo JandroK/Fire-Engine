@@ -526,9 +526,7 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 				body->isKinematic = tmp.JsonValToBool("isKinematic");
 				if (tmp.JsonValToBool("vehicle") == true)
 				{
-					body->SetAsVehicle();
-					if (tmp.JsonValToBool("mainV") == true)
-						body->SetAsMainV(true);
+					body->RecoverVehicle(tmp.JsonValToBool("mainV"));
 				}
 				
 				break;

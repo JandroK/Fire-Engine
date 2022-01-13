@@ -48,6 +48,7 @@ public:
 	CollisionType GetCollisionType() { return collisionType; };
 
 	void SetAsStatic();
+	void RecoverVehicle(bool _main);
 	void SetAsVehicle();
 
 	bool useGravity = true;

@@ -167,7 +167,9 @@ void C_RigidBody::OnEditor()
 		if (ImGui::Combo("Collision Type", &currentCollision, collisions, 6))
 		{
 			collisionType = (CollisionType)currentCollision;
-			SetCollisionType(collisionType);
+			SetCollisionType(collisionType);		
+			if (vehicle != nullptr)
+				RecoverVehicle(vehicle->mainV);
 		}
 		ImGui::PopItemWidth();
 
@@ -232,7 +234,7 @@ void C_RigidBody::OnEditor()
 						titleWheel += "m_wheelsRadius";
 						ImGui::Text("Wheel Radius:    "); ImGui::SameLine();
 						ImGui::PushItemWidth(size);
-						if (ImGui::DragFloat(titleWheel.c_str(), &vehicle->vehicle->getWheelInfo(i).m_wheelsRadius, 0.1f, 0, INFINITE))
+						if (ImGui::DragFloat(titleWheel.c_str(), &vehicle->vehicle->getWheelInfo(i).m_wheelsRadius, 0.1f, 0.1f, INFINITE))
 							vehicle->info.wheels[i].radius = vehicle->vehicle->getWheelInfo(i).m_wheelsRadius;
 						ImGui::PopItemWidth();
 
@@ -505,6 +507,15 @@ void C_RigidBody::SetAsStatic()
 	SetCollisionType(collisionType);
 }
 
+void C_RigidBody::RecoverVehicle(bool _main)
+{
+	if (mass <= 0) mass = 1;
+	VehicleInfo car(static_cast<MeshRenderer*>(GetOwner()->GetComponent(ComponentType::MESHRENDERER))->globalOBB.Size(), mass);
+
+	vehicle = app->physics->AddVehicle(car, body);
+	if(_main) SetAsMainV(true);
+	vehicle->mainV = _main;
+}
 void C_RigidBody::SetAsVehicle()
 {
 	if (mass <= 0) mass = 1;
