@@ -294,18 +294,13 @@ void C_RigidBody::Combos()
 		{
 			for (int i = 0; i < app->physics->GetBodiesNames().size(); i++)
 			{
-				btRigidBody* body2 = app->physics->GetBodies().at(i)->body;
-				if (body != body2)
+				if (body != app->physics->GetBodies().at(i)->body)
 				{
 					if (ImGui::Selectable(app->physics->GetBodiesNames().at(i).c_str()))
 					{
 						constraintBodies.push_back(app->physics->GetBodies().at(i));
 						app->physics->GetBodies().at(i)->constraintBodies.push_back(this);
-						btVector3 center;
-						float r1, r2;
-						body->getCollisionShape()->getBoundingSphere(center, r1);
-						body2->getCollisionShape()->getBoundingSphere(center, r2);
-						app->physics->AddConstraintP2P(*body, *body2, float3(r1, r1, r1), float3(r2, r2, r2));
+						AddConstraintP2P(app->physics->GetBodies().at(i));
 					}
 				}				
 			}
@@ -339,6 +334,15 @@ void C_RigidBody::Combos()
 	}
 	ImGui::PopStyleColor();
 	ImGui::PopStyleColor();
+}
+
+void C_RigidBody::AddConstraintP2P(C_RigidBody* const& val)
+{	
+	btVector3 center;
+	float r1, r2;
+	body->getCollisionShape()->getBoundingSphere(center, r1);
+	val->GetBody()->getCollisionShape()->getBoundingSphere(center, r2);
+	app->physics->AddConstraintP2P(*body, *val->GetBody(), float3(r1, r1, r1), float3(r2, r2, r2));
 }
 
 void C_RigidBody::SetCollisionType(CollisionType type)

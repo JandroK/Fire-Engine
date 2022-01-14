@@ -34,6 +34,8 @@ public:
 
 	void Combos();
 
+	void AddConstraintP2P(C_RigidBody* const& val);
+
 	void SetCollisionType(CollisionType type);
 	void ResetLocalValues();
 	void EditCollisionMesh();
@@ -54,6 +56,7 @@ public:
 	bool useGravity = true;
 	bool isKinematic = false;
 	std::vector<C_RigidBody*> constraintBodies;
+	std::vector<int> bodiesUIDs;
 
 private:
 	btRigidBody* body = nullptr;

@@ -49,10 +49,12 @@ private:
 	bool LoadScene();
 
 	GameObject* LoadGameObject(JsonParser root,GameObject* father = nullptr);
+	void LoadConstraints();
 
 	void LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj);
 
 	float4x4 strMatrixToF4x4(const char* convert);
+	std::vector<int> strMatrixToIntList(const char* convert);
 
 	void RecursiveUpdate(GameObject* parent);
 

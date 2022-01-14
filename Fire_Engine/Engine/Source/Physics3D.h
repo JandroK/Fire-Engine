@@ -59,7 +59,6 @@ public:
 	void SleepAllBodies();
 	void ActiveAllBodies();
 
-	std::vector<std::string> bodiesNames;
 private:
 	btDefaultCollisionConfiguration* collisionConfig = nullptr;
 	btCollisionDispatcher* dispatcher = nullptr;
@@ -71,6 +70,7 @@ private:
 	DebugDrawer* debugDraw = nullptr;
 
 	std::vector<C_RigidBody*> bodies;
+	std::vector<std::string> bodiesNames;
 	std::vector<PhysVehicle3D*> vehicles;
 
 	bool debug = true;

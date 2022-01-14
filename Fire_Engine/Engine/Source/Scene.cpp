@@ -406,6 +406,16 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 				}
 				else
 					tmp.SetJBool(tmp.ValueToObject(tmp.GetRootValue()), "vehicle", false);
+				
+				num = "";
+				for (int i = 0; i < body->constraintBodies.size(); i++)
+				{
+					num += std::to_string(body->constraintBodies.at(i)->GetOwner()->GetUID());
+					num += ",";
+				}
+				if(num != "") tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "Constraints", num.c_str());
+				else tmp.SetJString(tmp.ValueToObject(tmp.GetRootValue()), "Constraints", "");
+
 				break;
 		}
 		parentGO->GetCompoments().at(i)->GetType();
@@ -430,6 +440,7 @@ bool Scene::LoadScene()
 
 	rootGO = jsonFile.GetChild(rootFile, "GameObjects");
 	root=LoadGameObject(rootGO.GetChild(rootGO.GetRootValue(), "Root"));
+	LoadConstraints();
 
 	loadSceneRequest = false;
 
@@ -439,7 +450,6 @@ bool Scene::LoadScene()
 GameObject* Scene::LoadGameObject(JsonParser parent, GameObject* father)
 {
 	std::string num;
-	std::string convert;
 	std::string name=parent.JsonValToString("name");
 
 	GameObject* gamObj = new GameObject(name.c_str(), parent.JsonValToNumber("UID"));
@@ -457,7 +467,7 @@ GameObject* Scene::LoadGameObject(JsonParser parent, GameObject* father)
 	gamObj->SetPendingToDelete( parent.JsonValToBool("pendingToDelete"));
 
 	LoadComponents(parent, num, gamObj);
-	int count=0;
+	int count = 0;
 	num = "Child " + std::to_string(count);
 	while(parent.ExistChild(parent.GetRootValue(), num.c_str()))
 	{
@@ -470,6 +480,30 @@ GameObject* Scene::LoadGameObject(JsonParser parent, GameObject* father)
 	return gamObj;
 }
 
+void Scene::LoadConstraints()
+{
+	for (int i = 0; i < app->physics->GetBodies().size(); i++)
+	{
+		for (int j = 0; j < app->physics->GetBodies().at(i)->bodiesUIDs.size(); j++)
+		{
+			for (int k = 0; k < app->physics->GetBodies().size(); k++)
+			{
+				if (app->physics->GetBodies().at(k)->GetCollisionType() != CollisionType::CAMERA)
+				{
+					int UID1 = app->physics->GetBodies().at(k)->GetOwner()->GetUID();
+					int UID2 = app->physics->GetBodies().at(i)->bodiesUIDs.at(j);
+					if (UID1 == UID2)
+					{
+						app->physics->GetBodies().at(i)->constraintBodies.push_back(app->physics->GetBodies().at(k));
+						app->physics->GetBodies().at(i)->AddConstraintP2P(app->physics->GetBodies().at(k));
+						break;
+					}
+				}
+			}
+		}		
+	}
+}
+
 void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& gamObj)
 {
 	Transform* transform;
@@ -479,9 +513,11 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 	ComponentCamera* camera;
 	C_RigidBody* body;
 	float3 size = float3::one;
-
+	double uuiidd;
 	LOG(LogType::L_NORMAL, "Loading Components \n");
 	std::string debugPath;
+	std::string debugUID;
+
 	JsonParser components = parent.GetChild(parent.GetRootValue(), "components");
 	JsonParser tmp = components;
 
@@ -561,12 +597,14 @@ void Scene::LoadComponents(JsonParser& parent, std::string& num, GameObject*& ga
 				{
 					body->RecoverVehicle(tmp.JsonValToBool("mainV"));
 				}
-				
+				debugUID = tmp.JsonValToString("Constraints");
+				if (debugUID != "")
+				{
+					body->bodiesUIDs.clear();
+					body->bodiesUIDs = strMatrixToIntList(debugUID.c_str());
+				}
 				break;
 			}
-
-			//gamObj->AddComponent();
-
 		}
 		else break;
 	}
@@ -597,6 +635,21 @@ float4x4 Scene::strMatrixToF4x4(const char* convert)
 		}
 
 	return matrix;
+}
+
+std::vector<int> Scene::strMatrixToIntList(const char* convert)
+{
+	std::string text = convert;
+	std::string delimiter = ",";
+	std::vector<int> floatArray{};
+
+	size_t pos = 0;
+	while ((pos = text.find(delimiter)) != std::string::npos) {
+		floatArray.push_back(stoi(text.substr(0, pos)));
+		text.erase(0, pos + delimiter.length());
+	}
+
+	return floatArray;
 }
 
 void Scene::RecursiveUpdate(GameObject* parent)

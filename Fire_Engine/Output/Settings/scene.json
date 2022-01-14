@@ -1,7 +1,7 @@
 {
     "GameObjects": {
         "Root": {
-            "UID": 1878326183,
+            "UID": 545984095,
             "name": "Root",
             "IsRoot": true,
             "tag": "Untagged",
@@ -20,7 +20,7 @@
                 }
             },
             "Child 0": {
-                "UID": 1948123276,
+                "UID": 2051092499,
                 "name": "street2",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -39,7 +39,7 @@
                     }
                 },
                 "Child 0": {
-                    "UID": 1665904817,
+                    "UID": 38281967,
                     "name": "City_building_041",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -53,13 +53,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000024,-100.000000,-0.000024,3069.527832,0.000000,-0.000024,100.000000,5.500555,-100.000000,-0.000024,0.000000,-2161.264648,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,-1.000000,-0.000000,30.695278,0.000000,-0.000000,1.000000,0.055006,-1.000000,-0.000000,0.000000,-21.612646,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,-100.000000,0.000000,3069.527832,0.000000,0.000000,100.000000,5.996346,-100.000000,0.000000,0.000000,-2161.264648,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,-1.000000,0.000000,30.695278,0.000000,0.000000,1.000000,0.059963,-1.000000,0.000000,0.000000,-21.612646,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_041.fme",
                             "PrimType": -1,
                             "SizeX": 13.836939811706543,
@@ -70,7 +70,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V02_C.png",
+                            "Material": "Library\/Textures\/\/Building_V02_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V02_C.dds"
                         },
                         "Component 3": {
@@ -79,12 +79,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 1": {
-                    "UID": 662457181,
+                    "UID": 201618580,
                     "name": "City_building_040",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -98,13 +99,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.005865,100.000000,0.011325,-3455.833496,-0.005126,-0.011325,100.000000,145.884705,100.000000,-0.005865,0.005126,3064.362549,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000059,1.000000,0.000113,-34.558334,-0.000051,-0.000113,1.000000,1.458847,1.000000,-0.000059,0.000051,30.643625,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.007617,99.999992,0.015408,-3453.175049,-0.003940,-0.015402,99.999992,180.756561,99.999992,-0.007612,0.003946,3064.368164,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000076,1.000000,0.000154,-34.531750,-0.000039,-0.000154,1.000000,1.807566,1.000000,-0.000076,0.000039,30.643682,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_040.fme",
                             "PrimType": -1,
                             "SizeX": 11.313478469848633,
@@ -115,7 +116,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -124,12 +125,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 2": {
-                    "UID": 1572595429,
+                    "UID": 934041388,
                     "name": "City_building_039",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -143,13 +145,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.004995,100.000000,0.007534,-4292.933594,-0.000870,-0.007534,100.000000,5.840874,100.000000,-0.004995,0.000870,3064.384521,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000050,1.000000,0.000075,-42.929337,-0.000009,-0.000075,1.000000,0.058409,1.000000,-0.000050,0.000009,30.643845,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.003684,100.000046,0.001341,-4295.360840,0.002116,-0.001383,100.000046,6.321859,100.000046,-0.003725,-0.002158,3064.399414,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000037,1.000000,0.000013,-42.953609,0.000021,-0.000014,1.000000,0.063219,1.000000,-0.000037,-0.000022,30.643995,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_039.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
@@ -160,7 +162,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -169,12 +171,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 3": {
-                    "UID": 507587408,
+                    "UID": 943159141,
                     "name": "City_building_038",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -188,13 +191,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000024,100.000000,0.000024,-4164.900391,0.000000,-0.000024,100.000000,7.314205,100.000000,-0.000024,0.000000,1649.539429,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,0.000000,-41.649002,0.000000,-0.000000,1.000000,0.073142,1.000000,-0.000000,0.000000,16.495394,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,100.000000,0.000000,-4164.900391,0.000000,0.000000,100.000000,7.808638,100.000000,0.000000,0.000000,1649.539429,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,1.000000,0.000000,-41.649002,0.000000,0.000000,1.000000,0.078086,1.000000,0.000000,0.000000,16.495394,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_038.fme",
                             "PrimType": -1,
                             "SizeX": 13.04541015625,
@@ -205,7 +208,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -214,12 +217,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 4": {
-                    "UID": 1899520983,
+                    "UID": 75081242,
                     "name": "City_building_037",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -233,24 +237,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000063,0.000000,-2031.769409,0.000000,0.000072,99.999977,8.578491,-0.000063,99.999977,-0.000048,1616.360840,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000001,0.000000,-20.317694,0.000000,0.000001,1.000000,0.085785,-0.000001,1.000000,-0.000000,16.163609,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,-0.000101,0.000005,-2031.769409,0.000005,0.000018,99.999992,9.187317,-0.000101,99.999992,-0.000012,1616.360840,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,-0.000001,0.000000,-20.317694,0.000000,0.000000,1.000000,0.091873,-0.000001,1.000000,-0.000000,16.163609,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_037.fme",
                             "PrimType": -1,
                             "SizeX": 12.302089691162109,
-                            "SizeY": 10.436680793762207,
-                            "SizeZ": 8.3090620040893555,
+                            "SizeY": 10.436681747436523,
+                            "SizeZ": 8.3090629577636719,
                             "Radius": 6.1510448455810547
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -259,12 +263,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 5": {
-                    "UID": 212407889,
+                    "UID": 255952484,
                     "name": "City_building_036",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -278,24 +283,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.102514,99.999962,0.000072,-3121.618652,0.000021,-0.000095,100.000015,5.473399,99.999962,-0.102529,-0.000036,-3310.768555,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.001025,1.000000,0.000001,-31.216187,0.000000,-0.000001,1.000000,0.054734,1.000000,-0.001025,-0.000000,-33.107685,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.153923,99.999977,0.000048,-3121.606201,-0.000131,-0.000048,100.000000,5.965710,99.999977,-0.153923,0.000131,-3306.053467,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.001539,1.000000,0.000000,-31.216063,-0.000001,-0.000000,1.000000,0.059657,1.000000,-0.001539,0.000001,-33.060535,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_036.fme",
                             "PrimType": -1,
-                            "SizeX": 11.020986557006836,
-                            "SizeY": 8.2354068756103516,
+                            "SizeX": 11.020997047424316,
+                            "SizeY": 8.2354145050048828,
                             "SizeZ": 7.2911949157714844,
-                            "Radius": 5.510493278503418
+                            "Radius": 5.5104985237121582
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "Material": "Library\/Textures\/\/building 06_ c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         },
                         "Component 3": {
@@ -304,12 +309,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 6": {
-                    "UID": 477246827,
+                    "UID": 1996069405,
                     "name": "City_building_035",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -323,24 +329,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,-0.000003,-0.000015,1338.798950,0.000015,0.000006,99.999977,5.863810,-0.000003,-99.999977,0.000006,4080.251709,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,-0.000000,-0.000000,13.387989,0.000000,0.000000,1.000000,0.058638,-0.000000,-1.000000,0.000000,40.802517,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,-0.000004,-0.000025,1338.798828,0.000025,0.000006,99.999985,6.359529,-0.000004,-99.999985,0.000006,4080.251709,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,-0.000000,-0.000000,13.387988,0.000000,0.000000,1.000000,0.063595,-0.000000,-1.000000,0.000000,40.802517,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_039.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
-                            "SizeY": 7.0432424545288086,
-                            "SizeZ": 9.8554153442382812,
-                            "Radius": 4.9277076721191406
+                            "SizeY": 7.043243408203125,
+                            "SizeZ": 9.8554162979125977,
+                            "Radius": 4.9277081489562988
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -349,12 +355,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 7": {
-                    "UID": 534356183,
+                    "UID": 386280841,
                     "name": "City_building_034",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -368,13 +375,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000024,100.000015,-0.001085,1604.956055,-0.006092,0.001073,100.000015,8.558702,100.000015,-0.000036,0.006080,1669.663208,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,-0.000011,16.049561,-0.000061,0.000011,1.000000,0.085587,1.000000,-0.000000,0.000061,16.696632,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-0.000286,100.000015,-0.000840,1604.956787,-0.051180,0.000834,99.999992,9.259701,99.999992,0.000280,0.051171,1669.477051,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-0.000003,1.000000,-0.000008,16.049568,-0.000512,0.000008,1.000000,0.092597,1.000000,0.000003,0.000512,16.694771,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_034.fme",
                             "PrimType": -1,
                             "SizeX": 19.779281616210938,
@@ -385,7 +392,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -394,12 +401,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 8": {
-                    "UID": 1552599662,
+                    "UID": 320719880,
                     "name": "City_building_033",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -413,24 +421,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "99.999947,-0.101469,-0.000001,-3236.118408,0.000001,0.000030,99.999977,5.473614,-0.101469,-99.999931,0.000030,-4247.123047,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.999999,-0.001015,-0.000000,-32.361183,0.000000,0.000000,1.000000,0.054736,-0.001015,-0.999999,0.000000,-42.471230,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "99.999878,-0.153870,0.000001,-3236.110596,-0.000001,0.000060,100.000000,5.964899,-0.153870,-99.999878,0.000060,-4252.055664,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.999999,-0.001539,0.000000,-32.361107,-0.000000,0.000001,1.000000,0.059649,-0.001539,-0.999999,0.000001,-42.520557,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_033.fme",
                             "PrimType": -1,
                             "SizeX": 19.518222808837891,
                             "SizeY": 8.2354059219360352,
-                            "SizeZ": 7.291193962097168,
+                            "SizeZ": 7.2911949157714844,
                             "Radius": 9.7591114044189453
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "Material": "Library\/Textures\/\/building 06_ c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         },
                         "Component 3": {
@@ -439,12 +447,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 9": {
-                    "UID": 2099180004,
+                    "UID": 1451287621,
                     "name": "City_building_032",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -458,24 +467,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000017,0.000017,-2947.840332,-0.000017,0.000006,99.999977,5.870366,0.000017,-99.999977,0.000006,-2101.409912,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,-29.478403,-0.000000,0.000000,1.000000,0.058704,0.000000,-1.000000,0.000000,-21.014099,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,-2947.840332,-0.000000,0.000006,99.999985,6.365156,0.000000,-99.999985,0.000006,-2101.409912,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,-29.478403,-0.000000,0.000000,1.000000,0.063652,0.000000,-1.000000,0.000000,-21.014099,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_032.fme",
                             "PrimType": -1,
                             "SizeX": 11.836522102355957,
-                            "SizeY": 12.829914093017578,
-                            "SizeZ": 5.9038181304931641,
+                            "SizeY": 12.829916000366211,
+                            "SizeZ": 5.9038186073303223,
                             "Radius": 5.9182610511779785
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga",
+                            "Material": "Library\/Textures\/\/building03_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         },
                         "Component 3": {
@@ -484,12 +493,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 10": {
-                    "UID": 11461899,
+                    "UID": 989870291,
                     "name": "City_building_031",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -503,13 +513,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000060,99.999969,-0.000066,-3467.948242,-0.000006,0.000095,99.999969,5.864716,99.999969,-0.000030,0.000036,4183.556152,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000001,1.000000,-0.000001,-34.679482,-0.000000,0.000001,1.000000,0.058647,1.000000,-0.000000,0.000000,41.835560,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-0.000083,100.000023,-0.000215,-3467.947754,0.000060,0.000191,100.000023,6.358957,100.000023,0.000060,-0.000083,4183.556152,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-0.000001,1.000000,-0.000002,-34.679478,0.000001,0.000002,1.000000,0.063590,1.000000,0.000001,-0.000001,41.835564,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_031.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
@@ -520,7 +530,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -529,12 +539,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 11": {
-                    "UID": 1272437242,
+                    "UID": 861813834,
                     "name": "City_building_030",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -548,13 +559,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000012,99.999985,-0.000185,-4280.723633,0.000018,0.000203,99.999985,5.864811,99.999985,0.000006,0.000000,4183.556152,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,-0.000002,-42.807236,0.000000,0.000002,1.000000,0.058648,1.000000,0.000000,0.000000,41.835560,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-0.000083,100.000023,-0.000310,-4280.723633,0.000060,0.000286,100.000023,6.359148,100.000023,0.000060,-0.000083,4183.556152,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-0.000001,1.000000,-0.000003,-42.807236,0.000001,0.000003,1.000000,0.063591,1.000000,0.000001,-0.000001,41.835564,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_030.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
@@ -565,7 +576,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -574,12 +585,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 12": {
-                    "UID": 357819238,
+                    "UID": 1795323381,
                     "name": "Object010",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -593,24 +605,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000017,0.000000,-250.335098,-0.000000,0.000006,99.999977,-0.000024,0.000017,-99.999977,0.000006,-1580.083984,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,-2.503351,-0.000000,0.000000,1.000000,-0.000000,0.000000,-1.000000,0.000000,-15.800839,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,-250.335098,0.000000,-0.000036,100.000000,-0.001281,0.000000,-100.000000,-0.000036,-1580.083618,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,-0.000000,0.000000,-2.503351,0.000000,-0.000000,1.000000,-0.000013,-0.000000,-1.000000,-0.000000,-15.800837,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/Object010.fme",
                             "PrimType": -1,
                             "SizeX": 40.050388336181641,
-                            "SizeY": 40.050380706787109,
-                            "SizeZ": 1.1210947036743164,
+                            "SizeY": 40.050384521484375,
+                            "SizeZ": 1.121094822883606,
                             "Radius": 20.02519416809082
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/Materials\/white_texture.dds",
+                            "Material": "Materials\/white_texture.dds",
                             "LibraryPath": "Materials\/white_texture.dds"
                         },
                         "Component 3": {
@@ -619,12 +631,13 @@
                             "mass": 0,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 13": {
-                    "UID": 922863598,
+                    "UID": 70918613,
                     "name": "City_building_028",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -638,24 +651,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,-0.000011,-0.000065,1338.798828,0.000065,-0.000012,99.999977,5.863810,-0.000011,-99.999977,-0.000012,3375.503906,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,-0.000000,-0.000001,13.387988,0.000001,-0.000000,1.000000,0.058638,-0.000000,-1.000000,-0.000000,33.755039,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,-0.000004,-0.000025,1338.798828,0.000025,0.000006,99.999985,6.359434,-0.000004,-99.999985,0.000006,3375.503906,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,-0.000000,-0.000000,13.387988,0.000000,0.000000,1.000000,0.063594,-0.000000,-1.000000,0.000000,33.755039,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_039.fme",
                             "PrimType": -1,
                             "SizeX": 8.1208343505859375,
-                            "SizeY": 7.0432424545288086,
-                            "SizeZ": 9.8554153442382812,
-                            "Radius": 4.9277076721191406
+                            "SizeY": 7.043243408203125,
+                            "SizeZ": 9.8554162979125977,
+                            "Radius": 4.9277081489562988
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V01_C.png",
+                            "Material": "Library\/Textures\/\/Building_V01_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V01_C.dds"
                         },
                         "Component 3": {
@@ -664,12 +677,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 14": {
-                    "UID": 123321765,
+                    "UID": 359851220,
                     "name": "City_building_026",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -683,24 +697,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000039,0.000002,3151.188965,0.000002,0.000072,99.999977,7.312679,-0.000039,99.999977,-0.000048,1644.601685,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000000,0.000000,31.511890,0.000000,0.000001,1.000000,0.073127,-0.000000,1.000000,-0.000000,16.446016,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,-0.000000,0.000000,3151.188965,0.000000,0.000018,99.999992,7.808924,-0.000000,99.999992,-0.000012,1644.601685,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,-0.000000,0.000000,31.511889,0.000000,0.000000,1.000000,0.078089,-0.000000,1.000000,-0.000000,16.446016,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_026.fme",
                             "PrimType": -1,
                             "SizeX": 22.611854553222656,
-                            "SizeY": 10.436680793762207,
-                            "SizeZ": 8.3090620040893555,
+                            "SizeY": 10.436681747436523,
+                            "SizeZ": 8.3090629577636719,
                             "Radius": 11.305927276611328
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -709,12 +723,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 15": {
-                    "UID": 144980359,
+                    "UID": 657561718,
                     "name": "City_building_024",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -728,24 +743,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999985,-0.000039,0.000002,-2057.277100,0.000002,0.000072,99.999985,5.046928,-0.000039,99.999985,-0.000060,-4306.083008,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000000,0.000000,-20.572771,0.000000,0.000001,1.000000,0.050469,-0.000000,1.000000,-0.000001,-43.060829,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,-0.000000,-0.000000,-2057.277100,-0.000000,0.000018,99.999992,6.123555,-0.000000,99.999992,-0.000012,-4306.083008,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,-0.000000,-0.000000,-20.572771,-0.000000,0.000000,1.000000,0.061236,-0.000000,1.000000,-0.000000,-43.060829,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_024.fme",
                             "PrimType": -1,
                             "SizeX": 7.0603928565979004,
-                            "SizeY": 5.2050647735595703,
-                            "SizeZ": 3.4438879489898682,
+                            "SizeY": 5.2050652503967285,
+                            "SizeZ": 3.4438884258270264,
                             "Radius": 3.5301964282989502
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_025_c.tga",
+                            "Material": "Library\/Textures\/\/building_025_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_025_c.dds"
                         },
                         "Component 3": {
@@ -754,12 +769,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 16": {
-                    "UID": 504433039,
+                    "UID": 47982132,
                     "name": "City_building_023",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -773,24 +789,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000005,-0.000098,4213.063965,0.000098,-0.000036,99.999977,5.742908,0.000005,-99.999977,-0.000036,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,-0.000001,42.130638,0.000001,-0.000000,1.000000,0.057429,0.000000,-1.000000,-0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000081,4213.063965,-0.000081,0.000072,99.999992,6.238627,0.000000,-99.999992,0.000072,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000001,42.130638,-0.000001,0.000001,1.000000,0.062386,0.000000,-1.000000,0.000001,-37.493286,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_023.fme",
                             "PrimType": -1,
                             "SizeX": 10.117923736572266,
-                            "SizeY": 16.587713241577148,
-                            "SizeZ": 4.7902712821960449,
+                            "SizeY": 16.587715148925781,
+                            "SizeZ": 4.7902717590332031,
                             "Radius": 5.0589618682861328
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga",
+                            "Material": "Library\/Textures\/\/building_016_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         },
                         "Component 3": {
@@ -799,12 +815,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 17": {
-                    "UID": 1332528828,
+                    "UID": 1226940887,
                     "name": "City_building_022",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -818,24 +835,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000063,0.000002,-2083.132324,0.000002,0.000072,99.999977,7.313681,-0.000063,99.999977,-0.000048,2742.649170,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000001,0.000000,-20.831324,0.000000,0.000001,1.000000,0.073137,-0.000001,1.000000,-0.000000,27.426491,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,-0.000100,-0.000000,-2083.132324,-0.000000,0.000018,99.999992,7.808828,-0.000100,99.999992,-0.000012,2742.648926,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,-0.000001,-0.000000,-20.831324,-0.000000,0.000000,1.000000,0.078088,-0.000001,1.000000,-0.000000,27.426489,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_022.fme",
                             "PrimType": -1,
                             "SizeX": 13.04541015625,
-                            "SizeY": 20.236507415771484,
-                            "SizeZ": 8.3090620040893555,
+                            "SizeY": 20.236509323120117,
+                            "SizeZ": 8.3090629577636719,
                             "Radius": 6.522705078125
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building05 _c.tga",
+                            "Material": "Library\/Textures\/\/building05 _c.dds",
                             "LibraryPath": "Library\/Textures\/\/building05 _c.dds"
                         },
                         "Component 3": {
@@ -844,12 +861,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 18": {
-                    "UID": 695983788,
+                    "UID": 394467108,
                     "name": "City_building_017",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -863,13 +881,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000060,-99.999977,-0.000012,4426.008301,0.002193,0.000012,99.999977,5.586079,-99.999977,-0.000036,0.002217,3915.371338,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000001,-1.000000,-0.000000,44.260082,0.000022,0.000000,1.000000,0.055861,-1.000000,-0.000000,0.000022,39.153713,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,-100.000000,0.000000,4426.008301,0.000000,0.000000,100.000000,0.043744,-100.000000,0.000000,0.000000,3915.372070,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,-1.000000,0.000000,44.260082,0.000000,0.000000,1.000000,0.000437,-1.000000,0.000000,0.000000,39.153721,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_017.fme",
                             "PrimType": -1,
                             "SizeX": 12.292150497436523,
@@ -880,7 +898,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga",
+                            "Material": "Library\/Textures\/\/building 01_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         },
                         "Component 3": {
@@ -889,12 +907,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 19": {
-                    "UID": 1413777087,
+                    "UID": 1173648232,
                     "name": "City_building_016",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -908,24 +927,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999985,-0.000039,0.002178,3427.042480,0.002178,0.000072,99.999985,5.586034,-0.000039,99.999985,-0.000060,4197.274902,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000000,0.000022,34.270424,0.000022,0.000001,1.000000,0.055860,-0.000000,1.000000,-0.000001,41.972748,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000000,0.000000,0.000000,3427.042480,0.000000,0.000018,99.999992,6.074920,0.000000,99.999992,-0.000012,4197.274902,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,0.000000,0.000000,34.270424,0.000000,0.000000,1.000000,0.060749,0.000000,1.000000,-0.000000,41.972748,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_017.fme",
                             "PrimType": -1,
                             "SizeX": 12.292150497436523,
                             "SizeY": 0,
-                            "SizeZ": 0.81985151767730713,
+                            "SizeZ": 0.81985163688659668,
                             "Radius": 6.1460752487182617
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga",
+                            "Material": "Library\/Textures\/\/building 01_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         },
                         "Component 3": {
@@ -934,12 +953,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 20": {
-                    "UID": 809097429,
+                    "UID": 958275369,
                     "name": "City_building_014",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -953,24 +973,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "-99.999977,-0.000039,0.000339,-1943.971680,0.000339,0.007725,99.999977,6.893659,-0.000039,99.999977,-0.007701,-3206.150146,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "-1.000000,-0.000000,0.000003,-19.439716,0.000003,0.000077,1.000000,0.068937,-0.000000,1.000000,-0.000077,-32.061501,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-100.000023,-0.000001,0.000098,-1943.970825,0.000098,0.037748,100.000000,7.333636,-0.000001,100.000000,-0.037766,-3206.062012,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-1.000000,-0.000000,0.000001,-19.439709,0.000001,0.000377,1.000000,0.073336,-0.000000,1.000000,-0.000378,-32.060619,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_014.fme",
                             "PrimType": -1,
                             "SizeX": 9.9147052764892578,
-                            "SizeY": 23.785245895385742,
-                            "SizeZ": 5.905545711517334,
+                            "SizeY": 23.785249710083008,
+                            "SizeZ": 5.9055466651916504,
                             "Radius": 4.9573526382446289
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga",
+                            "Material": "Library\/Textures\/\/building03_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         },
                         "Component 3": {
@@ -979,12 +999,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 21": {
-                    "UID": 1676043599,
+                    "UID": 215003800,
                     "name": "City_building_013",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -998,13 +1019,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000048,-100.000000,-0.000048,-4228.806152,0.000000,-0.000048,100.000000,5.473733,-100.000000,-0.000048,0.000000,-3319.881348,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,-1.000000,-0.000000,-42.288059,0.000000,-0.000000,1.000000,0.054737,-1.000000,-0.000000,0.000000,-33.198814,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "-0.000024,-100.000015,0.000036,-4228.805664,-0.000012,0.000024,100.000015,5.965376,-100.000015,0.000012,-0.000024,-3319.879639,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "-0.000000,-1.000000,0.000000,-42.288055,-0.000000,0.000000,1.000000,0.059654,-1.000000,0.000000,-0.000000,-33.198795,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_036.fme",
                             "PrimType": -1,
                             "SizeX": 11.020986557006836,
@@ -1015,7 +1036,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 06_ c.tga",
+                            "Material": "Library\/Textures\/\/building 06_ c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 06_ c.dds"
                         },
                         "Component 3": {
@@ -1024,12 +1045,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 22": {
-                    "UID": 12478940,
+                    "UID": 818540210,
                     "name": "City_building_011",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -1043,24 +1065,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000005,0.000011,3013.454102,-0.000011,0.000006,99.999977,5.741763,0.000005,-99.999977,0.000006,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,30.134541,-0.000000,0.000000,1.000000,0.057418,0.000000,-1.000000,0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000081,3013.454102,-0.000081,0.000072,99.999992,6.238627,0.000000,-99.999992,0.000072,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000001,30.134541,-0.000001,0.000001,1.000000,0.062386,0.000000,-1.000000,0.000001,-37.493286,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_023.fme",
                             "PrimType": -1,
                             "SizeX": 10.117923736572266,
-                            "SizeY": 16.587713241577148,
-                            "SizeZ": 4.7902712821960449,
+                            "SizeY": 16.587715148925781,
+                            "SizeZ": 4.7902717590332031,
                             "Radius": 5.0589618682861328
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga",
+                            "Material": "Library\/Textures\/\/building_016_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         },
                         "Component 3": {
@@ -1069,12 +1091,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 23": {
-                    "UID": 1212888352,
+                    "UID": 1961903618,
                     "name": "City_building_010",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -1088,13 +1111,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000060,-99.999977,-0.000012,2515.400879,0.000882,0.000012,99.999977,5.585599,-99.999977,-0.000036,0.000906,3915.371582,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000001,-1.000000,-0.000000,25.154009,0.000009,0.000000,1.000000,0.055856,-1.000000,-0.000000,0.000009,39.153717,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,-100.000000,0.000000,2515.401123,0.000000,0.000000,100.000000,0.043744,-100.000000,0.000000,0.000000,3915.372070,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,-1.000000,0.000000,25.154011,0.000000,0.000000,1.000000,0.000437,-1.000000,0.000000,0.000000,39.153721,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_017.fme",
                             "PrimType": -1,
                             "SizeX": 12.292150497436523,
@@ -1105,7 +1128,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building 01_c.tga",
+                            "Material": "Library\/Textures\/\/building 01_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building 01_c.dds"
                         },
                         "Component 3": {
@@ -1114,12 +1137,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 24": {
-                    "UID": 1295470905,
+                    "UID": 1141904990,
                     "name": "Plane001",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -1133,24 +1157,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "99.663528,0.000000,0.000000,-2.860260,0.000000,0.000006,99.663506,0.000000,0.000000,-97.061623,0.000006,-2.603209,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.996635,-0.000000,0.000000,-0.028603,0.000000,0.000000,0.996635,0.000000,-0.000000,-0.970616,0.000000,-0.026032,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "99.663506,0.000000,0.000000,-2.860300,0.000000,-0.000035,99.663506,0.000000,0.000000,-97.061600,-0.000036,-2.603200,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.996635,-0.000000,0.000000,-0.028603,0.000000,-0.000000,0.996635,0.000000,-0.000000,-0.970616,-0.000000,-0.026032,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/Plane001.fme",
                             "PrimType": -1,
-                            "SizeX": 96.717315673828125,
-                            "SizeY": 94.192344665527344,
+                            "SizeX": 96.717292785644531,
+                            "SizeY": 94.192306518554688,
                             "SizeZ": 0,
-                            "Radius": 48.358657836914062
+                            "Radius": 48.358646392822266
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/Materials\/green_texture.dds",
+                            "Material": "Materials\/green_texture.dds",
                             "LibraryPath": "Materials\/green_texture.dds"
                         },
                         "Component 3": {
@@ -1159,12 +1183,13 @@
                             "mass": 0,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 25": {
-                    "UID": 1961670299,
+                    "UID": 722696850,
                     "name": "Line002",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -1178,13 +1203,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000024,100.000000,0.000024,-215.977188,0.000000,-0.000024,100.000000,0.000003,100.000000,-0.000024,0.000000,-185.383820,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,1.000000,0.000000,-2.159772,0.000000,-0.000000,1.000000,0.000000,1.000000,-0.000000,0.000000,-1.853838,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,100.000000,0.000000,-215.977188,0.000000,0.000000,100.000000,0.000000,100.000000,0.000000,0.000000,-185.383789,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,1.000000,0.000000,-2.159772,0.000000,0.000000,1.000000,0.000000,1.000000,0.000000,0.000000,-1.853838,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/Line002.fme",
                             "PrimType": -1,
                             "SizeX": 94.333724975585938,
@@ -1195,7 +1220,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/Materials\/default_texture.dds",
+                            "Material": "Materials\/default_texture.dds",
                             "LibraryPath": "Materials\/default_texture.dds"
                         },
                         "Component 3": {
@@ -1204,12 +1229,13 @@
                             "mass": 0,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 26": {
-                    "UID": 2077872067,
+                    "UID": 1483028287,
                     "name": "City_building_008",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -1223,13 +1249,13 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "0.000036,-99.999992,0.000018,4097.999512,0.000006,0.000024,99.999992,6.661665,-99.999992,-0.000030,0.000012,-1827.082397,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "0.000000,-1.000000,0.000000,40.979996,0.000000,0.000000,1.000000,0.066617,-1.000000,-0.000000,0.000000,-18.270824,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "0.000000,-100.000000,0.000024,4097.999512,0.000000,0.000024,100.000000,7.157695,-100.000000,0.000000,0.000000,-1827.082397,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "0.000000,-1.000000,0.000000,40.979996,0.000000,0.000000,1.000000,0.071577,-1.000000,0.000000,0.000000,-18.270824,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_024.fme",
                             "PrimType": -1,
                             "SizeX": 7.0603928565979004,
@@ -1240,7 +1266,7 @@
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_025_c.tga",
+                            "Material": "Library\/Textures\/\/building_025_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_025_c.dds"
                         },
                         "Component 3": {
@@ -1249,12 +1275,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 27": {
-                    "UID": 442780099,
+                    "UID": 1046105114,
                     "name": "City_building_007",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -1268,24 +1295,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000005,0.000011,1601.049194,-0.000011,0.000006,99.999977,5.742025,0.000005,-99.999977,0.000006,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,16.010492,-0.000000,0.000000,1.000000,0.057420,0.000000,-1.000000,0.000000,-37.493286,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000081,1601.049194,-0.000081,0.000072,99.999992,6.238627,0.000000,-99.999992,0.000072,-3749.328613,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000001,16.010492,-0.000001,0.000001,1.000000,0.062386,0.000000,-1.000000,0.000001,-37.493286,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_023.fme",
                             "PrimType": -1,
                             "SizeX": 10.117923736572266,
-                            "SizeY": 16.587713241577148,
-                            "SizeZ": 4.7902712821960449,
+                            "SizeY": 16.587715148925781,
+                            "SizeZ": 4.7902717590332031,
                             "Radius": 5.0589618682861328
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building_016_c.tga",
+                            "Material": "Library\/Textures\/\/building_016_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building_016_c.dds"
                         },
                         "Component 3": {
@@ -1294,12 +1321,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 28": {
-                    "UID": 1813003441,
+                    "UID": 1123737436,
                     "name": "City_building_001",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -1313,24 +1341,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000017,0.001871,1770.712036,-0.001871,0.000441,99.999985,6.791878,0.000017,-99.999985,0.000441,-2005.328735,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000019,17.707121,-0.000019,0.000004,1.000000,0.067919,0.000000,-1.000000,0.000004,-20.053288,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,-0.000004,0.000012,1770.716431,-0.000012,0.000006,99.999985,7.374334,-0.000004,-99.999985,0.000006,-2005.327637,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,-0.000000,0.000000,17.707165,-0.000000,0.000000,1.000000,0.073743,-0.000000,-1.000000,0.000000,-20.053276,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_041.fme",
                             "PrimType": -1,
                             "SizeX": 13.836939811706543,
-                            "SizeY": 10.114249229431152,
-                            "SizeZ": 4.70782470703125,
+                            "SizeY": 10.114250183105469,
+                            "SizeZ": 4.7078251838684082,
                             "Radius": 6.9184699058532715
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/Building_V02_C.png",
+                            "Material": "Library\/Textures\/\/Building_V02_C.dds",
                             "LibraryPath": "Library\/Textures\/\/Building_V02_C.dds"
                         },
                         "Component 3": {
@@ -1339,12 +1367,13 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 },
                 "Child 29": {
-                    "UID": 466246142,
+                    "UID": 747287899,
                     "name": "City_building_004",
                     "IsRoot": false,
                     "tag": "Untagged",
@@ -1358,24 +1387,24 @@
                         "Component 0": {
                             "Type": 0,
                             "active": true,
-                            "LocalTransform": "100.000000,0.000017,0.000017,-4147.588867,-0.000017,0.000006,99.999977,5.870605,0.000017,-99.999977,0.000006,-2101.409912,0.000000,0.000000,0.000000,1.000000,",
-                            "GlobalTransform": "1.000000,0.000000,0.000000,-41.475887,-0.000000,0.000000,1.000000,0.058706,0.000000,-1.000000,0.000000,-21.014099,0.000000,0.000000,0.000000,1.000000,"
+                            "LocalTransform": "100.000000,0.000000,0.000000,-4147.588867,-0.000000,0.000006,99.999985,6.365156,0.000000,-99.999985,0.000006,-2101.409912,0.000000,0.000000,0.000000,1.000000,",
+                            "GlobalTransform": "1.000000,0.000000,0.000000,-41.475887,-0.000000,0.000000,1.000000,0.063652,0.000000,-1.000000,0.000000,-21.014099,0.000000,0.000000,0.000000,1.000000,"
                         },
                         "Component 1": {
                             "Type": 1,
                             "active": true,
-                            "Mesh": "Assets\/Resources\/street\/street2.fbx",
+                            "Mesh": "Assets\/Assets\/Assets\/Assets\/Assets\/Resources\/street\/street2.fbx",
                             "LibraryPath": "Library\/Meshes\/City_building_032.fme",
                             "PrimType": -1,
                             "SizeX": 11.836522102355957,
-                            "SizeY": 12.829914093017578,
-                            "SizeZ": 5.9038181304931641,
+                            "SizeY": 12.829916000366211,
+                            "SizeZ": 5.9038186073303223,
                             "Radius": 5.9182610511779785
                         },
                         "Component 2": {
                             "Type": 2,
                             "active": true,
-                            "Material": "Resources\/street\/building03_c.tga",
+                            "Material": "Library\/Textures\/\/building03_c.dds",
                             "LibraryPath": "Library\/Textures\/\/building03_c.dds"
                         },
                         "Component 3": {
@@ -1384,13 +1413,14 @@
                             "mass": 1,
                             "collision": 0,
                             "isKinematic": false,
-                            "vehicle": false
+                            "vehicle": false,
+                            "Constraints": ""
                         }
                     }
                 }
             },
             "Child 1": {
-                "UID": 2077986225,
+                "UID": 1498126095,
                 "name": "MainCamera",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -1416,22 +1446,22 @@
                 }
             },
             "Child 2": {
-                "UID": 1307327777,
+                "UID": 1991984057,
                 "name": "Sphere1_P2P",
                 "IsRoot": false,
                 "tag": "Untagged",
                 "layer": "0: Default",
                 "active": true,
                 "isStatic": false,
-                "isSelected": false,
+                "isSelected": true,
                 "showChildrens": false,
                 "pendingToDelete": false,
                 "components": {
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "0.983861,0.133707,0.118915,-3.893208,-0.132122,0.991008,-0.021147,2.088583,-0.120673,0.005095,0.992679,-4.907115,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "0.983861,0.133707,0.118915,-3.893208,-0.132122,0.991008,-0.021147,2.088583,-0.120673,0.005095,0.992679,-4.907115,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "0.988413,0.105459,0.109163,-3.782425,-0.105761,0.994387,-0.003029,2.170436,-0.108870,-0.008551,0.994019,-4.821026,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "0.988413,0.105459,0.109163,-3.782425,-0.105761,0.994387,-0.003029,2.170436,-0.108870,-0.008551,0.994019,-4.821026,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
@@ -1439,10 +1469,10 @@
                         "Mesh": "",
                         "LibraryPath": "",
                         "PrimType": 1,
-                        "SizeX": 1,
+                        "SizeX": 0.99999940395355225,
                         "SizeY": 1,
-                        "SizeZ": 1,
-                        "Radius": 0.5
+                        "SizeZ": 0.99999982118606567,
+                        "Radius": 0.49999991059303284
                     },
                     "Component 2": {
                         "Type": 4,
@@ -1450,27 +1480,28 @@
                         "mass": 1,
                         "collision": 1,
                         "isKinematic": false,
-                        "vehicle": false
+                        "vehicle": false,
+                        "Constraints": "1575592784,"
                     }
                 }
             },
             "Child 3": {
-                "UID": 667751716,
+                "UID": 1575592784,
                 "name": "Sphere2_P2P",
                 "IsRoot": false,
                 "tag": "Untagged",
                 "layer": "0: Default",
                 "active": true,
                 "isStatic": false,
-                "isSelected": false,
+                "isSelected": true,
                 "showChildrens": false,
                 "pendingToDelete": false,
                 "components": {
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "0.983861,-0.132122,-0.120673,-0.106792,0.133707,0.991008,0.005095,1.905861,0.118915,-0.021147,0.992679,-5.092885,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "0.983861,-0.132122,-0.120673,-0.106792,0.133707,0.991008,0.005095,1.905861,0.118915,-0.021147,0.992679,-5.092885,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "0.599147,-0.568357,-0.563909,-0.217574,0.573400,0.796166,-0.193215,1.812897,0.558781,-0.207581,0.802916,-5.178974,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "0.599147,-0.568357,-0.563909,-0.217574,0.573400,0.796166,-0.193215,1.812897,0.558781,-0.207581,0.802916,-5.178974,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
@@ -1478,10 +1509,10 @@
                         "Mesh": "",
                         "LibraryPath": "",
                         "PrimType": 1,
-                        "SizeX": 1,
-                        "SizeY": 1,
-                        "SizeZ": 1,
-                        "Radius": 0.5
+                        "SizeX": 0.99999988079071045,
+                        "SizeY": 1.0000001192092896,
+                        "SizeZ": 0.99999970197677612,
+                        "Radius": 0.49999994039535522
                     },
                     "Component 2": {
                         "Type": 4,
@@ -1489,12 +1520,13 @@
                         "mass": 1,
                         "collision": 1,
                         "isKinematic": false,
-                        "vehicle": false
+                        "vehicle": false,
+                        "Constraints": "1991984057,"
                     }
                 }
             },
             "Child 4": {
-                "UID": 816229380,
+                "UID": 880526104,
                 "name": "Car1",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -1508,8 +1540,8 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "1.000000,0.000000,0.000000,-18.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "1.000000,0.000000,0.000000,-18.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "1.000000,0.000000,0.000000,-18.000000,0.000000,1.000000,0.000000,1.491666,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "1.000000,0.000000,0.000000,-18.000000,0.000000,1.000000,0.000000,1.491666,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
@@ -1529,12 +1561,13 @@
                         "collision": 0,
                         "isKinematic": false,
                         "vehicle": true,
-                        "mainV": true
+                        "mainV": true,
+                        "Constraints": ""
                     }
                 }
             },
             "Child 5": {
-                "UID": 2140881713,
+                "UID": 1039699322,
                 "name": "Car2",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -1548,8 +1581,8 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "1.000000,0.000000,0.000000,-12.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "1.000000,0.000000,0.000000,-12.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "1.000000,0.000000,0.000000,-12.000000,0.000000,1.000000,0.000000,1.491666,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "1.000000,0.000000,0.000000,-12.000000,0.000000,1.000000,0.000000,1.491666,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
@@ -1569,12 +1602,13 @@
                         "collision": 0,
                         "isKinematic": false,
                         "vehicle": true,
-                        "mainV": false
+                        "mainV": false,
+                        "Constraints": ""
                     }
                 }
             },
             "Child 6": {
-                "UID": 2075737091,
+                "UID": 1822691180,
                 "name": "Car3",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -1588,8 +1622,8 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "1.000000,0.000000,0.000000,-6.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "1.000000,0.000000,0.000000,-6.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "1.000000,0.000000,0.000000,-6.000000,0.000000,1.000000,0.000000,1.491666,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "1.000000,0.000000,0.000000,-6.000000,0.000000,1.000000,0.000000,1.491666,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
@@ -1609,12 +1643,13 @@
                         "collision": 0,
                         "isKinematic": false,
                         "vehicle": true,
-                        "mainV": false
+                        "mainV": false,
+                        "Constraints": ""
                     }
                 }
             },
             "Child 7": {
-                "UID": 2127471293,
+                "UID": 626457903,
                 "name": "Car4",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -1628,8 +1663,8 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,1.497222,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,1.491666,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,1.491666,0.000000,0.000000,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
@@ -1649,12 +1684,13 @@
                         "collision": 0,
                         "isKinematic": false,
                         "vehicle": true,
-                        "mainV": false
+                        "mainV": false,
+                        "Constraints": ""
                     }
                 }
             },
             "Child 8": {
-                "UID": 436789069,
+                "UID": 1380277840,
                 "name": "Car5",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -1668,8 +1704,8 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "0.999997,-0.002486,0.000000,5.999894,0.002486,0.999997,-0.000203,1.513778,0.000000,0.000203,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "0.999997,-0.002486,0.000000,5.999894,0.002486,0.999997,-0.000203,1.513778,0.000000,0.000203,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "0.999996,-0.002634,0.000045,5.999318,0.002634,0.999996,-0.000289,1.529577,-0.000044,0.000289,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "0.999996,-0.002634,0.000045,5.999318,0.002634,0.999996,-0.000289,1.529577,-0.000044,0.000289,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
@@ -1677,8 +1713,8 @@
                         "Mesh": "",
                         "LibraryPath": "",
                         "PrimType": 0,
-                        "SizeX": 4,
-                        "SizeY": 3,
+                        "SizeX": 3.9999969005584717,
+                        "SizeY": 2.9999978542327881,
                         "SizeZ": 5,
                         "Radius": 2.5
                     },
@@ -1689,12 +1725,13 @@
                         "collision": 0,
                         "isKinematic": false,
                         "vehicle": true,
-                        "mainV": false
+                        "mainV": false,
+                        "Constraints": ""
                     }
                 }
             },
             "Child 9": {
-                "UID": 1323331329,
+                "UID": 725262684,
                 "name": "Car6",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -1708,8 +1745,8 @@
                     "Component 0": {
                         "Type": 0,
                         "active": true,
-                        "LocalTransform": "0.999972,-0.007484,0.000002,11.999895,0.007484,0.999972,-0.000494,1.586477,0.000002,0.000494,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
-                        "GlobalTransform": "0.999972,-0.007484,0.000002,11.999895,0.007484,0.999972,-0.000494,1.586477,0.000002,0.000494,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
+                        "LocalTransform": "0.999949,-0.010128,0.000003,11.999687,0.010128,0.999949,-0.000695,1.690860,0.000004,0.000695,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,",
+                        "GlobalTransform": "0.999949,-0.010128,0.000003,11.999687,0.010128,0.999949,-0.000695,1.690860,0.000004,0.000695,1.000000,3.000000,0.000000,0.000000,0.000000,1.000000,"
                     },
                     "Component 1": {
                         "Type": 1,
@@ -1717,10 +1754,10 @@
                         "Mesh": "",
                         "LibraryPath": "",
                         "PrimType": 0,
-                        "SizeX": 4.5,
-                        "SizeY": 3.5,
-                        "SizeZ": 5.5,
-                        "Radius": 2.75
+                        "SizeX": 4.5000014305114746,
+                        "SizeY": 3.500002384185791,
+                        "SizeZ": 5.5000014305114746,
+                        "Radius": 2.7500007152557373
                     },
                     "Component 2": {
                         "Type": 4,
@@ -1729,12 +1766,13 @@
                         "collision": 0,
                         "isKinematic": false,
                         "vehicle": true,
-                        "mainV": false
+                        "mainV": false,
+                        "Constraints": ""
                     }
                 }
             },
             "Child 10": {
-                "UID": 307032715,
+                "UID": 1877814500,
                 "name": "Ramp",
                 "IsRoot": false,
                 "tag": "Untagged",
@@ -1758,9 +1796,9 @@
                         "LibraryPath": "",
                         "PrimType": 0,
                         "SizeX": 6,
-                        "SizeY": 2,
-                        "SizeZ": 6.0000004768371582,
-                        "Radius": 3.0000002384185791
+                        "SizeY": 2.0000019073486328,
+                        "SizeZ": 6.000007152557373,
+                        "Radius": 3.0000035762786865
                     },
                     "Component 2": {
                         "Type": 4,
@@ -1768,12 +1806,13 @@
                         "mass": 0,
                         "collision": 0,
                         "isKinematic": false,
-                        "vehicle": false
+                        "vehicle": false,
+                        "Constraints": ""
                     },
                     "Component 3": {
                         "Type": 2,
                         "active": true,
-                        "Material": "Resources\/Materials\/green_texture.dds",
+                        "Material": "Materials\/green_texture.dds",
                         "LibraryPath": "Materials\/green_texture.dds"
                     }
                 }
