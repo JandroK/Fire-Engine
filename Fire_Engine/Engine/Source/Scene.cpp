@@ -319,6 +319,7 @@ void Scene::SaveGameObjects(GameObject* parentGO, JsonParser& node)
 	ComponentCamera* camera;
 	C_RigidBody* body;
 
+	node.SetJNumber(node.ValueToObject(node.GetRootValue()), "UID", parentGO->GetUID());
 	node.SetJString(node.ValueToObject(node.GetRootValue()), "name", parentGO->name.c_str());
 	node.SetJBool(node.ValueToObject(node.GetRootValue()), "IsRoot", parentGO->IsRoot());
 
@@ -441,7 +442,7 @@ GameObject* Scene::LoadGameObject(JsonParser parent, GameObject* father)
 	std::string convert;
 	std::string name=parent.JsonValToString("name");
 
-	GameObject* gamObj = new GameObject(name.c_str());
+	GameObject* gamObj = new GameObject(name.c_str(), parent.JsonValToNumber("UID"));
 
 	LOG(LogType::L_NORMAL, (std::string("\n Loading ") + name).c_str());
 

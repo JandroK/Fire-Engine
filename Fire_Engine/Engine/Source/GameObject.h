@@ -10,7 +10,7 @@ class Transform;
 class GameObject
 {
 public:
-	GameObject(const char* name);
+	GameObject(const char* name, int UID = -1);
 	virtual ~GameObject();
 
 	void Update();
@@ -46,6 +46,8 @@ public:
 	bool GetPendingToDelete() { return pendingToDelete; };
 	void SetPendingToDelete(bool isPendingToDelete) {  pendingToDelete= isPendingToDelete; };
 
+	int GetUID() { return UID; };
+
 	Transform* transform = nullptr;
 
 	bool active = true;
@@ -67,5 +69,5 @@ private:
 	GameObject* parent = nullptr;
 	std::vector<Component*> components;
 	std::vector<GameObject*> childrens;
-
+	int UID = -1;
 };

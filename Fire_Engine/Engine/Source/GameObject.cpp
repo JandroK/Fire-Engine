@@ -2,6 +2,7 @@
 //#include "GameObject.h" 
 #include "Component.h"
 #include "Globals.h"
+#include "Application.h"
 
 // Components
 #include "Transform.h"
@@ -10,8 +11,9 @@
 #include "ComponentCamera.h"
 #include "C_RigidBody.h"
 
-GameObject::GameObject(const char* name) : name(name), tag("Untagged"), layer("0: Default")
+GameObject::GameObject(const char* name, int _UID) : name(name), tag("Untagged"), layer("0: Default"), UID(_UID)
 {
+	if(_UID == -1) UID = app->GetNewUID();
 	// Each GameObject must have a transform component, that's why we add it when creating it
 	transform = static_cast<Transform*>(AddComponent(ComponentType::TRANSFORM));
 }
