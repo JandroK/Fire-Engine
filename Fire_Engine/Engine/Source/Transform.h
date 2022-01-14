@@ -31,7 +31,7 @@ public:
 	void SetPosition(float3 pos) { localTransform.SetCol3(3, pos); position = pos; };
 	void SetWorldPosition(float3 pos) { globalTransform.SetCol3(3, pos); worldPosition = pos; };
 	void SetEulerRotation(float3 rot) { localTransform.SetRotatePart(Quat::FromEulerXYZ(rot.x * DEGTORAD, rot.y * DEGTORAD, rot.z * DEGTORAD)); };
-	void SetWorldEulerRotation(Quat rot) { globalTransform.SetRotatePart(rot); };
+	void SetWorldRotation(Quat rot) { globalTransform.SetRotatePart(rot); worldRotation = rot; worldEulerRotation = rot.ToEulerXYZ();};
 	void SetUpdateTransform(bool ret) { updateTransform = ret; };
 
 	void SetTransformMatrix(float3 position, Quat rotation, float3 localScale, Transform* parent);

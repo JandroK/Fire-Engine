@@ -19,6 +19,10 @@ public:
 	GameObject* CreateCamera();
 	bool Start() override;
 
+	void StartVehiclesFleet();
+
+	void StartSpheresP2P();
+
 	update_status PreUpdate(float dt) override;
 	update_status Update(float dt) override;
 

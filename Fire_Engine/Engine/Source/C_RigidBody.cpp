@@ -178,7 +178,7 @@ void C_RigidBody::OnEditor()
 
 		ImGui::Text("Mass:        "); ImGui::SameLine();
 		ImGui::PushItemWidth(winSize.x);
-		ImGui::DragFloat("##Mass", &mass, 0.1f, 0.1f);
+		ImGui::DragFloat("##Mass", &mass, 0.1f, 0.1f, INFINITE);
 		ImGui::PopItemWidth();
 
 		ImGui::Text("Friction:    "); ImGui::SameLine();
@@ -189,7 +189,7 @@ void C_RigidBody::OnEditor()
 
 		ImGui::Text("Restitution: "); ImGui::SameLine();
 		ImGui::PushItemWidth(winSize.x);
-		if (ImGui::DragFloat("##Restitution", &restitution, 0.1f) && body)
+		if (ImGui::DragFloat("##Restitution", &restitution, 0.1f, 0.f, 1.f) && body)
 			body->setRestitution(restitution);
 		ImGui::PopItemWidth();
 
@@ -217,7 +217,7 @@ void C_RigidBody::OnEditor()
 				app->scene->mainCar->OnEditor();
 
 				char nums[] = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'};
-				float size = ImGui::GetWindowSize().x - ImGui::CalcTextSize("Point Connection:").x - 35;
+				float size = ImGui::GetWindowSize().x - ImGui::CalcTextSize("Point Connec:").x - 35;
 
 				for (int i = 0; i < vehicle->info.num_wheels; i++)
 				{
@@ -225,22 +225,22 @@ void C_RigidBody::OnEditor()
 					titleWheel += nums[i];
 					if (ImGui::CollapsingHeader(titleWheel.c_str()))
 					{
-						titleWheel += "m_chassisConnectionPointCS";
-						ImGui::Text("Point Connection:"); ImGui::SameLine();
-						ImGui::PushItemWidth(size);
-						ImGui::DragFloat3(titleWheel.c_str(), vehicle->vehicle->getWheelInfo(i).m_chassisConnectionPointCS);
+						ImGui::PushID(i);
+						ImGui::Text("Point Connec:"); ImGui::SameLine();
+						ImGui::PushItemWidth(size-45);
+						ImGui::DragFloat3("##ChasisPoint", vehicle->vehicle->getWheelInfo(i).m_chassisConnectionPointCS, 0.1f, 0.01f, INFINITE);
 						ImGui::PopItemWidth();
 
-						titleWheel += "m_wheelsRadius";
-						ImGui::Text("Wheel Radius:    "); ImGui::SameLine();
-						ImGui::PushItemWidth(size);
-						if (ImGui::DragFloat(titleWheel.c_str(), &vehicle->vehicle->getWheelInfo(i).m_wheelsRadius, 0.1f, 0.1f, INFINITE))
+						ImGui::Text("Wheel Radius: "); ImGui::SameLine();
+						ImGui::PushItemWidth(size-6);
+						if (ImGui::DragFloat("##RadiusWheel", &vehicle->vehicle->getWheelInfo(i).m_wheelsRadius, 0.05f, 0.1f, INFINITE))
 							vehicle->info.wheels[i].radius = vehicle->vehicle->getWheelInfo(i).m_wheelsRadius;
 						ImGui::PopItemWidth();
 
 						ImGui::Checkbox("Drive", &vehicle->info.wheels[i].drive); ImGui::SameLine();
 						ImGui::Checkbox("Break", &vehicle->info.wheels[i].brake); ImGui::SameLine();
 						ImGui::Checkbox("Steering", &vehicle->info.wheels[i].steering);
+						ImGui::PopID();
 					}					
 				}				
 			}

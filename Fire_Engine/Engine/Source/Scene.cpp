@@ -85,13 +85,36 @@ bool Scene::Start()
 	transformCamera->SetEulerRotation(float3(145.0f, 30.0f, -160.0f));
 	transformCamera->SetTransformMFromM(transformCamera->GetLocalTransform());
 
+	StartSpheresP2P();
+	StartVehiclesFleet();
+
+	PCube ramp = PCube(float3(6,2,6), float3(-4, 0.1, 30));
+	ramp.InnerMesh();
+	ramp.mesh->LoadToMemory();
+	ramp.mesh->GenerateBounds();
+
+	GameObject* rampObj = CreatePrimitive("Ramp", ramp.mesh);
+	rampObj->transform->SetWorldPosition(float3(-4, 0.1, 30));
+	rampObj->transform->SetWorldRotation(Quat::FromEulerXYZ(-20 * DEGTORAD, 0, 0));
+	rampObj->transform->UpdateTransform();
+
+	rampObj->AddComponent(ComponentType::RIGIDBODY, 0);
+	static_cast<C_RigidBody*>(rampObj->GetComponent(ComponentType::RIGIDBODY))->SetAsStatic();
+	rampObj->AddComponent(ComponentType::MATERIAL);
+	static_cast<Material*>(rampObj->GetComponent(ComponentType::MATERIAL))->texture = app->resourceManager->greenTexture;
+
+	return true;
+}
+
+void Scene::StartSpheresP2P()
+{
 	PSphere spherePrim1 = PSphere();
 	spherePrim1.InnerMesh();
 	spherePrim1.mesh->LoadToMemory();
 	spherePrim1.mesh->GenerateBounds();
 
 	GameObject* sphere1 = CreatePrimitive("Sphere1_P2P", spherePrim1.mesh);
-	sphere1->transform->SetWorldPosition(float3(-4,2,-5));
+	sphere1->transform->SetWorldPosition(float3(-4, 2, -5));
 	sphere1->transform->UpdateTransform();
 	sphere1->AddComponent(ComponentType::RIGIDBODY, 1);
 
@@ -112,15 +135,18 @@ bool Scene::Start()
 	body2->constraintBodies.push_back(body1);
 	btVector3 center;
 	float r1, r2;
-	body1->GetBody()->getCollisionShape()->getBoundingSphere(center,r1);
+	body1->GetBody()->getCollisionShape()->getBoundingSphere(center, r1);
 	body2->GetBody()->getCollisionShape()->getBoundingSphere(center, r2);
 	app->physics->AddConstraintP2P(*body1->GetBody(), *body2->GetBody(), float3(r1, r1, r1), float3(r2, r2, r2));
+}
 
+void Scene::StartVehiclesFleet()
+{
 	mainCar = new CarControls();
 	std::string carName = "Car";
 	for (int i = 0; i < 6; i++)
 	{
-		PCube cubePrim = PCube(float3(2 + i * 0.5f, 1 + i * 0.5f, 3 + i * 0.5f), float3(-18.f + i*6, 1.5f, 3.f));
+		PCube cubePrim = PCube(float3(2 + i * 0.5f, 1 + i * 0.5f, 3 + i * 0.5f), float3(-18.f + i * 6, 1.5f, 3.f));
 		cubePrim.InnerMesh();
 		cubePrim.mesh->LoadToMemory();
 		cubePrim.mesh->GenerateBounds();
@@ -138,11 +164,10 @@ bool Scene::Start()
 		{
 			bodyCar->GetVehicle()->mainV = true;
 			mainCar->vehicle = bodyCar->GetVehicle();
-		}		
+		}
 	}
-
-	return true;
 }
+
 
 update_status Scene::PreUpdate(float dt)
 {
