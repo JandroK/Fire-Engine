@@ -28,6 +28,7 @@
 #include "MeshRenderer.h"
 #include "DTEngine.h"
 #include "ResourceTexture.h"
+#include "CarControls.h"
 
 #include "imgui/imgui.h"
 #include "IconsFontAwesome5.h"
@@ -645,6 +646,7 @@ void Editor::NewScene()
 	SetGameObjectSelected(nullptr);
 	app->scene->CleanUp(); //Clean GameObjects 
 	app->scene->Init();
+	app->scene->mainCar->vehicle = nullptr;
 	app->camera->ReStartCamera();
 	app->scene->mainCamera->ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 }

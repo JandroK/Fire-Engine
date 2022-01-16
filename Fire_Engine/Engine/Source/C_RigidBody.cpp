@@ -178,7 +178,17 @@ void C_RigidBody::OnEditor()
 
 		ImGui::Text("Mass:        "); ImGui::SameLine();
 		ImGui::PushItemWidth(winSize.x);
-		ImGui::DragFloat("##Mass", &mass, 0.1f, 0.1f, INFINITE);
+		if (ImGui::DragFloat("##Mass", &mass, 0.1f, 0.0f, INFINITE))
+		{
+			if(body->isStaticObject() && mass != 0.0f)
+				CreateBody();
+			if (mass != 0.f)
+			{
+				btVector3 inertia;
+				body->getCollisionShape()->calculateLocalInertia(mass, inertia);
+				body->setMassProps(mass, inertia);
+			}
+		}
 		ImGui::PopItemWidth();
 
 		ImGui::Text("Friction:    "); ImGui::SameLine();
@@ -193,8 +203,22 @@ void C_RigidBody::OnEditor()
 			body->setRestitution(restitution);
 		ImGui::PopItemWidth();
 
-		ImGui::Checkbox("Use Gravity", &useGravity);
-		ImGui::Checkbox("Is Kinematic", &isKinematic);
+		if(ImGui::Checkbox("Use Gravity", &useGravity))
+		{
+			if (!useGravity && !isKinematic)
+				SetAsStatic();
+			else CreateBody();
+		}
+		if (ImGui::Checkbox("Is Kinematic", &isKinematic))
+		{
+			if (isKinematic)
+			{
+				body->setCollisionFlags(body->getFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+				if(DTEngine::state == DTGState::PLAY)
+					body->setActivationState(DISABLE_DEACTIVATION);
+			}
+			else CreateBody();
+		}
 
 		Combos();
 
