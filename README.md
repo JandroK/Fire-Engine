@@ -92,6 +92,8 @@ Components Info:
   + Edit point connection and radius of each wheel
   + Set as Drive, Break and Steering 
 
+ ![Image](Fire_Engine/Output/Assets/Screenshoots/C_RigidBody.png)
+
 #### Short Cuts:<a name="id.Shorts">
 + The numbers 1-9 open and close the tabs
 + "Ctrl+N" New Scene
@@ -187,6 +189,16 @@ In help you can find a small options section where you can activate the demo ver
 
 #### Hierarchy:
 - Double click to name game object or click in arrow to open game object tree 
+
+#### Physic Engine:
+- The scene start physicalized, all game objects are dyanmic objects except the ground.
+- The camera is surrounded by a sphere that collides with scene
+- The player can be shoot spheres from the camera.
+- In the center of scene contain two primitives linked with constraint P2P
+- A Universal System has been developed that allows convert any rigidBody to vehicle
+- You can drive a physicalized car that interact with the other objects 
+
+ ![Image](Fire_Engine/Output/Assets/Screenshoots/scene_physicalized.png)
 
 ## About us:<a name="id.AboutUs">
 
