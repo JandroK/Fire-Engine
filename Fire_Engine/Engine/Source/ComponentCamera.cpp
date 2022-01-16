@@ -22,7 +22,7 @@ ComponentCamera::ComponentCamera() : Component(nullptr)
 	frustrum.verticalFov = 60.0f * DEGTORAD;
 	frustrum.horizontalFov = 2.0f * atanf(tanf(frustrum.verticalFov / 2.0f) * (16.f/9.f));
 
-	frustrum.pos = float3::zero;
+	frustrum.pos = float3(-50.0f, 44.0f, 80.0f);
 
 	//CalculateViewMatrix();
 }

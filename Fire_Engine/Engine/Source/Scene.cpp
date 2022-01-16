@@ -46,6 +46,8 @@ bool Scene::Init()
 
 	// Create GameCamera and asignt as main
 	GameObject* sceneCamera = CreateGameObjectEmpty("MainCamera");
+	sceneCamera->transform->SetWorldPosition(float3(15, 5,15));
+	sceneCamera->transform->SetWorldRotation(Quat::FromEulerXYZ(0, 5 * RADTODEG, 0));
 	sceneCamera->AddComponent(ComponentType::CAMERA);
 	mainCamera = static_cast<ComponentCamera*>(sceneCamera->GetComponent(ComponentType::CAMERA));
 	mainCamera->SetIsMainCamera(true);

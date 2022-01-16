@@ -43,6 +43,7 @@ void Camera3D::ReStartCamera()
 
 	position = float3(-50.0f, 44.0f, 80.0f);
 	reference = float3(0.0f, 0.0f, 0.0f);
+	LookAt(reference);
 
 	CalculateViewMatrix();
 }

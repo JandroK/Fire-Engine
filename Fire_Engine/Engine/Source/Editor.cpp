@@ -646,6 +646,7 @@ void Editor::NewScene()
 	app->scene->CleanUp(); //Clean GameObjects 
 	app->scene->Init();
 	app->camera->ReStartCamera();
+	app->scene->mainCamera->ReGenerateFrameBuffer(app->window->GetWindowWidth(), app->window->GetWindowHeight());
 }
 
 void Editor::PrimitiveMenuItem()
