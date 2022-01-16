@@ -6,11 +6,11 @@
 #include "Timer.h"
 #include "JsonParser.h"
 
-#define FILE_CONFIG	"../Output/Settings/config.json"
-//#define FILE_CONFIG	"Settings/config.json"
+//#define FILE_CONFIG	"../Output/Settings/config.json"
+#define FILE_CONFIG	"Settings/config.json"
 
-#define SCENE_CONFIG	"../Output/Settings/scene.json"
-//#define SCENE_CONFIG "Settings/scene.json"
+//#define SCENE_CONFIG	"../Output/Settings/scene.json"
+#define SCENE_CONFIG "Settings/scene.json"
 
 #include "Algorithm/Random/LCG.h"
 

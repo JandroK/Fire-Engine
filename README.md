@@ -43,6 +43,12 @@ To move the camera we will use MOUSE_RIGHT button +:
 + "Alt" Orbit 
 + "Scroll mouse" Zoom in and Zoom out
 
+The control Car:
++ "Up Arrow" Move the car to forward vector
++ "Down Arrow" Move the car to backward vector
++ "Left Arrow" Turn the car to left
++ "Right Arrow" Turn the car to right 
+
  ![Image](Fire_Engine/Output/Assets/Screenshoots/EngineCapture.PNG)
  
 You can use the mouse wheel to zoom both backwards and forwards.
@@ -53,9 +59,9 @@ Rotation with respect to an object is possible by holding ALT when an object is 
 #### Components:<a name="id.Components"> 
 Components Info:
 + Transform 
-  + Modified objects
+  + Modified objects position/rotation/sacle
   + Set axis Local/Global
-  + Delete objects
+  + Reset objects
 + Mesh Renderer
   + Enable/Disable mesh 
   + Mesh info
@@ -69,6 +75,22 @@ Components Info:
   + Set as main camera
   + Draw his frustrum boxes
   + Modified his frustrum variables
++ RigidBody
+  + Enable/Disable collision
+  + Set Collision Type
+  + Set Mass/Friction/Restitution
+  + Collision Edit (Size/Radius/Height)
+  + Freeze position and rotation
+  + Add Constraints P2P
+  + Linear and angular daming
+  + Convert body to vehicle
++ Vehicle Tuning
+  + Set as Main Vehicle
+  + Set Max Acceleration
+  + Set Max Turn Degrees
+  + Set Hardness Power Steering
+  + Edit point connection and radius of each wheel
+  + Set as Drive, Break and Steering 
 
 #### Short Cuts:<a name="id.Shorts">
 + The numbers 1-9 open and close the tabs
@@ -161,6 +183,7 @@ In help you can find a small options section where you can activate the demo ver
 - Buttons Add Tags and Layers
 - Show all components
 - Button "Add Component" 
+- Button "Delete Object" 
 
 #### Hierarchy:
 - Double click to name game object or click in arrow to open game object tree 
@@ -180,6 +203,7 @@ Ismael Tejada Coca:
  Denis Deconinck Soriano:
 - @Denisdrk6  | 
   - https://github.com/Denisdrk6
+  - https://www.linkedin.com/in/denis-deconinck-soriano-07364822b/
 
 ## License
 
